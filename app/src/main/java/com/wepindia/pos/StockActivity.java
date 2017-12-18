@@ -222,13 +222,13 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
 
     private  void clickEvent()
     {
-        ItemLongName.setOnTouchListener(new View.OnTouchListener(){
+        /*ItemLongName.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 ItemLongName.showDropDown();
                 return false;
             }
-        });
+        });*/
         ItemLongName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -252,19 +252,19 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
             }
         });
 
-        AutoCompleteItemBarcodeValue.setOnTouchListener(new View.OnTouchListener(){
+        /*AutoCompleteItemBarcodeValue.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 AutoCompleteItemBarcodeValue.showDropDown();
                 return false;
             }
-        });
+        });*/
         AutoCompleteItemBarcodeValue.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 onBarcodeSelected();
-                }
-            });
+            }
+        });
     }
 
     void onBarcodeSelected() {
@@ -467,19 +467,23 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
                     //Cursor cursor = dbStock.getItemss(items.getItemCode());
                     Cursor Item = null;
                     //if (v.getTag() != null) {
-                        Item = dbStock.getItemss(itemCode);
-                        if (Item.moveToNext()) {
-                            strMenuCode = Item.getString(Item.getColumnIndex("MenuCode"));
-                            ItemLongName.setText(Item.getString(Item.getColumnIndex("ItemName")));
-                            AutoCompleteItemBarcodeValue.setText(Item.getString(Item.getColumnIndex("ItemBarcode")));
-                            tvExistingStock.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("Quantity"))));
-                            txtRate1.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice1"))));
-                            txtRate2.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice2"))));
-                            txtRate3.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice3"))));
-                            txtNewStock.setText("0");
-                            btnUpdate.setEnabled(true);
-                        }
-                   // }
+                    Item = dbStock.getItemss(itemCode);
+                    if (Item.moveToNext()) {
+                        strMenuCode = Item.getString(Item.getColumnIndex("MenuCode"));
+                        ItemLongName.setThreshold(1000);
+                        AutoCompleteItemBarcodeValue.setThreshold(1000);
+                        ItemLongName.setText(Item.getString(Item.getColumnIndex("ItemName")));
+                        AutoCompleteItemBarcodeValue.setText(Item.getString(Item.getColumnIndex("ItemBarcode")));
+                        ItemLongName.setThreshold(1);
+                        AutoCompleteItemBarcodeValue.setThreshold(1);
+                        tvExistingStock.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("Quantity"))));
+                        txtRate1.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice1"))));
+                        txtRate2.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice2"))));
+                        txtRate3.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice3"))));
+                        txtNewStock.setText("0");
+                        btnUpdate.setEnabled(true);
+                    }
+                    // }
                 }
             });
             mRecyclerGridView.setAdapter(mTestItemsAdapter);
@@ -606,6 +610,9 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
                 Float.parseFloat(String.format("%.2f",Float.parseFloat(strRate2))),
                 Float.parseFloat(String.format("%.2f",Float.parseFloat(strRate3))) );
 
+
+        txtNewStock.setText("0");
+        tvExistingStock.setText(String.format("%.2f",(Float.parseFloat(strExistingStock) + newStock)));
         //Toast.makeText(myContext, "Price & Stock Updated Successfully", Toast.LENGTH_LONG).show();
         //DisplayItems();
         // updating in table outwardStock
@@ -640,7 +647,7 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
         }
         stock_outward.updateOpeningStock_Outward( currentdate, Integer.parseInt(strMenuCode),itemName,OpeningQuantity, rate );
         stock_outward.updateClosingStock_Outward( currentdate, Integer.parseInt(strMenuCode),itemName,ClosingQuantity);
-        ResetStock();
+        //ResetStock();
 
     }
 

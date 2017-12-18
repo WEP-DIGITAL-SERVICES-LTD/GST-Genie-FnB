@@ -162,13 +162,13 @@ public class SupplierDetailsActivity extends WepBaseActivity {
                 ListClickEvent(SupplierAdapter.getItem(position));
             }});
 
-        autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
+        /*autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 autocompletetv_suppliername.showDropDown();
                 return false;
             }
-        });
+        });*/
         autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

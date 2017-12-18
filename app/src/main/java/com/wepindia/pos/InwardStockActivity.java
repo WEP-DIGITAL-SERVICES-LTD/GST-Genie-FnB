@@ -138,13 +138,13 @@ public class InwardStockActivity extends WepBaseActivity {
 
     private void clickEvent()
     {
-        ItemLongName.setOnTouchListener(new View.OnTouchListener(){
+        /*ItemLongName.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 ItemLongName.showDropDown();
                 return false;
             }
-        });
+        });*/
         ItemLongName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -213,7 +213,9 @@ public class InwardStockActivity extends WepBaseActivity {
                 public void onItemClick(int position, View v) {
                     ItemInward itemClick = InwardItemList.get(position);
                     strMenuCode = String.valueOf(itemClick.getiMenuCode());
+                    ItemLongName.setThreshold(1000);
                     ItemLongName.setText(itemClick.getStrItemname());
+                    ItemLongName.setThreshold(1);
                     tvExistingStock.setText(String.format("%.2f", itemClick.getfQuantity()));
                     txtRate1.setText(String.format("%.2f", itemClick.getRate()));
                     txtNewStock.setText("0");
@@ -274,7 +276,9 @@ public class InwardStockActivity extends WepBaseActivity {
             stock_outward.updateOpeningStock_Inward( currentdate, Integer.parseInt(strMenuCode),itemName,OpeningQuantity, Double.parseDouble(String.format("%.2f",Double.parseDouble(strRate1))) );
             stock_outward.updateClosingStock_Inward( currentdate, Integer.parseInt(strMenuCode),itemName,ClosingQuantity);
             loadItems();
-            ResetStock();
+            tvExistingStock.setText(String.valueOf((Double.parseDouble(strExistingStock) + newStock)));
+            txtNewStock.setText("0.00");
+            //ResetStock();
             // updating rate in Item_Inward table
             long ll =dbInwardStock.updateItem_Inw(0, 0,  itemName , Double.parseDouble(strNewStock), Double.parseDouble(String.format("%.2f",Double.parseDouble(strRate1))));
             System.out.println(11);
@@ -293,9 +297,9 @@ public class InwardStockActivity extends WepBaseActivity {
 
     private void ResetStock() {
         ItemLongName.setText("");
-        txtNewStock.setText("0");
-        tvExistingStock.setText("0");
-        txtRate1.setText("0");
+        txtNewStock.setText("0.00");
+        tvExistingStock.setText("0.00");
+        txtRate1.setText("0.00");
         btnUpdate.setEnabled(false);
     }
     public void CloseStock(View v) {

@@ -224,13 +224,13 @@ public class InwardItemActivity extends WepBaseActivity {
             });
 
             lstInwardItem.setOnItemClickListener(ListViewClickEvent);
-            autocomplete_inw_ItemName.setOnTouchListener(new View.OnTouchListener(){
+           /* autocomplete_inw_ItemName.setOnTouchListener(new View.OnTouchListener(){
                 //@Override
                 public boolean onTouch(View v, MotionEvent event){
                     autocomplete_inw_ItemName.showDropDown();
                     return false;
                 }
-            });
+            });*/
 
             et_Inw_SGSTRate.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -350,7 +350,7 @@ public class InwardItemActivity extends WepBaseActivity {
                             mBufferReader  = new BufferedReader(
                                     new InputStreamReader(new FileInputStream(path),"ISO-8859-1"));
 
-                            Cursor cursor = dbInwardItem.getCurrentDate();
+                            //Cursor cursor = dbInwardItem.getCurrentDate();
 
                             setCSVFileToDB(InwardItemList);
                         }
@@ -602,10 +602,10 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
             });*/
 
-    } catch (Exception e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
@@ -1016,6 +1016,7 @@ public class InwardItemActivity extends WepBaseActivity {
                 int i = dbInwardItem.clearInwardItemdatabase();
                 i = dbInwardItem.clearInwardStock(businessDate);
                 i = dbInwardItem.clearSupplierLinkage();
+                i = dbInwardItem.deleteAllItemInGoodsInward();
                 InwardItemList.clear();
                 //InwardItemAdapter.notifyDataSetChanged(InwardItemList);
 
@@ -1157,7 +1158,9 @@ public class InwardItemActivity extends WepBaseActivity {
                     return;
                 ItemInward item = (ItemInward)InwardItemAdapter.getItem(position);
                 itemname_clicked = (item.getStrItemname());
+                autocomplete_inw_ItemName.setThreshold(1000);
                 autocomplete_inw_ItemName.setText(item.getStrItemname());
+                autocomplete_inw_ItemName.setThreshold(1);
                 tvMenuCode.setText(String.valueOf(item.getiMenuCode()));
                 et_inw_ItemBarcode.setText(item.getStrItemBarcode());
                 et_inw_averagerate_entered.setText(String.format("%.2f",item.getRate()));
@@ -1853,7 +1856,7 @@ public class InwardItemActivity extends WepBaseActivity {
         {
 
         }
-            //Toast.makeText(myContext, itemName+" reset to 0 for supplier : "+autocompletetv_suppliername.getText().toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(myContext, itemName+" reset to 0 for supplier : "+autocompletetv_suppliername.getText().toString(), Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(myContext, itemName+" cannot be reset to 0 ", Toast.LENGTH_LONG).show();
         ClearingAndDisplaying();
@@ -1870,14 +1873,14 @@ public class InwardItemActivity extends WepBaseActivity {
             return;
         }
 
-         if (et_inw_quantity.getText().toString().equalsIgnoreCase("")) {
+        if (et_inw_quantity.getText().toString().equalsIgnoreCase("")) {
             et_inw_quantity.setText("0");
         }else if(Double.parseDouble(et_inw_quantity.getText().toString())< 0 ||
-                 Double.parseDouble(et_inw_quantity.getText().toString())>9999.99)
-         {
-             MsgBox1.Show("Warning","Please enter item's quantity between 0 and 9999.99");
-             return;
-         }
+                Double.parseDouble(et_inw_quantity.getText().toString())>9999.99)
+        {
+            MsgBox1.Show("Warning","Please enter item's quantity between 0 and 9999.99");
+            return;
+        }
 
         if (et_inw_averagerate_entered.getText().toString().equalsIgnoreCase("")) {
             et_inw_averagerate_entered.setText("0");
@@ -1956,7 +1959,7 @@ public class InwardItemActivity extends WepBaseActivity {
         } else // Itemwise
         {
             String itemname = autocomplete_inw_ItemName.getText().toString();
-           // DisplayItems(itemname);
+            // DisplayItems(itemname);
         }
 
         ResetItem();

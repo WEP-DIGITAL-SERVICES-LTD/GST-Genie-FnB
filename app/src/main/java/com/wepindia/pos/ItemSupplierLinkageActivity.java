@@ -227,14 +227,14 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 
     private  void OnClickEvents()
     {
-        autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
+       /* autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 autocompletetv_suppliername.showDropDown();
 
                 return false;
             }
-        });
+        });*/
 
 
         autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -284,24 +284,24 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
             }
         });
 
-        autocompletetv_supplierPhn.setOnTouchListener(new View.OnTouchListener(){
+        /*autocompletetv_supplierPhn.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 autocompletetv_supplierPhn.showDropDown();
                 return false;
             }
         });
+*/
 
 
 
-
-        autocomplete_inw_ItemName.setOnTouchListener(new View.OnTouchListener(){
+        /*autocomplete_inw_ItemName.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 autocomplete_inw_ItemName.showDropDown();
                 return false;
             }
-        });
+        });*/
 
         autocomplete_inw_ItemName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -366,12 +366,17 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             try {
                 SupplierItemLinkageModel link = (SupplierItemLinkageModel)parent.getItemAtPosition(position);
+                autocompletetv_suppliername.setThreshold(1000);
                 autocompletetv_suppliername.setText(link.getSupplierName());
+                autocompletetv_suppliername.setThreshold(1);
+
                 tv_suppliercode.setText(String.valueOf(link.getSupplierCode()));
                 autocompletetv_supplierPhn.setText(link.getSupplierPhone());
                 et_inw_supplierAddress.setText(link.getSupplierAddress());
 
+                autocomplete_inw_ItemName.setThreshold(1000);
                 autocomplete_inw_ItemName.setText(link.getItemName());
+                autocomplete_inw_ItemName.setThreshold(1);
                 tv_menucode.setText(String.valueOf(link.getMenuCode()));
                 et_Inw_AverageRate.setText(String.format("%.2f",link.getAverageRate()));
                 et_inw_HSNCode.setText(link.getHsnCode());

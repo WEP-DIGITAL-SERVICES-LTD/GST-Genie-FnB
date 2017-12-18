@@ -212,6 +212,7 @@
                                             android:imeOptions="actionNext"
                                             android:drawableRight="@drawable/searchicon_img"
                                             android:inputType="text"
+                                            android:completionThreshold="1"
                                             android:textAppearance="?android:attr/textAppearanceMedium" />
                                     </TableRow>
                                     <TableRow
@@ -232,6 +233,7 @@
                                             android:imeOptions="flagNoExtractUi"
                                             android:drawableRight="@drawable/searchicon_img"
                                             android:inputType="text"
+                                            android:completionThreshold="1"
                                             android:textAppearance="?android:attr/textAppearanceMedium" />
                                     </TableRow>
 

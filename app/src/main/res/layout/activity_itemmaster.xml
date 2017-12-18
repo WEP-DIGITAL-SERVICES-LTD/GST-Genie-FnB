@@ -274,6 +274,7 @@
                             android:layout_weight="1"
                             android:hint="Item Barcode"
                             android:inputType="text"
+                            android:completionThreshold="1"
                             android:drawableRight="@drawable/searchicon_img"
                             android:textSize="13dp" />
                     </LinearLayout>

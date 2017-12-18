@@ -334,6 +334,7 @@
                             android:singleLine="true"
                             android:dropDownWidth="600dp"
                             android:imeOptions="actionNext"
+                            android:completionThreshold="1"
                             android:drawableRight="@drawable/searchicon_img" />
 
                     </LinearLayout>

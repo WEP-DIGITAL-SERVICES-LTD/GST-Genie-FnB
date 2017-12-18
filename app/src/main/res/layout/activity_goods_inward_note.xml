@@ -542,6 +542,7 @@
                             android:layout_weight="1"
                             android:singleLine="true"
                             android:dropDownWidth="600dp"
+                            android:completionThreshold="1"
                             android:imeOptions="actionNext"
                             android:drawableRight="@drawable/searchicon_img" />
 

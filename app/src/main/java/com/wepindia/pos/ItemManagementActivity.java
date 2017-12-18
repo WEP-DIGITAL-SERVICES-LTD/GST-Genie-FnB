@@ -264,226 +264,7 @@ public class ItemManagementActivity extends WepBaseActivity  implements  TextWat
                 }
 
             });
-            // Upload Excel data to Database
 
-
-            /*btnUploadExcel.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //startActivityForResult(new Intent(myContext, UploadFilePickerActivity.class), 1);
-                    Intent intent = new Intent(myContext, FilePickerActivity.class);
-                    intent.putExtra("contentType","csv");
-                    startActivityForResult(intent, FilePickerActivity.FILE_PICKER_CODE);
-                }
-            });
-
-            btnSaveExcel.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-
-                    try {
-                        AssetManager manager = myContext.getAssets();
-                        //Environment.getExternalStorageDirectory() + "/stock1.xls";
-                        //InputStream inputStream = getResources().openRawResource(R.raw.itemdb);
-                        if (strUploadFilepath.equalsIgnoreCase("")) {
-                            Toast.makeText(getApplicationContext(), "No File Found", Toast.LENGTH_SHORT).show();
-                        } else {
-                            //tvFileName.setText(strUploadFilepath);
-                            //String path = Environment.getExternalStorageDirectory() + "/itemdb.csv";
-                            String path = strUploadFilepath;
-                            FileInputStream inputStream = new FileInputStream(path);
-                            buffer = new BufferedReader(new InputStreamReader(inputStream));
-                            Cursor cursor = dbItems.getCurrentDate();
-//                            String currentdate = "";
-//                            if(cursor.moveToNext())
-//                                currentdate = cursor.getString(cursor.getColumnIndex("BusinessDate"));
-                            if (dataList.size()>0)
-                            {
-                                final String current_date = businessDate;
-                                AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                                        .setTitle("Replace Item")
-                                        .setMessage(" Are you sure you want to Replace all the existing Items, if any")
-                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                int deleted = dbItems.clearOutwardItemdatabase();
-                                                Log.d("ItemManagement"," Items deleted before uploading excel :"+deleted);
-                                                deleted = dbItems.clearOutwardStock(current_date);
-                                                Log.d("ItemManagement"," Outward Stock deleted before uploading excel :"+deleted);
-                                                new AsyncTask<Void,Void,Void>(){
-                                                    ProgressDialog pd;
-
-                                                    @Override
-                                                    protected void onPreExecute() {
-                                                        super.onPreExecute();
-                                                        pd = new ProgressDialog(ItemManagementActivity.this);
-                                                        pd.setMessage("Loading...");
-                                                        pd.setCancelable(false);
-                                                        pd.show();
-                                                    }
-
-                                                    @Override
-                                                    protected Void doInBackground(Void... params) {
-
-                                                        try {
-                                                            String line = "";
-                                                            int iteration = 0;
-                                                            int i =1;
-                                                            while ((line = buffer.readLine()) != null) {
-                                                                final String[] colums = line.split(",");
-                                                                if (colums.length != 9) {
-                                                                    Log.d("CSVParser", "Skipping Bad CSV Row");
-                                                                    //Toast.makeText(myContext, "Skipping Bad CSV Row", Toast.LENGTH_LONG).show();
-                                                                    continue;
-                                                                }
-                                                                if (iteration == 0) {
-                                                                    iteration++;
-                                                                    continue;
-                                                                }
-
-                                                                ItemOutward item_add = new ItemOutward(i,colums[1].trim(), Double.parseDouble(colums[2].trim()),
-                                                                        Double.parseDouble(colums[3].trim()), Double.parseDouble(colums[4].trim()),Double.parseDouble(colums[5].trim()),
-                                                                        0, 0, 0, "","",i, Double.parseDouble(colums[6].trim()),Double.parseDouble(colums[7].trim()),
-                                                                        Double.parseDouble(colums[6].trim())+ Double.parseDouble(colums[7].trim()),0,
-                                                                        colums[8].trim(), "HSN_"+i,"GST", "G" ,0) ;
-                                                                long lRowId = dbItems.addItem(item_add);
-
-
-                                                                    /*InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
-                                                                        Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
-                                                                        0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                                        2, 0, 0, 0, "", "",0f,0f,"HSN_"+i,
-                                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
-                                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
-                                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-                                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
-            i++;
-        }
-        StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
-        stock_outward.saveOpeningStock_Outward(current_date);
-
-    } catch (Exception exp) {
-        exp.printStackTrace();
-        //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
-    }
-    }
-
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        try{
-            ResetItem();
-            //ClearItemTable();
-            DisplayItemList();
-            Toast.makeText(getApplicationContext(), "Items Imported Successfully", Toast.LENGTH_LONG).show();
-            pd.dismiss();
-        }catch (Exception e){
-            e.printStackTrace();
-            //Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-}.execute();
-
-
-
-        dialog.dismiss();
-        }
-        })
-        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-        //ClearItemTable();
-        DisplayItemList();
-        }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-        }
-        else
-        {
-        new AsyncTask<Void,Void,Void>(){
-        ProgressDialog pd;
-
-@Override
-protected void onPreExecute() {
-        super.onPreExecute();
-        pd = new ProgressDialog(ItemManagementActivity.this);
-        pd.setMessage("Loading...");
-        pd.setCancelable(false);
-        pd.show();
-        }
-
-@Override
-protected Void doInBackground(Void... params) {
-
-        try {
-        String line = "";
-        int iteration = 0;
-        int i = 1;
-
-        while ((line = buffer.readLine()) != null) {
-final String[] colums = line.split(",");
-        if (colums.length != 9) {
-        Log.d("CSVParser", "Skipping Bad CSV Row");
-        //Toast.makeText(myContext, "Skipping Bad CSV Row", Toast.LENGTH_LONG).show();
-        continue;
-        }
-        if (iteration == 0) {
-        iteration++;
-        continue;
-        }
-//                                                InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
-//                                                        Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
-//                                                        0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-//                                                        2, 0, 0, 0, "", "",0f,0f,"HSN_"+i,
-//                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
-//                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
-//                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-//                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
-        ItemOutward item_add = new ItemOutward(i,colums[1].trim(), Double.parseDouble(colums[2].trim()),
-        Double.parseDouble(colums[3].trim()), Double.parseDouble(colums[4].trim()),Double.parseDouble(colums[5].trim()),
-        0, 0, 0, "","",i,Double.parseDouble(colums[6].trim()),
-        Double.parseDouble(colums[7].trim()),Double.parseDouble(colums[6].trim())+ Double.parseDouble(colums[7].trim()),0,
-        colums[8].trim(), "HSN_"+i,"GST", "G",0 ) ;
-        long lRowId = dbItems.addItem(item_add);
-        i++;
-        }
-final String current_date = businessDate;
-        StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
-        stock_outward.saveOpeningStock_Outward(current_date);
-        } catch (Exception exp) {
-        Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
-        exp.printStackTrace();
-        }
-        return null;
-        }
-
-@Override
-protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        try{
-        ResetItem();
-        //ClearItemTable();
-        DisplayItemList();
-        Toast.makeText(myContext, "Items Imported Successfully", Toast.LENGTH_SHORT).show();
-        pd.dismiss();
-        }catch (Exception e){
-        Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
-        e.printStackTrace();
-        }
-
-        }
-        }.execute();
-
-        }
-        }
-        } catch (IOException e) {
-        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        e.printStackTrace();
-        }
-        finally {
-        tvFileName.setText("Select FileName");
-        strUploadFilepath="";
-        }
-        }
-        });*/
 
             SetGSTView();
             DisplayItemList();
@@ -587,13 +368,13 @@ protected void onPostExecute(Void aVoid) {
 
     private  void clickEvent()
     {
-        AutoCompleteItemLongName.setOnTouchListener(new View.OnTouchListener(){
+        /*AutoCompleteItemLongName.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 AutoCompleteItemLongName.showDropDown();
                 return false;
             }
-        });
+        });*/
         AutoCompleteItemLongName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -630,13 +411,13 @@ protected void onPostExecute(Void aVoid) {
             }
         });
 
-        AutoCompleteItemBarcode.setOnTouchListener(new View.OnTouchListener(){
+        /*AutoCompleteItemBarcode.setOnTouchListener(new View.OnTouchListener(){
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 AutoCompleteItemBarcode.showDropDown();
                 return false;
             }
-        });
+        });*/
         AutoCompleteItemBarcode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -1814,10 +1595,14 @@ public void onFocusChange(View v, boolean hasFocus) {
     private void listItemClickEvent(ItemOutward item) {
         edtMenuCode.setText(String.valueOf(item.getMenuCode()));
         txtLongName.setText(item.getItemName());
+        AutoCompleteItemLongName.setThreshold(1000);
+        AutoCompleteItemBarcode.setThreshold(1000);
         AutoCompleteItemLongName.setText(item.getItemName());
         itemName_beforeChange_in_update = item.getItemName();
         itembarCode_beforeChange_in_update = item.getBarCode();
         AutoCompleteItemBarcode.setText(item.getBarCode());
+        AutoCompleteItemLongName.setThreshold(1);
+        AutoCompleteItemBarcode.setThreshold(1);
         txtDineIn1.setText(String.format("%.2f",item.getDineIn1()));
         txtDineIn2.setText(String.format("%.2f",item.getDineIn2()));
         txtDineIn3.setText(String.format("%.2f",item.getDineIn3()));
@@ -2726,7 +2511,10 @@ public void onFocusChange(View v, boolean hasFocus) {
         Log.d("Item", "Row Id:" + String.valueOf(lRowId));
     }
 
-    private void ReadData(int Type) {
+    private long ReadData(int Type) {
+
+        long lRowId =0;
+
         String strMenuCode = "", strLongName = "", strShortName = "", strBarcode = "";
         int iDeptCode = 0, iCategCode = 0, iKitchenCode = 0, iSalesTaxId = 0, iAdditionalTaxId = 0, iOptionalTaxId1 = 0,
                 iOptionalTaxId2 = 0, iDiscountId = 0, iPriceChange = 0, iDiscountEnable = 0, iBillWithStock = 0,iTaxType = 0;
@@ -2801,7 +2589,7 @@ public void onFocusChange(View v, boolean hasFocus) {
                 ItemOutward item_add = new ItemOutward(iMenuCode,strLongName, fDineIn1, fDineIn2,fDineIn3,fStock,
                         iDeptCode,iCategCode,iKitchenCode, strBarcode,strImageUri,iMenuCode, fCGSTTax,fSGSTTax,fIGSTTax,fcessTax,
                         MOU_str, hsnCode,taxationtype_str, g_s ,itemDiscount) ;
-                long lRowId = dbItems.addItem(item_add);
+                lRowId = dbItems.addItem(item_add);
                 if (lRowId>0)
                 {
                     Log.d("Item Management : ", strLongName+" added sucessfully at Row Id:" + String.valueOf(lRowId));
@@ -2826,15 +2614,15 @@ public void onFocusChange(View v, boolean hasFocus) {
             }
             else if (Type == 2)
             {
-                int iRowId = dbItems.updateItem(Integer.parseInt(edtMenuCode.getText().toString()), strLongName, strShortName, strBarcode,
+                lRowId = dbItems.updateItem(Integer.parseInt(edtMenuCode.getText().toString()), strLongName, strShortName, strBarcode,
                         iDeptCode, iCategCode, iKitchenCode, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
                         iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId, fStock, iPriceChange,
                         iDiscountEnable, iBillWithStock, strImageUri, iTaxType, frate, hsnCode, g_s, MOU_str,
                         taxationtype_str, fIGSTTax, fCGSTTax, fSGSTTax,fcessTax,
                         fSalesTax, fServiceTax, Integer.valueOf(strItemId), itemDiscount);
-                if (iRowId > 0)
+                if (lRowId > 0)
                 {
-                    Log.d("Item Management : ", "Updated Rows: " + String.valueOf(iRowId));
+                    Log.d("Item Management : ", "Updated Rows: " + String.valueOf(lRowId));
                     // updating outwardStock table
                     double rate =0;
                     if(Double.parseDouble(txtDineIn1.getText().toString()) >0)
@@ -2862,6 +2650,7 @@ public void onFocusChange(View v, boolean hasFocus) {
             ResetItem();
             Toast.makeText(myContext, " Negative Values not allowed for GST Tax and Quantity", Toast.LENGTH_SHORT).show();
         }
+        return lRowId;
     }
 
 
@@ -3105,7 +2894,7 @@ public void onFocusChange(View v, boolean hasFocus) {
 
         new AsyncTask<Void,Void,Void>(){
             ProgressDialog pd;
-
+            long lRowId=0;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -3118,8 +2907,10 @@ public void onFocusChange(View v, boolean hasFocus) {
             @Override
             protected Void doInBackground(Void... params) {
 
+                lRowId=0;
                 try {
-                    ReadData(1); // 2 - updateItem
+                    lRowId = ReadData(1);
+                    lRowId ++;// 2 - updateItem
                     //ResetItem();
                     //ClearItemTable();
                     //DisplayItems();
@@ -3130,14 +2921,20 @@ public void onFocusChange(View v, boolean hasFocus) {
                 return null;
             }
 
+
+
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 try{
+                    if (lRowId > 0) {
+                        Toast.makeText(myContext, AutoCompleteItemLongName.getText().toString().toUpperCase()+" added successfully", Toast.LENGTH_SHORT).show();
+                    }
                     ResetItem();
                     loadAutoCompleteData_ItemNames();
                     //ClearItemTable();
                     DisplayItemList();
+
                     //Toast.makeText(myContext, "Item Added Successfully", Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }catch (Exception e){
@@ -3285,7 +3082,7 @@ public void onFocusChange(View v, boolean hasFocus) {
 
             new AsyncTask<Void, Void, Void>() {
                 ProgressDialog pd;
-
+                long lRowId =0;
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
@@ -3298,8 +3095,9 @@ public void onFocusChange(View v, boolean hasFocus) {
                 @Override
                 protected Void doInBackground(Void... params) {
 
+                    lRowId =0;
                     try {
-                        ReadData(2); // 2 - updateItem
+                        lRowId = ReadData(2); // 2 - updateItem
                         //ResetItem();
 //                    ClearItemTable();
 //                    DisplayItems();
@@ -3310,15 +3108,19 @@ public void onFocusChange(View v, boolean hasFocus) {
                     return null;
                 }
 
+
                 @Override
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
                     try {
+                        if(lRowId>0)
+                        {
+                            Toast.makeText(myContext, AutoCompleteItemLongName.getText().toString().toUpperCase()+" updated Successfully", Toast.LENGTH_LONG).show();
+                        }
                         ResetItem();
                         loadAutoCompleteData_ItemNames();
                         //ClearItemTable();
                         DisplayItemList();
-                        Toast.makeText(myContext, "Item Updated Successfully", Toast.LENGTH_LONG).show();
                         pd.dismiss();
 
                     } catch (Exception e) {
