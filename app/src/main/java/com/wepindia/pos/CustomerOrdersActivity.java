@@ -679,7 +679,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 						.setIcon((R.drawable.ic_launcher))
 						.setMessage(" Paid Order cannot be modified. Do you want to print bill")
 						.setNegativeButton("Cancel",null)
-						.setNeutralButton("Finish", new DialogInterface.OnClickListener() {
+						/*.setNeutralButton("Finish", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
@@ -697,7 +697,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 								setResult(RESULT_OK, intentBillScreen);
 								finish();
 							}
-						})
+						})*/
 						.setPositiveButton("Print", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
@@ -779,7 +779,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 							.setIcon((R.drawable.ic_launcher))
 							.setMessage(" Bill is already paid. Do you want to go back and print it")
 							.setNegativeButton("Cancel",null)
-							.setNeutralButton("Finish", new DialogInterface.OnClickListener() {
+							/*.setNeutralButton("Finish", new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
@@ -797,7 +797,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 									setResult(RESULT_OK, intentBillScreen);
 									finish();
 								}
-							})
+							})*/
 							.setPositiveButton("Print", new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
