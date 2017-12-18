@@ -279,6 +279,7 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:ems="5"
+                    android:maxLength="10"
                     android:hint="Search Mobile No"
                     android:inputType="number" />
 

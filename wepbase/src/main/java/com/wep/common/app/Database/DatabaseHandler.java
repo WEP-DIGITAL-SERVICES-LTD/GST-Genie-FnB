@@ -2884,6 +2884,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Cursor getBillSetting() {
         return dbFNB.query(TBL_BILLSETTING, new String[]{"*"}, null, null, null, null, null);
     }
+    public int getMaxTables() {
+        Cursor crsrBillSetting = dbFNB.query(TBL_BILLSETTING, new String[]{KEY_MaximumTables}, null, null, null, null, null);
+        int maxTables  =0;
+        if (crsrBillSetting !=null && crsrBillSetting.moveToFirst())
+        {
+            maxTables = crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("MaximumTables"));
+        }
+        return maxTables;
+    }
 
     // -----Retrieve Business Date-----
     public Cursor getCurrentDate() {
@@ -4143,6 +4152,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.delete(TBL_CUSTOMER, "CustId=" + CustId, null);
     }
 
+    public int DeleteAllCustomer() {
+
+        return dbFNB.delete(TBL_CUSTOMER,null, null);
+    }
+
     /************************************************************************************************************************************/
     /*******************************************************
      * Table - Employee
@@ -4776,6 +4790,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    public long updateKOTDineIn(int tblno, int tblsplitno,int ItemNo, float Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode
+            ,float IAmt, double cessAmt, double taxableValue, double discountAmt) {
+        cvDbValues = new ContentValues();
+        cvDbValues.put("Quantity", Qty);
+        cvDbValues.put("Amount", Amount);
+        cvDbValues.put("TaxAmount", TaxAmt);
+        cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
+        cvDbValues.put(KEY_DiscountAmount, discountAmt);
+        cvDbValues.put(KEY_IGSTAmount, IAmt);
+        cvDbValues.put(KEY_cessAmount, cessAmt);
+        cvDbValues.put(KEY_TaxableValue, taxableValue);
+        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode + " AND TableNumber=" + tblno + " AND TableSplitNo=" + tblsplitno, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+    }
+    public long updateKOT(int ItemNo, float Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode
+            ,float IAmt, double cessAmt, double taxableValue) {
+        cvDbValues = new ContentValues();
+        cvDbValues.put("Quantity", Qty);
+        cvDbValues.put("Amount", Amount);
+        cvDbValues.put("TaxAmount", TaxAmt);
+        cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
+        cvDbValues.put(KEY_IGSTAmount, IAmt);
+        cvDbValues.put(KEY_cessAmount, cessAmt);
+        cvDbValues.put(KEY_TaxableValue, taxableValue);
+        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode , null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+    }
+
     public long updateKOT(int ItemNo, float Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode, int PrintKOTStatus
             ,float IAmt, double cessAmt, double taxableValue) {
         cvDbValues = new ContentValues();
@@ -4788,6 +4828,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_TaxableValue, taxableValue);
         return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
     }
+
 
     public long updateKOT_new(int ItemNo, float Qty, double Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
             ,float IAmt, float cessAmt) {
@@ -4831,6 +4872,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    /*public Cursor getItemsForUpdatingKOT(int TableNo, int SubUdfNo, int TableSplitNo, int ItemNo, int OrderMode, int PrintStatus) {
+//        int PrintStatus = 0;
+        return dbFNB.query(TBL_PENDINGKOT, new String[]{"*"},
+                "TableNumber=" + TableNo + " AND SubUdfNumber=" + SubUdfNo + " AND TableSplitNo=" + TableSplitNo +
+                        " AND ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode + " AND PrintKOTStatus = " + PrintStatus
+                , null, null, null, null);
+    }*/
     public Cursor getItemsForUpdatingKOT(int TableNo, int SubUdfNo, int TableSplitNo, int ItemNo, int OrderMode) {
         int PrintStatus = 0;
         return dbFNB.query(TBL_PENDINGKOT, new String[]{"*"},
@@ -4855,6 +4903,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         finally {
             return cursor;
         }
+    }
+    // -----Retrieve KOT numbers for reprinting-----
+    public Cursor getKOTNumbers(int TableNumber, int TableSplitNo) {
+        String qq ="SELECT DISTINCT(TokenNumber) as TokenNumber FROM PendingKOT WHERE "+ "TableNumber=" + TableNumber + " AND TableSplitNo=" + TableSplitNo;
+        //int KOTNo = -1;
+        //return dbFNB.query(TBL_PENDINGKOT, new String[]{KEY_TokenNumber},"TableNumber=" + TableNumber + " AND TableSplitNo=" + TableSplitNo, null, null, null, null, null);
+        return dbFNB.rawQuery(qq, null);
+    }
+    // -----Retrieve KOT numbers for reprinting-----
+    public int getMaxKOTNoForTablePendingKot(int TableNumber, int TableSplitNo) {
+        String qq ="SELECT MAX(TokenNumber) as TokenNumber FROM PendingKOT WHERE "+ "TableNumber=" + TableNumber + " AND TableSplitNo=" + TableSplitNo;
+        int KOTNo = -1;
+        Cursor cursor = dbFNB.query(TBL_PENDINGKOT, new String[]{KEY_TokenNumber},
+                "TableNumber=" + TableNumber + " AND TableSplitNo=" + TableSplitNo, null, null, null, null, null);
+
+        cursor = dbFNB.rawQuery(qq, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            KOTNo = cursor.getInt(cursor.getColumnIndex(KEY_TokenNumber));
+        }
+        return KOTNo;
+    }
+    public Cursor getKOTNumberslast(int TableNumber, int TableSplitNo) {
+        return dbFNB.query(TBL_PENDINGKOT, new String[]{KEY_TokenNumber},
+                "TableNumber=" + TableNumber + " AND TableSplitNo=" + TableSplitNo +" AND PrintKOTStatus = 1 ", null, null, null, null, null);
+    }
+
+    // -----Retrieve KOT items for billing from Pending KOT table-----
+    public Cursor getKOTItemsForReprint(int TableNumber, int TableSplitNo, int KOTNo) {
+        return dbFNB.query(TBL_PENDINGKOT, new String[]{"*"},
+                "TableNumber=" + TableNumber + " AND TableSplitNo=" + TableSplitNo+ " AND TokenNumber=" + KOTNo, null, null, null, null);
     }
 
     // -----Retrieve KOT items for billing from Pending KOT table-----
@@ -5010,9 +5089,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // -----Delete finalized KOT items from Pending KOT table by Token Number-----
-    public int deleteKOTItemsByItemToken(String ItemNumber, int TokenNumber, int SubUdfNumber) {
+    public int deleteKOTItemsByItemToken(String ItemNumber, int TokenNumber, int TableNumber) {
 
-        return dbFNB.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
+        return dbFNB.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND TableNumber=" + TableNumber, null);
     }
     public int deleteKOTItemsByItemToken_new(String ItemNumber, int TokenNumber, int SubUdfNumber) {
 
@@ -5768,7 +5847,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.insert(TBL_PREVIEWBILLITEM, null, cvDbValues);
     }
 
+    public Cursor getPreviewBillItem() {
 
+        String query = "SELECT * FROM "+TBL_PREVIEWBILLITEM;
+        Cursor cursor = dbFNB.rawQuery(query,null);
+        return cursor;
+    }
     // -----Insert Bill Items-----
     public long addBillItem_inward(BillItem objBillItem) {
         cvDbValues = new ContentValues();
@@ -9035,6 +9119,20 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
 
     }
 
+    public Cursor getItemsForcessTaxPreviewPrints(int InvoiceNo, String InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("Select SUM(cessAmount) as cessAmount, cessRate from " + TBL_PREVIEWBILLITEM +
+                    " where InvoiceNo = '" + InvoiceNo + "' AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"' GROUP BY cessRate", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
     /*public Cursor getItemsForSGSTTaxPrint(int InvoiceNo) {
 
         Cursor cursor = null;
@@ -9140,7 +9238,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put("Time", objBillDetail.getTime());
             cvDbValues.put(KEY_GSTIN, gstin);
             cvDbValues.put(KEY_InvoiceDate, objBillDetail.getDate());
-            cvDbValues.put(KEY_GrandTotal, objBillDetail.getBillAmount());
+            cvDbValues.put(KEY_GrandTotal, objBillDetail.getdBillAmount());
             cvDbValues.put("TotalItems", objBillDetail.getTotalItems());
             cvDbValues.put("BillAmount", objBillDetail.getdBillAmount());
             cvDbValues.put("TotalDiscountAmount", objBillDetail.getTotalDiscountAmount());

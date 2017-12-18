@@ -33,6 +33,7 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.RecyclerDirectory.TableBookingAdapter;
 import com.wepindia.pos.RecyclerDirectory.TableBookingResponse;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +47,8 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
 
     // Context object
     Context myContext;
+
+    String tempStrCustomerName, tempStrTimeBooking, tempStrMobileNo, tempStrTableNo;
 
     // DatabaseHandler object
     DatabaseHandler dbTableBooking = new DatabaseHandler(TableBookingActivity.this);
@@ -189,6 +192,8 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
                             strTimeBooking = hourOfDay + ":" + mins_str;
                             linear_table.setVisibility(View.VISIBLE);
                             tvMobileNo.setVisibility(View.VISIBLE);
+                            if (tvMobileNo.getText().toString().equals(""))
+                                tvMobileNo.setEnabled(true);
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -402,6 +407,11 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
 
     private void ClearTableBooking() {
 
+        tempStrCustomerName = "";
+        tempStrMobileNo = "";
+        tempStrTableNo = "";
+        tempStrTimeBooking = "";
+
         for (int i = 1; i < tblTableBooking.getChildCount(); i++) {
             View Row = tblTableBooking.getChildAt(i);
             if (Row instanceof TableRow) {
@@ -416,6 +426,12 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
         tvTableNo.setText("");
         tvMobileNo.setText("");
         tvSearchMobileNo.setText("");
+
+        tempStrCustomerName = "";
+        tempStrMobileNo = "";
+        tempStrTableNo = "";
+        tempStrTimeBooking = "";
+
         btnAddTB.setEnabled(true);
         btnSaveTB.setEnabled(false);
         iTBookId =0;
@@ -436,79 +452,85 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
                 MsgBox.Show("Warning", "Please Select Table for Booking");
             } else if (tvMobileNo.getText().toString().equalsIgnoreCase("")) {
                 MsgBox.Show("Warning", "Please Enter Mobile No for Booking");
+            } else if (tvMobileNo.getText().toString().length()!= 10) {
+                MsgBox.Show("Warning", "Please fill 10 digit customer phone number");
             } else {
-                try {
+
+                Cursor crsrCust = dbTableBooking.getTableBookingByMobile(tvMobileNo.getText().toString());
+                if (crsrCust.moveToFirst()) {
+                    MsgBox.Show("Note", "Customer has already booked a table. Please use a different mobile number for booking.");
+                } else {
+                    try {
+                        final String strCustomerName = tvCustomerName.getText().toString();
+                        final String strTimeBooking = tvTimeBooking.getText().toString();
+                        final String strMobileNo = tvMobileNo.getText().toString();
+                        final int iTableNo = Integer.valueOf(tvTableNo.getText().toString());
+                        int iTBookId;
+
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+                        calendar.setTime(sdf.parse(strTimeBooking));
+                        calendar.add(Calendar.MINUTE, -15);
+                        Date previous_time = calendar.getTime();
+
+                        calendar.setTime(sdf.parse(strTimeBooking));
+                        calendar.add(Calendar.MINUTE, 15);
+                        Date next_time = calendar.getTime();
+                        long millis = previous_time.getTime();
+
+                        // Create an instance of SimpleDateFormat used for formatting
+                        // the string representation of date (month/day/year)
+                        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+
+                        // Get the date today using Calendar object.
+                        Date today = Calendar.getInstance().getTime();
+                        // Using DateFormat format method we can create a string
+                        // representation of a date with the defined format.
+                        String strTimeBookingStart = df.format(previous_time);
+                        String strTimeBookingEnd = df.format(next_time);
 
 
-                    final String strCustomerName = tvCustomerName.getText().toString();
-                    final String strTimeBooking = tvTimeBooking.getText().toString();
-                    final String strMobileNo = tvMobileNo.getText().toString();
-                    final int iTableNo = Integer.valueOf(tvTableNo.getText().toString());
-                    int iTBookId;
-
-                    Calendar calendar = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
-                    calendar.setTime(sdf.parse(strTimeBooking));
-                    calendar.add(Calendar.MINUTE, -15);
-                    Date previous_time = calendar.getTime();
-
-                    calendar.setTime(sdf.parse(strTimeBooking));
-                    calendar.add(Calendar.MINUTE, 15);
-                    Date next_time = calendar.getTime();
-                    long millis = previous_time.getTime();
-
-                    // Create an instance of SimpleDateFormat used for formatting
-                    // the string representation of date (month/day/year)
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-
-                    // Get the date today using Calendar object.
-                    Date today = Calendar.getInstance().getTime();
-                    // Using DateFormat format method we can create a string
-                    // representation of a date with the defined format.
-                    String strTimeBookingStart = df.format(previous_time);
-                    String strTimeBookingEnd = df.format(next_time);
-
-
-                    Cursor crsr = dbTableBooking.checkBookingStatus(iTableNo, strTimeBookingStart, strTimeBookingEnd);
-                    if (crsr != null && crsr.moveToFirst()) {
-                        String timeBookedAt = "";
-                        do {
-                            timeBookedAt += crsr.getString(crsr.getColumnIndex("TimeForBooking")) + ", ";
-                        } while (crsr.moveToNext());
-                        //String timeBookedAt = crsr.getString(crsr.getColumnIndex("TimeForBooking"));
-                        String msg = " Table " + iTableNo + " is already booked for " + timeBookedAt + " Do you still want to book it ";
-                        MsgBox.setMessage(msg)
-                                .setTitle("Note")
-                                .setIcon(R.drawable.ic_launcher)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        int iTBookId = dbTableBooking.getTableBookingId();
-                                        iTBookId++;
-                                        Log.d("Insert TableBooking", "Table Booking Id: " + String.valueOf(iTBookId));
-                                        InsertTableBooking(iTBookId, strCustomerName, strTimeBooking, strMobileNo, iTableNo);
-                                        ResetTableBooking();
-                                        //    ClearTableBooking();
-                                        mTableBookingList.clear();
-                                        DisplayTableBooking();
-                                    }
-                                })
-                                .setNegativeButton("No", null)
-                                .show();
-                    } else {
-                        //  table not booked
-                        iTBookId = dbTableBooking.getTableBookingId();
-                        iTBookId++;
-                        Log.d("Insert TableBooking", "Table Booking Id: " + String.valueOf(iTBookId));
-                        InsertTableBooking(iTBookId, strCustomerName, strTimeBooking, strMobileNo, iTableNo);
-                        ResetTableBooking();
-                        //     ClearTableBooking();
-                        mTableBookingList.clear();
-                        DisplayTableBooking();
+                        Cursor crsr = dbTableBooking.checkBookingStatus(iTableNo, strTimeBookingStart, strTimeBookingEnd);
+                        if (crsr != null && crsr.moveToFirst()) {
+                            String timeBookedAt = "";
+                            do {
+                                timeBookedAt += crsr.getString(crsr.getColumnIndex("TimeForBooking")) + ", ";
+                            } while (crsr.moveToNext());
+                            //String timeBookedAt = crsr.getString(crsr.getColumnIndex("TimeForBooking"));
+                            String msg = " Table " + iTableNo + " is already booked for " + timeBookedAt + " Do you still want to book it ";
+                            MsgBox.setMessage(msg)
+                                    .setTitle("Note")
+                                    .setIcon(R.drawable.ic_launcher)
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            int iTBookId = dbTableBooking.getTableBookingId();
+                                            iTBookId++;
+                                            Log.d("Insert TableBooking", "Table Booking Id: " + String.valueOf(iTBookId));
+                                            InsertTableBooking(iTBookId, strCustomerName, strTimeBooking, strMobileNo, iTableNo);
+                                            ResetTableBooking();
+                                            //    ClearTableBooking();
+                                            mTableBookingList.clear();
+                                            DisplayTableBooking();
+                                        }
+                                    })
+                                    .setNegativeButton("No", null)
+                                    .show();
+                        } else {
+                            //  table not booked
+                            iTBookId = dbTableBooking.getTableBookingId();
+                            iTBookId++;
+                            Log.d("Insert TableBooking", "Table Booking Id: " + String.valueOf(iTBookId));
+                            InsertTableBooking(iTBookId, strCustomerName, strTimeBooking, strMobileNo, iTableNo);
+                            ResetTableBooking();
+                            //     ClearTableBooking();
+                            mTableBookingList.clear();
+                            DisplayTableBooking();
+                        }
+                    } catch (Exception ex) {
+                        Toast.makeText(myContext, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("Table Booking :", ex.getMessage());
                     }
-                } catch (Exception ex) {
-                    Toast.makeText(myContext, ex.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.d("Table Booking :", ex.getMessage());
                 }
             }
         } catch (Exception ex) {
@@ -518,33 +540,145 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
     }
 
     public void SaveTableBooking(View v) {
-        if (tvCustomerName.getText().toString().equalsIgnoreCase("")) {
-            MsgBox.Show("Warning", "Please Enter CustomerName before Booking");
-        } else if (tvTimeBooking.getText().toString().equalsIgnoreCase("")) {
-            MsgBox.Show("Warning", "Please Select Time for Booking");
-        } else if (tvTableNo.getText().toString().equalsIgnoreCase("")) {
-            MsgBox.Show("Warning", "Please Select Table for Booking");
-        } else if (tvMobileNo.getText().toString().equalsIgnoreCase("")) {
-            MsgBox.Show("Warning", "Please Enter Mobile No for Booking");
-        } else {
-            strCustomerName = tvCustomerName.getText().toString();
-            strTimeBooking = tvTimeBooking.getText().toString();
-            strMobileNo = tvMobileNo.getText().toString();
-            iTableNo = Integer.parseInt(tvTableNo.getText().toString());
-            //TableBookingResponse cc = (TableBookingResponse)v;
-            Log.d("TableBooking Selection", "Code: " + iTBookId + " Name: " + strCustomerName);
 
-            int iResult = dbTableBooking.updateTableBooking(iTBookId, strCustomerName, strTimeBooking, iTableNo,
-                    strMobileNo);
-            Log.d("updateDept", "Updated Rows: " + String.valueOf(iResult));
-            ResetTableBooking();
-            if (iResult > 0) {
-                //    ClearTableBooking();
-                mTableBookingList.clear();
-                DisplayTableBooking();
+        try {
+
+            if (tvCustomerName.getText().toString().equalsIgnoreCase("")) {
+                MsgBox.Show("Warning", "Please Enter CustomerName before Booking");
+            } else if (tvTimeBooking.getText().toString().equalsIgnoreCase("")) {
+                MsgBox.Show("Warning", "Please Select Time for Booking");
+            } else if (tvTableNo.getText().toString().equalsIgnoreCase("")) {
+                MsgBox.Show("Warning", "Please Select Table for Booking");
+            } else if (tvMobileNo.getText().toString().equalsIgnoreCase("")) {
+                MsgBox.Show("Warning", "Please Enter Mobile No for Booking");
+            } else if (tvMobileNo.getText().toString().length()!= 10) {
+                MsgBox.Show("Warning", "Please fill 10 digit customer phone number");
             } else {
-                MsgBox.Show("Warning", "Update failed");
+
+                strCustomerName = tvCustomerName.getText().toString();
+                strTimeBooking = tvTimeBooking.getText().toString();
+                strMobileNo = tvMobileNo.getText().toString();
+                strTableNo = tvTableNo.getText().toString();
+                iTableNo = Integer.parseInt(tvTableNo.getText().toString());
+
+                if (strCustomerName.equals(tempStrCustomerName)
+                        && strTimeBooking.equals(tempStrTimeBooking)
+                        && strMobileNo.equals(tempStrMobileNo)
+                        && strTableNo.equals(tempStrTableNo)) {
+
+                    ResetTableBooking();
+
+                } else {
+
+                    Cursor crsrCust = dbTableBooking.getTableBookingByMobile(tvMobileNo.getText().toString());
+                    if (crsrCust.moveToFirst()) {
+                        if (!strCustomerName.equals(crsrCust.getString(crsrCust.getColumnIndex("CustName")))) {
+                            MsgBox.Show("Note", "Customer has already booked a table. Please use a different mobile number for booking.");
+                            return;
+                        }
+                    }
+//                    else {
+
+                    //TableBookingResponse cc = (TableBookingResponse)v;
+                    Log.d("TableBooking Selection", "Code: " + iTBookId + " Name: " + strCustomerName);
+
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+
+                    calendar.setTime(sdf.parse(strTimeBooking));
+                    calendar.add(Calendar.MINUTE, -15);
+                    Date previous_time = calendar.getTime();
+
+                    calendar.setTime(sdf.parse(strTimeBooking));
+                    calendar.add(Calendar.MINUTE, 15);
+                    Date next_time = calendar.getTime();
+
+                    // Create an instance of SimpleDateFormat used for formatting
+                    // the string representation of date (month/day/year)
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+
+                    // Using DateFormat format method we can create a string
+                    // representation of a date with the defined format.
+                    String strTimeBookingStart = df.format(previous_time);
+                    String strTimeBookingEnd = df.format(next_time);
+
+                    Cursor crsr = dbTableBooking.checkBookingStatus(iTableNo, strTimeBookingStart, strTimeBookingEnd);
+
+                    if (crsr != null && crsr.moveToFirst()) {
+                        String timeBookedAt = "";
+                        do {
+
+                            if (!strMobileNo.equals(crsr.getString(crsr.getColumnIndex("MobileNo")))
+                                    && strTableNo.equals(crsr.getString(crsr.getColumnIndex("TableNo")))) {
+
+                                timeBookedAt += crsr.getString(crsr.getColumnIndex("TimeForBooking")) + ", ";
+
+                            }
+
+                        } while (crsr.moveToNext());
+                        //String timeBookedAt = crsr.getString(crsr.getColumnIndex("TimeForBooking"));
+                        String msg = " Table " + iTableNo + " is already booked for " + timeBookedAt + " Do you still want to book it ";
+                        if (!timeBookedAt.equals(""))
+                            MsgBox.setMessage(msg)
+                                    .setTitle("Note")
+                                    .setIcon(R.drawable.ic_launcher)
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //                                    int iTBookId = dbTableBooking.getTableBookingId();
+                                            //                                    iTBookId++;
+                                            Log.d("Insert TableBooking", "Table Booking Id: " + String.valueOf(iTBookId));
+                                            int iResult = dbTableBooking.updateTableBooking(iTBookId, strCustomerName, strTimeBooking, iTableNo,
+                                                    strMobileNo);
+                                            ResetTableBooking();
+                                            //    ClearTableBooking();
+                                            if (iResult > 0) {
+                                                //    ClearTableBooking();
+                                                mTableBookingList.clear();
+                                                DisplayTableBooking();
+                                            } else {
+                                                MsgBox.Show("Warning", "Update failed");
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton("No", null)
+                                    .show();
+                        else {
+                            int iResult = dbTableBooking.updateTableBooking(iTBookId, strCustomerName, strTimeBooking, iTableNo,
+                                    strMobileNo);
+                            ResetTableBooking();
+                            //    ClearTableBooking();
+                            if (iResult > 0) {
+                                //    ClearTableBooking();
+                                mTableBookingList.clear();
+                                DisplayTableBooking();
+                            } else {
+                                MsgBox.Show("Warning", "Update failed");
+                            }
+                        }
+
+
+                    } else {
+                        //  table not booked
+                        int iResult = dbTableBooking.updateTableBooking(iTBookId, strCustomerName, strTimeBooking, iTableNo,
+                                strMobileNo);
+                        Log.d("updateDept", "Updated Rows: " + String.valueOf(iResult));
+                        ResetTableBooking();
+
+                        if (iResult > 0) {
+                            //    ClearTableBooking();
+                            mTableBookingList.clear();
+                            DisplayTableBooking();
+                        } else {
+                            MsgBox.Show("Warning", "Update failed");
+                        }
+                    }
+//                    }
+                }
             }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
@@ -571,7 +705,10 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
     public void DisplayTBookingByMobileNoTest() {
         if (tvSearchMobileNo.getText().toString().equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Please fill MobileNo for Search");
-        } else {
+        } else if (tvSearchMobileNo.getText().toString().length()<10) {
+            MsgBox.Show("Warning", "Please enter 10 digit mobile no");
+
+        } else{
             Cursor crsrTBooking;
             crsrTBooking = dbTableBooking.getTableBookingByMobile(tvSearchMobileNo.getText().toString());
 
@@ -590,6 +727,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
 
                     i++;
                 } while (crsrTBooking.moveToNext());
+                hideKeyboard();
             } else {
                 MsgBox.Show("Warning", "Table Booking not found");
                 Log.d("Display Table Booking", "No Table Booking found");
@@ -637,18 +775,27 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
     @Override
     public void onItemClick(int position, View v) {
 
-        Log.d("position", " hi" + position);
+        //Log.d("position", " hi" + position);
+        strTimeBooking = mTableBookingList.get(position).getTimeBooking();
         tvCustomerName.setText(mTableBookingList.get(position).getCustomerName());
         tvTimeBooking.setText(mTableBookingList.get(position).getTimeBooking());
         tvTableNo.setText("" + mTableBookingList.get(position).getTableNo());
         tvMobileNo.setText(mTableBookingList.get(position).getMobileNo());
         iTBookId = (mTableBookingList.get(position).getiTBookId());
+
+        tempStrCustomerName = tvCustomerName.getText().toString().trim();
+        tempStrTimeBooking = tvTimeBooking.getText().toString().trim();
+        tempStrMobileNo = tvMobileNo.getText().toString().trim();
+        tempStrTableNo = tvTableNo.getText().toString().trim();
+
+
         btnAddTB.setEnabled(false);
         btnSaveTB.setEnabled(true);
         //btnAddTB.setTextColor(Color.GRAY);
         //btnSaveTB.setTextColor(Color.BLACK);
         linear_table.setVisibility(View.VISIBLE);
         tvMobileNo.setVisibility(View.VISIBLE);
+        tvMobileNo.setEnabled(false);
 
     }
 
