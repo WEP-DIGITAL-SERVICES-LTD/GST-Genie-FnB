@@ -603,6 +603,12 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
             return;
         }
 
+        if(strRate1 == null  || strRate1.equals(""))
+            strRate1 = "0.00";
+        if(strRate2 == null  || strRate2.equals(""))
+            strRate2 = "0.00";
+        if(strRate3 == null  || strRate3.equals(""))
+            strRate3 = "0.00";
         float newStock = Float.parseFloat(String.format("%.2f",Float.parseFloat(strNewStock)));
 
         UpdateItemStock(Integer.parseInt(strMenuCode), (Float.parseFloat(strExistingStock) + newStock),

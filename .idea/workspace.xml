@@ -21,7 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,14 +107,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomerDetailActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CustomerDetailActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="214" column="36" selection-start-line="214" selection-start-column="36" selection-end-line="214" selection-end-column="36" />
+            <state relative-caret-position="371">
+              <caret line="220" column="44" selection-start-line="220" selection-start-column="44" selection-end-line="220" selection-end-column="44" />
               <folding>
                 <element signature="e#45135#45143#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StockActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="520" column="34" selection-start-line="520" selection-start-column="34" selection-end-line="520" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -6477,7 +6487,6 @@
         <option value="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardStockActivity.java" />
@@ -6497,6 +6506,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardItemActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" />
       </list>
     </option>
   </component>
@@ -7154,13 +7164,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00131" summary="image adapter issue in DineIn">
-      <created>1506576326061</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1506576326061</updated>
-    </task>
     <task id="LOCAL-00132" summary="Pettycash amount coming wrong for large values.">
       <created>1506580955886</created>
       <option name="number" value="00132" />
@@ -7497,7 +7500,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513605249782</updated>
     </task>
-    <option name="localTasksCounter" value="180" />
+    <task id="LOCAL-00180" summary="formatting error message">
+      <created>1513607234233</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1513607234233</updated>
+    </task>
+    <option name="localTasksCounter" value="181" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7616,7 +7626,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="stock not allowed to update if bill was made for that day in ItemManagement" />
     <MESSAGE value="issue in department and category report for quantity in decimal" />
     <MESSAGE value=" issue - reading from outward item csv file , sometimes takes space as special character.&#10; rectifying same in inward item csv read also" />
     <MESSAGE value=" screen blacks out upon opening the pdf, when pdf reader is not installed in tablet" />
@@ -7641,7 +7650,8 @@
     <MESSAGE value="Bug 594 - User is unable to delete multiple customers at once in 'Customers' page via 'Masters'" />
     <MESSAGE value="Bug 551 - Numbers List Should get automatically updated after deleting the Roles mentioned in the List" />
     <MESSAGE value="Bug 707 - Application is getting crashed after tapping on update button in Customer Master Module&#10;Bug 695 - An error pop-up flashes on uploading sample CSV generated in 'Inward Items Master' via 'Masters'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug 707 - Application is getting crashed after tapping on update button in Customer Master Module&#10;Bug 695 - An error pop-up flashes on uploading sample CSV generated in 'Inward Items Master' via 'Masters'" />
+    <MESSAGE value="formatting error message" />
+    <option name="LAST_COMMIT_MESSAGE" value="formatting error message" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7840,7 +7850,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java</url>
-          <line>1014</line>
+          <line>1020</line>
           <properties />
           <option name="timeStamp" value="689" />
         </line-breakpoint>
@@ -8170,39 +8180,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="102" column="42" selection-start-line="102" selection-start-column="42" selection-end-line="102" selection-end-column="42" />
-          <folding>
-            <element signature="e#9141#10591#0" expanded="true" />
-            <element signature="e#10590#10591#0" expanded="true" />
-            <element signature="e#10947#11164#0" expanded="true" />
-            <element signature="e#11163#11164#0" expanded="true" />
-            <element signature="e#13783#14286#0" expanded="true" />
-            <element signature="e#14285#14286#0" expanded="true" />
-            <element signature="e#14344#14689#0" expanded="true" />
-            <element signature="e#14688#14689#0" expanded="true" />
-            <element signature="e#14872#14873#0" expanded="true" />
-            <element signature="e#14924#14925#0" expanded="true" />
-            <element signature="e#15834#15835#0" expanded="true" />
-            <element signature="e#15886#15887#0" expanded="true" />
-            <element signature="e#16787#16788#0" expanded="true" />
-            <element signature="e#16839#16840#0" expanded="true" />
-            <element signature="e#17588#17589#0" expanded="true" />
-            <element signature="e#17640#17641#0" expanded="true" />
-            <element signature="e#18836#20544#0" expanded="true" />
-            <element signature="e#20543#20544#0" expanded="true" />
-            <element signature="e#22168#22316#0" expanded="true" />
-            <element signature="e#22315#22316#0" expanded="true" />
-            <element signature="e#22361#22508#0" expanded="true" />
-            <element signature="e#22507#22508#0" expanded="true" />
-            <element signature="e#22552#22699#0" expanded="true" />
-            <element signature="e#22698#22699#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_supplier_details.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -8522,11 +8499,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="214" column="36" selection-start-line="214" selection-start-column="36" selection-end-line="214" selection-end-column="36" />
+        <state relative-caret-position="371">
+          <caret line="220" column="44" selection-start-line="220" selection-start-column="44" selection-end-line="220" selection-end-column="44" />
           <folding>
             <element signature="e#45135#45143#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="520" column="34" selection-start-line="520" selection-start-column="34" selection-end-line="520" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
