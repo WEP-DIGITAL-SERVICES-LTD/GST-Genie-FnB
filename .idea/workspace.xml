@@ -22,8 +22,10 @@
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="Bug 660 - Application crashes when we try to edit amount in mswipe opening page while adding mobile number.  &#10;Fix - editing amount in Mswipe screen is disabled.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
@@ -64,26 +66,48 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3145">
-              <caret line="235" column="58" selection-start-line="235" selection-start-column="49" selection-end-line="235" selection-end-column="58" />
+            <state relative-caret-position="255">
+              <caret line="232" column="42" selection-start-line="232" selection-start-column="42" selection-end-line="232" selection-end-column="42" />
               <folding>
-                <element signature="e#10322#10323#0" expanded="true" />
-                <element signature="e#10360#10361#0" expanded="true" />
-                <element signature="e#10672#10673#0" expanded="true" />
-                <element signature="e#10710#10711#0" expanded="true" />
-                <element signature="e#66076#66077#0" expanded="true" />
-                <element signature="e#66100#66101#0" expanded="true" />
-                <element signature="e#70533#70534#0" expanded="true" />
-                <element signature="e#70565#70566#0" expanded="true" />
-                <element signature="e#70934#70935#0" expanded="true" />
-                <element signature="e#70966#70967#0" expanded="true" />
-                <element signature="e#71211#71212#0" expanded="true" />
-                <element signature="e#71240#71241#0" expanded="true" />
-                <element signature="e#72184#72185#0" expanded="true" />
-                <element signature="e#72214#72215#0" expanded="true" />
+                <element signature="e#10262#10263#0" expanded="true" />
+                <element signature="e#10300#10301#0" expanded="true" />
+                <element signature="e#10612#10613#0" expanded="true" />
+                <element signature="e#10650#10651#0" expanded="true" />
+                <element signature="e#31676#34676#0" expanded="true" />
+                <element signature="e#34675#34676#0" expanded="true" />
+                <element signature="e#37092#37678#0" expanded="true" />
+                <element signature="e#37677#37678#0" expanded="true" />
+                <element signature="e#38667#39782#0" expanded="true" />
+                <element signature="e#39781#39782#0" expanded="true" />
+                <element signature="e#44422#45042#0" expanded="true" />
+                <element signature="e#45041#45042#0" expanded="true" />
+                <element signature="e#48481#48651#0" expanded="true" />
+                <element signature="e#48650#48651#0" expanded="true" />
+                <element signature="e#49293#52332#0" expanded="true" />
+                <element signature="e#52331#52332#0" expanded="true" />
+                <element signature="e#54283#54343#0" expanded="true" />
+                <element signature="e#56450#56504#0" expanded="true" />
+                <element signature="e#63783#65132#0" expanded="true" />
+                <element signature="e#65131#65132#0" expanded="true" />
+                <element signature="e#65573#65574#0" expanded="true" />
+                <element signature="e#65597#65598#0" expanded="true" />
+                <element signature="e#66293#69977#0" expanded="true" />
+                <element signature="e#69976#69977#0" expanded="true" />
+                <element signature="e#70030#70031#0" expanded="true" />
+                <element signature="e#70062#70063#0" expanded="true" />
+                <element signature="e#70431#70432#0" expanded="true" />
+                <element signature="e#70463#70464#0" expanded="true" />
+                <element signature="e#70708#70709#0" expanded="true" />
+                <element signature="e#70737#70738#0" expanded="true" />
+                <element signature="e#71200#71545#0" expanded="true" />
+                <element signature="e#71544#71545#0" expanded="true" />
+                <element signature="e#71681#71682#0" expanded="true" />
+                <element signature="e#71711#71712#0" expanded="true" />
+                <element signature="e#77665#77840#0" expanded="true" />
+                <element signature="e#77839#77840#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,27 +115,35 @@
       </file>
       <file leaf-file-name="activity_paybill.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_paybill.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
               <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
               <folding />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="payment_selection.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="payment_selection.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="363" column="29" selection-start-line="363" selection-start-column="29" selection-end-line="363" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="269">
+              <caret line="297" column="36" selection-start-line="297" selection-start-column="36" selection-end-line="297" selection-end-column="36" />
+              <folding>
+                <element signature="e#18403#18427#0" expanded="true" />
+                <element signature="e#19483#19507#0" expanded="true" />
+                <element signature="e#21007#21031#0" expanded="true" />
+                <element signature="e#22940#22964#0" expanded="true" />
+                <element signature="e#24394#24418#0" expanded="true" />
+                <element signature="e#25907#25931#0" expanded="true" />
+                <element signature="e#28176#28196#0" expanded="true" />
+              </folding>
             </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -146,14 +178,14 @@
         <entry>
           <key>
             <ExternalProjectPojo>
-              <option name="name" value="EasyBill-V2.8" />
+              <option name="name" value="GST-Genie-V1.2" />
               <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value="EasyBill-V2.8" />
+                <option name="name" value="GST-Genie-V1.2" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
@@ -191,7 +223,7 @@
           <value>
             <list>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of root project 'EasyBill-V2.8'." />
+                <option name="description" value="Displays the sub-projects of root project 'GST-Genie-V1.2'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="projects" />
               </ExternalTaskPojo>
@@ -282,7 +314,7 @@
                 <option name="name" value="compileDebugAndroidTestJavaWithJavac" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by root project 'EasyBill-V2.8'. [incubating]" />
+                <option name="description" value="Displays the components produced by root project 'GST-Genie-V1.2'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="components" />
               </ExternalTaskPojo>
@@ -605,12 +637,12 @@
                 <option name="name" value="generateDebugAssets" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the dependent components of components in root project 'EasyBill-V2.8'. [incubating]" />
+                <option name="description" value="Displays the dependent components of components in root project 'GST-Genie-V1.2'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependentComponents" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in root project 'EasyBill-V2.8'." />
+                <option name="description" value="Displays all buildscript dependencies declared in root project 'GST-Genie-V1.2'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="buildEnvironment" />
               </ExternalTaskPojo>
@@ -740,12 +772,12 @@
                 <option name="name" value="bundleRelease" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of root project 'EasyBill-V2.8'. [incubating]" />
+                <option name="description" value="Displays the configuration model of root project 'GST-Genie-V1.2'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="model" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from root project 'EasyBill-V2.8' (some of the displayed tasks may belong to subprojects)." />
+                <option name="description" value="Displays the tasks runnable from root project 'GST-Genie-V1.2' (some of the displayed tasks may belong to subprojects)." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="tasks" />
               </ExternalTaskPojo>
@@ -772,7 +804,7 @@
                 <option name="name" value="incrementalDebugJavaCompilationSafeguard" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in root project 'EasyBill-V2.8'." />
+                <option name="description" value="Displays all dependencies declared in root project 'GST-Genie-V1.2'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependencies" />
               </ExternalTaskPojo>
@@ -861,7 +893,7 @@
                 <option name="name" value="prepareComAndroidSupportSupportMediaCompat2501Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in root project 'EasyBill-V2.8'." />
+                <option name="description" value="Displays the insight into a specific dependency in root project 'GST-Genie-V1.2'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependencyInsight" />
               </ExternalTaskPojo>
@@ -1106,7 +1138,7 @@
                 <option name="name" value="packageDebugAndroidTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of root project 'EasyBill-V2.8'." />
+                <option name="description" value="Displays the properties of root project 'GST-Genie-V1.2'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="properties" />
               </ExternalTaskPojo>
@@ -5619,6 +5651,7 @@
         <entry key="E:\22sep\wepfnb_gst" value="12029300433796" />
         <entry key="E:\April\wepfnb_datamini" value="10436100137164" />
         <entry key="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8" value="12104754149546" />
+        <entry key="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2" value="12108683732111" />
         <entry key="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst" value="12031381652939" />
         <entry key="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst" value="11989601060294" />
         <entry key="E:\FnbProjects\WepFnB_GST\wepfnb_gst" value="10440824877452" />
@@ -6277,7 +6310,7 @@
                   </entry>
                 </map>
               </option>
-              <option name="name" value="EasyBill-V2.8" />
+              <option name="name" value="GST-Genie-V1.2" />
               <option name="projectBuildClasspath">
                 <list>
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-3.4.1-all/c3ib5obfnqr0no9szq6qc17do/gradle-3.4.1/src/announce" />
@@ -6480,8 +6513,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
         <option value="$PROJECT_DIR$/mSwipe/src/main/res/layout/activity_payment_mswipe.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
       </list>
     </option>
   </component>
@@ -6516,68 +6549,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EasyBill-V2.8" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EasyBill-V2.8" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EasyBill-V2.8" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EasyBill-V2.8" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EasyBill-V2.8" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane />
       </pane>
@@ -6605,8 +6577,17 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GST-Genie-V1.2" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -7456,12 +7437,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1370" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885906" sideWeight="0.4969743" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2764505" sideWeight="0.47862595" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2996965" sideWeight="0.5068259" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2996965" sideWeight="0.5068259" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40443686" sideWeight="0.22692889" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44197953" sideWeight="0.7980333" order="1" side_tool="false" content_ui="tabs" />
@@ -7472,13 +7453,13 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32423207" sideWeight="0.51221377" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21450381" sideWeight="0.49317408" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21755725" sideWeight="0.49317408" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977098" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24886535" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29351535" sideWeight="0.7730711" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -8016,7 +7997,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="131" column="42" selection-start-line="131" selection-start-column="42" selection-end-line="131" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8105,37 +8085,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
           <caret line="204" column="28" selection-start-line="204" selection-start-column="28" selection-end-line="204" selection-end-column="28" />
-          <folding>
-            <element signature="e#3705#3742#0" expanded="false" />
-            <element signature="e#4819#4856#0" expanded="false" />
-            <element signature="e#5928#5965#0" expanded="false" />
-            <element signature="e#9172#9422#0" expanded="false" />
-            <element signature="e#10946#10979#0" expanded="false" />
-            <element signature="e#11453#11486#0" expanded="false" />
-            <element signature="e#12355#12388#0" expanded="false" />
-            <element signature="e#12868#12901#0" expanded="false" />
-            <element signature="e#13859#13892#0" expanded="false" />
-            <element signature="e#14358#14391#0" expanded="false" />
-            <element signature="e#15226#15259#0" expanded="false" />
-            <element signature="e#15710#15743#0" expanded="false" />
-            <element signature="e#16552#16585#0" expanded="false" />
-            <element signature="e#17029#17062#0" expanded="false" />
-            <element signature="e#17943#17976#0" expanded="false" />
-            <element signature="e#18420#18453#0" expanded="false" />
-            <element signature="e#19334#19367#0" expanded="false" />
-            <element signature="e#19811#19844#0" expanded="false" />
-            <element signature="e#20497#20526#0" expanded="false" />
-            <element signature="e#20588#20617#0" expanded="false" />
-            <element signature="e#21388#21623#0" expanded="false" />
-            <element signature="e#21633#23906#0" expanded="false" />
-            <element signature="e#21954#21983#0" expanded="false" />
-            <element signature="e#22120#22152#0" expanded="false" />
-            <element signature="e#22486#22523#0" expanded="false" />
-            <element signature="e#22721#22753#0" expanded="false" />
-            <element signature="e#23134#23171#0" expanded="false" />
-            <element signature="e#23369#23401#0" expanded="false" />
-            <element signature="e#23782#23819#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -8150,7 +8099,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-71">
           <caret line="200" column="25" selection-start-line="200" selection-start-column="25" selection-end-line="200" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8312,10 +8260,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="367">
           <caret line="264" column="35" selection-start-line="264" selection-start-column="35" selection-end-line="264" selection-end-column="35" />
-          <folding>
-            <element signature="e#5246#8588#0" expanded="false" />
-            <element signature="e#12503#12532#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -8370,37 +8314,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3145">
-          <caret line="235" column="58" selection-start-line="235" selection-start-column="49" selection-end-line="235" selection-end-column="58" />
-          <folding>
-            <element signature="e#10322#10323#0" expanded="true" />
-            <element signature="e#10360#10361#0" expanded="true" />
-            <element signature="e#10672#10673#0" expanded="true" />
-            <element signature="e#10710#10711#0" expanded="true" />
-            <element signature="e#66076#66077#0" expanded="true" />
-            <element signature="e#66100#66101#0" expanded="true" />
-            <element signature="e#70533#70534#0" expanded="true" />
-            <element signature="e#70565#70566#0" expanded="true" />
-            <element signature="e#70934#70935#0" expanded="true" />
-            <element signature="e#70966#70967#0" expanded="true" />
-            <element signature="e#71211#71212#0" expanded="true" />
-            <element signature="e#71240#71241#0" expanded="true" />
-            <element signature="e#72184#72185#0" expanded="true" />
-            <element signature="e#72214#72215#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="363" column="29" selection-start-line="363" selection-start-column="29" selection-end-line="363" selection-end-column="29" />
-          <folding />
+        <state relative-caret-position="269">
+          <caret line="297" column="36" selection-start-line="297" selection-start-column="36" selection-end-line="297" selection-end-column="36" />
+          <folding>
+            <element signature="e#18403#18427#0" expanded="true" />
+            <element signature="e#19483#19507#0" expanded="true" />
+            <element signature="e#21007#21031#0" expanded="true" />
+            <element signature="e#22940#22964#0" expanded="true" />
+            <element signature="e#24394#24418#0" expanded="true" />
+            <element signature="e#25907#25931#0" expanded="true" />
+            <element signature="e#28176#28196#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="232" column="42" selection-start-line="232" selection-start-column="42" selection-end-line="232" selection-end-column="42" />
+          <folding>
+            <element signature="e#10262#10263#0" expanded="true" />
+            <element signature="e#10300#10301#0" expanded="true" />
+            <element signature="e#10612#10613#0" expanded="true" />
+            <element signature="e#10650#10651#0" expanded="true" />
+            <element signature="e#31676#34676#0" expanded="true" />
+            <element signature="e#34675#34676#0" expanded="true" />
+            <element signature="e#37092#37678#0" expanded="true" />
+            <element signature="e#37677#37678#0" expanded="true" />
+            <element signature="e#38667#39782#0" expanded="true" />
+            <element signature="e#39781#39782#0" expanded="true" />
+            <element signature="e#44422#45042#0" expanded="true" />
+            <element signature="e#45041#45042#0" expanded="true" />
+            <element signature="e#48481#48651#0" expanded="true" />
+            <element signature="e#48650#48651#0" expanded="true" />
+            <element signature="e#49293#52332#0" expanded="true" />
+            <element signature="e#52331#52332#0" expanded="true" />
+            <element signature="e#54283#54343#0" expanded="true" />
+            <element signature="e#56450#56504#0" expanded="true" />
+            <element signature="e#63783#65132#0" expanded="true" />
+            <element signature="e#65131#65132#0" expanded="true" />
+            <element signature="e#65573#65574#0" expanded="true" />
+            <element signature="e#65597#65598#0" expanded="true" />
+            <element signature="e#66293#69977#0" expanded="true" />
+            <element signature="e#69976#69977#0" expanded="true" />
+            <element signature="e#70030#70031#0" expanded="true" />
+            <element signature="e#70062#70063#0" expanded="true" />
+            <element signature="e#70431#70432#0" expanded="true" />
+            <element signature="e#70463#70464#0" expanded="true" />
+            <element signature="e#70708#70709#0" expanded="true" />
+            <element signature="e#70737#70738#0" expanded="true" />
+            <element signature="e#71200#71545#0" expanded="true" />
+            <element signature="e#71544#71545#0" expanded="true" />
+            <element signature="e#71681#71682#0" expanded="true" />
+            <element signature="e#71711#71712#0" expanded="true" />
+            <element signature="e#77665#77840#0" expanded="true" />
+            <element signature="e#77839#77840#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
