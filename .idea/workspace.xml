@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/KOTStatusActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/KOTStatusActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/test_fragment__gstr2__b2_b__amend.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/test_fragment__gstr2__b2_b__amend.xml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
@@ -7113,13 +7112,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00126" summary="including usermanual and quick guideline in app">
-      <created>1506345830086</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1506345830086</updated>
-    </task>
     <task id="LOCAL-00127" summary="Outward item csv including department code, categ code, hsn and barcode">
       <created>1506410165533</created>
       <option name="number" value="00127" />
@@ -7456,7 +7448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513594769880</updated>
     </task>
-    <option name="localTasksCounter" value="175" />
+    <task id="LOCAL-00175" summary="Bug 579 - Incorrect message pops up while user searches for table in 'KOT Status' page via 'Dine In'">
+      <created>1513597687066</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1513597687067</updated>
+    </task>
+    <option name="localTasksCounter" value="176" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7575,7 +7574,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="reprintBill giving wrong billamount for large values" />
     <MESSAGE value="1. Ingredient not available when csv upload took place for inward items&#10;2. Delete all items for inward items now available&#10;3. New Module Price &amp; Stock introduced for inward Items" />
     <MESSAGE value="Removing GSTR data download API from Application. Now User can directly goto the ASP portal and download the data from GSP Portal" />
     <MESSAGE value="1. Correcting GSTIn validation in customer, ownerdetails and billing screens&#10;2. Implementing Credit limit for customers" />
@@ -7600,7 +7598,8 @@
     <MESSAGE value="Bug 655 - 'COD Settlement' page title reads 'Rider Settlement' in Home Delivery" />
     <MESSAGE value="Bug 657 - Item details are refreshed and set to 'zero' on adding 'New Stock' against an existing item and tapping 'Update' in ' Inward Price and Stock' via 'Inward Management'&#10;Bug 604 - Prediction drop-down appears as soon as user taps/selects on any of the items in 'Price and Stock' via 'Masters'&#10;Bug 549 - Item details are refreshed and set to 'zero' on adding 'New Stock' against an existing item and tapping 'Update' via 'Price and Stock'&#10;" />
     <MESSAGE value="Bug 577 - Search mobile number in table booking field should restricted to 10 digits.&#10;Bug 150 - Overlap in Tablebooking" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug 577 - Search mobile number in table booking field should restricted to 10 digits.&#10;Bug 150 - Overlap in Tablebooking" />
+    <MESSAGE value="Bug 579 - Incorrect message pops up while user searches for table in 'KOT Status' page via 'Dine In'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug 579 - Incorrect message pops up while user searches for table in 'KOT Status' page via 'Dine In'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

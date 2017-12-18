@@ -31,7 +31,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.98"
+                    android:layout_weight="0.9"
                     android:orientation="vertical">
 
                     <TextView
@@ -63,6 +63,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:textSize="14sp"
                             android:entries="@array/suppliertypes" />
                     </LinearLayout>
 
@@ -85,7 +86,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:maxLength="15"
+                        android:singleLine="true"
+                        android:maxLength="50"
                         android:textSize="14dp" />
                 </LinearLayout>
 
