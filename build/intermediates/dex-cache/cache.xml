@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\printers\build\intermediates\bundles\default\libs\commons-lang-2.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7b864bf2ded4300446c9316d5cfff88effcbbfd2">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-lang-2.6_116dc7581f847024af468ac19927e8091abb5d72\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_61a3e1a8988cd4cb0f6ba4aab7713ade890625da\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_9d76d793dfe816b08ea323fc25489f973a298a72\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -30,12 +30,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\simplyprintapi-android-1.3.0.jar"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\libs\imageLib.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_678bb33f6d683fc3007e1410cbd50766bea02714\classes.dex" />
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\2\imageLib_9638141d1d627dd35dc04b116cb28df8cd1603eb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_db36e6bedc0e453d30889f308f6df9d2d7fed35e\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -57,21 +66,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\printers\build\intermediates\bundles\default\libs\jcc-bate-0.7.3.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_b434554f1e507b8bab2e65db80f79f7a9972c357\classes.dex" />
+        sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_abf8d10a49dd9d45d76b5787c14e689dd896b01e\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\apachehttp.jar"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_585f7ce5e09416f450d87b77bc4b499373635dd6\classes.dex" />
+        sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_2d5177a0a91b3fcedfeaba8b151bc076b05caf24\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -90,6 +99,105 @@
         revision="25.0.0"
         sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
         <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_b07fb36a560dfb3a150918df83bb24378090fb98\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\libs\poi-3.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_4ba1bf85135565de09eadfc17d513f80fec44bee\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
+        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_9d76d793dfe816b08ea323fc25489f973a298a72\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\simplyprintapi-android-1.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
+        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_678bb33f6d683fc3007e1410cbd50766bea02714\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\printers\build\intermediates\bundles\default\libs\apachestrlib.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2a6e72794eeecaf83ed38b185d735a3d24b36669">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_5e8e499d8a32edd880336c47ba86bbeee640f038\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
+        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_b434554f1e507b8bab2e65db80f79f7a9972c357\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\mSwipe\build\intermediates\bundles\default\libs\apachehttp.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_38c00bc2355e94c95deb01e277fc51cbdb7923c0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\apachehttp.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
+        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\23sep\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_585f7ce5e09416f450d87b77bc4b499373635dd6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\mSwipe\build\intermediates\bundles\default\libs\simplyprintapi-android-1.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_8eb5f8c9d462743cd3c4f8218a9f28f6dc7508ab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\mSwipe\build\intermediates\bundles\default\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_bd7f0dec830b7c367ab1b52da6dbced348fcad09\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="561b694b8b079056fb781470d9f6dd80d55e3543">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ef9be16f86b4c0865fbc0e9b06a477429ea9101f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\EasyBill-V2.8\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_8c05cae485949e3e03bcea7db4412c04b72353e8\classes.dex" />
     </item>
     <item
         is-multidex="true"

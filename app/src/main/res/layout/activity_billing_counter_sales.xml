@@ -249,7 +249,6 @@
                             </LinearLayout>
                         </LinearLayout>
 
-
                         <View
                             android:id="@+id/table_top_view_headline"
                             android:layout_width="match_parent"

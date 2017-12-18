@@ -584,6 +584,21 @@
                     android:theme="@style/WepButtonWithMarigin" />
 
                 <Button
+                    android:id="@+id/btn_OrderCustomerFinish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_btn"
+                    android:onClick="Finish"
+                    android:text="Finish"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
+
+
+                <Button
                     android:id="@+id/btn_OrderCustomerDelivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

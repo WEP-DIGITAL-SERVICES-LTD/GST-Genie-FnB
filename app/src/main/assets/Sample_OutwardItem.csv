@@ -1,11 +1,11 @@
 MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,CESS RATE,DISCOUNT PERCENT,DEPARTMENT CODE,CATEGORY CODE,HSN,BAR CODE
-1,Aloo baingan masala,G,80.6,80.6,80.6,310.2,Pk,8.6,8.6,17.2,5,80,,,hsn1,1122
-2,Aloo gobi,G,20.22,20.22,20.22,320.22,Lt,20.22,20.22,40.44,5,20.22,,,hsn2,sfg21314
-3,Aloo ki tikki,G,30.5,30.5,30.5,330.5,Ml,30.5,30.5,61,5,30.5,,,hsn3,gsdgW443
-4,Aloo matar,G,40.3,40.3,40.3,340.3,Gm,40.3,40.3,80.6,50,40.3,,,hsn4,qwqr33223
-5,Aloo methi,S,50.7,50.7,50.7,350.7,Kg,5.7,5.7,11.4,35,50.7,,,hsn5,TGDH35353
-6,Aloo shimla mirch,S,60.8,60.8,60.8,360.8,Bg,15,15,30,5,60.8,,,hsn6,
-7,Amriti with rabdi,G,70.5,70.5,70.5,370.5,Bx,25,25,50,45,70.5,,,hsn7,g234235
-8,Amritsari fish,S,80.6,80.6,80.6,380.6,No,12.5,12.5,25,55.55,80.6,,,hsn8,
-9,CHAI,G,55.5,55.5,55.5,355.5,Mt,6.85,6.85,13.7,5,55.5,,,hsn9,
-10,CHAACH,S,10,10,10,333.1,Mt,10,10,20,5.85,11.1,,,hsn10,
+1,Aloo baigan masala,G,80.6,80.6,80.6,310.2,Pk,1.5,1.5,3.0,5,80,,,hsn1,1122
+2,Aloo gobi,G,20.2,20.2,20.2,320.22,Lt,1.5,1.5,3.0,5,20.22,,,hsn2,sfg21314
+3,Aloo ki tikki,G,30.5,30.5,30.5,330.5,Ml,2.5,2.5,5.0,5,30.5,,,hsn3,gsdgW443
+4,Aloo matar,G,40.3,40.3,40.3,340.3,Gm,14.0,14.0,28.0,50,40.3,,,hsn4,qwqr33223
+5,Aloo methi,G,50.7,50.7,50.7,350.7,Kg,2.5,2.5,5.0,35,50.7,,,hsn5,TGDH35353
+6,Aloo shimla mirch,G,60.8,60.8,60.8,360.8,Bg,2.5,2.5,5.0,5,60.8,,,hsn6,
+7,Amriti with rabdi,G,70.5,70.5,70.5,370.5,Bx,6.0,6.0,12.0,45,70.5,,,hsn7,g234235
+8,Amritsari fish,G,80.6,80.6,80.6,380.6,No,14.0,14.0,28.0,55.55,80.6,,,hsn8,
+9,CHAI,G,55.5,55.5,55.5,355.5,Mt,9.0,9.0,18.0,5,55.5,,,hsn9,
+10,CHAACH,G,10.1,10.1,10.1,333.1,Mt,6.0,6.0,12.0,5.85,11.1,,,hsn10,

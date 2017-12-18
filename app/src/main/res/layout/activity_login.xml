@@ -32,7 +32,7 @@
                 android:id="@+id/btnAbout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="WeP Peripherals Ltd."
+                android:contentDescription="WeP Solutions Ltd."
                 android:onClick="About"
                 android:layout_alignParentLeft="true"
                 android:padding="0dp"
@@ -236,7 +236,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:background="@color/greenyellow"
-                android:text="WeP Solutions Limited."
+                android:text="WeP Digital Limited."
                 android:textSize="18sp" />
 
         </LinearLayout>

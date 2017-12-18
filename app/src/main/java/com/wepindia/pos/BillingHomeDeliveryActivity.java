@@ -87,12 +87,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implements TextWatcher {
@@ -8186,12 +8184,17 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         return super.onOptionsItemSelected(item);
     }
 
-    void additemtoKOT()
+    void addBarCodeItemToOrderTable()
     {
         String barcode = autoCompleteTextViewSearchItemBarcode.getText().toString().trim();
         System.out.println("Barcode = "+barcode);
+        if(barcode == null || barcode.equals("") )
+            return;
         Cursor crsr = dbBillScreen.getItem(barcode);
-        AddItemToOrderTable(crsr);
+        if(crsr!=null && crsr.moveToFirst())
+            AddItemToOrderTable(crsr);
+        else
+            MsgBox.Show("Oops ","Item not found");
         autoCompleteTextViewSearchItemBarcode.setText("");
         linefeed="";
     }
@@ -8215,13 +8218,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
         {
             //System.out.println("Richa : Enter encountered for barcode");
-            additemtoKOT();
+            addBarCodeItemToOrderTable();
         }else if (event.getKeyCode() == KeyEvent.KEYCODE_J ||event.getKeyCode() == KeyEvent.KEYCODE_CTRL_LEFT   )
         //}else if (event.getKeyCode() == KeyEvent.KEYCODE_J ||event.getKeyCode() == KeyEvent.KEYCODE_CTRL_LEFT ||event.getKeyCode() == KeyEvent.KEYCODE_SHIFT_LEFT  )
         {
             linefeed +=String.valueOf(event.getKeyCode());
             if(linefeed.equalsIgnoreCase("38113")|| linefeed.equalsIgnoreCase("11338")) // line feed value
-                additemtoKOT();
+                addBarCodeItemToOrderTable();
         }else
         {
             linefeed = "";

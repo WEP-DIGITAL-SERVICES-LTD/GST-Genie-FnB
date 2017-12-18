@@ -71,7 +71,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	// View handlers
 	TextView lblHeadingOrderDetails;
 	EditText txtCustPhone, txtCustName, txtCustAddress, txtCustId, txtBillAmount,txtTime,txtBillNo;
-	Button btnAdd, btnOrder, btnTender, btnDelivery, btn_DeliveryOrderCancel,btn_OrderCustomerClear,btn_OrderCustomerClose;
+	Button btnAdd, btnOrder, btnTender, btnDelivery, btn_DeliveryOrderCancel,btn_OrderCustomerClear,btn_OrderCustomerClose, btn_OrderCustomerFinish;
 	ListView lstvwOrderCustName;
 	ScrollView scrlOrderDetail;
 	TableLayout tblOrderDetails, tblRider;
@@ -132,6 +132,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				title  = "Delivery";
 				btnTender.setText("COD Settlement");
 				btnDelivery.setVisibility(View.GONE);
+				btn_OrderCustomerFinish.setVisibility(View.GONE);
 				//btnDelivery.setText("Assign Driver");
 			}
 			com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),title,strUserName," Date:"+s.toString());
@@ -172,6 +173,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		btn_DeliveryOrderCancel = (Button)findViewById(R.id.btn_DeliveryOrderCancel);
 		btn_OrderCustomerClear = (Button)findViewById(R.id.btn_OrderCustomerClear);
 		btn_OrderCustomerClose = (Button)findViewById(R.id.btn_OrderCustomerClose);
+		btn_OrderCustomerFinish = (Button)findViewById(R.id.btn_OrderCustomerFinish);
 
 		lstvwOrderCustName = (ListView)findViewById(R.id.lstCustomerPendingOrders);
 		lstvwOrderCustName.setOnItemClickListener(CustomerOrderListClick);
@@ -221,6 +223,12 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 			@Override
 			public void onClick(View v) {
 				Close(v);
+			}
+		});
+		btn_OrderCustomerFinish.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Finish(v);
 			}
 		});
 
@@ -505,6 +513,11 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				txtPaidStatus.setText("Paid");
 				strPaymentStatus= "Paid";
 				txtBillNo.setText(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
+				if(BILLING_MODE.equals("3") )
+				{
+					btn_OrderCustomerFinish.setEnabled(true);
+					btn_OrderCustomerFinish.setTextColor(Color.WHITE);
+				}
 				break;
 			}
 		}if(0 == found){
@@ -517,6 +530,15 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				strPaymentStatus = "Cash On Delivery";
 			}
 			txtBillNo.setText("0");
+			if(BILLING_MODE.equals("3") )
+			{
+				btn_OrderCustomerFinish.setEnabled(false);
+				btn_OrderCustomerFinish.setTextColor(Color.GRAY);
+				btnOrder.setEnabled(true);
+				btnTender.setEnabled(true);
+				btnTender.setTextColor(Color.WHITE);
+				btnOrder.setTextColor(Color.WHITE);
+			}
 		}
 	}
 
@@ -533,6 +555,13 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		btnTender.setEnabled(true);
 		btnDelivery.setEnabled(true);
 		menuCodeList=null;
+
+		if(BILLING_MODE.equals("3") )
+		{
+			btn_OrderCustomerFinish.setEnabled(true);
+			btn_OrderCustomerFinish.setTextColor(Color.WHITE);
+		}
+
 
 		for(int iPosition = tblOrderDetails.getChildCount() -1; iPosition >= 1; iPosition--){
 			TableRow rowOrderItem = (TableRow)tblOrderDetails.getChildAt(iPosition);
@@ -709,6 +738,32 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				setResult(RESULT_OK, intentBillScreen);
 				this.finish();
 			}}
+
+	}
+	public void Finish(View v){
+		//LaunchBillScreen();
+
+		int count = tblOrderDetails.getChildCount();
+		if(tblOrderDetails.getChildCount() <= 1){
+			MsgBox.Show("Warning", "No order is selected to finish");
+		} else {
+			if((BILLING_MODE.equalsIgnoreCase("3") && txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))) {
+				Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
+				intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
+				intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+				intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+				intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
+				intentBillScreen.putExtra("MAKE_ORDER", "YES");
+				intentBillScreen.putExtra("IS_PRINT_BILL", false);
+				intentBillScreen.putExtra("IS_FINISH", true);
+				Log.d("Sending Discount", String.valueOf(discountAmount));
+				intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
+				intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
+				//startActivityForResult(intentBillScreen,1);
+				setResult(RESULT_OK, intentBillScreen);
+				finish();
+			}
+		}
 
 	}
 

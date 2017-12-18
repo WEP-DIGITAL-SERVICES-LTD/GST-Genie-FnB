@@ -173,7 +173,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
                         }else
                         {
-                            Toast.makeText(myContext, "No Invoice count to send for businessDate :"+businessdate, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(myContext, "No Invoice count to send for businessDate :"+businessdate, Toast.LENGTH_SHORT).show();
                             Log.d("TAG", "No Invoice count to send for businessDate :"+businessdate);
                         }
 
@@ -582,21 +582,21 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                 {
                     if(data.contains("\"success\":true,\"message\":\"Data Updated Successfully\""))
                     {
-                        Toast.makeText(myContext, "No of invoices uploaded sucessfully.", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(myContext, "No of invoices uploaded sucessfully.", Toast.LENGTH_SHORT).show();
                     }
                     else if (data.contains("\"success\":false,\"message\":\"Check Parameters\""))
                     {
-                        Toast.makeText(myContext, "No of invoices uploading failed.", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(myContext, "No of invoices uploading failed.", Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"No of invoices uploading failed.");
                     }
                 }
             } catch (Exception e) {
-                Toast.makeText(this, "Error due to " + e, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "Error due to " + e, Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
         } else {
-            Toast.makeText(this, "Sending error", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Sending error", Toast.LENGTH_SHORT).show();
         }
 
     }

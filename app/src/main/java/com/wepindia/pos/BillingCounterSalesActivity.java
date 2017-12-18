@@ -24,7 +24,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -1796,7 +1795,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         else
         {
             Log.d("AddItemToOrderTable", "ItemNotFound Exception");
-            messageDialog.Show("Oops ","Item not found");
+            //messageDialog.Show("Oops ","Item not found");
         }
     }
 
@@ -5241,15 +5240,23 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         return super.onKeyDown(keyCode, event);
     }
 
-    void additemtoKOT()
+    void addBarCodeItemToOrderTable()
     {
         String barcode = autoCompleteTextViewSearchItemBarcode.getText().toString().trim();
         System.out.println("Barcode = "+barcode);
+        if(barcode == null || barcode.equals("") )
+            return;
         Cursor crsr = db.getItemssbyBarCode(barcode);
-        AddItemToOrderTable(crsr);
+        if(crsr!=null && crsr.moveToFirst())
+            AddItemToOrderTable(crsr);
+        else
+            messageDialog.Show("Oops ","Item not found");
         autoCompleteTextViewSearchItemBarcode.setText("");
         linefeed="";
     }
+
+
+
 
 
     @Override
@@ -5266,13 +5273,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         //Toast.makeText(this, "Richa : "+event.getKeyCode()+" keycode = "+keyCode, Toast.LENGTH_SHORT).show();
         if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
             System.out.println("Richa : Enter encountered for barcode");
-            additemtoKOT();
+            addBarCodeItemToOrderTable();
         }else if (event.getKeyCode() == KeyEvent.KEYCODE_J ||event.getKeyCode() == KeyEvent.KEYCODE_CTRL_LEFT   )
         //}else if (event.getKeyCode() == KeyEvent.KEYCODE_J ||event.getKeyCode() == KeyEvent.KEYCODE_CTRL_LEFT ||event.getKeyCode() == KeyEvent.KEYCODE_SHIFT_LEFT  )
         {
             linefeed +=String.valueOf(event.getKeyCode());
             if(linefeed.equalsIgnoreCase("38113")|| linefeed.equalsIgnoreCase("11338")) // line feed value
-                additemtoKOT();
+                addBarCodeItemToOrderTable();
         }else {
             linefeed = "";
             if (dd < 15 && dd > 0 && CUSTOMER_FOUND == 0) {
@@ -5293,7 +5300,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         case R.id.edtCustName:
                         case R.id.edtCustPhoneNo:
                             if (tx.equals("")) {
-                                Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
                             }
                         case R.id.edtCustAddress:
                             EditText ed = (EditText) findViewById(v.getId());

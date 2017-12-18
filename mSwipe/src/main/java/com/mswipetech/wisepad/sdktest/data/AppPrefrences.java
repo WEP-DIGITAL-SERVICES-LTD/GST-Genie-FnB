@@ -15,7 +15,7 @@ public class AppPrefrences {
 	}
 	
 	public static GATEWAYENV getGateWayEnv(){
-		GATEWAYENV gateWayDefault = GATEWAYENV.LABS;
+		GATEWAYENV gateWayDefault = GATEWAYENV.PRODUCTION;
 		int gateWay = ApplicationData.appSharedPreferences.getInt("gateway", gateWayDefault.ordinal());
 		return	GATEWAYENV.values()[gateWay];
 	}

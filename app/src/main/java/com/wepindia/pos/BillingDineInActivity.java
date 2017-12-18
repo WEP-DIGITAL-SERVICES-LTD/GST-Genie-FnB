@@ -18,10 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -79,7 +77,6 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
 import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
-import com.wepindia.pos.adapters.TestImageAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 import com.wepindia.pos.utils.StockOutwardMaintain;
@@ -100,7 +97,6 @@ import java.util.regex.Pattern;
 
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class BillingDineInActivity extends WepPrinterBaseActivity implements TextWatcher , TestItemsAdapter.OnItemsImageClickListener {
 
@@ -2605,7 +2601,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         else
         {
             Log.d("AddItemToOrderTable", "ItemNotFound Exception");
-            MsgBox.Show("Oops ","Item not found");
+            //MsgBox.Show("Oops ","Item not found");
         }
     }
 
@@ -8932,15 +8928,21 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         return super.onKeyDown(keyCode, event);
     }
 
-    void additemtoKOT()
+    void addBarCodeItemToOrderTable()
     {
         String barcode = autoCompleteTextViewSearchItemBarcode.getText().toString().trim();
         System.out.println("Barcode = "+barcode);
+        if(barcode == null || barcode.equals("") )
+            return;
         Cursor crsr = dbBillScreen.getItem(barcode);
-        AddItemToOrderTable(crsr);
+        if(crsr!=null && crsr.moveToFirst())
+            AddItemToOrderTable(crsr);
+        else
+            MsgBox.Show("Oops ","Item not found");
         autoCompleteTextViewSearchItemBarcode.setText("");
         linefeed="";
     }
+
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -8954,13 +8956,13 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         //Toast.makeText(myContext, "Richa : "+event.getKeyCode()+" keycode = "+keyCode, Toast.LENGTH_SHORT).show();
         if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
             System.out.println("Richa : Enter encountered for barcode");
-            additemtoKOT();
+            addBarCodeItemToOrderTable();
         }else if (event.getKeyCode() == KeyEvent.KEYCODE_J ||event.getKeyCode() == KeyEvent.KEYCODE_CTRL_LEFT   )
         //}else if (event.getKeyCode() == KeyEvent.KEYCODE_J ||event.getKeyCode() == KeyEvent.KEYCODE_CTRL_LEFT ||event.getKeyCode() == KeyEvent.KEYCODE_SHIFT_LEFT  )
         {
             linefeed +=String.valueOf(event.getKeyCode());
             if(linefeed.equalsIgnoreCase("38113")|| linefeed.equalsIgnoreCase("11338")) // line feed value
-                additemtoKOT();
+                addBarCodeItemToOrderTable();
         }else
         {
             linefeed = "";

@@ -45,7 +45,7 @@
         <!-- Add your API key here -->
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_l35hnbVK4OKd8J" />
+            android:value="xxxxxxxx" />
 
         <activity
             android:name=".LoginActivity"

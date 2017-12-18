@@ -872,13 +872,44 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     public void Coupons(View view) {
         //edtCoupon.setEnabled(true);
         // custom dialog
-        PayBillDialog = new Dialog(myContext);
+        /*PayBillDialog = new Dialog(myContext);
         PayBillDialog.setContentView(R.layout.paybill_tablelist);
-        PayBillDialog.setTitle("Coupon");
+        PayBillDialog.setTitle("Coupon");*/
+
+
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialog_layout = inflater.inflate(R.layout.paybill_tablelist,null);
+        AlertDialog.Builder dlgMessage = new AlertDialog.Builder(myContext);
+        dlgMessage.setView(dialog_layout)
+            .setTitle("Coupons")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                 public void onClick(DialogInterface dialog, int which) {
+                    int count = tblPayBill.getChildCount();
+                    double amount =0;
+                    for (int i=1;i<count;i++)
+                    {
+                        TableRow rowPayBill =  (TableRow) tblPayBill.getChildAt(i);
+                        TextView value =  (TextView) rowPayBill.getChildAt(2);
+                        EditText qty =  (EditText) rowPayBill.getChildAt(3);
+                        double rate = 0;
+                        double quantity =0;
+                        if(!(value.getText() == null || value.getText().toString().equals("")))
+                            rate = Double.parseDouble(value.getText().toString());
+                         if(!(qty.getText() == null || qty.getText().toString().equals("")))
+                            quantity = Double.parseDouble(qty.getText().toString());
+
+                        amount += rate*quantity;
+                    }
+                    edtCoupon.setText(String.valueOf(amount));
+                }})
+                .setNeutralButton("Cancel",null)
+                .setCancelable(false)
+                .show();
 
         // set the custom dialog components - text, image and button
-        tblPayBill = (TableLayout) PayBillDialog.findViewById(R.id.tblPayBill);
-        TextView tvCaptionPaybillAmount = (TextView) PayBillDialog.findViewById(R.id.tvCaptionPaybillAmount);
+        tblPayBill = (TableLayout) dialog_layout.findViewById(R.id.tblPayBill);
+        TextView tvCaptionPaybillAmount = (TextView) dialog_layout.findViewById(R.id.tvCaptionPaybillAmount);
         tvCaptionPaybillAmount.setText("Qty");
         Cursor crsrCoupon = dbPayBill.getPayBillCoupon();
         if (crsrCoupon.moveToFirst()) {
@@ -898,7 +929,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     tvSno.setTextSize(20);
                     tvSno.setGravity(1);
                     tvSno.setTextColor(Color.parseColor("#000000"));
-                    tvSno.setText(String.valueOf(i));
+                    tvSno.setText(String.valueOf(i++));
                     rowPayBill.addView(tvSno);
 
                     tvName = new TextView(myContext);
@@ -921,11 +952,11 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     txtCouponQty.setWidth(80);
                     txtCouponQty.setSelectAllOnFocus(true);
                     txtCouponQty.setTextColor(Color.parseColor("#000000"));
-                    txtCouponQty.setOnKeyListener(CouponQtyKeyPressEvent);
-                    txtCouponQty.addTextChangedListener(CouponQtyChangeEvent);
+                    //txtCouponQty.setOnKeyListener(CouponQtyKeyPressEvent);
+                    //txtCouponQty.addTextChangedListener(CouponQtyChangeEvent);
                     rowPayBill.addView(txtCouponQty);
 
-                    rowPayBill.setOnClickListener(new View.OnClickListener() {
+                    /*rowPayBill.setOnClickListener(new View.OnClickListener() {
 
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
@@ -948,17 +979,20 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                 PayBillDialog.dismiss();
                             }
                         }
-                    });
+                    });*/
                     rowPayBill.setTag("TAG");
 
                     tblPayBill.addView(rowPayBill, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 } while (crsrCoupon.moveToNext());
+
             } else {
                 Log.d("DisplayCoupon", "No Coupon found");
             }
+
         }
-        PayBillDialog.show();
+        //PayBillDialog.show();
+
     }
 
     View.OnKeyListener CouponQtyKeyPressEvent = new View.OnKeyListener() {
@@ -1576,34 +1610,46 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
 
         String keyid = paymentDetails.getString(paymentDetails.getColumnIndex("RazorPay_KeyId")).trim();
-        if(keyid == null || keyid.equals(""))
+        if(!(keyid != null &&  keyid.length()>=8))
         {
             MsgBox.Show("Invalid Credentials"," Please configure key id for razor pay in payment mode configuration module");
             return;
         }
 
         final Checkout co = new Checkout();
+        Cursor ownercrsr = dbPayBill.getOwnerDetail();
+        if(ownercrsr != null && ownercrsr.moveToFirst() )
+        {
+            try {
+                String firmName = ownercrsr.getString(ownercrsr.getColumnIndex("FirmName"));
+                if(firmName== null)
+                    firmName = "";
+                JSONObject options = new JSONObject();
+                options.put("name", firmName);
+                options.put("description", "eWallet Payment");
+                //You can omit the image option to fetch the image from dashboard
+                options.put("image", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSVnUM4lZzEAgU62oQU9yjp_Z0i6KkrNzdrlZZT5LyfxZUIJpnL");
+                options.put("currency", "INR");
+                toPayAmount = getIntegers(edtChange.getText().toString().trim());
+                options.put("amount", toPayAmount+"");
+                JSONObject preFill = new JSONObject();
+                preFill.put("email", "");
+                preFill.put("contact", phone);
+                options.put("prefill", preFill);
+                co.setKeyID(keyid);
+                co.open(activity, options);
 
-        try {
-            JSONObject options = new JSONObject();
-            options.put("name", "Wep Solutions Ltd");
-            options.put("description", "Resturant bill payment");
-            //You can omit the image option to fetch the image from dashboard
-            options.put("image", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSVnUM4lZzEAgU62oQU9yjp_Z0i6KkrNzdrlZZT5LyfxZUIJpnL");
-            options.put("currency", "INR");
-            toPayAmount = getIntegers(edtChange.getText().toString().trim());
-            options.put("amount", toPayAmount+"");
-            JSONObject preFill = new JSONObject();
-            preFill.put("email", "");
-            preFill.put("contact", phone);
-            options.put("prefill", preFill);
-            co.open(activity, options);
-            co.setKeyID(keyid);
-        } catch (Exception e) {
-            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            } catch (Exception e) {
+                Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }else
+        {
+            MsgBox.Show("Error","Issue occured in fetching owner details.");
         }
+
     }
+
 
     private int getIntegers(String txt) {
         Integer i = 0;
@@ -1615,6 +1661,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
         return i;
     }
+
 
     /**
      * The name of the function has to be
