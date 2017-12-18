@@ -21,7 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/test_fragment__gstr2__b2_b__amend.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/test_fragment__gstr2__b2_b__amend.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,12 +77,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KOTStatusActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="KOTStatusActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/KOTStatusActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="294">
               <caret line="300" column="43" selection-start-line="300" selection-start-column="43" selection-end-line="300" selection-end-column="43" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomerDetailActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="295">
+              <caret line="916" column="17" selection-start-line="916" selection-start-column="17" selection-end-line="916" selection-end-column="17" />
+              <folding>
+                <element signature="e#44284#44292#0" expanded="true" />
+                <element signature="e#45149#45550#0" expanded="true" />
+                <element signature="e#45549#45550#0" expanded="true" />
+                <element signature="e#45693#45694#0" expanded="true" />
+                <element signature="e#45742#45743#0" expanded="true" />
+                <element signature="e#47007#47600#0" expanded="true" />
+                <element signature="e#47599#47600#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -6415,7 +6433,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OwnerDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_owner_details.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_display_owner_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/assets/Sample_InwardItem.csv" />
         <option value="$PROJECT_DIR$/app/src/main/assets/Sample_OutwardItem.csv" />
@@ -6455,6 +6472,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_tablebooking.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/test_fragment__gstr2__b2_b__amend.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/KOTStatusActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
       </list>
     </option>
   </component>
@@ -7112,13 +7130,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00127" summary="Outward item csv including department code, categ code, hsn and barcode">
-      <created>1506410165533</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1506410165533</updated>
-    </task>
     <task id="LOCAL-00128" summary="Outward item csv including department code, categ code, hsn and barcode">
       <created>1506420539441</created>
       <option name="number" value="00128" />
@@ -7455,7 +7466,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513597687067</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="Bug 587 - 'Supplier Type' field is truncated in 'Amendments' via Home Page">
+      <created>1513597725485</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1513597725485</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7477,7 +7495,7 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2996965" sideWeight="0.5068259" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40443686" sideWeight="0.22692889" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44197953" sideWeight="0.7980333" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24232082" sideWeight="0.7980333" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30992368" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35153583" sideWeight="0.48473284" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31740615" sideWeight="0.49389312" order="3" side_tool="false" content_ui="tabs" />
@@ -7574,7 +7592,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. Ingredient not available when csv upload took place for inward items&#10;2. Delete all items for inward items now available&#10;3. New Module Price &amp; Stock introduced for inward Items" />
     <MESSAGE value="Removing GSTR data download API from Application. Now User can directly goto the ASP portal and download the data from GSP Portal" />
     <MESSAGE value="1. Correcting GSTIn validation in customer, ownerdetails and billing screens&#10;2. Implementing Credit limit for customers" />
     <MESSAGE value="remeber me not reflecting properly.Once remember me is checked, it remains checked everytime application is opened" />
@@ -7599,7 +7616,8 @@
     <MESSAGE value="Bug 657 - Item details are refreshed and set to 'zero' on adding 'New Stock' against an existing item and tapping 'Update' in ' Inward Price and Stock' via 'Inward Management'&#10;Bug 604 - Prediction drop-down appears as soon as user taps/selects on any of the items in 'Price and Stock' via 'Masters'&#10;Bug 549 - Item details are refreshed and set to 'zero' on adding 'New Stock' against an existing item and tapping 'Update' via 'Price and Stock'&#10;" />
     <MESSAGE value="Bug 577 - Search mobile number in table booking field should restricted to 10 digits.&#10;Bug 150 - Overlap in Tablebooking" />
     <MESSAGE value="Bug 579 - Incorrect message pops up while user searches for table in 'KOT Status' page via 'Dine In'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug 579 - Incorrect message pops up while user searches for table in 'KOT Status' page via 'Dine In'" />
+    <MESSAGE value="Bug 587 - 'Supplier Type' field is truncated in 'Amendments' via Home Page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug 587 - 'Supplier Type' field is truncated in 'Amendments' via Home Page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7839,13 +7857,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/25.1.1/appcompat-v7-25.1.1-sources.jar!/android/support/v7/view/WindowCallbackWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-24/android/app/Activity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
@@ -8501,6 +8512,22 @@
         <state relative-caret-position="294">
           <caret line="300" column="43" selection-start-line="300" selection-start-column="43" selection-end-line="300" selection-end-column="43" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="916" column="17" selection-start-line="916" selection-start-column="17" selection-end-line="916" selection-end-column="17" />
+          <folding>
+            <element signature="e#44284#44292#0" expanded="true" />
+            <element signature="e#45149#45550#0" expanded="true" />
+            <element signature="e#45549#45550#0" expanded="true" />
+            <element signature="e#45693#45694#0" expanded="true" />
+            <element signature="e#45742#45743#0" expanded="true" />
+            <element signature="e#47007#47600#0" expanded="true" />
+            <element signature="e#47599#47600#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

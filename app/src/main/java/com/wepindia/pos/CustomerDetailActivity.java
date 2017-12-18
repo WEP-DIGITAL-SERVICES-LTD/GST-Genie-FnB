@@ -33,6 +33,8 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
@@ -838,21 +840,24 @@ public class CustomerDetailActivity extends WepBaseActivity {
                 }
                 boolean mFlag =  GSTINValidation.checkGSTINValidation(GSTIN);
 
-                if(mFlag)
-                {
+                if(mFlag) {
+                   /* if (!GSTINValidation.checkValidStateCode(GSTIN,this)) {
+                        MsgBox.Show("Invalid Information", "Please Enter Valid StateCode for GSTIN");
+                    }
+                    else{*/
+                        double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("") ? 0.00 :
+                                Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
 
-                    double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("")?0.00:
-                            Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
+                        double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("") ? 0.00 :
+                                Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
 
-                    double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("")?0.00:
-                            Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
-
-                    InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount,GSTIN, dCreditLimit);
-                    Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
-                    ResetCustomer();
-                    ClearCustomerTable();
-                    DisplayCustomer();
-                    ((ArrayAdapter<String>)(txtSearchName.getAdapter())).add(Name);
+                        InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount, GSTIN, dCreditLimit);
+                        Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
+                        ResetCustomer();
+                        ClearCustomerTable();
+                        DisplayCustomer();
+                        ((ArrayAdapter<String>) (txtSearchName.getAdapter())).add(Name);
+                   // }
                 }else
                 {
                     MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
@@ -885,27 +890,32 @@ public class CustomerDetailActivity extends WepBaseActivity {
         boolean mFlag = GSTINValidation.checkGSTINValidation(GSTIN);
         if (mFlag)
         {
-            double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("")?0.00:
-                    Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
+            /*if(!GSTINValidation.checkValidStateCode(GSTIN,this))
+            {
+                MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
+            }else {*/
+                double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("") ? 0.00 :
+                        Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
 
-            double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("")?0.00:
-                    Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
+                double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("") ? 0.00 :
+                        Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
 
 
-            Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
-                    + " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction+" GSTIN : "+GSTIN
-                    +" Credit Limit : "+dCreditLimit);
-            int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
-                    Double.parseDouble(LastTransaction), Double.parseDouble(TotalTransaction), dCreditAmount, GSTIN,dCreditLimit);
-            Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
-            Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
-            ResetCustomer();
-            if (iResult > 0) {
-                ClearCustomerTable();
-                DisplayCustomer();
-            } else {
-                MsgBox.Show("Warning", "Update failed");
-            }
+                Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
+                        + " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction + " GSTIN : " + GSTIN
+                        + " Credit Limit : " + dCreditLimit);
+                int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
+                        Double.parseDouble(LastTransaction), Double.parseDouble(TotalTransaction), dCreditAmount, GSTIN, dCreditLimit);
+                Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
+                Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
+                ResetCustomer();
+                if (iResult > 0) {
+                    ClearCustomerTable();
+                    DisplayCustomer();
+                } else {
+                    MsgBox.Show("Warning", "Update failed");
+                }
+           // }
         }else
         {
             MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
@@ -969,5 +979,53 @@ public class CustomerDetailActivity extends WepBaseActivity {
     @Override
     public void onHomePressed() {
         ActionBarUtils.navigateHome(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_with_delete, menu);
+        for (int j = 0; j < menu.size(); j++) {
+            MenuItem item = menu.getItem(j);
+            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home)
+        {
+            finish();
+        }
+        else if (id == R.id.action_home)
+        {
+            onHomePressed();
+        }
+        else if (id == R.id.action_screen_shot)
+        {
+            com.wep.common.app.ActionBarUtils.takeScreenshot(this,findViewById(android.R.id.content).getRootView());
+        }
+        else if (id == R.id.action_clear)
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Confirmation")
+                    .setIcon(R.drawable.ic_launcher)
+                    .setMessage("Are you sure to delete all the existing customers?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Toast.makeText(myContext, "clear", Toast.LENGTH_SHORT).show();
+                            long lResult = dbCustomer.DeleteAllCustomer();
+                            if(lResult>0)
+                            {
+                                ClearCustomer(null);
+                                Toast.makeText(myContext, "Items Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
