@@ -185,6 +185,7 @@ public class InwardActivity extends WepBaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(com.wep.common.app.R.menu.menu_wep_base, menu);
+        menu.getItem(0).setVisible(true);
         for (int j = 0; j < menu.size(); j++) {
             MenuItem item = menu.getItem(j);
             item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -205,6 +206,10 @@ public class InwardActivity extends WepBaseActivity {
         if (id == android.R.id.home) {
             getDb().CloseDatabase();
             finish();
+        }else if (id == com.wep.common.app.R.id.action_home) {
+
+            ActionBarUtils.navigateHome(this);
+
         }else if (id == com.wep.common.app.R.id.action_screen_shot) {
 
         }else if (id == com.wep.common.app.R.id.action_logout) {

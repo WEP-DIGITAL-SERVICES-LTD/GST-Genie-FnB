@@ -42,6 +42,7 @@ import java.util.Locale;
 
 
 import com.wepindia.pos.R;
+import com.wepindia.pos.utils.ActionBarUtils;
 
 public class TableBookingActivity extends WepBaseActivity implements TableBookingAdapter.OnTableViewClickListener {
 
@@ -768,8 +769,8 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
 
     @Override
     public void onHomePressed() {
-        //ActionBarUtils.navigateHome(this);
-        finish();
+        ActionBarUtils.navigateHome(this);
+//        finish();
     }
 
     @Override

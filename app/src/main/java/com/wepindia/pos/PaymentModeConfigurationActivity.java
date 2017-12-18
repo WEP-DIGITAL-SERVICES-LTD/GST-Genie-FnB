@@ -122,6 +122,7 @@ public class PaymentModeConfigurationActivity extends WepBaseActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.wep.common.app.R.menu.menu_wep_base, menu);
+        menu.getItem(0).setVisible(true);
         for (int j = 0; j < menu.size(); j++) {
             MenuItem item = menu.getItem(j);
             item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);

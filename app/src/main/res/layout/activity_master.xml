@@ -96,13 +96,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/bottom_margin_20dp"
                     android:layout_marginEnd="@dimen/right_margin_220dp"
-                    android:layout_marginLeft="@dimen/left_margin_220dp"
-                    android:layout_marginRight="@dimen/right_margin_220dp"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginRight="300dp"
                     android:layout_marginStart="@dimen/left_margin_220dp"
                     android:orientation="horizontal"
-                    android:weightSum="5">
+                    android:weightSum="4">
 
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -114,13 +113,13 @@
                             android:id="@+id/imgConfigurations"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Configurations"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/img_configurations"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentStart="true" />
+                            android:src="@drawable/img_configurations" />
 
                         <TextView
                             android:id="@+id/tvConfigurationOption"
@@ -220,35 +219,6 @@
 
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1">
-
-                        <ImageButton
-                            android:id="@+id/imgPaymentMode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:background="@drawable/gradient_button"
-                            android:contentDescription="PaymentMode"
-                            android:onClick="LaunchActivity"
-                            android:padding="3dp"
-                            android:src="@drawable/paymentmodeconfiguration" />
-
-                        <TextView
-                            android:id="@+id/tvPaymentMode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgPaymentMode"
-                            android:gravity="center"
-                            android:text="Payment Mode Configuration"
-                            android:textSize="@dimen/menu_box_font_size"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -260,22 +230,22 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                    </RelativeLayout>
+                        android:layout_weight="1"></RelativeLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/bottom_margin_20dp"
+                    android:layout_below="@+id/tvItemOption"
                     android:layout_marginEnd="@dimen/right_margin_220dp"
-                    android:layout_marginLeft="@dimen/left_margin_220dp"
-                    android:layout_marginRight="@dimen/right_margin_220dp"
+                    android:layout_marginLeft="@dimen/right_margin_220dp"
+                    android:layout_marginRight="@dimen/left_margin_220dp"
                     android:layout_marginStart="@dimen/left_margin_220dp"
+                    android:layout_marginTop="25dp"
                     android:orientation="horizontal"
                     android:weightSum="5">
+
 
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -389,7 +359,6 @@
                             android:gravity="center"
                             android:text="Settings"
                             android:textSize="@dimen/menu_box_font_size"
-
                             android:textStyle="bold" />
                     </RelativeLayout>
 
@@ -400,23 +369,23 @@
                         android:layout_weight="1">
 
                         <ImageButton
-                            android:id="@+id/imgBack"
+                            android:id="@+id/imgPaymentMode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
-                            android:contentDescription="Back"
+                            android:contentDescription="PaymentMode"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/img_back" />
+                            android:src="@drawable/paymentmodeconfiguration" />
 
                         <TextView
-                            android:id="@+id/tvBackOption"
+                            android:id="@+id/tvPaymentMode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgBack"
+                            android:layout_below="@+id/imgPaymentMode"
                             android:gravity="center"
-                            android:text="Home"
+                            android:text="Payment Mode Configuration"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
 

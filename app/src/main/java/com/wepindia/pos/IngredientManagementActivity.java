@@ -36,6 +36,7 @@ import com.wep.common.app.views.WepButton;
 import com.wep.common.app.models.Ingredient;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.IngredientListAdapter;
+import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -599,7 +600,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
             {
                 TableRow row = new TableRow(myContext);
                 row.setLayoutParams(new ViewGroup.LayoutParams
-                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 TextView sn = new TextView(myContext);
                 sn.setWidth(95);
@@ -1318,7 +1319,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
 
     @Override
     public void onHomePressed() {
-        //ActionBarUtils.navigateHome(this);
-        finish();
+        ActionBarUtils.navigateHome(this);
+//        finish();
     }
 }

@@ -8085,7 +8085,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     boolean mFlag = GSTINValidation.checkGSTINValidation(gstin);
                     if(mFlag)
                     {
-                        if(!GSTINValidation.checkValidStateCode(gstin,this))
+                        if( !GSTINValidation.checkValidStateCode(gstin,this))
                         {
                             MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
                         }

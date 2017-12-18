@@ -2,16 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
+        android:id="@+id/action_home"
+        android:icon="@mipmap/ic_home_white_24dp"
+        android:orderInCategory="100"
+        android:title="Home"
+        android:visible="false"/>
+
+    <item
         android:id="@+id/action_screen_shot"
         android:icon="@mipmap/ic_photo_white_24dp"
-        android:orderInCategory="100"
-        android:title="ScreenShot"
-        app:showAsAction="always" />
+        android:orderInCategory="200"
+        android:title="ScreenShot" />
 
     <item
         android:id="@+id/action_logout"
         android:icon="@mipmap/ic_logout"
-        android:orderInCategory="200"
-        android:title="Logout"
-        app:showAsAction="always" />
+        android:orderInCategory="300"
+        android:title="Logout" />
 </menu>

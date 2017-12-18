@@ -99,6 +99,8 @@ public class GSTINValidation {
 
     public static boolean checkValidStateCode(String gstin, Context activityContext)
     {
+        if(gstin ==  null || gstin.equals(""))
+            return true;
         boolean statecodePresent = false;
         //List<Integer> StateCodeList = Arrays.asList(R.array.poscode_list);
         List<String> StateCodeList = Arrays.asList(activityContext.getResources().getStringArray(R.array.poscode_list));
