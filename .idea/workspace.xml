@@ -106,8 +106,8 @@
       <file leaf-file-name="GSTINValidation.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/GSTINValidation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="98" column="47" lean-forward="false" selection-start-line="98" selection-start-column="47" selection-end-line="98" selection-end-column="47" />
+            <state relative-caret-position="399">
+              <caret line="103" column="5" lean-forward="true" selection-start-line="103" selection-start-column="5" selection-end-line="103" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -6862,7 +6862,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513626872979" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513627034690" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -6910,7 +6910,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513626872979" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513627034690" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -7093,7 +7093,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513626872980" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513627034691" />
       </method>
     </configuration>
     <configuration default="false" name="upgradeModule" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
@@ -7142,7 +7142,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513626872980" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1513627034691" />
       </method>
     </configuration>
     <list size="4">
@@ -7227,13 +7227,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
-    </task>
-    <task id="LOCAL-00139" summary="Billwise report issue">
-      <created>1506688810638</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1506688810638</updated>
     </task>
     <task id="LOCAL-00140" summary="Invalid gstin msg not displaying">
       <created>1507531665893</created>
@@ -7571,7 +7564,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513626861801</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="test github username">
+      <created>1513626898161</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1513626898161</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7666,7 +7666,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. customer details taking invalid phone number" />
     <MESSAGE value="1. toast showing error in payment due to unavailibity of internet&#10;2. Home icon and back icon removed from owner details page. Instead screenshot and logout icon are available." />
     <MESSAGE value="issue - more than 15 character GSTIN was getting accepted in setting display owner module&#10; no hint was available" />
     <MESSAGE value=" issue - User is unable to delete the customer added in table booking if phone number is of 10 digits and starts other than 0/1/2." />
@@ -7691,7 +7690,8 @@
     <MESSAGE value="Bug 205 - Coupon wont be added in the bill in Counter Sales while billing" />
     <MESSAGE value="Bug 205 - Coupon wont be added in the bill in Counter Sales while billing&#10;Bug 313 - 'Name' field in Owner details page should not take Special characters in it.&#10;" />
     <MESSAGE value="Bug 591 - Home shortcut button is missing in Inward Management page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug 591 - Home shortcut button is missing in Inward Management page" />
+    <MESSAGE value="test github username" />
+    <option name="LAST_COMMIT_MESSAGE" value="test github username" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -8605,8 +8605,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/GSTINValidation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="98" column="47" lean-forward="false" selection-start-line="98" selection-start-column="47" selection-end-line="98" selection-end-column="47" />
+        <state relative-caret-position="399">
+          <caret line="103" column="5" lean-forward="true" selection-start-line="103" selection-start-column="5" selection-end-line="103" selection-end-column="5" />
           <folding />
         </state>
       </provider>
