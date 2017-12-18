@@ -269,6 +269,15 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     TextWatcher textChangeCard = new TextWatcher() {
 
         public void afterTextChanged(Editable s) {
+            double OtherCardVal = edtOtherCards.getText().toString().equalsIgnoreCase("")?0:Double.parseDouble(edtOtherCards.getText().toString());
+            double dTotalValue = edtTotalValue.getText().toString().equalsIgnoreCase("") ? 0.00 : Double.parseDouble(edtTotalValue.getText().toString());
+
+            if(OtherCardVal > dTotalValue)
+            {
+                MsgBox.Show("Error","Other cards value cannot be greater than total bill amount");
+                edtOtherCards.setText("0");
+                return;
+            }
             TenderChange();
         }
 
@@ -429,9 +438,11 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
             if (edtCard.getText().toString().equalsIgnoreCase("") && edtOtherCards.getText().toString().equalsIgnoreCase(""))
                 dCard = 0.00;
+
             else {
                 double MSwipeVal = edtCard.getText().toString().equalsIgnoreCase("")?0:Double.parseDouble(edtCard.getText().toString());
                 double OtherCardVal = edtOtherCards.getText().toString().equalsIgnoreCase("")?0:Double.parseDouble(edtOtherCards.getText().toString());
+
                 /*if (MSwipeVal> 0 && OtherCardVal >0) {
                     Toast.makeText(this, "Please select one of the cards.", Toast.LENGTH_SHORT).show();
                     return;
