@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -50,7 +49,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
     private ArrayList<String> allRoles;
     Cursor crsrRole;
     MessageDialog MsgBox;
-    Button btnClearRole,btnCloseRole, delete, addrole;
+    Button btnClearRole,btnCloseRole, delete, btnaddrole;
     String strUserName = "";
     private Toolbar toolbar;
     ArrayList<String> listsAccess=null;
@@ -95,18 +94,18 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
         gridViewAccesses.setItemChecked(0, true);
 
         gridViewAccesses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(position ==0){
-                if(((android.support.v7.widget.AppCompatCheckedTextView)view).isChecked() == false)
-                {
-                    Toast.makeText(myContext,"Operator permission is given to all roles by default",Toast.LENGTH_SHORT).show();;
-                    gridViewAccesses.setItemChecked(0, true);
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position ==0){
+                    if(((android.support.v7.widget.AppCompatCheckedTextView)view).isChecked() == false)
+                    {
+                        Toast.makeText(myContext,"Operator permission is given to all roles by default",Toast.LENGTH_SHORT).show();;
+                        gridViewAccesses.setItemChecked(0, true);
 
+                    }
                 }
             }
-        }
-    });
+        });
     }
 
     private void clear()
@@ -126,7 +125,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
         //displayRoleList();
         delete.setEnabled(false);
         btnupdate.setEnabled(false);
-        addrole.setEnabled(true);
+        btnaddrole.setEnabled(true);
 
     }
     private void  clickEvents()
@@ -149,9 +148,9 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
     private void initialiseViewVariables()
     {
         try {
-             delete=(Button)findViewById(R.id.btnDeleteRole);
+            delete=(Button)findViewById(R.id.btnDeleteRole);
             btnupdate =(Button)findViewById(R.id.btnGrantAccess);
-            addrole=(Button)findViewById(R.id.btnAddRole);
+            btnaddrole =(Button)findViewById(R.id.btnAddRole);
             btnCloseRole = (Button) findViewById(R.id.closeRole);
             editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
             gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
@@ -243,6 +242,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
                                 gridViewAccesses.setItemChecked(key,false);
 //                                createPDF(txt,listsAccess.toString());
                             }
+                            gridViewAccesses.setItemChecked(0, true);
                         } else
                             Toast.makeText(myContext, "Sorry role cannot be added", Toast.LENGTH_SHORT).show();
                     }
@@ -399,12 +399,12 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
 
     public void askForDelete(final String roleName) {
         if(roleName.equalsIgnoreCase("Manager") || roleName.equalsIgnoreCase("HeadCook") || roleName.equalsIgnoreCase("Waiter")
-            || roleName.equalsIgnoreCase("Rider"))
+                || roleName.equalsIgnoreCase("Rider"))
         {
             MsgBox.Show("Error","Default roles can not be deleted");
             return;
         }
-         int roleId = dbHelper.getRoleIdForUserName(strUserName);
+        int roleId = dbHelper.getRoleIdForUserName(strUserName);
         if(roleId <1) {
             System.out.println("roleId received from database : "+roleId);
             Toast.makeText(myContext, "Sorry cannot delete",Toast.LENGTH_SHORT).show();
@@ -438,7 +438,8 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
                 int deleterole = dbHelper.deleteRole(roleName);
                 int deleteuserName = dbHelper.deleteUser(roleIdtoDelete);
                 rolesAdapter.remove(roleName);
-                btnClearRole.performClick();
+                rolesAdapter.notifyDataSetChanged();
+                clear();
                 dialog.dismiss();
 
             }

@@ -21,7 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomerDetailActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CustomerDetailActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="916" column="17" selection-start-line="916" selection-start-column="17" selection-end-line="916" selection-end-column="17" />
+            <state relative-caret-position="397">
+              <caret line="922" column="0" selection-start-line="922" selection-start-column="0" selection-end-line="922" selection-end-column="0" />
               <folding>
                 <element signature="e#44284#44292#0" expanded="true" />
                 <element signature="e#45149#45550#0" expanded="true" />
@@ -100,6 +100,51 @@
                 <element signature="e#45742#45743#0" expanded="true" />
                 <element signature="e#47007#47600#0" expanded="true" />
                 <element signature="e#47599#47600#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddRolesActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserManagementActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="57" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="468" selection-end-column="0" />
+              <folding>
+                <element signature="e#4273#4504#0" expanded="true" />
+                <element signature="e#4503#4504#0" expanded="true" />
+                <element signature="e#4821#4972#0" expanded="true" />
+                <element signature="e#4971#4972#0" expanded="true" />
+                <element signature="e#5016#5163#0" expanded="true" />
+                <element signature="e#5162#5163#0" expanded="true" />
+                <element signature="e#5206#5356#0" expanded="true" />
+                <element signature="e#5355#5356#0" expanded="true" />
+                <element signature="e#5399#5541#0" expanded="true" />
+                <element signature="e#5540#5541#0" expanded="true" />
+                <element signature="e#11536#11799#0" expanded="true" />
+                <element signature="e#11798#11799#0" expanded="true" />
+                <element signature="e#11854#12517#0" expanded="true" />
+                <element signature="e#12516#12517#0" expanded="true" />
+                <element signature="e#17104#17466#0" expanded="true" />
+                <element signature="e#17465#17466#0" expanded="true" />
+                <element signature="e#17510#17702#0" expanded="true" />
+                <element signature="e#17701#17702#0" expanded="true" />
+                <element signature="e#17814#17815#0" expanded="true" />
+                <element signature="e#17843#17844#0" expanded="true" />
+                <element signature="e#18306#18705#0" expanded="true" />
+                <element signature="e#18704#18705#0" expanded="true" />
+                <element signature="e#18848#18849#0" expanded="true" />
+                <element signature="e#18897#18898#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -6422,13 +6467,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/pay_bill_dialog.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/row_users.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/UsersListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OwnerDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_owner_details.xml" />
@@ -6473,6 +6516,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/test_fragment__gstr2__b2_b__amend.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/KOTStatusActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java" />
       </list>
     </option>
   </component>
@@ -7130,13 +7175,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00128" summary="Outward item csv including department code, categ code, hsn and barcode">
-      <created>1506420539441</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1506420539441</updated>
-    </task>
     <task id="LOCAL-00129" summary="views being overlapped by soft keyboard">
       <created>1506430574067</created>
       <option name="number" value="00129" />
@@ -7473,7 +7511,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513597725485</updated>
     </task>
-    <option name="localTasksCounter" value="177" />
+    <task id="LOCAL-00177" summary="Bug 594 - User is unable to delete multiple customers at once in 'Customers' page via 'Masters'">
+      <created>1513598328169</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1513598328169</updated>
+    </task>
+    <option name="localTasksCounter" value="178" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7495,7 +7540,7 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2996965" sideWeight="0.5068259" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40443686" sideWeight="0.22692889" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24232082" sideWeight="0.7980333" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24232082" sideWeight="0.7980333" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30992368" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35153583" sideWeight="0.48473284" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31740615" sideWeight="0.49389312" order="3" side_tool="false" content_ui="tabs" />
@@ -7592,7 +7637,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Removing GSTR data download API from Application. Now User can directly goto the ASP portal and download the data from GSP Portal" />
     <MESSAGE value="1. Correcting GSTIn validation in customer, ownerdetails and billing screens&#10;2. Implementing Credit limit for customers" />
     <MESSAGE value="remeber me not reflecting properly.Once remember me is checked, it remains checked everytime application is opened" />
     <MESSAGE value="stock not allowed to update if bill was made for that day in ItemManagement" />
@@ -7617,7 +7661,8 @@
     <MESSAGE value="Bug 577 - Search mobile number in table booking field should restricted to 10 digits.&#10;Bug 150 - Overlap in Tablebooking" />
     <MESSAGE value="Bug 579 - Incorrect message pops up while user searches for table in 'KOT Status' page via 'Dine In'" />
     <MESSAGE value="Bug 587 - 'Supplier Type' field is truncated in 'Amendments' via Home Page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug 587 - 'Supplier Type' field is truncated in 'Amendments' via Home Page" />
+    <MESSAGE value="Bug 594 - User is unable to delete multiple customers at once in 'Customers' page via 'Masters'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug 594 - User is unable to delete multiple customers at once in 'Customers' page via 'Masters'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7780,13 +7825,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java</url>
-          <line>239</line>
+          <line>265</line>
           <properties />
           <option name="timeStamp" value="672" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java</url>
-          <line>275</line>
+          <line>277</line>
           <properties />
           <option name="timeStamp" value="673" />
         </line-breakpoint>
@@ -7857,20 +7902,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-24/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="2706" column="0" selection-start-line="2706" selection-start-column="0" selection-end-line="2706" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/ActionBarUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="96" column="34" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -8517,8 +8548,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="916" column="17" selection-start-line="916" selection-start-column="17" selection-end-line="916" selection-end-column="17" />
+        <state relative-caret-position="397">
+          <caret line="922" column="0" selection-start-line="922" selection-start-column="0" selection-end-line="922" selection-end-column="0" />
           <folding>
             <element signature="e#44284#44292#0" expanded="true" />
             <element signature="e#45149#45550#0" expanded="true" />
@@ -8528,6 +8559,47 @@
             <element signature="e#47007#47600#0" expanded="true" />
             <element signature="e#47599#47600#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="57" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="468" selection-end-column="0" />
+          <folding>
+            <element signature="e#4273#4504#0" expanded="true" />
+            <element signature="e#4503#4504#0" expanded="true" />
+            <element signature="e#4821#4972#0" expanded="true" />
+            <element signature="e#4971#4972#0" expanded="true" />
+            <element signature="e#5016#5163#0" expanded="true" />
+            <element signature="e#5162#5163#0" expanded="true" />
+            <element signature="e#5206#5356#0" expanded="true" />
+            <element signature="e#5355#5356#0" expanded="true" />
+            <element signature="e#5399#5541#0" expanded="true" />
+            <element signature="e#5540#5541#0" expanded="true" />
+            <element signature="e#11536#11799#0" expanded="true" />
+            <element signature="e#11798#11799#0" expanded="true" />
+            <element signature="e#11854#12517#0" expanded="true" />
+            <element signature="e#12516#12517#0" expanded="true" />
+            <element signature="e#17104#17466#0" expanded="true" />
+            <element signature="e#17465#17466#0" expanded="true" />
+            <element signature="e#17510#17702#0" expanded="true" />
+            <element signature="e#17701#17702#0" expanded="true" />
+            <element signature="e#17814#17815#0" expanded="true" />
+            <element signature="e#17843#17844#0" expanded="true" />
+            <element signature="e#18306#18705#0" expanded="true" />
+            <element signature="e#18704#18705#0" expanded="true" />
+            <element signature="e#18848#18849#0" expanded="true" />
+            <element signature="e#18897#18898#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
