@@ -147,7 +147,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     double dPettCashPayment = 0;
     float dDiscPercent = 0;
     float fWalletPayment = 0;
-    float fChangePayment = 0, fRoundOfValue =0;
+    double dChangePayment = 0;
+    float fRoundOfValue =0;
     double dFinalBillValue=0;
     double dServiceTaxPercent = 0, dOtherChrgs = 0;
     String strPaymentStatus = "", strMakeOrder = "";
@@ -2215,7 +2216,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         else
         {
             Log.d("AddItemToOrderTable", "ItemNotFound Exception");
-            MsgBox.Show("Oops ","Item not found");
+            // MsgBox.Show("Oops ","Item not found");
         }
     }
 
@@ -3258,6 +3259,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         fRoundOfValue =0;
         AMOUNTPRINTINNEXTLINE =0;
 
+        fCashPayment = 0;
+        fCardPayment = 0;
+        fCouponPayment = 0;
+        fPaidTotalPayment = 0;
+        dPettCashPayment = 0;
+        dChangePayment = 0;
+        fWalletPayment = 0;
+        dFinalBillValue = 0;
+
     }
 
 
@@ -3514,7 +3524,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 double  taxableValue = Double.valueOf(TaxableValue.getText().toString()) +
                         Double.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("TaxableValue")));
 
-                lResult = dbBillScreen.updateKOT(itemno, Qty, Amt, TaxAmt, SerTaxAmt, jBillingMode, Status,IAmt,cessAmount,taxableValue);
+                lResult = dbBillScreen.updateKOT(itemno, Qty, Amt, TaxAmt, SerTaxAmt, jBillingMode, IAmt,cessAmount,taxableValue);
                 Log.d("UpdateKOT", "KOT item updated at position:" + lResult);
             } else {
 
@@ -4868,7 +4878,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         //    if(ItemwiseDiscountEnabled ==1)
         calculateDiscountAmount();
         float discount = Float.parseFloat(tvDiscountAmount.getText().toString());
-        objBillDetail.setTotalDiscountAmount(discount);
+        //objBillDetail.setTotalDiscountAmount(discount);
+        objBillDetail.setTotalDiscountAmount(fTotalDiscount);
         Log.d("InsertBillDetail", "Total Discount:" + discount);
 
         // Sales Tax Amount
@@ -4981,8 +4992,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
             // Change Payment
-            objBillDetail.setChangePayment(fChangePayment);
-            Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
+            objBillDetail.setChangePayment(dChangePayment);
+            Log.d("InsertBillDetail", "ChangePayment:" + dChangePayment);
+
             objBillDetail.setfRoundOff(fRoundOfValue);
             Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
 
@@ -5017,8 +5029,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
                 // Change Payment
-                objBillDetail.setChangePayment(fChangePayment);
-                Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
+                objBillDetail.setChangePayment(dChangePayment);
+                Log.d("InsertBillDetail", "ChangePayment:" + dChangePayment);
                 objBillDetail.setfRoundOff(fRoundOfValue);
                 Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
             } else {
@@ -5050,8 +5062,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
                 // Change Payment
-                objBillDetail.setChangePayment(fChangePayment);
-                Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
+                objBillDetail.setChangePayment(dChangePayment);
+                Log.d("InsertBillDetail", "ChangePayment:" + dChangePayment);
                 objBillDetail.setfRoundOff(fRoundOfValue);
                 Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
             }
@@ -6522,7 +6534,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         dPettCashPayment = data.getDoubleExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
                         fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
                         fWalletPayment = data.getFloatExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
-                        fChangePayment = data.getFloatExtra(PayBillActivity.TENDER_CHANGE_AMOUNT, 0);
+                        dChangePayment = data.getDoubleExtra(PayBillActivity.TENDER_CHANGE_VALUE, 0);
                         fRoundOfValue = data.getFloatExtra(PayBillActivity.TENDER_ROUNDOFF, 0);
                         dFinalBillValue = data.getDoubleExtra(PayBillActivity.TENDER_FINALBILL_VALUE, 0);
 
@@ -6756,7 +6768,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                         Cursor cursorBillInfo = db.getBillDetail_counter(Integer.parseInt(strBillNo), String.valueOf(milli));
                                         System.out.println("Cursor:"+cursorBillInfo.getCount());
                                         if (cursorBillInfo.moveToNext()) {
-                                            fRoundOfValue = cursorBillInfo.getString(cursorBillInfo.getColumnIndex("TotalDiscountAmount"))== null?
+                                            fRoundOfValue = cursorBillInfo.getString(cursorBillInfo.getColumnIndex("RoundOff"))== null?
                                                     0: Float.parseFloat(String.format("%.2f", cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("RoundOff"))));
                                             tvDiscountAmount.setText(String.format("%.2f", cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("TotalDiscountAmount"))));
                                             tvDiscountPercentage.setText(String.format("%.2f", cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("DiscPercentage"))));
@@ -7535,6 +7547,50 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     item.setTotalSalesTaxAmount(tvTaxTotal.getText().toString());
                     item.setTotalServiceTaxAmount(tvServiceTaxTotal.getText().toString());
                     item.setRoundOff(fRoundOfValue);
+                    String date_today = tvDate.getText().toString();
+                    //Log.d("Date ", date_today);
+                    try {
+                        Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_today);
+                        Cursor paymentModeinBillcrsr = db.getBillDetail_counter((orderId),String.valueOf(date1.getTime()));
+                        if(paymentModeinBillcrsr!=null && paymentModeinBillcrsr.moveToFirst())
+                        {
+                            double cardValue = 0.00,eWalletValue = 0.00,couponValue = 0.00,pettyCashValue = 0.00,
+                                    cashValue = 0.00,changeValue = 0.00;
+
+                            if(paymentModeinBillcrsr.getString(paymentModeinBillcrsr.getColumnIndex("CardPayment")) !=null)
+                                cardValue = paymentModeinBillcrsr.getDouble(paymentModeinBillcrsr.getColumnIndex("CardPayment"));
+                            if(paymentModeinBillcrsr.getString(paymentModeinBillcrsr.getColumnIndex("WalletPayment")) !=null)
+                                eWalletValue = paymentModeinBillcrsr.getDouble(paymentModeinBillcrsr.getColumnIndex("WalletPayment"));
+                            if(paymentModeinBillcrsr.getString(paymentModeinBillcrsr.getColumnIndex("CouponPayment")) !=null)
+                                couponValue = paymentModeinBillcrsr.getDouble(paymentModeinBillcrsr.getColumnIndex("CouponPayment"));
+                            if(paymentModeinBillcrsr.getString(paymentModeinBillcrsr.getColumnIndex("PettyCashPayment")) !=null)
+                                pettyCashValue = paymentModeinBillcrsr.getDouble(paymentModeinBillcrsr.getColumnIndex("PettyCashPayment"));
+                            if(paymentModeinBillcrsr.getString(paymentModeinBillcrsr.getColumnIndex("CashPayment")) !=null)
+                                cashValue = paymentModeinBillcrsr.getDouble(paymentModeinBillcrsr.getColumnIndex("CashPayment"));
+                            if(paymentModeinBillcrsr.getString(paymentModeinBillcrsr.getColumnIndex("ChangePayment")) !=null)
+                                changeValue = paymentModeinBillcrsr.getDouble(paymentModeinBillcrsr.getColumnIndex("ChangePayment"));
+
+
+                            cardValue = Double.parseDouble(String.format("%.2f",cardValue));
+                            eWalletValue = Double.parseDouble(String.format("%.2f",eWalletValue));
+                            couponValue = Double.parseDouble(String.format("%.2f",couponValue));
+                            pettyCashValue = Double.parseDouble(String.format("%.2f",pettyCashValue));
+                            cashValue = Double.parseDouble(String.format("%.2f",cashValue));
+                            changeValue = Double.parseDouble(String.format("%.2f",changeValue));
+
+                            item.setCardPaymentValue(cardValue);
+                            item.seteWalletPaymentValue(eWalletValue);
+                            item.setCouponPaymentValue(couponValue);
+                            item.setPettyCashPaymentValue(pettyCashValue);
+                            item.setCashPaymentValue(cashValue);
+                            item.setChangePaymentValue(changeValue);
+                        }
+
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
                     if(reprintBillingMode == 0) {
                         if (jBillingMode == 4)
                             item.setStrBillingModeName(HomeDeliveryCaption);
@@ -7545,7 +7601,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
                         item.setTime(strTime);
 
-                    }else
+                    }else // reprint
                     {
                         switch (reprintBillingMode)
                         {
@@ -8029,12 +8085,18 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     boolean mFlag = GSTINValidation.checkGSTINValidation(gstin);
                     if(mFlag)
                     {
-                        InsertCustomer(edtCustAddress.getText().toString(), edtCustPhoneNo.getText().toString(),
-                                edtCustName.getText().toString(), 0, 0, 0, gstin);
-                        //ResetCustomer();
-                        //MsgBox.Show("", "Customer Added Successfully");
-                        Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
-                        ControlsSetEnabled();
+                        if(!GSTINValidation.checkValidStateCode(gstin,this))
+                        {
+                            MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
+                        }
+                        else {
+                            InsertCustomer(edtCustAddress.getText().toString(), edtCustPhoneNo.getText().toString(),
+                                    edtCustName.getText().toString(), 0, 0, 0, gstin);
+                            //ResetCustomer();
+                            //MsgBox.Show("", "Customer Added Successfully");
+                            Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
+                            ControlsSetEnabled();
+                        }
                     }else
                     {
                         MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
@@ -8213,7 +8275,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         /*Log.d("TAG",String.valueOf(dd));
         Log.d("TAG1",String.valueOf(event.getEventTime()-event.getDownTime()));
         Log.d("TAG",String.valueOf(event));*/
-       // System.out.println("Richa : "+event.getKeyCode()+" SC "+event.getScanCode());
+        // System.out.println("Richa : "+event.getKeyCode()+" SC "+event.getScanCode());
         //Toast.makeText(myContext, "Richa : "+event.getKeyCode()+" keycode = "+keyCode, Toast.LENGTH_SHORT).show();
         if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
         {

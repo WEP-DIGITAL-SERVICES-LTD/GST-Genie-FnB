@@ -157,19 +157,19 @@
     <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-25.0.1" level="project" />
-    <orderEntry type="library" exported="" name="support-vector-drawable-25.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-25.0.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-25.0.1" level="project" />
     <orderEntry type="library" exported="" name="apachehttp" level="project" />
     <orderEntry type="library" exported="" name="simplyprintapi-android-1.3.0" level="project" />
     <orderEntry type="library" exported="" name="MswipeWisepadDRDSDKAPIVer2.5.4" level="project" />
-    <orderEntry type="library" exported="" name="upgradeModule-unspecified" level="project" />
-    <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="apachestrlib" level="project" />
     <orderEntry type="library" exported="" name="jcc-bate-0.7.3" level="project" />
     <orderEntry type="library" exported="" name="effica_lib" level="project" />
     <orderEntry type="library" exported="" name="guava-19.0" level="project" />
     <orderEntry type="library" exported="" name="commons-lang-2.6" level="project" />
     <orderEntry type="library" exported="" name="gprinter-2.1.2" level="project" />
+    <orderEntry type="library" exported="" name="library-1.0.19" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
   </component>
 </module>

@@ -131,6 +131,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="Enter Name"
+                    android:digits="@string/nameValidtaion"
                     android:inputType="text" />
             </LinearLayout>
 
@@ -159,7 +160,6 @@
                     android:layout_weight="1"
                     android:hint="eg. 00ABCDE0123A1ZZ"
                     android:inputType="text"
-
                     android:maxLength="15" />
             </LinearLayout>
 
@@ -185,6 +185,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="reference no"
+                    android:digits="@string/nameValidtaion"
                     android:inputType="text" />
             </LinearLayout>
 
@@ -287,6 +288,7 @@
                     android:layout_weight="1"
                     android:hint="ABCD"
                     android:inputType="text"
+                    android:digits="@string/nameValidtaion"
                     android:maxLength="8" />
             </LinearLayout>
 

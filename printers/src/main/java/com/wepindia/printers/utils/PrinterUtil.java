@@ -29,9 +29,9 @@ import java.util.Vector;
  */
 
 public class PrinterUtil {
-    
+
     private Context context;
-    
+
     public PrinterUtil(Context context){
         this.context = context;
     }
@@ -401,7 +401,7 @@ public class PrinterUtil {
         esc.addText("=============================================\n");
         esc.addText("Attendant : "+item.getOrderBy()+"\n");
         if ((item.getWaiterName() != null) && !(item.getWaiterName().equals("")))
-         esc.addText("Waiter : "+item.getWaiterName()+"\n");
+            esc.addText("Waiter : "+item.getWaiterName()+"\n");
         esc.addText("Date : "+item.getDate() +" | "+"Time : "+item.getTime()+"\n");
         esc.addText("=============================================\n");
 //        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
@@ -418,7 +418,7 @@ public class PrinterUtil {
             BillKotItem billKotItem = (BillKotItem) it.next();
             int id = billKotItem.getItemId();
             String name = getFormatedCharacterForPrint(billKotItem.getItemName(),16,1);
-            String qty = billKotItem.getQty()+"";
+            String qty = String.format("%.2f",billKotItem.getQty());
             String pre = getPostAddedSpaceFormat("",String.valueOf(id),10,1)+name;
             esc.addText(getPreAddedSpaceFormat(pre,qty,38,1)+"\n");
         }
@@ -693,8 +693,27 @@ public class PrinterUtil {
         esc.addText(getSpaceFormater("TOTAL",String.format("%.2f",item.getNetTotal()),48,1)+"\n");
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         if(item.getRoundOff()>0){
-            esc.addText("------------------------------------------------\n");
+            //esc.addText("------------------------------------------------\n");
             esc.addText(getSpaceFormater("Total Roundoff to 1.00 ","",48,1)+"\n");
+        }
+        if(item.getCardPaymentValue()>0 || item.geteWalletPaymentValue()>0 ||
+                item.getCouponPaymentValue()>0 || item.getPettyCashPaymentValue()>0 ){
+            esc.addText("================================================"+"\n");
+            if(item.getCardPaymentValue()>0)
+                esc.addText(getSpaceFormater("Card Payment",String.format("%.2f",item.getCardPaymentValue()),48,1)+"\n");
+            if(item.geteWalletPaymentValue()>0)
+                esc.addText(getSpaceFormater("eWallet Payment",String.format("%.2f",item.geteWalletPaymentValue()),48,1)+"\n");
+            if(item.getCouponPaymentValue()>0)
+                esc.addText(getSpaceFormater("Coupon Payment",String.format("%.2f",item.getCouponPaymentValue()),48,1)+"\n");
+            if(item.getPettyCashPaymentValue()>0)
+                esc.addText(getSpaceFormater("PettyCash Payment",String.format("%.2f",item.getPettyCashPaymentValue()),48,1)+"\n");
+            if(item.getCashPaymentValue()>0)
+                esc.addText(getSpaceFormater("Cash Payment",String.format("%.2f",item.getCashPaymentValue()),48,1)+"\n");
+        }
+
+        if (item.getChangePaymentValue()>0) {
+            esc.addText("------------------------------------------------"+"\n");
+            esc.addText(getSpaceFormater("Due amount",String.format("%.2f",item.getChangePaymentValue()),48,1)+"\n");
         }
         esc.addText("================================================"+"\n");
         if(!item.getFooterLine1().equals(""))

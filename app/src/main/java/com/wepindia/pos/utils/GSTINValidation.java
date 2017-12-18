@@ -1,5 +1,11 @@
 package com.wepindia.pos.utils;
 
+import android.content.Context;
+
+import com.wepindia.pos.R;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,20 +26,13 @@ public class GSTINValidation {
             if(str.trim().length() == 0)
             {mFlag = true;}
             else if (str.trim().length() > 0 && str.length() == 15) {
-                String[] part = str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                if ((part.length == 7 ||part.length == 6)
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(str.substring(13,14),"String")
-                        //&& (((int)(str.charAt(13))) >=65 && ((int)(str.charAt(13))) <=90)
-                        && (CHECK_INTEGER_VALUE == checkDataypeValue(str.substring(14),"Int") ||
-                        CHECK_STRING_VALUE == checkDataypeValue(str.substring(14),"String"))) {
-
+                Pattern p = Pattern.compile("^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ][0-9a-zA-Z]{1}$");
+                Matcher m = p.matcher(str);
+                if(m.find())
+                {
                     mFlag = true;
-                } else {
+                }
+                else {
                     mFlag = false;
                 }
             } else {
@@ -96,6 +95,17 @@ public class GSTINValidation {
             return  result;
         }
 
+    }
+
+    public static boolean checkValidStateCode(String gstin, Context activityContext)
+    {
+        boolean statecodePresent = false;
+        //List<Integer> StateCodeList = Arrays.asList(R.array.poscode_list);
+        List<String> StateCodeList = Arrays.asList(activityContext.getResources().getStringArray(R.array.poscode_list));
+        String statecode = (gstin.substring(0,2));
+        if(StateCodeList.contains(statecode))
+            statecodePresent =  true;
+        return statecodePresent;
     }
 
 }

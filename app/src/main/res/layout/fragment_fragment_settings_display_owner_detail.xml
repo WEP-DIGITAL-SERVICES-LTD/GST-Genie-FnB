@@ -217,6 +217,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="reference no"
+                android:digits="@string/nameValidtaion"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -244,6 +245,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="ABCD"
+                android:digits="@string/nameValidtaion"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="text"
                 android:maxLength="8" />

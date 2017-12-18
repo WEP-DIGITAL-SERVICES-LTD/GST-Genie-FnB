@@ -59,10 +59,17 @@ public class PrintKotBillItem implements Serializable {
     private int UTGSTEnabled = 0;
     private int HSNPrintEnabled_out = 0;
     private float roundOff = 0;
+    private  double cardPaymentValue =0.00;
+    private  double pettyCashPaymentValue =0.00;
+    private  double eWalletPaymentValue =0.00;
+    private  double couponPaymentValue =0.00;
+    private  double cashPaymentValue =0.00;
+    private double changePaymentValue =0.00;
 
     public PrintKotBillItem() {
     }
 
+    // please check all the parameters are present in this constructor or not, before calling from your activity
     public PrintKotBillItem(String billNo, String tableNo, String waiterName, int waiterNo,
                             int boldHeader, int ownerDetail, int printService, String orderBy,
                             String customerName, String date, String time, double subTotal,
@@ -123,6 +130,54 @@ public class PrintKotBillItem implements Serializable {
         this.UTGSTEnabled = UTGSTEnabled;
         this.HSNPrintEnabled_out = HSNPrintEnabled_out;
         this.roundOff = roundOff;
+    }
+
+    public double getChangePaymentValue() {
+        return changePaymentValue;
+    }
+
+    public void setChangePaymentValue(double changePaymentValue) {
+        this.changePaymentValue = changePaymentValue;
+    }
+
+    public double getCardPaymentValue() {
+        return cardPaymentValue;
+    }
+
+    public void setCardPaymentValue(double cardPaymentValue) {
+        this.cardPaymentValue = cardPaymentValue;
+    }
+
+    public double getPettyCashPaymentValue() {
+        return pettyCashPaymentValue;
+    }
+
+    public void setPettyCashPaymentValue(double pettyCashPaymentValue) {
+        this.pettyCashPaymentValue = pettyCashPaymentValue;
+    }
+
+    public double geteWalletPaymentValue() {
+        return eWalletPaymentValue;
+    }
+
+    public void seteWalletPaymentValue(double eWalletPaymentValue) {
+        this.eWalletPaymentValue = eWalletPaymentValue;
+    }
+
+    public double getCouponPaymentValue() {
+        return couponPaymentValue;
+    }
+
+    public void setCouponPaymentValue(double couponPaymentValue) {
+        this.couponPaymentValue = couponPaymentValue;
+    }
+
+    public double getCashPaymentValue() {
+        return cashPaymentValue;
+    }
+
+    public void setCashPaymentValue(double cashPaymentValue) {
+        this.cashPaymentValue = cashPaymentValue;
     }
 
     public int getAmountInNextLine() {
