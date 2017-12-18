@@ -19,10 +19,10 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" line="6756" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="Bug 660 - Application crashes when we try to edit amount in mswipe opening page while adding mobile number.  &#10;Fix - editing amount in Mswipe screen is disabled.">
+    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
@@ -66,49 +66,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="232" column="42" selection-start-line="232" selection-start-column="42" selection-end-line="232" selection-end-column="42" />
+            <state relative-caret-position="158">
+              <caret line="1736" column="5" selection-start-line="1736" selection-start-column="5" selection-end-line="1736" selection-end-column="5" />
               <folding>
-                <element signature="e#10262#10263#0" expanded="true" />
-                <element signature="e#10300#10301#0" expanded="true" />
-                <element signature="e#10612#10613#0" expanded="true" />
-                <element signature="e#10650#10651#0" expanded="true" />
-                <element signature="e#31676#34676#0" expanded="true" />
-                <element signature="e#34675#34676#0" expanded="true" />
-                <element signature="e#37092#37678#0" expanded="true" />
-                <element signature="e#37677#37678#0" expanded="true" />
-                <element signature="e#38667#39782#0" expanded="true" />
-                <element signature="e#39781#39782#0" expanded="true" />
-                <element signature="e#44422#45042#0" expanded="true" />
-                <element signature="e#45041#45042#0" expanded="true" />
-                <element signature="e#48481#48651#0" expanded="true" />
-                <element signature="e#48650#48651#0" expanded="true" />
-                <element signature="e#49293#52332#0" expanded="true" />
-                <element signature="e#52331#52332#0" expanded="true" />
-                <element signature="e#54283#54343#0" expanded="true" />
-                <element signature="e#56450#56504#0" expanded="true" />
-                <element signature="e#63783#65132#0" expanded="true" />
-                <element signature="e#65131#65132#0" expanded="true" />
-                <element signature="e#65573#65574#0" expanded="true" />
-                <element signature="e#65597#65598#0" expanded="true" />
-                <element signature="e#66293#69977#0" expanded="true" />
-                <element signature="e#69976#69977#0" expanded="true" />
-                <element signature="e#70030#70031#0" expanded="true" />
-                <element signature="e#70062#70063#0" expanded="true" />
-                <element signature="e#70431#70432#0" expanded="true" />
-                <element signature="e#70463#70464#0" expanded="true" />
-                <element signature="e#70708#70709#0" expanded="true" />
-                <element signature="e#70737#70738#0" expanded="true" />
-                <element signature="e#71200#71545#0" expanded="true" />
-                <element signature="e#71544#71545#0" expanded="true" />
-                <element signature="e#71681#71682#0" expanded="true" />
-                <element signature="e#71711#71712#0" expanded="true" />
-                <element signature="e#77665#77840#0" expanded="true" />
-                <element signature="e#77839#77840#0" expanded="true" />
+                <element signature="e#54665#54725#0" expanded="true" />
+                <element signature="e#56953#57007#0" expanded="true" />
+                <element signature="e#78169#78344#0" expanded="true" />
+                <element signature="e#78343#78344#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppPrefrences.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="17" column="57" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="57" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -6506,7 +6484,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerOrdersActivity.java" />
-        <option value="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/paybill_tablelist.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" />
@@ -6515,6 +6492,7 @@
         <option value="$PROJECT_DIR$/mSwipe/src/main/res/layout/activity_payment_mswipe.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
+        <option value="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" />
       </list>
     </option>
   </component>
@@ -6586,6 +6564,48 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GST-Genie-V1.2" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GST-Genie-V1.2" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pos" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GST-Genie-V1.2" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -6605,7 +6625,7 @@
     <property name="android.project.structure.last.selected" value="upgradeModule" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-hdpi" />
-    <property name="SearchEverywhereHistoryKey" value="ctivity_payment&#9;FILE&#9;file://E:/FnbProjects/ReleaseGSTGinne/EasyBill-V2.8/mSwipe/src/main/res/layout/activity_payment_mswipe.xml&#10;AppP&#9;FILE&#9;file://E:/FnbProjects/ReleaseGSTGinne/EasyBill-V2.8/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java&#10;appp&#9;PSI&#9;JAVA://com.mswipetech.wisepad.sdktest.data.AppPrefrences&#10;preference&#9;PSI&#9;JAVA://com.mswipetech.wisepad.sdktest.view.ApplicationData#appSharedPreferences&#10;ItemIn&#9;PSI&#9;JAVA://com.wep.common.app.models.ItemInward&#10;SplitBil&#9;PSI&#9;JAVA://com.wepindia.pos.SplitBillActivity&#10;PrintKot&#9;PSI&#9;JAVA://com.wep.common.app.print.PrintKotBillItem&#10;KOTStatus&#9;PSI&#9;JAVA://com.wepindia.pos.KOTStatusActivity&#10;master&#9;PSI&#9;JAVA://com.wepindia.pos.MasterActivity&#10;Data&#9;PSI&#9;JAVA://com.wep.common.app.Database.DatabaseHandler&#10;D&#9;FILE&#9;file://E:/20sep/wepfnb_gst/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java&#10;BillSetti&#9;PSI&#9;JAVA://com.wep.common.app.Database.BillSetting&#10;apputil&#9;PSI&#9;JAVA://com.wep.common.app.utils.AppUtils" />
+    <property name="SearchEverywhereHistoryKey" value="App&#9;FILE&#9;file://E:/FnbProjects/ReleaseGSTGinne/GithubCode/GST-Genie-V1.2/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java&#10;ctivity_payment&#9;FILE&#9;file://E:/FnbProjects/ReleaseGSTGinne/EasyBill-V2.8/mSwipe/src/main/res/layout/activity_payment_mswipe.xml&#10;AppP&#9;FILE&#9;file://E:/FnbProjects/ReleaseGSTGinne/EasyBill-V2.8/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java&#10;appp&#9;PSI&#9;JAVA://com.mswipetech.wisepad.sdktest.data.AppPrefrences&#10;preference&#9;PSI&#9;JAVA://com.mswipetech.wisepad.sdktest.view.ApplicationData#appSharedPreferences&#10;ItemIn&#9;PSI&#9;JAVA://com.wep.common.app.models.ItemInward&#10;SplitBil&#9;PSI&#9;JAVA://com.wepindia.pos.SplitBillActivity&#10;PrintKot&#9;PSI&#9;JAVA://com.wep.common.app.print.PrintKotBillItem&#10;KOTStatus&#9;PSI&#9;JAVA://com.wepindia.pos.KOTStatusActivity&#10;master&#9;PSI&#9;JAVA://com.wepindia.pos.MasterActivity&#10;Data&#9;PSI&#9;JAVA://com.wep.common.app.Database.DatabaseHandler&#10;D&#9;FILE&#9;file://E:/20sep/wepfnb_gst/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java&#10;BillSetti&#9;PSI&#9;JAVA://com.wep.common.app.Database.BillSetting&#10;apputil&#9;PSI&#9;JAVA://com.wep.common.app.utils.AppUtils" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -7080,13 +7100,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00121" summary="removing mandatory entry of secret key in paymentmodeconfiguration">
-      <created>1505485298284</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1505485298284</updated>
-    </task>
     <task id="LOCAL-00122" summary="1. Mswipe : swipe card details not getting returned to our app.&#10;2. rectifying misallignment in reports.&#10;3. removing compulsory entry of secret key for razorpay in PaymentModeConfiguration&#10;4. Images taking underscore for all spaces in images name.">
       <created>1505803213132</created>
       <option name="number" value="00122" />
@@ -7423,7 +7436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513582754845</updated>
     </task>
-    <option name="localTasksCounter" value="170" />
+    <task id="LOCAL-00170" summary="checking changes">
+      <created>1513585617378</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1513585617378</updated>
+    </task>
+    <option name="localTasksCounter" value="171" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7542,7 +7562,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="misallignment in hsn summary report" />
     <MESSAGE value="amount not printing in corresponding column for larger value of amount in bill" />
     <MESSAGE value="dept and category not displaying properly when items are loaded from csv" />
     <MESSAGE value="tax amount not coming correct in reports(tax report)" />
@@ -7567,7 +7586,8 @@
     <MESSAGE value="Committing V1.1P GST Ginie F" />
     <MESSAGE value="Bug 6 - when user changes quantity to 'zero' from '1' in 'Counter Sales', Amount fied is not updated to Amount '0.0' --  issue is that amount is coming inclusive of item wise discount. As per discussion , discount need to be displayed in order table. As of now, displaying msg for discount inclusive in amount." />
     <MESSAGE value="Bug 660 - Application crashes when we try to edit amount in mswipe opening page while adding mobile number.  &#10;Fix - editing amount in Mswipe screen is disabled." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug 660 - Application crashes when we try to edit amount in mswipe opening page while adding mobile number.  &#10;Fix - editing amount in Mswipe screen is disabled." />
+    <MESSAGE value="checking changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="checking changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7586,19 +7606,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>972</line>
+          <line>978</line>
           <properties />
           <option name="timeStamp" value="626" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1029</line>
+          <line>1035</line>
           <properties />
           <option name="timeStamp" value="628" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1051</line>
+          <line>1057</line>
           <properties />
           <option name="timeStamp" value="629" />
         </line-breakpoint>
@@ -7706,37 +7726,37 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1134</line>
+          <line>1140</line>
           <properties />
           <option name="timeStamp" value="662" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1117</line>
+          <line>1123</line>
           <properties />
           <option name="timeStamp" value="663" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1125</line>
+          <line>1131</line>
           <properties />
           <option name="timeStamp" value="665" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1217</line>
+          <line>1225</line>
           <properties />
           <option name="timeStamp" value="666" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1214</line>
+          <line>1222</line>
           <properties />
           <option name="timeStamp" value="667" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1230</line>
+          <line>1238</line>
           <properties />
           <option name="timeStamp" value="668" />
         </line-breakpoint>
@@ -7778,19 +7798,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1741</line>
+          <line>1748</line>
           <properties />
           <option name="timeStamp" value="675" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1694</line>
+          <line>1701</line>
           <properties />
           <option name="timeStamp" value="676" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1721</line>
+          <line>1728</line>
           <properties />
           <option name="timeStamp" value="677" />
         </line-breakpoint>
@@ -7814,19 +7834,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>909</line>
+          <line>915</line>
           <properties />
           <option name="timeStamp" value="691" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>907</line>
+          <line>913</line>
           <properties />
           <option name="timeStamp" value="692" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>902</line>
+          <line>908</line>
           <properties />
           <option name="timeStamp" value="693" />
         </line-breakpoint>
@@ -8227,13 +8247,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -8260,6 +8273,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="367">
           <caret line="264" column="35" selection-start-line="264" selection-start-column="35" selection-end-line="264" selection-end-column="35" />
+          <folding>
+            <element signature="e#5246#8588#0" expanded="false" />
+            <element signature="e#12503#12532#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -8335,46 +8352,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="232" column="42" selection-start-line="232" selection-start-column="42" selection-end-line="232" selection-end-column="42" />
+        <state relative-caret-position="158">
+          <caret line="1736" column="5" selection-start-line="1736" selection-start-column="5" selection-end-line="1736" selection-end-column="5" />
           <folding>
-            <element signature="e#10262#10263#0" expanded="true" />
-            <element signature="e#10300#10301#0" expanded="true" />
-            <element signature="e#10612#10613#0" expanded="true" />
-            <element signature="e#10650#10651#0" expanded="true" />
-            <element signature="e#31676#34676#0" expanded="true" />
-            <element signature="e#34675#34676#0" expanded="true" />
-            <element signature="e#37092#37678#0" expanded="true" />
-            <element signature="e#37677#37678#0" expanded="true" />
-            <element signature="e#38667#39782#0" expanded="true" />
-            <element signature="e#39781#39782#0" expanded="true" />
-            <element signature="e#44422#45042#0" expanded="true" />
-            <element signature="e#45041#45042#0" expanded="true" />
-            <element signature="e#48481#48651#0" expanded="true" />
-            <element signature="e#48650#48651#0" expanded="true" />
-            <element signature="e#49293#52332#0" expanded="true" />
-            <element signature="e#52331#52332#0" expanded="true" />
-            <element signature="e#54283#54343#0" expanded="true" />
-            <element signature="e#56450#56504#0" expanded="true" />
-            <element signature="e#63783#65132#0" expanded="true" />
-            <element signature="e#65131#65132#0" expanded="true" />
-            <element signature="e#65573#65574#0" expanded="true" />
-            <element signature="e#65597#65598#0" expanded="true" />
-            <element signature="e#66293#69977#0" expanded="true" />
-            <element signature="e#69976#69977#0" expanded="true" />
-            <element signature="e#70030#70031#0" expanded="true" />
-            <element signature="e#70062#70063#0" expanded="true" />
-            <element signature="e#70431#70432#0" expanded="true" />
-            <element signature="e#70463#70464#0" expanded="true" />
-            <element signature="e#70708#70709#0" expanded="true" />
-            <element signature="e#70737#70738#0" expanded="true" />
-            <element signature="e#71200#71545#0" expanded="true" />
-            <element signature="e#71544#71545#0" expanded="true" />
-            <element signature="e#71681#71682#0" expanded="true" />
-            <element signature="e#71711#71712#0" expanded="true" />
-            <element signature="e#77665#77840#0" expanded="true" />
-            <element signature="e#77839#77840#0" expanded="true" />
+            <element signature="e#54665#54725#0" expanded="true" />
+            <element signature="e#56953#57007#0" expanded="true" />
+            <element signature="e#78169#78344#0" expanded="true" />
+            <element signature="e#78343#78344#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="17" column="57" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
