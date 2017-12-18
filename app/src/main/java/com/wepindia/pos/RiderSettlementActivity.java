@@ -83,7 +83,7 @@ public class RiderSettlementActivity extends WepBaseActivity{
 		InitializeViews();
 
 		LoadPendingDelivery();
-		com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Rider Settlement","","");
+		com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"COD Settlement","","");
 	}
 
 	private void InitializeViews(){

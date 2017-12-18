@@ -21,12 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,11 +76,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppPrefrences.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AppPrefrences.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
               <caret line="17" column="57" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RiderSettlementActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="85" column="94" selection-start-line="85" selection-start-column="94" selection-end-line="85" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -6442,7 +6447,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/row_cat.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/StockInwardMaintain.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemInwardAdapter.java" />
@@ -6493,6 +6497,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/payment_selection.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
         <option value="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java" />
       </list>
     </option>
   </component>
@@ -7100,13 +7105,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00122" summary="1. Mswipe : swipe card details not getting returned to our app.&#10;2. rectifying misallignment in reports.&#10;3. removing compulsory entry of secret key for razorpay in PaymentModeConfiguration&#10;4. Images taking underscore for all spaces in images name.">
-      <created>1505803213132</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1505803213132</updated>
-    </task>
     <task id="LOCAL-00123" summary="1. item name list in autocomplete getting not getting refreshed after csv upload.&#10;2. department and category code configuration in item master through csv">
       <created>1505825918785</created>
       <option name="number" value="00123" />
@@ -7443,7 +7441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513585617378</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="Bug 662 - Amount auto-populated from mswipe in billing window will vanish after clicking on wallet payment.">
+      <created>1513587187713</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1513587187713</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7562,7 +7567,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="amount not printing in corresponding column for larger value of amount in bill" />
     <MESSAGE value="dept and category not displaying properly when items are loaded from csv" />
     <MESSAGE value="tax amount not coming correct in reports(tax report)" />
     <MESSAGE value="tax slab not printing in bill after selecting the rider and printing the bill.&#10;Step 1. make bill with large amount&#10;step2. paybill by pettycash&#10;step3. Goto Delivery status, assign rider and printbill" />
@@ -7587,7 +7591,8 @@
     <MESSAGE value="Bug 6 - when user changes quantity to 'zero' from '1' in 'Counter Sales', Amount fied is not updated to Amount '0.0' --  issue is that amount is coming inclusive of item wise discount. As per discussion , discount need to be displayed in order table. As of now, displaying msg for discount inclusive in amount." />
     <MESSAGE value="Bug 660 - Application crashes when we try to edit amount in mswipe opening page while adding mobile number.  &#10;Fix - editing amount in Mswipe screen is disabled." />
     <MESSAGE value="checking changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="checking changes" />
+    <MESSAGE value="Bug 662 - Amount auto-populated from mswipe in billing window will vanish after clicking on wallet payment." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug 662 - Amount auto-populated from mswipe in billing window will vanish after clicking on wallet payment." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7863,13 +7868,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/25.1.1/appcompat-v7-25.1.1-sources.jar!/android/support/v7/app/AppCompatDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-987">
-          <caret line="223" column="42" selection-start-line="223" selection-start-column="42" selection-end-line="223" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-25/com/android/documentsui/BaseActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
@@ -8105,6 +8103,37 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
           <caret line="204" column="28" selection-start-line="204" selection-start-column="28" selection-end-line="204" selection-end-column="28" />
+          <folding>
+            <element signature="e#3705#3742#0" expanded="false" />
+            <element signature="e#4819#4856#0" expanded="false" />
+            <element signature="e#5928#5965#0" expanded="false" />
+            <element signature="e#9172#9422#0" expanded="false" />
+            <element signature="e#10946#10979#0" expanded="false" />
+            <element signature="e#11453#11486#0" expanded="false" />
+            <element signature="e#12355#12388#0" expanded="false" />
+            <element signature="e#12868#12901#0" expanded="false" />
+            <element signature="e#13859#13892#0" expanded="false" />
+            <element signature="e#14358#14391#0" expanded="false" />
+            <element signature="e#15226#15259#0" expanded="false" />
+            <element signature="e#15710#15743#0" expanded="false" />
+            <element signature="e#16552#16585#0" expanded="false" />
+            <element signature="e#17029#17062#0" expanded="false" />
+            <element signature="e#17943#17976#0" expanded="false" />
+            <element signature="e#18420#18453#0" expanded="false" />
+            <element signature="e#19334#19367#0" expanded="false" />
+            <element signature="e#19811#19844#0" expanded="false" />
+            <element signature="e#20497#20526#0" expanded="false" />
+            <element signature="e#20588#20617#0" expanded="false" />
+            <element signature="e#21388#21623#0" expanded="false" />
+            <element signature="e#21633#23906#0" expanded="false" />
+            <element signature="e#21954#21983#0" expanded="false" />
+            <element signature="e#22120#22152#0" expanded="false" />
+            <element signature="e#22486#22523#0" expanded="false" />
+            <element signature="e#22721#22753#0" expanded="false" />
+            <element signature="e#23134#23171#0" expanded="false" />
+            <element signature="e#23369#23401#0" expanded="false" />
+            <element signature="e#23782#23819#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -8275,7 +8304,7 @@
           <caret line="264" column="35" selection-start-line="264" selection-start-column="35" selection-end-line="264" selection-end-column="35" />
           <folding>
             <element signature="e#5246#8588#0" expanded="false" />
-            <element signature="e#12503#12532#0" expanded="true" />
+            <element signature="e#12503#12532#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -8367,6 +8396,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="17" column="57" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="85" column="94" selection-start-line="85" selection-start-column="94" selection-end-line="85" selection-end-column="94" />
           <folding />
         </state>
       </provider>
