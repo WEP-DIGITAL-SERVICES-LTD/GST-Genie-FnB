@@ -832,7 +832,7 @@ public class InwardItemActivity extends WepBaseActivity {
                 final String[] colums = line.split(",");
 
                 if (colums[0].length() > 0 && colums[0].trim().length() > 0 && colums[0] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[0]);
+                    mCheckCSVValueType = checkCSVTypeValue(colums[0],"Int");
                     if (mCheckCSVValueType == CHECK_INTEGER_VALUE) {
                         mMenuCode = Integer.parseInt(colums[0]);
                     } else {
@@ -852,7 +852,7 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[1].length() > 0 && colums[1].trim().length() > 0 && colums[1] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[1]);
+                    mCheckCSVValueType = checkCSVTypeValue(colums[1], "String");
                     if (mCheckCSVValueType == CHECK_STRING_VALUE) {
                         mItemName = colums[1];
                     } else {
@@ -868,7 +868,7 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[2].length() > 0 && colums[2].trim().length() > 0 && colums[2] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[2]);
+                    mCheckCSVValueType = checkCSVTypeValue(colums[2], "String");
                     if (mCheckCSVValueType == CHECK_STRING_VALUE) {
 
                         if (checkSupplyType[0].equals(colums[2])) {
@@ -893,8 +893,9 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[3].length() > 0 && colums[3].trim().length() > 0 && colums[3] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[3]);
-                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[3],"Double");
+                    int mCheckCSVValueType1 = checkCSVTypeValue(colums[3],"Int");
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE || mCheckCSVValueType1 == CHECK_INTEGER_VALUE) {
                         mRate = Double.parseDouble(colums[3]);
                     } else {
                         mFlag = true;
@@ -908,8 +909,9 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[4].length() > 0 && colums[4].trim().length() > 0 && colums[4] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[4]);
-                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[4],"Double");
+                    int mCheckCSVValueType1 = checkCSVTypeValue(colums[4],"Int");
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE || mCheckCSVValueType1 == CHECK_INTEGER_VALUE) {
                         mQuantity = Double.parseDouble(colums[4]);
                     } else {
                         mFlag = true;
@@ -923,7 +925,7 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[5].length() > 0 && colums[5].trim().length() > 0 && colums[5] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[5]);
+                    mCheckCSVValueType = checkCSVTypeValue(colums[5],"String");
                     if (mCheckCSVValueType == CHECK_STRING_VALUE) {
 
                         if (colums[5].trim().length() == 2 && checkUOMTypye.contains(colums[5])) {
@@ -945,8 +947,9 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[6].length() > 0 && colums[6].trim().length() > 0 && colums[6] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[6]);
-                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[6],"Double");
+                    int mCheckCSVValueType1 = checkCSVTypeValue(colums[6],"Int");
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE || mCheckCSVValueType1 == CHECK_INTEGER_VALUE) {
                         mCGSTRate = Double.parseDouble(colums[6]);
                     } else {
                         mFlag = true;
@@ -960,8 +963,9 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[7].length() > 0 && colums[7].trim().length() > 0 && colums[7] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[7]);
-                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[7],"Double");
+                    int mCheckCSVValueType1 = checkCSVTypeValue(colums[7],"Int");
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE || mCheckCSVValueType1 == CHECK_INTEGER_VALUE) {
                         mSGSTRate = Double.parseDouble(colums[7]);
                     } else {
                         mFlag = true;
@@ -975,8 +979,9 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[8].length() > 0 && colums[8].trim().length() > 0 && colums[8] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[8]);
-                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[8],"Double");
+                    int mCheckCSVValueType1 = checkCSVTypeValue(colums[8],"Int");
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE || mCheckCSVValueType1 == CHECK_INTEGER_VALUE) {
                         mIGSTRate = Double.parseDouble(colums[8]);
                     } else {
                         mFlag = true;
@@ -990,8 +995,9 @@ public class InwardItemActivity extends WepBaseActivity {
                 }
 
                 if (colums[9].length() > 0 && colums[9].trim().length() > 0 && colums[9] != null) {
-                    mCheckCSVValueType = checkCSVTypeValue(colums[9]);
-                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[9],"Double");
+                    int mCheckCSVValueType1 = checkCSVTypeValue(colums[9],"Int");
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE || mCheckCSVValueType1 == CHECK_INTEGER_VALUE) {
                         mCESSRate = Double.parseDouble(colums[9]);
                     } else {
                         mFlag = true;
@@ -1094,23 +1100,24 @@ public class InwardItemActivity extends WepBaseActivity {
      * @param value - csv value
      */
 
-    public static int checkCSVTypeValue(String value) {
-        int flag;
+    public static int checkCSVTypeValue(String value,String dataType) {
+        int flag =2;
         try {
-            Integer.parseInt(value);
-            flag = 0;
-            return flag;
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
+            switch(dataType)
+            {
+                case "Int" : Integer.parseInt(value);
+                    flag = 0;
+                    break;
+                case "Double" :  Double.parseDouble(value);
+                    flag = 1;
+                    break;
+                default: flag = 2;
+            }
+        } catch (Exception nfe) {
+            // nfe.printStackTrace();
         }
-        try {
-            Double.parseDouble(value);
-            flag = 1;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            flag = 2;
-        }
-        return flag;
+        finally
+        {return flag;}
     }
 
     private void InitializeViewVariables() {

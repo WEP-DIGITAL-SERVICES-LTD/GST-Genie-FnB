@@ -188,9 +188,12 @@ public class CustomerDetailActivity extends WepBaseActivity {
                         if (txtSearchPhone.getText().toString().length() == 10) {
                             Cursor crsrCust = dbCustomer.getCustomer(txtSearchPhone.getText().toString());
                             if (crsrCust.moveToFirst()) {
-                                txtName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
+                                /*txtName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
                                 txtPhone.setText(crsrCust.getString(crsrCust.getColumnIndex("CustContactNumber")));
                                 txtAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
+                                LastTransaction =crsrCust.getString(crsrCust.getColumnIndex("LastTransaction"));
+                                TotalTransaction = crsrCust.getString(crsrCust.getColumnIndex("TotalTransaction"));
+
                                 txtCreditAmount.setText(String.format("%.2f",crsrCust.getDouble(crsrCust.getColumnIndex("CreditAmount"))));
                                 txtCustomerCreditLimit.setText(String.format("%.2f",crsrCust.getDouble(crsrCust.getColumnIndex("CreditLimit"))));
                                 String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
@@ -198,14 +201,15 @@ public class CustomerDetailActivity extends WepBaseActivity {
                                 upon_rowClick_Phn = txtPhone.getText().toString();
                                 if (gstin==null)
                                     gstin = "";
-                                txGSTIN.setText(gstin);
+                                txGSTIN.setText(gstin);*/
+
 
                                 ClearCustomerTable();
                                 DisplayCustomerSearch(txtSearchPhone.getText().toString());
                                 txtSearchName.setText("");
                                 btnAdd.setEnabled(false);
-                                btnEdit.setEnabled(true);
-
+                                //btnEdit.setEnabled(true);
+                                tv_CustomerDetailMsg.setVisibility(View.VISIBLE);
                                 //tv_CustomerDetailMsg.setVisibility(View.VISIBLE);
                                 //}
                             } else {
@@ -809,6 +813,8 @@ public class CustomerDetailActivity extends WepBaseActivity {
         txtSearchName.setText("");
         txGSTIN.setText("");
         upon_rowClick_Phn="";
+        LastTransaction ="";
+        TotalTransaction = "";
         tv_CustomerDetailMsg.setVisibility(View.GONE);
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
@@ -873,7 +879,16 @@ public class CustomerDetailActivity extends WepBaseActivity {
         Address = txtAddress.getText().toString();
         CreditAmount = txtCreditAmount.getText().toString();
         String GSTIN = txGSTIN.getText().toString().trim().toUpperCase();
-
+        if (Name.equalsIgnoreCase("")) {
+            MsgBox.Show("Warning", "Please enter customer name before adding customer");
+            return;
+        } else if (Phone.equalsIgnoreCase("")) {
+            MsgBox.Show("Warning", "Please enter mobile no before adding customer");
+            return;
+        } else if(Phone.length() != 10) {
+            MsgBox.Show("Warning", "Please enter correct mobile no before adding customer");
+            return;
+        }
         if(!Phone.equalsIgnoreCase(upon_rowClick_Phn))
         {
             Cursor cursor = dbCustomer.getCustomer(Phone);
