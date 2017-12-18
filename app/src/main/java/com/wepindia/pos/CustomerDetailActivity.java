@@ -213,7 +213,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
                                 //tv_CustomerDetailMsg.setVisibility(View.VISIBLE);
                                 //}
                             } else {
-                                MsgBox.Show("", "Customer is not Found, Please Add Customer before Order");
+                                MsgBox.Show("Error", "Customer is not Found, Please Add Customer before Order");
                             }
                         } else {
 
