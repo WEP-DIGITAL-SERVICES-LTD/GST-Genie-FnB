@@ -20,32 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_genie_two.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login_old.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/Quick_Start_Guide.pdf" afterPath="$PROJECT_DIR$/app/src/main/assets/Quick_Start_Guide.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/User_Manual.pdf" afterPath="$PROJECT_DIR$/app/src/main/assets/User_Manual.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/Sample_InwardItem.csv" afterPath="$PROJECT_DIR$/app/src/main/assets/Sample_InwardItem.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/Sample_OutwardItem.csv" afterPath="$PROJECT_DIR$/app/src/main/assets/Sample_OutwardItem.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerOrdersActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerOrdersActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" afterPath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -159,16 +137,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wepbase/src/main/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="31" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="paybill_tablelist.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/paybill_tablelist.xml">
           <provider editor-type-id="android-designer2">
@@ -205,17 +173,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_billing_counter_sales.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="activity_billing_counter_sales.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="250" column="24" selection-start-line="250" selection-start-column="24" selection-end-line="250" selection-end-column="24" />
+            <state relative-caret-position="367">
+              <caret line="264" column="35" selection-start-line="264" selection-start-column="35" selection-end-line="264" selection-end-column="35" />
               <folding>
                 <element signature="e#5246#8588#0" expanded="false" />
-                <element signature="e#8614#12009#0" expanded="false" />
+                <element signature="e#12503#12532#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -227,9 +195,39 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="571" column="39" selection-start-line="571" selection-start-column="39" selection-end-line="571" selection-end-column="39" />
+            <state relative-caret-position="325">
+              <caret line="581" column="53" selection-start-line="581" selection-start-column="53" selection-end-line="581" selection-end-column="53" />
+              <folding>
+                <element signature="e#29168#29197#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_billing_home_delivery.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="269">
+              <caret line="178" column="15" selection-start-line="178" selection-start-column="15" selection-end-line="178" selection-end-column="15" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="order_page_content_homedelivery.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="367">
+              <caret line="219" column="56" selection-start-line="219" selection-start-column="56" selection-end-line="219" selection-end-column="56" />
+              <folding>
+                <element signature="e#10320#10349#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -6550,7 +6548,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_gstlink.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inward.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/row_cat.xml" />
@@ -6599,8 +6596,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/paybill_tablelist.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
       </list>
     </option>
   </component>
@@ -7218,13 +7216,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00118" summary="removing pdation of stock in inwardItemDatabase.">
-      <created>1505381523607</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1505381523607</updated>
-    </task>
     <task id="LOCAL-00119" summary="Include AutoComplete in Outward item and stock&#10;Making super user login">
       <created>1505399189677</created>
       <option name="number" value="00119" />
@@ -7561,7 +7552,14 @@
       <option name="project" value="LOCAL" />
       <updated>1509439020922</updated>
     </task>
-    <option name="localTasksCounter" value="167" />
+    <task id="LOCAL-00167" summary="Committing V1.1P GST Ginie F">
+      <created>1513577641379</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1513577641379</updated>
+    </task>
+    <option name="localTasksCounter" value="168" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7680,7 +7678,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Billwise report issue" />
     <MESSAGE value="Invalid gstin msg not displaying" />
     <MESSAGE value="displaying department code and category code in configuration module" />
     <MESSAGE value="misallignment in hsn summary report" />
@@ -7705,7 +7702,8 @@
     <MESSAGE value=" issue - User is unable to delete the customer added in table booking if phone number is of 10 digits and starts other than 0/1/2." />
     <MESSAGE value="issue - The time format at any 'X' hours and 'zero' minutes is 'hh:m' instead of 'hh:mm'" />
     <MESSAGE value="isuue - Item fails to auto-populate into KOT list as soon as user scans the bar-code.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="isuue - Item fails to auto-populate into KOT list as soon as user scans the bar-code.&#10;" />
+    <MESSAGE value="Committing V1.1P GST Ginie F" />
+    <option name="LAST_COMMIT_MESSAGE" value="Committing V1.1P GST Ginie F" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7981,27 +7979,11 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="168" column="38" selection-start-line="168" selection-start-column="38" selection-end-line="168" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.android/build-cache/f8824dc8bac6aeaefb734ce3dea1f48e249f7566/output/jars/classes.jar!/com/razorpay/Checkout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/MasterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="87" column="49" selection-start-line="87" selection-start-column="49" selection-end-line="87" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8012,6 +7994,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8073,6 +8056,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="159" column="38" selection-start-line="159" selection-start-column="38" selection-end-line="159" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8083,6 +8067,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="195" column="23" selection-start-line="195" selection-start-column="23" selection-end-line="195" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8100,6 +8085,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="175" column="46" selection-start-line="175" selection-start-column="46" selection-end-line="175" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8115,6 +8101,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8168,6 +8155,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="111">
           <caret line="251" column="52" selection-start-line="251" selection-start-column="51" selection-end-line="251" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8175,6 +8163,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="131" column="42" selection-start-line="131" selection-start-column="42" selection-end-line="131" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8263,6 +8252,37 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
           <caret line="204" column="28" selection-start-line="204" selection-start-column="28" selection-end-line="204" selection-end-column="28" />
+          <folding>
+            <element signature="e#3705#3742#0" expanded="false" />
+            <element signature="e#4819#4856#0" expanded="false" />
+            <element signature="e#5928#5965#0" expanded="false" />
+            <element signature="e#9172#9422#0" expanded="false" />
+            <element signature="e#10946#10979#0" expanded="false" />
+            <element signature="e#11453#11486#0" expanded="false" />
+            <element signature="e#12355#12388#0" expanded="false" />
+            <element signature="e#12868#12901#0" expanded="false" />
+            <element signature="e#13859#13892#0" expanded="false" />
+            <element signature="e#14358#14391#0" expanded="false" />
+            <element signature="e#15226#15259#0" expanded="false" />
+            <element signature="e#15710#15743#0" expanded="false" />
+            <element signature="e#16552#16585#0" expanded="false" />
+            <element signature="e#17029#17062#0" expanded="false" />
+            <element signature="e#17943#17976#0" expanded="false" />
+            <element signature="e#18420#18453#0" expanded="false" />
+            <element signature="e#19334#19367#0" expanded="false" />
+            <element signature="e#19811#19844#0" expanded="false" />
+            <element signature="e#20497#20526#0" expanded="false" />
+            <element signature="e#20588#20617#0" expanded="false" />
+            <element signature="e#21388#21623#0" expanded="false" />
+            <element signature="e#21633#23906#0" expanded="false" />
+            <element signature="e#21954#21983#0" expanded="false" />
+            <element signature="e#22120#22152#0" expanded="false" />
+            <element signature="e#22486#22523#0" expanded="false" />
+            <element signature="e#22721#22753#0" expanded="false" />
+            <element signature="e#23134#23171#0" expanded="false" />
+            <element signature="e#23369#23401#0" expanded="false" />
+            <element signature="e#23782#23819#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -8270,6 +8290,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8277,6 +8298,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-71">
           <caret line="200" column="25" selection-start-line="200" selection-start-column="25" selection-end-line="200" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8284,6 +8306,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8291,6 +8314,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="39" selection-start-line="13" selection-start-column="39" selection-end-line="13" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8317,6 +8341,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
           <caret line="558" column="59" selection-start-line="558" selection-start-column="37" selection-end-line="558" selection-end-column="59" />
+          <folding>
+            <element signature="e#28895#28932#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -8332,6 +8359,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8440,6 +8468,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -8462,27 +8491,53 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="571" column="39" selection-start-line="571" selection-start-column="39" selection-end-line="571" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="250" column="24" selection-start-line="250" selection-start-column="24" selection-end-line="250" selection-end-column="24" />
+        <state relative-caret-position="367">
+          <caret line="264" column="35" selection-start-line="264" selection-start-column="35" selection-end-line="264" selection-end-column="35" />
           <folding>
             <element signature="e#5246#8588#0" expanded="false" />
-            <element signature="e#8614#12009#0" expanded="false" />
+            <element signature="e#12503#12532#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="581" column="53" selection-start-line="581" selection-start-column="53" selection-end-line="581" selection-end-column="53" />
+          <folding>
+            <element signature="e#29168#29197#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="178" column="15" selection-start-line="178" selection-start-column="15" selection-end-line="178" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="219" column="56" selection-start-line="219" selection-start-column="56" selection-end-line="219" selection-end-column="56" />
+          <folding>
+            <element signature="e#10320#10349#0" expanded="true" />
           </folding>
         </state>
       </provider>

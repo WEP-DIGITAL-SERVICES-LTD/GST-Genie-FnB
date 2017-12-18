@@ -248,12 +248,20 @@
                                     android:textAlignment="center" />
                             </LinearLayout>
                         </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/boxFields"
+                            android:id="@+id/tv_msg"
+                            android:text="*Please note amount is inclusive of discount (if any)"
+                            android:textColor="@color/red"
+                            android:layout_marginBottom="@dimen/_2dp_720dp_2dp_600dp"/>
 
                         <View
                             android:id="@+id/table_top_view_headline"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_3dp_720dp_3dp_600dp"
-                            android:layout_below="@id/boxFields"
+                            android:layout_below="@id/tv_msg"
                             android:background="@color/black" />
 
 
