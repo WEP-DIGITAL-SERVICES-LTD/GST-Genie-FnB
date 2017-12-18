@@ -150,7 +150,8 @@
                                 android:maxLength="10"
                                 android:singleLine="true"
                                 android:textSize="22dp"
-                                android:typeface="sans" />
+                                android:typeface="sans"
+                                android:enabled="false"/>
                         </LinearLayout>
 
                         <LinearLayout
