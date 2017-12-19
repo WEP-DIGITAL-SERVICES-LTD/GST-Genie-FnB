@@ -708,67 +708,77 @@ public void onFocusChange(View v, boolean hasFocus) {
         edtIGSTTax.addTextChangedListener(this);
         etItemDiscount.addTextChangedListener(this);
 
-        edtItemSGSTTax.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        try{
+            edtItemSGSTTax.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String SGST = edtItemSGSTTax.getText().toString();
-                String CGST = edtItemCGSTTax.getText().toString();
-                if(SGST.equals("")){
-                    //edtItemSGSTTax.setText("0");
-                    SGST = ("0");
-                }
-                if(CGST.equals("")){
-                    //edtItemCGSTTax.setText("0");
-                    CGST = ("0");}
-
-                double sgst_d = Double.parseDouble(SGST);
-                double cgst_d = Double.parseDouble(CGST);
-                double igst_d = sgst_d+cgst_d;
-                edtIGSTTax.setText(String.format("%.2f",igst_d));
-
-            }
-        });
-        edtItemCGSTTax.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String SGST = edtItemSGSTTax.getText().toString();
-                String CGST = edtItemCGSTTax.getText().toString();
-                if(CGST.equals("")) {
-                    //edtItemCGSTTax.setText("0");
-                    CGST = ("0");
-                }
-                if(SGST.equals("")) {
-                    //edtItemSGSTTax.setText("0");
-                    SGST = ("0");
                 }
 
-                double sgst_d = Double.parseDouble(SGST);
-                double cgst_d = Double.parseDouble(CGST);
-                double igst_d = sgst_d+cgst_d;
-                edtIGSTTax.setText(String.format("%.2f",igst_d));
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
-        });
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String SGST = edtItemSGSTTax.getText().toString().equals("")?"0.00":edtItemSGSTTax.getText().toString();
+                    String CGST = edtItemCGSTTax.getText().toString().equals("")?"0.00":edtItemCGSTTax.getText().toString();
+                    SGST = edtItemSGSTTax.getText().toString().equals(".")?"0.":edtItemSGSTTax.getText().toString();
+                    CGST = edtItemCGSTTax.getText().toString().equals(".")?"0.":edtItemCGSTTax.getText().toString();
+                    if(SGST.equals("")){
+                        //edtItemSGSTTax.setText("0");
+                        SGST = ("0");
+                    }
+                    if(CGST.equals("")){
+                        //edtItemCGSTTax.setText("0");
+                        CGST = ("0");}
+
+                    double sgst_d = Double.parseDouble(SGST);
+                    double cgst_d = Double.parseDouble(CGST);
+                    double igst_d = sgst_d+cgst_d;
+                    edtIGSTTax.setText(String.format("%.2f",igst_d));
+
+                }
+            });
+            edtItemCGSTTax.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String SGST = edtItemSGSTTax.getText().toString().equals("")?"0.00":edtItemSGSTTax.getText().toString();
+                    String CGST = edtItemCGSTTax.getText().toString().equals("")?"0.00":edtItemCGSTTax.getText().toString();
+                    SGST = edtItemSGSTTax.getText().toString().equals(".")?"0.":edtItemSGSTTax.getText().toString();
+                    CGST = edtItemCGSTTax.getText().toString().equals(".")?"0.":edtItemCGSTTax.getText().toString();
+                    if(CGST.equals("")) {
+                        //edtItemCGSTTax.setText("0");
+                        CGST = ("0");
+                    }
+                    if(SGST.equals("")) {
+                        //edtItemSGSTTax.setText("0");
+                        SGST = ("0");
+                    }
+
+                    double sgst_d = Double.parseDouble(SGST);
+                    double cgst_d = Double.parseDouble(CGST);
+                    double igst_d = sgst_d+cgst_d;
+                    edtIGSTTax.setText(String.format("%.2f",igst_d));
+
+                }
+            });
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            //MsgBox.Show();
+        }
     }
 
 

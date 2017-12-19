@@ -1,5 +1,6 @@
 package com.wepindia.pos;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -166,9 +167,15 @@ public class InwardStockActivity extends WepBaseActivity {
     private void loadItems() {
         new AsyncTask<Void, Void, ArrayList<ItemInward>>() {
 
+            ProgressDialog pd = new ProgressDialog(InwardStockActivity.this);
+            int progress = 0;
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                pd.setMessage("Updating item list...");
+                pd.setCancelable(false);
+                pd.show();
             }
 
             @Override
@@ -197,7 +204,9 @@ public class InwardStockActivity extends WepBaseActivity {
                 super.onPostExecute(InwardItemList);
                 if(InwardItemList!=null)
                     setItemsAdapter(InwardItemList);
+                pd.dismiss();
             }
+
         }.execute();
     }
 
@@ -276,7 +285,7 @@ public class InwardStockActivity extends WepBaseActivity {
             stock_outward.updateOpeningStock_Inward( currentdate, Integer.parseInt(strMenuCode),itemName,OpeningQuantity, Double.parseDouble(String.format("%.2f",Double.parseDouble(strRate1))) );
             stock_outward.updateClosingStock_Inward( currentdate, Integer.parseInt(strMenuCode),itemName,ClosingQuantity);
             loadItems();
-            tvExistingStock.setText(String.valueOf((Double.parseDouble(strExistingStock) + newStock)));
+            tvExistingStock.setText(String.format("%.2f",(Double.parseDouble(strExistingStock) + newStock)));
             txtNewStock.setText("0.00");
             //ResetStock();
             // updating rate in Item_Inward table

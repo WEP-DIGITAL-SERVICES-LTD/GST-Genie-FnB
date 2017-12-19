@@ -834,12 +834,15 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                             else
                                 etCustGSTIN.setText(gstin);
                             Toast.makeText(myContext, "Customer Fetched Successfully", Toast.LENGTH_LONG).show();
+                            checkForInterStateTax();
                             //}
                         } else {
                             MsgBox.Show("Note", "Customer is not Found, Please Add Customer before Order");
                         }
-                    } else {
-
+                    } else if (edtCustDineInPhoneNo.getText().toString().trim().equals("")) {
+                        chk_interstate.setChecked(false);
+                        chk_interstate.setEnabled(true);
+                        spnr_pos.setEnabled(false);
                     }
                 } catch (Exception ex) {
                     MsgBox.Show("Error", ex.getMessage());
@@ -1221,6 +1224,40 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         }catch (Exception ex) {
             MsgBox.Show("Error " + ex.toString(), ex.getMessage());
 
+        }
+    }
+
+    private void checkForInterStateTax()
+    {
+        String custGStin = etCustGSTIN.getText().toString().trim();
+
+        if (custGStin != null && custGStin.length() == 15)
+        {
+
+            String GSTCustomerSateCode = custGStin.substring(0, 2);
+            Cursor   ownerCursor = db.getOwnerDetail_counter();
+            String ownerGSTIN = "";
+            if(ownerCursor !=null && ownerCursor.moveToFirst())
+            {
+                ownerGSTIN = ownerCursor.getString(ownerCursor.getColumnIndex("GSTIN"));
+            }
+
+            if (GSTCustomerSateCode.equals(ownerGSTIN.substring(0, 2))) {
+                chk_interstate.setChecked(false);
+                spnr_pos.setSelection(0);
+            } else
+            {
+                chk_interstate.setChecked(true);
+                String stateName = "";
+                spnr_pos.setSelection(getIndex_pos(GSTCustomerSateCode));
+
+            }
+            chk_interstate.setEnabled(false);
+            spnr_pos.setEnabled(false);
+
+        } else {
+            chk_interstate.setChecked(false);
+            spnr_pos.setSelection(0);
         }
     }
 
@@ -3183,6 +3220,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         chk_interstate.setChecked(false);
         spnr_pos.setSelection(0);
         spnr_pos.setEnabled(false);
+        chk_interstate.setEnabled(true);
         // Clear order item table
         tblOrderItems.removeAllViews();
         edtCustName.setText("");

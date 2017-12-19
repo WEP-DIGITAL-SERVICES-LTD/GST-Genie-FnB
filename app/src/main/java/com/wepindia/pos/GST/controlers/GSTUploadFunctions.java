@@ -115,8 +115,8 @@ public class GSTUploadFunctions {
                                 String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
                                 String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
                                 String pos = cursor.getString(cursor.getColumnIndex("POS"));
-                                if(pos!=null && custStateCode!=null & pos.equals(custStateCode))
-                                    custStateCode="";
+                                if(custStateCode == null || custStateCode.equals(""))
+                                    custStateCode = pos;
 
                                 GSTR1_B2B_invoices inv = new GSTR1_B2B_invoices(
                                         BillNoPrefix+invno,
@@ -167,12 +167,15 @@ public class GSTUploadFunctions {
                 String custStateCd_temp="";
                 do
                 {
+                    String taxableValue_str = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("TaxableValue"));
+                    double taxableValue = Double.parseDouble(taxableValue_str);
+                    if(taxableValue <=250000)
+                        continue;
                     String invoiceNo = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceNo"));
                     String invoiceDate = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceDate"));
                     String custName = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustName"));
                     String provisionalAssess = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("ProvisionalAssess"));
                     String etin = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("EcommerceGSTIN"));
-                    double taxableValue = cursor_billDetail.getDouble(cursor_billDetail.getColumnIndex("TaxableValue"));
                     String pos_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("POS"));
                     custStateCd_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustStateCode"));
 
@@ -330,14 +333,15 @@ public class GSTUploadFunctions {
 
         for (B2Csmall b2Csmall : b2CsmallsList) {
             String custStateCode = "";
-            if(b2Csmall.getSply_ty().equalsIgnoreCase("INTER"))
-                custStateCode = b2Csmall.getStateCode();
+            //if(b2Csmall.getSply_ty().equalsIgnoreCase("INTER"))
+            //    custStateCode = b2Csmall.getStateCode();
             GSTR1B2CSData b2CSData = new GSTR1B2CSData(
                     b2Csmall.getSply_ty(),
                     b2Csmall.getGSTRate(),
                     b2Csmall.getEtype(),
                     b2Csmall.getEtin(),
-                    custStateCode,
+                    //custStateCode,
+                    b2Csmall.getStateCode(),
                     b2Csmall.getTaxableValue(),
                     b2Csmall.getIGSTAmt(),
                     b2Csmall.getCGSTAmt(),
@@ -361,10 +365,10 @@ public class GSTUploadFunctions {
                 do {// item_detail table
                     String stateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
                     String ownerPOS = cursor.getString(cursor.getColumnIndex("POS"));
-                    if(stateCode== null)
-                        stateCode = "";
+                    if(stateCode== null || stateCode.equals(""))
+                        stateCode = ownerPOS;
                     float TaxableValue_f = Float.parseFloat(cursor.getString(cursor.getColumnIndex("TaxableValue")));
-                    if ((stateCode.equals("")) || (stateCode.equals(ownerPOS))|| (!(stateCode.equals("") && TaxableValue_f <= 250000)) || (!(stateCode.equals("29") && TaxableValue_f <= 250000))) {
+                    if ( (stateCode.equals(ownerPOS))|| (!stateCode.equals(ownerPOS) && TaxableValue_f <= 250000)) {
                         // for intrastate + interstate only  <=2.5L
                         String InvNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                         String InvDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
@@ -478,6 +482,7 @@ public class GSTUploadFunctions {
                                     obj.setSupplyType(SupplyType_str);
                                     obj.setHSNCode(HSN);
                                     obj.setStateCode(stateCode);
+                                    obj.setPlaceOfSupply(stateCode);
                                     obj.setTaxableValue(taxablevalue_f);
                                     obj.setIGSTRate(IGSTRate_f);
                                     obj.setIGSTAmt(IGSTAmount_f);

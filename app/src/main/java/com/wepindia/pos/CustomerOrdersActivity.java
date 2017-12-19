@@ -751,7 +751,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 								intentBillScreen.putExtra("MAKE_ORDER", "YES");
 								intentBillScreen.putExtra("IS_PRINT_BILL",true);
 								Log.d("Sending Discount", String.valueOf(discountAmount));
-								intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
+								intentBillScreen.putExtra("DISCOUNT_AMOUNT", Float.parseFloat(String.valueOf(discountAmount)));
 								intentBillScreen.putExtra("BILLNO",txtBillNo.getText().toString());
 								intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
 								//startActivityForResult(intentBillScreen,1);
@@ -799,7 +799,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				intentBillScreen.putExtra("IS_PRINT_BILL", false);
 				intentBillScreen.putExtra("IS_FINISH", true);
 				Log.d("Sending Discount", String.valueOf(discountAmount));
-				intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
+				intentBillScreen.putExtra("DISCOUNT_AMOUNT", Float.parseFloat(String.valueOf(discountAmount)));
 				intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
 				//startActivityForResult(intentBillScreen,1);
 				setResult(RESULT_OK, intentBillScreen);
@@ -851,7 +851,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 									intentBillScreen.putExtra("MAKE_ORDER", "YES");
 									intentBillScreen.putExtra("IS_PRINT_BILL",true);
 									Log.d("Sending Discount", String.valueOf(discountAmount));
-									intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
+									intentBillScreen.putExtra("DISCOUNT_AMOUNT", Float.parseFloat(String.valueOf(discountAmount)));
 									intentBillScreen.putExtra("BILLNO",txtBillNo.getText().toString());
 									intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
 									//startActivityForResult(intentBillScreen,1);
@@ -1312,7 +1312,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		intentBillScreen.putExtra("PAYMENT_STATUS", strPaymentStatus);
 		intentBillScreen.putExtra("MAKE_ORDER", "YES");
 		//Log.d("Sending Discount", String.valueOf(discountAmount));
-		intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
+		intentBillScreen.putExtra("DISCOUNT_AMOUNT", Float.parseFloat(String.valueOf(discountAmount)));
 		intentBillScreen.putExtra("BILLNO", txtBillNo.getText().toString());
 		if(txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
 			intentBillScreen.putExtra("IS_PAID", "YES");

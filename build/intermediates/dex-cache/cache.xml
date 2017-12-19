@@ -3,120 +3,111 @@
 
     <item
         is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\app\libs\poi-3.8.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_98ebd5e7b89db8d9bf07ad84f5cf1e53353538c0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\mSwipe\build\intermediates\bundles\default\libs\apachehttp.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_f51483e771a190dcab5ecc0331a08cdfc0ad5db2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b47d04ec4bfb43a8eb720bbb1ede88c4da67de42">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_1607a789046ee7e2e4493359f7b451f9e01024a2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Administrator\.android\build-cache\c312cd4daa25717da2c79913f37a77127ef27322\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b20dc61a3102ba44dfa7c9e8ad97beebbafa918e">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4766d76ab49e36c6cf631f94b647241ae9d4c0bd\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\mSwipe\build\intermediates\bundles\default\libs\simplyprintapi-android-1.3.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_806ed55ab292d2b36f1a7c5328f317544b39e3e9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_8c71690e4f68028a4a7bc36e7e5be6e2982987ba\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_7e68a3f855d372d32ba76cecbedc1e4fa432590e\classes.dex" />
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_96faa134655205fc88d647c0e22c95569c5f4eda\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\mSwipe\build\intermediates\bundles\default\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\libs\poi-3.8.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_bc74875597a5b47492f57707a6c9ca575d1baa8d\classes.dex" />
+        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_5d3b2e208267564869caf2cbe7e8d2ad1706c3a3\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\printers\build\intermediates\bundles\default\libs\jcc-bate-0.7.3.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_b53b3f06f54ad4a3cfce1907a3ae6b6579b3e447\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\printers\build\intermediates\bundles\default\libs\commons-lang-2.6.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="7b864bf2ded4300446c9316d5cfff88effcbbfd2">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-lang-2.6_a36f3696aa8358a2792b39430b6be776a8c76448\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\app\libs\imageLib.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\2\imageLib_739236960d7b7808dc1464958d4cba38afc8b53d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_895e6a04cc8dd9ada736d93e0f3e522f881feaa6\classes.dex" />
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_5e2c33278d6a0014e29f784a93feb0b089c38537\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\richa\GSTGenieF\GSTGenieF\printers\build\intermediates\bundles\default\libs\apachestrlib.jar"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\mSwipe\build\intermediates\bundles\default\libs\simplyprintapi-android-1.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_fb517dffa697764f4bcec44a49c548f9379e46ef\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\printers\build\intermediates\bundles\default\libs\commons-lang-2.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7b864bf2ded4300446c9316d5cfff88effcbbfd2">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-lang-2.6_08b9fdbdc1f74086ee705a3c5c64d457880e635b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\printers\build\intermediates\bundles\default\libs\jcc-bate-0.7.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_a27dad07eeeb7799b7c2889f3eb0aa9a7464bcbb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\mSwipe\build\intermediates\bundles\default\libs\apachehttp.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_463702002d0bdd5e5cf02fbebba2f6f2ae295b33\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4ee57ea2640bdaa8e8cc2d4085a1808a90f6c20b">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_8a01b652b4e254ba43a4ce58808167b731e3f6e5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_d8becd92e269fda671040ee9e5e21cf0ca92d386\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\printers\build\intermediates\bundles\default\libs\apachestrlib.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="2a6e72794eeecaf83ed38b185d735a3d24b36669">
-        <dex dex="D:\richa\GSTGenieF\GSTGenieF\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_cb73588ede8a35b8451786e378ad46431a805b98\classes.dex" />
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_d85c28f046c275484c28a2e3957add78c1098c3e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\libs\imageLib.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\2\imageLib_8f6b394f894dfe18b49b94605b259eaf98caf13e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\mSwipe\build\intermediates\bundles\default\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
+        <dex dex="E:\FnbProjects\ReleaseGSTGinne\GithubCode\GST-Genie-V1.2\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_8f041b0d2c5ca980fca0dfe13586f3c4a83c5cf3\classes.dex" />
     </item>
 
 </items>

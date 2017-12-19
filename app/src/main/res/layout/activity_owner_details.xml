@@ -131,6 +131,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="Enter Name"
+                    android:singleLine="true"
                     android:digits="@string/nameValidtaion"
                     android:inputType="text" />
             </LinearLayout>
@@ -149,7 +150,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="GSTIN"
+                    android:text="GSTIN*"
                     android:gravity="center_vertical"
                     android:textSize="25sp" />
 
@@ -163,31 +164,7 @@
                     android:maxLength="15" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin1"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-                android:layout_marginRight="@dimen/activity_horizontal_margin1"
-                android:layout_weight="1"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Reference No"
-                    android:textSize="25sp" />
-
-                <EditText
-                    android:id="@+id/ownerReferenceNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="reference no"
-                    android:digits="@string/nameValidtaion"
-                    android:inputType="text" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -211,7 +188,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="Enter Contact Number"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:maxLength="10" />
             </LinearLayout>
 
@@ -317,7 +294,6 @@
                     android:entries="@array/poscode"
                     android:spinnerMode="dropdown" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -325,6 +301,32 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin1"
                 android:layout_marginRight="@dimen/activity_horizontal_margin1"
                 android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Reference No"
+                    android:textSize="25sp" />
+
+                <EditText
+                    android:id="@+id/ownerReferenceNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="reference no"
+                    android:digits="@string/nameValidtaion"
+                    android:inputType="text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+                android:layout_marginRight="@dimen/activity_horizontal_margin1"
+                android:layout_weight="1"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView

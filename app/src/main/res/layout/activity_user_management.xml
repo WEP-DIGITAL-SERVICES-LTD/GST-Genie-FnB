@@ -56,6 +56,8 @@
                         android:layout_weight="2"
                         android:background="@android:drawable/edit_text"
                         android:hint="Enter Name"
+                        android:maxLength="70"
+                        android:digits="@string/nameValidtaion"
                         android:inputType="textPersonName" />
                 </LinearLayout>
 

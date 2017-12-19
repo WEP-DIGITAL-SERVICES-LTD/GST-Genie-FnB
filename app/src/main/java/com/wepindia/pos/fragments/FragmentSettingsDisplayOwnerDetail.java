@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,7 @@ public class FragmentSettingsDisplayOwnerDetail extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_fragment_settings_display_owner_detail, container, false);
         myContext = getActivity();
         initialseViewVariablesAndDisplay(view);
+        TextChangeListener();
         return view;
     }
 
@@ -129,23 +132,75 @@ public class FragmentSettingsDisplayOwnerDetail extends Fragment {
         dbHelper.CloseDatabase();
         getActivity().finish();
     }
+    private void TextChangeListener() {
+
+
+        try {
+            Gstin.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {   }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String gstin = Gstin.getText().toString();
+                    if(gstin.length() == 2)
+                    {
+                        if(GSTINValidation.checkValidStateCode(gstin, myContext)){
+                            String stateCode = gstin.substring(0,2);
+                            POS.setText(stateCode);
+                        }else
+                        {
+                            Toast.makeText(myContext, "Invalid StateCode for GSTIN",Toast.LENGTH_SHORT).show();
+                            Gstin.setText("");
+                        }
+                    }
+                }
+            });
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
     private void apply(View v)
     {
         String billPrefix = BillNoPrefix.getText().toString().trim();
         String gstin = Gstin.getText().toString().trim().toUpperCase();
-        if (!Gstin.getText().toString().trim().toUpperCase().equals("") && Gstin.getText().toString().trim().toUpperCase().length()!=15)
+        if (Gstin.getText().toString().trim().toUpperCase().equals("") )
         {
-            Toast.makeText(myContext, "GSTIN can either be empty or of 15 characters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(myContext, "GSTIN cannot  be empty ", Toast.LENGTH_SHORT).show();
             return;
-        }if(!GSTINValidation.checkGSTINValidation(gstin))
+        }else if (Gstin.getText().toString().trim().toUpperCase().length()!=15){
+            Toast.makeText(myContext, "Please enter 15 characters GSTIN ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!GSTINValidation.checkGSTINValidation(gstin))
         {
             Toast.makeText(myContext, "Invalid GSTIN", Toast.LENGTH_SHORT).show();
             return;
+        }else if(!GSTINValidation.checkValidStateCode(gstin,myContext))
+        {
+            Toast.makeText(myContext, "Invalid StateCode for GSTIN",Toast.LENGTH_SHORT).show();
+            Gstin.setText("");
+            return;
         }
+
+        String GSTIN = Gstin.getText().toString();
+        String stateSelected = POS.getText().toString();
+        int length = stateSelected.length();
+        String stateCode = stateSelected.substring(length-2,length);
+        if(!GSTIN.substring(0,2).equals(stateCode))
+        {
+            POS.setText(GSTIN.substring(0,2));
+        }
+
         String referenceNo = RefernceNo.getText().toString().trim();
         dbHelper.CreateDatabase();
         dbHelper.OpenDatabase();
-        int ll = dbHelper.updateOwnerDetails(billPrefix,gstin,referenceNo);
+        int ll = dbHelper.updateOwnerDetails(billPrefix,gstin,referenceNo,GSTIN.substring(0,2));
         if(ll>0)
             Toast.makeText(myContext, "Details updated successfully", Toast.LENGTH_SHORT).show();
     }

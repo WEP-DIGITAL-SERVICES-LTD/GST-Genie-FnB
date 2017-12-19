@@ -276,6 +276,7 @@
                                             android:layout_height="wrap_content"
                                             android:ems="5"
                                             android:inputType="numberDecimal"
+                                            android:maxLength="8"
                                             android:selectAllOnFocus="true" />
                                     </TableRow>
 
@@ -296,6 +297,7 @@
                                             android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
                                             android:layout_height="wrap_content"
                                             android:ems="5"
+                                            android:maxLength="8"
                                             android:inputType="numberDecimal"
                                             android:selectAllOnFocus="true" />
 
@@ -319,6 +321,7 @@
                                             android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
                                             android:layout_height="wrap_content"
                                             android:ems="5"
+                                            android:maxLength="8"
                                             android:inputType="numberDecimal"
                                             android:selectAllOnFocus="true" />
 
@@ -342,6 +345,7 @@
                                             android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
                                             android:layout_height="wrap_content"
                                             android:ems="5"
+                                            android:maxLength="8"
                                             android:inputType="numberDecimal"
                                             android:selectAllOnFocus="true" />
 

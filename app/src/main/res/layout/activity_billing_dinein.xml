@@ -370,6 +370,7 @@
                                     android:hint="Search Item Barcode"
                                     android:inputType="text"
                                     android:minHeight="40dp"
+                                    android:completionThreshold="1"
                                     android:selectAllOnFocus="true"
                                     android:drawableRight="@drawable/searchicon_img"
                                     android:textSize="10sp"

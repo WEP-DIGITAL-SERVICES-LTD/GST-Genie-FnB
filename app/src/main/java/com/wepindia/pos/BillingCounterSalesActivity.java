@@ -142,8 +142,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     int iTaxType = 0, iTotalItems = 0, iCustId = 0, iTokenNumber = 0;
     float  fRoundOfValue =0;
     double fChangePayment = 0,dFinalBillValue=0;
-    float fWalletPayment = 0;
-    float fTotalDiscount = 0, fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPettCashPayment = 0, fPaidTotalPayment = 0;
+    double fWalletPayment = 0;
+    float fTotalDiscount = 0,   fPettCashPayment = 0;
+    double  fCashPayment = 0, fCardPayment = 0,fCouponPayment = 0,fPaidTotalPayment = 0;
     double dPettCashPayment = 0;
     int BillwithStock = 0;
     String businessDate="";
@@ -278,6 +279,40 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 case 2 : listViewDept.setVisibility(View.INVISIBLE);
             }
             loadItems(0);
+        }
+    }
+
+    private void checkForInterStateTax()
+    {
+        String custGStin = etCustGSTIN.getText().toString().trim();
+
+        if (custGStin != null && custGStin.length() == 15)
+        {
+
+            String GSTCustomerSateCode = custGStin.substring(0, 2);
+            Cursor   ownerCursor = db.getOwnerDetail_counter();
+            String ownerGSTIN = "";
+            if(ownerCursor !=null && ownerCursor.moveToFirst())
+            {
+                ownerGSTIN = ownerCursor.getString(ownerCursor.getColumnIndex("GSTIN"));
+            }
+
+            if (GSTCustomerSateCode.equals(ownerGSTIN.substring(0, 2))) {
+                chk_interstate.setChecked(false);
+                spnr_pos.setSelection(0);
+            } else
+            {
+                chk_interstate.setChecked(true);
+                String stateName = "";
+                spnr_pos.setSelection(getIndex_pos(GSTCustomerSateCode));
+
+            }
+            chk_interstate.setEnabled(false);
+            spnr_pos.setEnabled(false);
+
+        } else {
+            chk_interstate.setChecked(false);
+            spnr_pos.setSelection(0);
         }
     }
 
@@ -425,11 +460,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     }
                     boolean mFlag = GSTINValidation.checkGSTINValidation(gstin);
 
-                    if (mFlag)
-                    {
+                    if (mFlag) {
+                        if(!GSTINValidation.checkValidStateCode(gstin,this))
+                        {
+                            messageDialog.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
+                            return;
+                        }else {
                         insertCustomer(editTextAddress.getText().toString(), editTextMobile.getText().toString(), editTextName.getText().toString(), 0, 0, 0, gstin);
                         Toast.makeText(BillingCounterSalesActivity.this, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
-                        ControlsSetEnabled();
+                            checkForInterStateTax();
+                            ControlsSetEnabled();
+                    }
                     }else
                     {
                         messageDialog.Show("Invalid Information","Please enter valid GSTIN for customer");
@@ -466,6 +507,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     {
         Time = Calendar.getInstance();
         tx = "";
+        editTextMobile.setText("");
         autoCompleteTextViewSearchItemBarcode.setText("");
         isReprint = false;
         reprintBillingMode=0;
@@ -479,7 +521,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvDiscountPercentage.setText("0.00");
         editTextName.setText("");
         customerId = "0";
-        editTextMobile.setText("");
+
         editTextAddress.setText("");
         tvBillNumber.setText("");
         autoCompleteTextViewSearchItem.setText("");
@@ -489,6 +531,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         chk_interstate.setChecked(false);
         spnr_pos.setSelection(0);
         spnr_pos.setEnabled(false);
+        chk_interstate.setEnabled(true);
         tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
 
         fTotalDiscount =0;
@@ -903,7 +946,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if(view== null  || CUSTOMER_FOUND==1)
                 return;
             if(view.getId() == R.id.edtCustPhoneNo){
-                if (editTextMobile.getText().toString().length() == 10) {
+                if (editTextMobile.getText().toString().length() == 10 ) {
                     Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
                     if (crsrCust.moveToFirst()) {
                         CUSTOMER_FOUND = 1;
@@ -915,6 +958,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                             etCustGSTIN.setText("");
                         else
                             etCustGSTIN.setText(gstin);
+                        checkForInterStateTax();
                         ControlsSetEnabled();
                         btn_DineInAddCustomer.setEnabled(false);
                         btn_PrintBill.setEnabled(true);
@@ -932,6 +976,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     editTextAddress.setText("");
                     etCustGSTIN.setText("");
                     CUSTOMER_FOUND=0;
+                    chk_interstate.setChecked(false);
+                    chk_interstate.setEnabled(true);
+                    spnr_pos.setEnabled(false);
                     //Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -4358,14 +4405,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     strComplimentaryReason = data.getStringExtra(PayBillActivity.COMPLIMENTARY_REASON);
                     dDiscPercent = data.getFloatExtra("DISCOUNT_PERCENTAGE", 0);
 
-                    fCashPayment = data.getFloatExtra(PayBillActivity.TENDER_CASH_VALUE, 0);
-                    fCardPayment = data.getFloatExtra(PayBillActivity.TENDER_CARD_VALUE, 0);
-                    fCouponPayment = data.getFloatExtra(PayBillActivity.TENDER_COUPON_VALUE, 0);
+                    fCashPayment = data.getDoubleExtra(PayBillActivity.TENDER_CASH_VALUE, 0);
+                    fCardPayment = data.getDoubleExtra(PayBillActivity.TENDER_CARD_VALUE, 0);
+                    fCouponPayment = data.getDoubleExtra(PayBillActivity.TENDER_COUPON_VALUE, 0);
 
 //                    fPettCashPayment = data.getFloatExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
                     dPettCashPayment = data.getDoubleExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
-                    fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
-                    fWalletPayment = data.getFloatExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
+                    fPaidTotalPayment = data.getDoubleExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
+                    fWalletPayment = data.getDoubleExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
                     fChangePayment = data.getDoubleExtra(PayBillActivity.TENDER_CHANGE_VALUE, 0);
                     fRoundOfValue = data.getFloatExtra(PayBillActivity.TENDER_ROUNDOFF, 0);
                     dFinalBillValue = data.getDoubleExtra(PayBillActivity.TENDER_FINALBILL_VALUE, 0);
@@ -4574,7 +4621,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
      * @param PaidAmount          : Amount paid for the complimentary bill
      * @param ComplimentaryReason : Reason for giving complimentary bill
      *************************************************************************************************************************************/
-    private void SaveComplimentaryBill(int BillNumber, float PaidAmount, String ComplimentaryReason) {
+    private void SaveComplimentaryBill(int BillNumber, double PaidAmount, String ComplimentaryReason) {
         long lResult = 0;
 
         ComplimentaryBillDetail objComplimentaryBillDetail = new ComplimentaryBillDetail();

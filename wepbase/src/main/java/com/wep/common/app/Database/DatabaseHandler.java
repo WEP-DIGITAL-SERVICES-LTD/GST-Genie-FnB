@@ -61,7 +61,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     static String colAge = "Age";
 
     // DatabaseVersion
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     String strDate = "";
     Date strDate_date;
     Calendar Time; // Time variable
@@ -1330,58 +1330,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if(value == -1) db.execSQL("ALTER TABLE " + TBL_RIDERSETTLEMENT +" ADD InvoiceDate TEXT");
 
 
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLDETAIL);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_Supplier);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLSETTING);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLNORESETCONFIG);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CATEGORY);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_COMPLIMENTARYBILLDETAIL);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_COUPON);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CUSTOMER);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DELETEDKOT);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DEPARTMENT);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DESCRIPTION);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DISCOUNTCONFIG);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_VOUCHERCONFIG);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_EMPLOYEE);
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Outward);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_KITCHEN);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_KOTMODIFIER);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_MACHINESETTING);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_MAILSETTING);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PAYMENTRECEIPT);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PENDINGKOT);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_RIDERSETTLEMENT);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_TAXCONFIG);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_SUBTAXCONFIG);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_TABLEBOOKING);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_REPORTSMASTER);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERSROLE);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERROLEACCESS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_ITEMS_DETAILS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_LEDGER);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR2_AMEND);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_LEDGER);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR1_AMEND);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_2A);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_1A);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Inward);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Outward);
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_OWNER_DETAILS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Inward);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Outward);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PURCHASEORDER);
-        //db.execSQL("DROP TABLE IF EXIXTS " + TBL_GOODSINWARD);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_INGREDIENTS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_TRANSACTIONS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PaymentModeConfiguration);
-        //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockOutward);
-        //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockInward);
-//        onCreate(db);
     }
 
     public void setDefaultTableValues(SQLiteDatabase db) {//user HARDCODING
@@ -8227,7 +8175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public int updateOwnerDetails(String BillNoPrefix,String gstin, String referenceNo)
+    public int updateOwnerDetails(String BillNoPrefix,String gstin, String referenceNo,String POS)
     {
         int result =0;
         try{
@@ -8235,6 +8183,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put(KEY_BillNoPrefix, BillNoPrefix);
             cvDbValues.put(KEY_GSTIN, gstin);
             cvDbValues.put(KEY_REFERENCE_NO, referenceNo);
+            cvDbValues.put(KEY_POS, POS);
             result= dbFNB.update(TBL_OWNER_DETAILS, cvDbValues, null, null);
         }catch (Exception e){
             e.printStackTrace();
@@ -8436,13 +8385,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return list;
     }
     public ArrayList<String> getGSTR1B2CL_stateCodeList(String startDate, String endDate) {
-        String selectQuery = "SELECT  CustStateCode, POS FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE  " +
+        String selectQuery = "SELECT  CustStateCode, POS, TaxableValue FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE  " +
                 KEY_BusinessType + " = 'B2C' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "' AND "+
-                KEY_BillStatus+" = 1 AND "+KEY_TaxableValue+" > 250000";
+                KEY_BillStatus+" = 1";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
         ArrayList<String> list = new ArrayList<>();
         while(cursor!=null && cursor.moveToNext())
         {
+
+            String TaxableValue_str = cursor.getString(cursor.getColumnIndex("TaxableValue"));
+            double TaxableValue = Double.parseDouble(TaxableValue_str);
+            if(TaxableValue <=250000)
+                continue;
             String pos = cursor.getString(cursor.getColumnIndex("POS"));
             String state_cd = cursor.getString(cursor.getColumnIndex("CustStateCode"));
             if(!pos.equalsIgnoreCase(state_cd))
@@ -8468,7 +8422,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "ProvisionalAssess, EcommerceGSTIN FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE  " +
                 KEY_BusinessType + " = 'B2C' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" +
                 endDate + "' AND "+KEY_CustStateCode+" LIKE '"+stateCd+"' AND "+
-                KEY_BillStatus+" = 1 AND "+KEY_TaxableValue+" > 250000";
+                KEY_BillStatus+" = 1";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
         return cursor;
     }

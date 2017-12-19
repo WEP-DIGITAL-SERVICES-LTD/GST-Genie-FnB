@@ -247,6 +247,8 @@ public class InwardItemActivity extends WepBaseActivity {
                 public void afterTextChanged(Editable s) {
                     String SGST = et_Inw_SGSTRate.getText().toString();
                     String CGST = et_Inw_CGSTRate.getText().toString();
+                    SGST = et_Inw_SGSTRate.getText().toString().equals(".")?"0.":et_Inw_SGSTRate.getText().toString();
+                    CGST = et_Inw_CGSTRate.getText().toString().equals(".")?"0.":et_Inw_CGSTRate.getText().toString();
                     if(SGST.equals("")){
                         //et_Inw_SGSTRate.setText("0");
                         SGST = ("0");
@@ -277,6 +279,8 @@ public class InwardItemActivity extends WepBaseActivity {
                 public void afterTextChanged(Editable s) {
                     String SGST = et_Inw_SGSTRate.getText().toString();
                     String CGST = et_Inw_CGSTRate.getText().toString();
+                    SGST = et_Inw_SGSTRate.getText().toString().equals(".")?"0.":et_Inw_SGSTRate.getText().toString();
+                    CGST = et_Inw_CGSTRate.getText().toString().equals(".")?"0.":et_Inw_CGSTRate.getText().toString();
                     if(CGST.equals("")) {
                         //et_Inw_CGSTRate.setText("0");
                         CGST = ("0");
@@ -1800,7 +1804,7 @@ public class InwardItemActivity extends WepBaseActivity {
         if (et_inw_averagerate_entered.getText().toString().equalsIgnoreCase("")) {
             MsgBox.setTitle("Warning")
                     .setIcon(R.drawable.ic_launcher)
-                    .setMessage("Please enter item's average rate")
+                    .setMessage("Please enter item's  rate")
                     .setPositiveButton("Ok",null)
                     .show();
             return;
@@ -1811,7 +1815,7 @@ public class InwardItemActivity extends WepBaseActivity {
             {
                 MsgBox.setTitle("Warning")
                         .setIcon(R.drawable.ic_launcher)
-                        .setMessage("Please enter item's average rate between 0 and 9999.99")
+                        .setMessage("Please enter item's  rate between 0 and 9999.99")
                         .setPositiveButton("Ok",null)
                         .show();
                 return;
@@ -1894,7 +1898,7 @@ public class InwardItemActivity extends WepBaseActivity {
         }else if(Double.parseDouble(et_inw_averagerate_entered.getText().toString())< 0 ||
                 Double.parseDouble(et_inw_averagerate_entered.getText().toString())>9999.99)
         {
-            MsgBox1.Show("Warning","Please enter item's average rate between 0 and 9999.99");
+            MsgBox1.Show("Warning","Please enter item's  rate between 0 and 9999.99");
             return;
         }
 

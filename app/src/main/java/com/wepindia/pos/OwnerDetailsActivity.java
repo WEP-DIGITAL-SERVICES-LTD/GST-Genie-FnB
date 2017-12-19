@@ -63,8 +63,42 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         clickEvents();
         loadOwnerDetail();
 
-        checkEditTextTest();
+        TextChangeListener();
 
+
+    }
+
+    private void TextChangeListener() {
+
+
+        try {
+            Gstin.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {   }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String gstin = Gstin.getText().toString();
+                    if(gstin.length() == 2)
+                    {
+                        if(GSTINValidation.checkValidStateCode(gstin, myContext)){
+                            String stateCode = gstin.substring(0,2);
+                            spinner1.setSelection(getIndex_pos(stateCode));
+                        }else
+                        {
+                            MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
+                            Gstin.setText("");
+                        }
+                    }
+                }
+            });
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -80,6 +114,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         Phone = (EditText) findViewById(R.id.ownerContact);
         Email = (EditText) findViewById(R.id.ownerEmail);
         spinner1 = (Spinner) findViewById(R.id.ownerPos);
+        spinner1.setEnabled(false);
         spinner2 = (Spinner) findViewById(R.id.ownerOffice);
         spinner2.setSelection(1);
         Address = (EditText) findViewById(R.id.ownerAddress);
@@ -90,8 +125,9 @@ public class OwnerDetailsActivity extends WepBaseActivity {
             @Override
             public void onClick(View view) {
                 String GSTIN = Gstin.getText().toString().trim().toUpperCase();
-                if (GSTIN == null) {
-                    GSTIN = "";
+                if (GSTIN == null || GSTIN.equals("")) {
+                    MsgBox.Show("Note", "Please enter the GSTIN");
+                    return;
                 }
 
 
@@ -101,14 +137,14 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                         spinner1.getSelectedItem().toString().equalsIgnoreCase("") ||
                         spinner1.getSelectedItem().toString().equalsIgnoreCase("Select") ||
                         Address.getText().toString().equalsIgnoreCase("")) {
-                        MsgBox.Show("Incomplete Information","Please fill required details");
+                    MsgBox.Show("Incomplete Information","Please fill required details");
                     //Toast.makeText(OwnerDetailsActivity.this, "detail not completed", Toast.LENGTH_SHORT).show();
                 }else if (!Gstin.getText().toString().trim().toUpperCase().equals("") && Gstin.getText().toString().trim().toUpperCase().length()!=15)
                 {
-                     MsgBox.Show("Note", "GSTIN can either be empty or of 15 characters");
+                    MsgBox.Show("Note", "Please enter 15 characters GSTIN");
                 }  else{
                     try {
-                       // boolean cc = isValidEmailAddress(Email.getText().toString().trim());
+                        // boolean cc = isValidEmailAddress(Email.getText().toString().trim());
                         mFlag =  GSTINValidation.checkGSTINValidation(GSTIN);
                         if (!isValidEmailAddress(Email.getText().toString().trim()))
                         {
@@ -120,10 +156,25 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                             return;
                         }
                         else if (mFlag) {
-                            dbHelper.CreateDatabase();
-                            dbHelper.OpenDatabase();
-                            dbHelper.deleteOwnerDetails();
-                            updateDetails();
+                            if(!GSTINValidation.checkValidStateCode(GSTIN,myContext))
+                            {
+                                MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
+                                Gstin.setText("");
+                            }
+                            else
+                            {
+                                String stateSelected = (spinner1.getSelectedItem().toString());
+                                int length = stateSelected.length();
+                                String stateCode = stateSelected.substring(length-2,length);
+                                if(!GSTIN.substring(0,2).equals(stateCode))
+                                {
+                                    spinner1.setSelection(getIndex_pos(GSTIN.substring(0,2)));
+                                }
+                                dbHelper.CreateDatabase();
+                                dbHelper.OpenDatabase();
+                                dbHelper.deleteOwnerDetails();
+                                updateDetails();
+                            }
                         } else {
                             MsgBox.Show("Invalid Information","Please Enter Valid GSTIN");
                             //Toast.makeText(OwnerDetailsActivity.this, "Please Enter Valid GSTIN", Toast.LENGTH_SHORT).show();
@@ -156,34 +207,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         });
 
     }
-    private void checkEditTextTest() {
 
-
-      /*  Gstin.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String gst = Gstin.getText().toString();
-                Log.d("welcome", " work " + gst);
-                Log.d("welcome", " work " + s);
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String gst1 = Gstin.getText().toString();
-                Log.d("welcome", " work " + gst1);
-                Log.d("welcome", " work " + s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String gst = Gstin.getText().toString();
-                Log.d("welcome", " work " + gst);
-                Log.d("welcome", " work " + s);
-            }
-        });*/
-
-    }
 
     private int getIndex_pos(String substring) {
 

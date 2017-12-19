@@ -28,6 +28,7 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.SupplierAdapter;
 import com.wepindia.pos.adapters.SupplierSuggestionAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.GSTINValidation;
 
 import org.w3c.dom.Text;
 
@@ -286,23 +287,17 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         try {
             if(suppliergstin_str.trim().length() == 0)
             {mFlag = true;}
-            else if (suppliergstin_str.trim().length() > 0 && suppliergstin_str.length() == 15) {
-                String[] part = suppliergstin_str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
-
-                               /* int length = gstin.length() -1;
-                                if(Integer.parseInt(String.valueOf(gstin.charAt(length))) ==  checksumGSTIN(gstin.substring(0,length)))*/
-                    mFlag = true;
-                } else {
-                    mFlag = false;
+            else if(GSTINValidation.checkGSTINValidation(suppliergstin_str))
+            {
+                if(!GSTINValidation.checkValidStateCode(suppliergstin_str,this))
+                {
+                    MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
+                    return false;
                 }
-            } else {
+                mFlag = true;
+            }
+            else
+            {
                 mFlag = false;
             }
         } catch (Exception e) {
@@ -398,26 +393,21 @@ public class SupplierDetailsActivity extends WepBaseActivity {
 
 
         boolean mFlag = false;
-        try {
+        try
+        {
             if(suppliergstin_str.trim().length() == 0)
             {mFlag = true;}
-            else if (suppliergstin_str.trim().length() > 0 && suppliergstin_str.length() == 15) {
-                String[] part = suppliergstin_str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
-
-                               /* int length = gstin.length() -1;
-                                if(Integer.parseInt(String.valueOf(gstin.charAt(length))) ==  checksumGSTIN(gstin.substring(0,length)))*/
-                    mFlag = true;
-                } else {
-                    mFlag = false;
+            else if(GSTINValidation.checkGSTINValidation(suppliergstin_str))
+            {
+                if(!GSTINValidation.checkValidStateCode(suppliergstin_str,this))
+                {
+                    MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
+                    return false;
                 }
-            } else {
+                mFlag = true;
+            }
+            else
+            {
                 mFlag = false;
             }
         } catch (Exception e) {

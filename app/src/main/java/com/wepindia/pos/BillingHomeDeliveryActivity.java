@@ -561,6 +561,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                     return;
 //
                                 }else {
+                                    checkForInterStateTax();
                                     btnAddCustomer.setVisibility(View.INVISIBLE);
                                     ControlsSetEnabled();
                                     if(jBillingMode!=2) {
@@ -580,8 +581,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                 btnAddCustomer.setVisibility(View.VISIBLE);
                                 //ControlsSetDisabled();
                             }
-                        } else {
-
+                        } else if (edtCustPhoneNo.getText().toString().trim().equals("")){
+                            chk_interstate.setChecked(false);
+                            chk_interstate.setEnabled(true);
+                            spnr_pos.setEnabled(false);
                         }
                     } catch (Exception ex) {
                         MsgBox.Show("Error", ex.getMessage());
@@ -3225,6 +3228,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
         Time = Calendar.getInstance();
         tx = "";
+        edtCustPhoneNo.setText("");
         autoCompleteTextViewSearchItemBarcode.setText("");
         isReprint = false;
         //txtSearchItemBarcode.setText("");
@@ -3240,6 +3244,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         tvBillAmount.setText("0.00");
         chk_interstate.setChecked(false);
         spnr_pos.setSelection(0);
+        chk_interstate.setEnabled(true);
         spnr_pos.setEnabled(false);
         aTViewSearchItem.setText("");
         aTViewSearchMenuCode.setText("");
@@ -3247,10 +3252,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         tblOrderItems.removeAllViews();
         edtCustName.setText("");
         edtCustId.setText("0");
-        edtCustPhoneNo.setText("");
+
         edtCustAddress.setText("");
         etCustGSTIN.setText("");
-        spnr_pos.setSelection(0);
+
 
         tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
         setInvoiceDate();
@@ -5111,7 +5116,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             iCustId = Integer.valueOf(edtCustId.getText().toString());
             double fTotalTransaction = db.getCustomerTotalTransaction(iCustId);
             double fCreditAmount = db.getCustomerCreditAmount(iCustId);
-            fCreditAmount = fCreditAmount - Double.parseDouble(tvBillAmount.getText().toString());
+            fCreditAmount = fCreditAmount -  dPettCashPayment;
             fTotalTransaction += Double.parseDouble(tvBillAmount.getText().toString());
 
             long lResult1 = db.updateCustomerTransaction(iCustId,
@@ -6537,7 +6542,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         fPaidTotalPayment = data.getDoubleExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
                         fWalletPayment = data.getDoubleExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
                         fChangePayment = data.getDoubleExtra(PayBillActivity.TENDER_CHANGE_AMOUNT, 0);
-                        fRoundOfValue = data.getDoubleExtra(PayBillActivity.TENDER_ROUNDOFF, 0);
+                        fRoundOfValue = data.getFloatExtra(PayBillActivity.TENDER_ROUNDOFF, 0);
                         dFinalBillValue = data.getDoubleExtra(PayBillActivity.TENDER_FINALBILL_VALUE, 0);
 
                         iCustId = data.getIntExtra("CUST_ID", 1);
@@ -7409,7 +7414,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         if(proceed == 0)
             return;
         if (isPrinterAvailable) {
-            strPaymentStatus = "Paid";
+            if(jBillingMode == 3)
+                strPaymentStatus = "Paid";
+            else
+                strPaymentStatus = "Cash On Delivery";
             PrintBillPayment = 1;
 
             // Print Bill with Save Bill
@@ -8066,6 +8074,40 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
     }
 
+    private void checkForInterStateTax()
+    {
+        String custGStin = etCustGSTIN.getText().toString().trim();
+
+        if (custGStin != null && custGStin.length() == 15)
+        {
+
+            String GSTCustomerSateCode = custGStin.substring(0, 2);
+            Cursor   ownerCursor = db.getOwnerDetail_counter();
+            String ownerGSTIN = "";
+            if(ownerCursor !=null && ownerCursor.moveToFirst())
+            {
+                ownerGSTIN = ownerCursor.getString(ownerCursor.getColumnIndex("GSTIN"));
+            }
+
+            if (GSTCustomerSateCode.equals(ownerGSTIN.substring(0, 2))) {
+                chk_interstate.setChecked(false);
+                spnr_pos.setSelection(0);
+            } else
+            {
+                chk_interstate.setChecked(true);
+                String stateName = "";
+                spnr_pos.setSelection(getIndex_pos(GSTCustomerSateCode));
+
+            }
+            chk_interstate.setEnabled(false);
+            spnr_pos.setEnabled(false);
+
+        } else {
+            chk_interstate.setChecked(false);
+            spnr_pos.setSelection(0);
+        }
+    }
+
     // Add Customer if Customer is not Found for Pickup and Home Delivery
     public void AddCustomer(View v) {
         try {
@@ -8098,6 +8140,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                             //MsgBox.Show("", "Customer Added Successfully");
                             Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
                             ControlsSetEnabled();
+                            checkForInterStateTax();
                         }
                     }else
                     {

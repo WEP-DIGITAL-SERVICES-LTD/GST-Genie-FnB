@@ -144,6 +144,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
             txtCreditAmount = (EditText) findViewById(R.id.etCreditAmount);
             txtCustomerCreditLimit = (EditText) findViewById(R.id.etCreditCreditLimit);
             txtCreditAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
+            txtCustomerCreditLimit.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
             txtSearchName = (AutoCompleteTextView) findViewById(R.id.etSearchCustomerName);
             txtSearchPhone = (EditText) findViewById(R.id.etSearchCustomerPhone);
             txGSTIN = (EditText) findViewById(R.id.etCustomerGSTIN);
@@ -841,16 +842,17 @@ public class CustomerDetailActivity extends WepBaseActivity {
                 MsgBox.Show("Warning", "Customer already exists");
             } else {
 
-                if (GSTIN == null) {
+                if (GSTIN == null ) {
                     GSTIN = "";
                 }
                 boolean mFlag =  GSTINValidation.checkGSTINValidation(GSTIN);
 
                 if(mFlag) {
-                   /* if (!GSTINValidation.checkValidStateCode(GSTIN,this)) {
+                    if (!GSTINValidation.checkValidStateCode(GSTIN,this)) {
                         MsgBox.Show("Invalid Information", "Please Enter Valid StateCode for GSTIN");
+                        return;
                     }
-                    else{*/
+                    else{
                         double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("") ? 0.00 :
                                 Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
 
@@ -863,7 +865,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
                         ClearCustomerTable();
                         DisplayCustomer();
                         ((ArrayAdapter<String>) (txtSearchName.getAdapter())).add(Name);
-                   // }
+                    }
                 }else
                 {
                     MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
@@ -905,10 +907,11 @@ public class CustomerDetailActivity extends WepBaseActivity {
         boolean mFlag = GSTINValidation.checkGSTINValidation(GSTIN);
         if (mFlag)
         {
-            /*if(!GSTINValidation.checkValidStateCode(GSTIN,this))
+            if(!GSTINValidation.checkValidStateCode(GSTIN,this))
             {
                 MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
-            }else {*/
+                return;
+            }else {
                 double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("") ? 0.00 :
                         Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
 
@@ -922,15 +925,16 @@ public class CustomerDetailActivity extends WepBaseActivity {
                 int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
                         Double.parseDouble(LastTransaction), Double.parseDouble(TotalTransaction), dCreditAmount, GSTIN, dCreditLimit);
                 Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
-                Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(myContext, "Cus tomer Updated Successfully", Toast.LENGTH_LONG).show();
                 ResetCustomer();
                 if (iResult > 0) {
                     ClearCustomerTable();
                     DisplayCustomer();
+                    loadAutoCompleteData();
                 } else {
                     MsgBox.Show("Warning", "Update failed");
                 }
-           // }
+            }
         }else
         {
             MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
