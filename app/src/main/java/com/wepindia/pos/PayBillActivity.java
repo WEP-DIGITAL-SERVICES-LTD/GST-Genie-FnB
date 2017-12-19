@@ -349,10 +349,27 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             }  // end of for
             dTotalValue+= otherCharges_recieved;
             totalBillAmount = dTotalValue;
-            dRoundoffTotal = Math.round(dTotalValue);
+
+            if (BILLAMOUNTROUNDOFF == 1) {
+                dRoundoffTotal = Math.round(totalBillAmount);
+                String str = String.format("%.2f",totalBillAmount);
+                if (!str.contains(".00")) {
+                    edtRoundOff.setText("0" + str.substring(str.indexOf(".")));
+                } else {
+                    edtRoundOff.setText("0");
+                }
+
+            } else {
+                dRoundoffTotal = totalBillAmount ;// Round off disabled
+                edtRoundOff.setText("0");
+            }
+            edtTotalValue.setText(String.format( "%.2f", dRoundoffTotal ));
+
+            /*dRoundoffTotal = Math.round(dTotalValue);
             String str = String.format("%.2f",dTotalValue);
             edtTotalValue.setText(String.format( "%.2f", dRoundoffTotal ));
-            edtRoundOff.setText("0" + str.substring(str.indexOf(".")));
+            edtRoundOff.setText("0" + str.substring(str.indexOf(".")));*/
+
 
         }
         else
@@ -377,13 +394,27 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     totalcessAmount += item.getCessAmt();
 
                 }
+
                 discAmt = Double.parseDouble(disAmount_str);
                 totalBillAmount = Double.parseDouble(strTotal);
                 totalBillAmount -= discAmt;
-                dRoundoffTotal = Math.round(totalBillAmount);
-                String str = String.format("%.2f",totalBillAmount);
+
+                if (BILLAMOUNTROUNDOFF == 1) {
+                    dRoundoffTotal = Math.round(totalBillAmount);
+                    String str = String.format("%.2f",totalBillAmount);
+                    if (!str.contains(".00")) {
+                        edtRoundOff.setText("0" + str.substring(str.indexOf(".")));
+                    } else {
+                        edtRoundOff.setText("0");
+                    }
+
+                } else {
+                    dRoundoffTotal = totalBillAmount ;// Round off disabled
+                    edtRoundOff.setText("0");
+                }
                 edtTotalValue.setText(String.format( "%.2f", dRoundoffTotal ));
-                edtRoundOff.setText("0" + str.substring(str.indexOf(".")));
+
+
 
             }
         }
@@ -642,7 +673,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             intentResult.putExtra(TENDER_PETTYCASH_VALUE, getPettyCash());
             intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Double.parseDouble(edtTenderTotalValue.getText().toString()));
             intentResult.putExtra(TENDER_CHANGE_VALUE, Double.parseDouble(edtChange.getText().toString()));
-            intentResult.putExtra(TENDER_ROUNDOFF, Double.parseDouble(edtRoundOff.getText().toString()));
+            intentResult.putExtra(TENDER_ROUNDOFF, Float.parseFloat(edtRoundOff.getText().toString()));
             intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
             intentResult.putExtra(TENDER_FINALBILL_VALUE, dRoundoffTotal);
             intentResult.putExtra(ORDER_DELIVERED, dRoundoffTotal);
