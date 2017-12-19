@@ -19,12 +19,14 @@ package com.wep.common.app.Database;
 public class RiderSettlement {
 
 	// Private variable
-	int iBillNumber, iEmployeeId, iTotalItems, iCustId;
-	double fBillAmount, fDeliveryCharge, fPettyCash, fSettledAmount;
+	private String InvoiceDate;
+	private int iBillNumber, iEmployeeId, iTotalItems, iCustId;
+	private double fBillAmount, fDeliveryCharge, fPettyCash, fSettledAmount;
 
 	// Default constructor
 	public RiderSettlement(){
 
+		this.InvoiceDate = "";
 		this.iBillNumber = 0;
 		this.iEmployeeId = 0;
 		this.iTotalItems = 0;
@@ -36,9 +38,10 @@ public class RiderSettlement {
 	}
 
 	// Parameterized constructor
-	public RiderSettlement(int BillNumber,int EmployeeId,int TotalItems,
+	public RiderSettlement(String InvoiceDate, int BillNumber,int EmployeeId,int TotalItems,
 						   double BillAmount,double DeliveryCharge,double PettyCash,double SettledAmount, int CustId){
 
+		this.InvoiceDate = InvoiceDate;
 		this.iBillNumber = BillNumber;
 		this.iEmployeeId = EmployeeId;
 		this.iTotalItems = TotalItems;
@@ -47,6 +50,14 @@ public class RiderSettlement {
 		this.fPettyCash = PettyCash;
 		this.fSettledAmount = SettledAmount;
 		this.iCustId = CustId;
+	}
+
+	public String getInvoiceDate() {
+		return InvoiceDate;
+	}
+
+	public void setInvoiceDate(String invoiceDate) {
+		InvoiceDate = invoiceDate;
 	}
 
 	// getting BillNumber

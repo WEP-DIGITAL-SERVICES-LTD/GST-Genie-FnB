@@ -24,8 +24,8 @@ public class BillItem {
 			GSTIN;
 	int  iItemNumber, iDeptCode, iCategCode, iKitchenCode, iTaxType;
 	float  fDiscountAmount, fDiscountPercent, fQuantity, fvalue,fTaxAmount, fTaxPercent, fServiceTaxPercent, fServiceTaxAmount, fModifierAmount,
-			IGSTRate, IGSTAmount, CGSTRate, SGSTRate;
-	double SGSTAmount, CGSTAmount;
+			IGSTRate, CGSTRate, SGSTRate;
+	double SGSTAmount, CGSTAmount, IGSTAmount;
 	String TaxationType,SupplierType ;
 	String InvoiceDate;
 	String BillingMode; // richa_2012
@@ -365,11 +365,11 @@ public class BillItem {
 		this.IGSTRate = IGSTRate;
 	}
 
-	public float getIGSTAmount() {
+	public double getIGSTAmount() {
 		return IGSTAmount;
 	}
 
-	public void setIGSTAmount(float IGSTAmount) {
+	public void setIGSTAmount(double IGSTAmount) {
 		this.IGSTAmount = IGSTAmount;
 	}
 

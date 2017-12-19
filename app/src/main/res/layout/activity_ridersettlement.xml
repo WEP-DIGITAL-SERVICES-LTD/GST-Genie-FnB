@@ -44,7 +44,7 @@
                             android:id="@+id/tblRiderSettlement"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:collapseColumns="5,6">
+                            android:collapseColumns="5,6,7">
 
                             <TableRow
                                 android:id="@+id/rowCaption"
@@ -114,6 +114,15 @@
                                     android:textColor="@color/txtColorAccent"
                                     android:textSize="16sp" />
 
+                                <TextView
+                                    android:id="@+id/tvCaptionRiderSettlementBillDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="10dp"
+                                    android:text="Bill Date"
+                                    android:textColor="@color/txtColorAccent"
+                                    android:textSize="16sp" />
+
                             </TableRow>
                         </TableLayout>
                     </ScrollView>
@@ -159,10 +168,36 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/rowRiderSettlementBillAmount"
+                    android:id="@+id/rowRiderSettlementBillDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rowRiderSettlementBillNumber"
+                    android:orientation="horizontal"
+                    android:weightSum="6">
+
+                    <TextView
+                        android:id="@+id/tvDeliveryBillDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="Bill Date:"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <EditText
+                        android:id="@+id/etDeliveryBillDateValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:focusable="false"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rowRiderSettlementBillAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rowRiderSettlementBillDate"
                     android:orientation="horizontal"
                     android:weightSum="6">
 
@@ -210,10 +245,35 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/rowRiderSettlementPettyCash"
+                    android:id="@+id/rowRiderSettlementCash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rowRiderSettlementDeliveryCharge"
+                    android:weightSum="6">
+
+                    <TextView
+                        android:id="@+id/tvDeliveryCash"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="Cash"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <EditText
+                        android:id="@+id/etDeliveryCashValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:focusable="false"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rowRiderSettlementPettyCash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rowRiderSettlementCash"
                     android:weightSum="6">
 
                     <TextView

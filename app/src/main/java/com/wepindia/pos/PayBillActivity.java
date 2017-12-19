@@ -75,7 +75,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     float baseValue_recieved =0;
     int taxType_recieved =0;
     double dRoundoffTotal =0;
-    float dWalletPayment =0;
+    double dWalletPayment =0;
     int RESETCALLED =0;
     float discPercent =0;
     double otherCharges_recieved =0;
@@ -235,7 +235,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtDiscount.setEnabled(false);
         edtWallet = (EditText) findViewById(R.id.edtWallet);
         edtWallet.setEnabled(false);
-        //edtWallet.addTextChangedListener(textChangeCard);
+
         edtCoupon = (EditText) findViewById(R.id.edtCoupon);
         edtCoupon.setEnabled(false);
         edtCoupon.addTextChangedListener(ChangeAmountEvent);
@@ -425,7 +425,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
     }
 
-    float cardAmount = 0;
+    double cardAmount = 0;
 
     private void TenderChange() {
         double dTotalValue = 0.00, dPaidTotal = 0.00;
@@ -453,7 +453,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                 dCard = MSwipeVal +OtherCardVal;
             }
 
-            cardAmount = (float) dCard;
+            cardAmount =  dCard;
 
 //        dCard = edtCard.getText().toString().equalsIgnoreCase("") ? 0.00 : Double.parseDouble(edtCard.getText().toString());
             dCoupon = edtCoupon.getText().toString().equalsIgnoreCase("") ? 0.00 : Double.parseDouble(edtCoupon.getText().toString());
@@ -636,13 +636,13 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             intentResult.putExtra(IS_PRINT_BILL, isPrint);
             intentResult.putExtra(DISCOUNT_AMOUNT, Float.parseFloat(edtDiscount.getText().toString()));
             intentResult.putExtra("DISCOUNT_PERCENTAGE",discPercent);
-            intentResult.putExtra(TENDER_CASH_VALUE, Float.parseFloat(edtPaid.getText().toString()));
+            intentResult.putExtra(TENDER_CASH_VALUE, Double.parseDouble(edtPaid.getText().toString()));
             intentResult.putExtra(TENDER_CARD_VALUE, cardAmount);
-            intentResult.putExtra(TENDER_COUPON_VALUE, Float.parseFloat(edtCoupon.getText().toString()));
+            intentResult.putExtra(TENDER_COUPON_VALUE, Double.parseDouble(edtCoupon.getText().toString()));
             intentResult.putExtra(TENDER_PETTYCASH_VALUE, getPettyCash());
-            intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Float.parseFloat(edtTenderTotalValue.getText().toString()));
-            intentResult.putExtra(TENDER_CHANGE_VALUE, Double.parseDouble(edtChange.getText().toString().substring(1)));
-            intentResult.putExtra(TENDER_ROUNDOFF, Float.parseFloat(edtRoundOff.getText().toString()));
+            intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Double.parseDouble(edtTenderTotalValue.getText().toString()));
+            intentResult.putExtra(TENDER_CHANGE_VALUE, Double.parseDouble(edtChange.getText().toString()));
+            intentResult.putExtra(TENDER_ROUNDOFF, Double.parseDouble(edtRoundOff.getText().toString()));
             intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
             intentResult.putExtra(TENDER_FINALBILL_VALUE, dRoundoffTotal);
             intentResult.putExtra(ORDER_DELIVERED, dRoundoffTotal);
@@ -1706,7 +1706,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_SHORT).show();
         try {
             edtWallet.setText(edtChange.getText().toString().trim());
-            dWalletPayment = Float.parseFloat(edtWallet.getText().toString());
+            dWalletPayment = Double.parseDouble(edtWallet.getText().toString());
             /*Payment payment = new Payment();
             payment.setPaymentType("Card");
             payment.setTotalAmount(toPayAmount+"");

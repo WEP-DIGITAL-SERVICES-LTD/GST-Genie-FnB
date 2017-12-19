@@ -51,8 +51,10 @@ import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,10 +69,11 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	DatabaseHandler dbCustomerOrder = new DatabaseHandler(CustomerOrdersActivity.this);
 	// MessageDialog object
 	MessageDialog MsgBox;
+	String businessDate = "";
 
 	// View handlers
 	TextView lblHeadingOrderDetails;
-	EditText txtCustPhone, txtCustName, txtCustAddress, txtCustId, txtBillAmount,txtTime,txtBillNo;
+	EditText txtCustPhone, txtCustName, txtCustAddress, txtCustId, txtBillAmount,txtTime,txtBillNo, txtBillDate;
 	Button btnAdd, btnOrder, btnTender, btnDelivery, btn_DeliveryOrderCancel,btn_OrderCustomerClear,btn_OrderCustomerClose, btn_OrderCustomerFinish;
 	ListView lstvwOrderCustName;
 	ScrollView scrlOrderDetail;
@@ -84,8 +87,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	String BILLING_MODE = "";
 	String strUserId = "", strUserName = "", strCustId = "", strPaymentStatus = "", strBillAmt = "";
 	int iAccessLevel = 0;
-	float discountAmount =0;
-	int iServiceTaxType = 0, iRiderCode = 0;
+	double discountAmount =0;
+	int iServiceTaxType = 0, iRiderCode = 0, BILLAMOUNTROUNDOFF = 0;
 	double dDeliveryCharge = 0, dPettyCash = 0, dServiceTaxPercent = 0;
 
 	EditText txtRiderName, txtPaidStatus, txtAmountDue;
@@ -146,6 +149,20 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				dServiceTaxPercent = crsrSettings.getDouble(crsrSettings.getColumnIndex("ServiceTaxPercent"));
 				HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
 				TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
+
+				if ((crsrSettings.getInt(crsrSettings.getColumnIndex("BillAmountRoundOff")) == 1)) { // Bill Amount Round Off
+					BILLAMOUNTROUNDOFF = 1;
+				}else
+				{
+					BILLAMOUNTROUNDOFF = 0;
+				}
+
+			}
+
+			Cursor cursorBDate = dbCustomerOrder.getCurrentDate();
+			if(cursorBDate.moveToFirst())
+			{
+				businessDate = cursorBDate.getString(cursorBDate.getColumnIndex("BusinessDate"));
 			}
 
 			LoadOrderToList();
@@ -165,6 +182,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		txtCustId = (EditText)findViewById(R.id.etOrderCustomerId);
 		txtTime = (EditText)findViewById(R.id.etOrderCustomerTime);
 		txtBillNo = (EditText)findViewById(R.id.etOrderCustomerBillNo);
+		txtBillDate = (EditText)findViewById(R.id.etOrderCustomerBillDate);
 		txtBillAmount = (EditText) findViewById(R.id.etOrderBillAmount);
 		btnAdd = (Button)findViewById(R.id.btn_OrderCustomerAddCustomer);
 		btnOrder = (Button)findViewById(R.id.btn_OrderCustomerOrder);
@@ -508,7 +526,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 			if(strtaxVal.equals(strtot))
 			{
 				found =1;
-				discountAmount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
+				discountAmount = cursor.getDouble(cursor.getColumnIndex("TotalDiscountAmount"));
 				txtBillAmount.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("BillAmount"))));
 				txtPaidStatus.setText("Paid");
 				strPaymentStatus= "Paid";
@@ -518,10 +536,25 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 					btn_OrderCustomerFinish.setEnabled(true);
 					btn_OrderCustomerFinish.setTextColor(Color.WHITE);
 				}
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				long milliSeconds= Long.parseLong(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(milliSeconds);
+
+				txtBillDate.setText(formatter.format(calendar.getTime()));
+
 				break;
 			}
-		}if(0 == found){
-			txtBillAmount.setText(String.format("%.2f", dBillTotal));
+		}
+		if(0 == found){
+
+			if (BILLAMOUNTROUNDOFF == 1) {
+				dBillTotal = Math.round(dBillTotal);
+				txtBillAmount.setText(String.format("%.2f", dBillTotal));
+			} else
+				txtBillAmount.setText(String.format("%.2f", dBillTotal));
+
+			txtBillDate.setText(businessDate);
 			if(BILLING_MODE.equals("3")) {
 				txtPaidStatus.setText("Not Paid");
 				strPaymentStatus = "Not Paid";
@@ -609,9 +642,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		objRiderSettlement.setEmployeeId(iRiderCode);
 		Log.d("SaveRiderDelivery", "Rider Code:" + iRiderCode);
 
-		// Delivery Cash
-		objRiderSettlement.setDeliveryCharge(Float
-				.parseFloat(String.format("%.2f", dDeliveryCharge)));
+		// Delivery Charges
+		objRiderSettlement.setDeliveryCharge(Double.parseDouble(String.format("%.2f", dDeliveryCharge)));
 		Log.d("SaveRiderDelivery", "Delivery Charge:" + String.format("%.2f", dDeliveryCharge));
 
 		// Petty Cash
@@ -628,6 +660,16 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 		// Cust Id
 		objRiderSettlement.setCustId(Integer.valueOf(CustId));
+
+		// Invoice Date
+		Date dd = null;
+		try {
+			dd = new SimpleDateFormat("dd-MM-yyyy").parse(txtBillDate.getText().toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		String date_milli_str = String.valueOf(dd.getTime());
+		objRiderSettlement.setInvoiceDate(date_milli_str);
 
 		lResult = dbCustomerOrder.addRiderSettlement(objRiderSettlement);
 
@@ -1269,7 +1311,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
 		intentBillScreen.putExtra("PAYMENT_STATUS", strPaymentStatus);
 		intentBillScreen.putExtra("MAKE_ORDER", "YES");
-		Log.d("Sending Discount", String.valueOf(discountAmount));
+		//Log.d("Sending Discount", String.valueOf(discountAmount));
 		intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
 		intentBillScreen.putExtra("BILLNO", txtBillNo.getText().toString());
 		if(txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))

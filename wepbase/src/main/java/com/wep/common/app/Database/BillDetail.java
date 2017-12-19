@@ -22,11 +22,11 @@ public class BillDetail {
 	String Custname, CustStateCode, POS,strDate, strTime, strUserId,BusinessType, Amount, GSTIN;
 	int iBillNumber, iBillStatus, iCustId, iEmployeeId, iReprintCount, iTotalItems, iUserId;
 	String BillingMode, TableNo, TableSplitNo; // richa_2012
-	float fBillAmount, fCardPayment, fCashPayment, fCouponPayment, fPettyCashPayment, fPaidTotalPayment,  fWalletAmount,
-			fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount,IGSTAmount;
+	float   fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount;
+	double fPettyCashPayment,fCardPayment, fCashPayment, fCouponPayment, fChangePayment, fWalletAmount, IGSTAmount, fBillAmount;
 	double dBillAmount, CGSTAmount, SGSTAmount, cessAmount,  fTotalTaxAmount, fTotalServiceTaxAmount;
-	float fRoundOff;
-	double dPettyCashPayment, dChangePayment;
+	double fRoundOff;
+	double dPettyCashPayment, fPaidTotalPayment,dChangePayment;
 	double SubTotal;
 
 	// Default Constructor
@@ -143,11 +143,11 @@ public class BillDetail {
 		this.dBillAmount = dBillAmount;
 	}
 
-	public float getfRoundOff() {
+	public double getfRoundOff() {
 		return fRoundOff;
 	}
 
-	public void setfRoundOff(float fRoundOff) {
+	public void setfRoundOff(double fRoundOff) {
 		this.fRoundOff = fRoundOff;
 	}
 
@@ -191,11 +191,11 @@ public class BillDetail {
 		this.fTotalDiscountPercentage = fTotalDiscountPercentage;
 	}
 
-	public float getWalletAmount() {
+	public double getWalletAmount() {
 		return fWalletAmount;
 	}
 
-	public void setWalletAmount(float fWalletAmount) {
+	public void setWalletAmount(double fWalletAmount) {
 		this.fWalletAmount = fWalletAmount;
 	}
 
@@ -236,11 +236,11 @@ public class BillDetail {
 		SubTotal = subTotal;
 	}
 
-	public float getIGSTAmount() {
+	public double getIGSTAmount() {
 		return IGSTAmount;
 	}
 
-	public void setIGSTAmount(float IGSTAmount) {
+	public void setIGSTAmount(double IGSTAmount) {
 		this.IGSTAmount = IGSTAmount;
 	}
 
@@ -330,22 +330,22 @@ public class BillDetail {
 	}
 
 	// getting BillAmount
-	public float getBillAmount(){
+	public double getBillAmount(){
 		return this.fBillAmount;
 	}
 
 	// getting CardPayment
-	public float getCardPayment(){
+	public double getCardPayment(){
 		return this.fCardPayment;
 	}
 
 	// getting CashPayment
-	public float getCashPayment(){
+	public double getCashPayment(){
 		return this.fCashPayment;
 	}
 
 	// getting CouponPayment
-	public float getCouponPayment(){
+	public double getCouponPayment(){
 		return this.fCouponPayment;
 	}
 
@@ -370,12 +370,12 @@ public class BillDetail {
 	}
 
 	// getting PettyCashPayment
-	public float getPettyCashPayment(){
+	public double getPettyCashPayment(){
 		return this.fPettyCashPayment;
 	}
 
 	// getting PaidTotalPayment
-	public float getPaidTotalPayment(){
+	public double getPaidTotalPayment(){
 		return this.fPaidTotalPayment;
 	}
 
@@ -431,22 +431,22 @@ public class BillDetail {
 	}
 
 	// setting BillAmount
-	public void setBillAmount(float BillAmount){
+	public void setBillAmount(double BillAmount){
 		this.fBillAmount = BillAmount;
 	}
 
 	// setting CardPayment
-	public void setCardPayment(float CardPayment){
+	public void setCardPayment(double CardPayment){
 		this.fCardPayment = CardPayment;
 	}
 
 	// setting CashPayment
-	public void setCashPayment(float CashPayment){
+	public void setCashPayment(double CashPayment){
 		this.fCashPayment = CashPayment;
 	}
 
 	// setting CouponPayment
-	public void setCouponPayment(float CouponPayment){
+	public void setCouponPayment(double CouponPayment){
 		this.fCouponPayment = CouponPayment;
 	}
 
@@ -471,12 +471,12 @@ public class BillDetail {
 	}
 
 	// setting PettyCashPayment
-	public void setPettyCashPayment(float PettyCashPayment){
+	public void setPettyCashPayment(double PettyCashPayment){
 		this.fPettyCashPayment = PettyCashPayment;
 	}
 
 	// setting PaidTotalPayment
-	public void setPaidTotalPayment(float PaidTotalPayment){
+	public void setPaidTotalPayment(double PaidTotalPayment){
 		this.fPaidTotalPayment = PaidTotalPayment;
 	}
 

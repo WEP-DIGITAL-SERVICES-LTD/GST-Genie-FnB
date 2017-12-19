@@ -41,6 +41,12 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class RiderSettlementActivity extends WepBaseActivity{
 
 	// Context object
@@ -52,7 +58,7 @@ public class RiderSettlementActivity extends WepBaseActivity{
 	MessageDialog MsgBox;
 
 	// View handlers
-	EditText txtBillNumber, txtBillAmount, txtPettyCash, txtSettledAmount, txtDeliveryCharge;
+	EditText txtBillNumber, txtBillDate, txtBillAmount, txtCash, txtPettyCash, txtSettledAmount, txtDeliveryCharge;
 	EditText txtDiscountAmt, txtCouponAmt, txtAmountDue;
 	TableLayout tblRiderSettlement;
 	Button btn_DeliverySettlementUpdate;
@@ -89,7 +95,9 @@ public class RiderSettlementActivity extends WepBaseActivity{
 	private void InitializeViews(){
 		EditTextInputHandler etInputValidate =  new EditTextInputHandler();
 		txtBillNumber = (EditText)findViewById(R.id.etDeliveryBillNumberValue);
+		txtBillDate = (EditText)findViewById(R.id.etDeliveryBillDateValue);
 		txtBillAmount = (EditText)findViewById(R.id.etDeliveryBillAmountValue);
+		txtCash = (EditText)findViewById(R.id.etDeliveryCashValue);
 		txtPettyCash = (EditText)findViewById(R.id.etDeliveryPettyCashValue);
 		txtDeliveryCharge = (EditText)findViewById(R.id.etDeliveryDeliveryChargeValue);
 		txtDiscountAmt = (EditText)findViewById(R.id.etDeliveryDiscount);
@@ -108,7 +116,7 @@ public class RiderSettlementActivity extends WepBaseActivity{
 
 		if(crsrPendingDelivery.moveToFirst()){
 			TableRow rowPendingDelivery;
-			TextView BillNumber, BillAmount, RiderCode,
+			TextView BillNumber, BillDate, BillAmount, RiderCode,
 					PettyCash, SettledAmount, TotalItems, DeliveryCharge;
 			do{
 				rowPendingDelivery = new TableRow(myContext);
@@ -128,6 +136,12 @@ public class RiderSettlementActivity extends WepBaseActivity{
 				BillNumber.setText(crsrPendingDelivery.getString
 						(crsrPendingDelivery.getColumnIndex("InvoiceNo")));
 
+				// Bill Date
+				BillDate = new TextView(myContext);
+				BillDate.setTextSize(18);
+				BillDate.setText(crsrPendingDelivery.getString
+						(crsrPendingDelivery.getColumnIndex("InvoiceDate")));
+
 				// Bill Amount
 				BillAmount = new TextView(myContext);
 				BillAmount.setTextSize(18);
@@ -143,14 +157,12 @@ public class RiderSettlementActivity extends WepBaseActivity{
 				// Petty Cash
 				PettyCash = new TextView(myContext);
 				PettyCash.setTextSize(18);
-				PettyCash.setText(crsrPendingDelivery.getString
-						(crsrPendingDelivery.getColumnIndex("PettyCash")));
+				PettyCash.setText(String.format("%.2f", crsrPendingDelivery.getDouble(crsrPendingDelivery.getColumnIndex("PettyCash"))));
 
 				// Settled Amount
 				SettledAmount = new TextView(myContext);
 				SettledAmount.setTextSize(18);
-				SettledAmount.setText(crsrPendingDelivery.getString
-						(crsrPendingDelivery.getColumnIndex("SettledAmount")));
+				SettledAmount.setText(String.format("%.2f", crsrPendingDelivery.getDouble(crsrPendingDelivery.getColumnIndex("SettledAmount"))));
 
 				// Total Items
 				TotalItems = new TextView(myContext);
@@ -166,6 +178,7 @@ public class RiderSettlementActivity extends WepBaseActivity{
 				rowPendingDelivery.addView(PettyCash);
 				rowPendingDelivery.addView(SettledAmount);
 				rowPendingDelivery.addView(DeliveryCharge);
+				rowPendingDelivery.addView(BillDate);
 
 				rowPendingDelivery.setOnClickListener(new View.OnClickListener() {
 
@@ -182,32 +195,40 @@ public class RiderSettlementActivity extends WepBaseActivity{
 							TextView rowPettyCash = (TextView)((TableRow)v).getChildAt(4);
 							TextView rowSettledAmount = (TextView)((TableRow)v).getChildAt(5);
 							TextView rowDeliveryCharge = (TextView)((TableRow)v).getChildAt(6);
+							TextView rowBillDate = (TextView)((TableRow)v).getChildAt(7);
 
 							// assign the data to text boxes
 							iRiderCode = Integer.parseInt(rowRiderCode.getText().toString());
 							txtBillNumber.setText(rowBillNumber.getText());
-							txtBillAmount.setText(rowBillAmount.getText());
 
+							DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+							long milliSeconds= Long.parseLong(rowBillDate.getText().toString());
+							Calendar calendar = Calendar.getInstance();
+							calendar.setTimeInMillis(milliSeconds);
+							txtBillDate.setText(formatter.format(calendar.getTime()));
+
+							txtBillAmount.setText(rowBillAmount.getText());
 							txtSettledAmount.setText(rowSettledAmount.getText());
 
-							Cursor crsrBillDetail = dbRiderSettlement.getBillDetail(Integer.valueOf(txtBillNumber.getText().toString()));
+							Cursor crsrBillDetail = dbRiderSettlement.getBillDetail(Integer.valueOf(txtBillNumber.getText().toString()), rowBillDate.getText().toString());
 							if(crsrBillDetail.moveToFirst())
 							{
 								txtDeliveryCharge.setText(String.format("%.2f", crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("DeliveryCharge"))));
+								txtCash.setText(String.format("%.2f", crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("CashPayment"))));
 								txtPettyCash.setText(String.format("%.2f", crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("PettyCashPayment"))));
 								txtCouponAmt.setText(String.format("%.2f", crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("CouponPayment"))));
 								txtDiscountAmt.setText(String.format("%.2f", crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("TotalDiscountAmount"))));
 
-								double billAmt = Math.round(crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("BillAmount")));
+								double billAmt = crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("BillAmount"));
 								double PaidAmt = crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("PaidTotalPayment"));
 								if(billAmt <= PaidAmt) {
-									txtAmountDue.setText("0");
+									txtAmountDue.setText("0.00");
 									txtSettledAmount.setText(String.format("%.2f",billAmt));
 								}
 								else
 								{
-									txtAmountDue.setText(String.format("%.2f", crsrBillDetail.getDouble(crsrBillDetail.getColumnIndex("BillAmount"))));
-									crsrBillDetail.getColumnIndex("BillAmount");
+									txtAmountDue.setText(String.format("%.2f", billAmt));
+									txtSettledAmount.setText("0.00");
 //									txtAmountDue.setText(crsrBillDetail.getString(crsrBillDetail.getColumnIndex("BillAmount")));
 								}
 							}
@@ -225,8 +246,10 @@ public class RiderSettlementActivity extends WepBaseActivity{
 
 	private void ClearAll(){
 		txtBillNumber.setText("");
+		txtBillDate.setText("");
 		txtBillAmount.setText("");
 		txtDeliveryCharge.setText("");
+		txtCash.setText("");
 		txtPettyCash.setText("");
 		txtSettledAmount.setText("");
 		txtDiscountAmt.setText("");
@@ -255,7 +278,18 @@ public class RiderSettlementActivity extends WepBaseActivity{
 	public void Update(View v){
 		int iResult = 0;
 		String billno_str = txtBillNumber.getText().toString();
+		String date_milli_str = "";
+		Date date = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		try {
+			date = sdf.parse(txtBillDate.getText().toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		String bill_date = String.valueOf(date.getTime());
 		String billAmount_str = txtBillAmount.getText().toString();
+		String cash = txtCash.getText().toString();
 		String deliveryCharges_str = txtDeliveryCharge.getText().toString();
 		String pettyCash_str = txtPettyCash.getText().toString();
 		String discount_str = txtDiscountAmt.getText().toString();
@@ -263,11 +297,16 @@ public class RiderSettlementActivity extends WepBaseActivity{
 		String amount_str = txtAmountDue.getText().toString();
 		String settledAmount_str = txtSettledAmount.getText().toString();
 
-		if(billno_str == null || billno_str.equals("") || billAmount_str == null || billAmount_str.equals(""))
+		if(billno_str == null || billno_str.equals("") || billAmount_str == null || billAmount_str.equals("") || bill_date == null || bill_date.equals(""))
 		{
 			MsgBox = new MessageDialog(myContext);
 			MsgBox.Show("Insufficient Information", "Please Select Bill To Update ");
 			return;
+		}
+
+		if(cash== null | cash.equals(""))
+		{
+			cash = "0";
 		}
 
 		if(deliveryCharges_str== null | deliveryCharges_str.equals(""))
@@ -298,6 +337,7 @@ public class RiderSettlementActivity extends WepBaseActivity{
 
 		double fSettledAmount = Double.parseDouble(settledAmount_str);
 		double fAAmountDue = Double.parseDouble(amount_str);
+
 //		float fAmountToBeSettled = Float.parseFloat(txtBillAmount.getText().toString()) +
 //				Float.parseFloat(txtPettyCash.getText().toString()) +
 //				Float.parseFloat(txtDeliveryCharge.getText().toString());
@@ -309,13 +349,13 @@ public class RiderSettlementActivity extends WepBaseActivity{
 		} else {
 
 			iResult = dbRiderSettlement.updateRiderPendingDelivery
-					(Integer.parseInt(billno_str),
+					(Integer.parseInt(billno_str), bill_date,
 							fSettledAmount);
 			Log.d("UpdateRiderPendDelivery", "Rows Updated:" + iResult);
 
 			iResult = dbRiderSettlement.updatePendingDeliveryBill
-					(Integer.parseInt(billno_str), iRiderCode,
-							Double.parseDouble(deliveryCharges_str), fSettledAmount, fSettledAmount);
+					(Integer.parseInt(billno_str), bill_date, iRiderCode,
+							Double.parseDouble(deliveryCharges_str), Double.parseDouble(cash), fSettledAmount);
 			Log.d("UpdatePendingDelivery", "Rows Updated:" + iResult);
 
 			iResult = dbRiderSettlement.updatePendingDeliveryBill_Ledger

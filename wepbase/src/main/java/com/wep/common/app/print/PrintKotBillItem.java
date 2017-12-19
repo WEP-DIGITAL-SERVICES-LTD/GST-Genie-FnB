@@ -58,7 +58,7 @@ public class PrintKotBillItem implements Serializable {
 
     private int UTGSTEnabled = 0;
     private int HSNPrintEnabled_out = 0;
-    private float roundOff = 0;
+    private double roundOff = 0;
     private  double cardPaymentValue =0.00;
     private  double pettyCashPaymentValue =0.00;
     private  double eWalletPaymentValue =0.00;
@@ -316,11 +316,11 @@ public class PrintKotBillItem implements Serializable {
         this.HSNPrintEnabled_out = HSNPrintEnabled_out;
     }
 
-    public float getRoundOff() {
+    public double getRoundOff() {
         return roundOff;
     }
 
-    public void setRoundOff(float roundOff) {
+    public void setRoundOff(double roundOff) {
         this.roundOff = roundOff;
     }
 

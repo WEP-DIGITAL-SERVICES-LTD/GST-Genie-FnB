@@ -24,8 +24,8 @@ public class PendingKOT {
             iCategCode, iKitchenCode, iEmployeeId, iCustId, iTaxType, iOrderMode, iIsCheckedOut;
     float fQuantity,  fTaxPercent,
             fDiscountPercent, fDiscountAmount, fModifierAmount, fServiceTaxPercent;
-    float cessRate, IGSTRate,IGSTAmount;
-    double  originalrate,fRate, fAmount,taxableValue, fServiceTaxAmount, fTaxAmount, cessAmount;
+    float cessRate, IGSTRate;
+    double  originalrate,fRate, fAmount,taxableValue, fServiceTaxAmount, fTaxAmount, cessAmount,IGSTAmount;
 
     // Default constructor
     public PendingKOT() {
@@ -151,11 +151,11 @@ public class PendingKOT {
         this.IGSTRate = IGSTRate;
     }
 
-    public float getIGSTAmount() {
+    public double getIGSTAmount() {
         return IGSTAmount;
     }
 
-    public void setIGSTAmount(float IGSTAmount) {
+    public void setIGSTAmount(double IGSTAmount) {
         this.IGSTAmount = IGSTAmount;
     }
 

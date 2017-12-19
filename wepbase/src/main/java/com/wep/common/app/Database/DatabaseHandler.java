@@ -1213,7 +1213,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             " PrintKOTStatus NUMERIC)";
 
     String QUERY_CREATE_TABLE_RIDERSETTLEMENT = "CREATE TABLE " + TBL_RIDERSETTLEMENT + " (" + KEY_DeliveryCharge +
-            " REAL, " + KEY_BillAmount + " REAL, " + KEY_InvoiceNo + " NUMERIC, " + KEY_EmployeeId + " NUMERIC," +
+            " REAL, " + KEY_BillAmount + " REAL, " + KEY_InvoiceNo + " NUMERIC, " + KEY_InvoiceDate + " TEXT, " +  KEY_EmployeeId + " NUMERIC," +
             KEY_PettyCash + " REAL, " + KEY_SettledAmount + " REAL, " + KEY_TotalItems + " NUMERIC, " + KEY_CustId + " NUMERIC)";
 
 
@@ -1324,58 +1324,64 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        Cursor res = db.rawQuery("PRAGMA table_info("+TBL_RIDERSETTLEMENT+")",null);
+        int value = res.getColumnIndex(KEY_InvoiceDate);
+        if(value == -1) db.execSQL("ALTER TABLE " + TBL_RIDERSETTLEMENT +" ADD InvoiceDate TEXT");
+
+
         //db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLDETAIL);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_Supplier);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLSETTING);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLNORESETCONFIG);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_CATEGORY);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_COMPLIMENTARYBILLDETAIL);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_COUPON);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_CUSTOMER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_DELETEDKOT);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_DEPARTMENT);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_DESCRIPTION);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_DISCOUNTCONFIG);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_VOUCHERCONFIG);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_EMPLOYEE);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_Supplier);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLSETTING);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_BILLNORESETCONFIG);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CATEGORY);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_COMPLIMENTARYBILLDETAIL);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_COUPON);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CUSTOMER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DELETEDKOT);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DEPARTMENT);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DESCRIPTION);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_DISCOUNTCONFIG);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_VOUCHERCONFIG);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_EMPLOYEE);
         //db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Outward);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_KITCHEN);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_KOTMODIFIER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_MACHINESETTING);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_MAILSETTING);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_PAYMENTRECEIPT);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_PENDINGKOT);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_RIDERSETTLEMENT);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_TAXCONFIG);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_SUBTAXCONFIG);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_TABLEBOOKING);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_REPORTSMASTER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERSROLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERROLEACCESS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_ITEMS_DETAILS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_LEDGER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR2_AMEND);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_LEDGER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR1_AMEND);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_2A);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_1A);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Inward);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Outward);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_KITCHEN);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_KOTMODIFIER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_MACHINESETTING);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_MAILSETTING);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PAYMENTRECEIPT);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PENDINGKOT);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_RIDERSETTLEMENT);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_TAXCONFIG);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_SUBTAXCONFIG);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_TABLEBOOKING);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_REPORTSMASTER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERSROLE);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_USERROLEACCESS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_ITEMS_DETAILS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_LEDGER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR2_AMEND);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_LEDGER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR1_AMEND);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_2A);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_1A);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Inward);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Outward);
         //db.execSQL("DROP TABLE IF EXISTS " + TBL_OWNER_DETAILS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Inward);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Outward);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_PURCHASEORDER);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Inward);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Outward);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PURCHASEORDER);
         //db.execSQL("DROP TABLE IF EXIXTS " + TBL_GOODSINWARD);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_INGREDIENTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_TRANSACTIONS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_PaymentModeConfiguration);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_INGREDIENTS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_TRANSACTIONS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TBL_PaymentModeConfiguration);
         //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockOutward);
         //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockInward);
-        onCreate(db);
+//        onCreate(db);
     }
 
     public void setDefaultTableValues(SQLiteDatabase db) {//user HARDCODING
@@ -4791,7 +4797,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public long updateKOTDineIn(int tblno, int tblsplitno,int ItemNo, float Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode
-            ,float IAmt, double cessAmt, double taxableValue, double discountAmt) {
+            ,double IAmt, double cessAmt, double taxableValue, double discountAmt) {
         cvDbValues = new ContentValues();
         cvDbValues.put("Quantity", Qty);
         cvDbValues.put("Amount", Amount);
@@ -5720,7 +5726,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Update Bill Status Delivery Charge, Rider Code of Pending Delivery
     // bill-----
-    public int updatePendingDeliveryBill(int InvoiceNo, int EmployeeId, double DeliveryCharge, double CashPayment, double PaidTotalPayment) {
+    public int updatePendingDeliveryBill(int InvoiceNo, String InvoiceDate, int EmployeeId, double DeliveryCharge, double CashPayment, double PaidTotalPayment) {
         cvDbValues = new ContentValues();
 
         cvDbValues.put("EmployeeId", EmployeeId);
@@ -5729,7 +5735,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("CashPayment", CashPayment);
         cvDbValues.put("PaidTotalPayment", PaidTotalPayment);
 
-        return dbFNB.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+        return dbFNB.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo + " AND " + KEY_InvoiceDate + "=" + InvoiceDate, null);
     }
     public int updatePendingDeliveryBill_Ledger(int InvoiceNo, double PaidTotalPayment) {
         cvDbValues = new ContentValues();
@@ -5936,6 +5942,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("SettledAmount", objRiderSettlement.getSettledAmount());
         cvDbValues.put("DeliveryCharge", objRiderSettlement.getDeliveryCharge());
         cvDbValues.put("CustId", objRiderSettlement.getCustId());
+        cvDbValues.put("InvoiceDate", objRiderSettlement.getInvoiceDate());
 
         return dbFNB.insert(TBL_RIDERSETTLEMENT, null, cvDbValues);
     }
@@ -5962,12 +5969,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // -----Update pending rider delivery-----
-    public int updateRiderPendingDelivery(int InvoiceNo, double SettledAmount) {
+    public int updateRiderPendingDelivery(int InvoiceNo, String InvoiceDate, double SettledAmount) {
         cvDbValues = new ContentValues();
 
         cvDbValues.put("SettledAmount", SettledAmount);
 
-        return dbFNB.update(TBL_RIDERSETTLEMENT, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+        return dbFNB.update(TBL_RIDERSETTLEMENT, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo + " AND " + KEY_InvoiceDate + "=" + InvoiceDate, null);
     }
 
     /************************************************************************************************************************************/

@@ -3083,8 +3083,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             // Amount
                             TextView Amt = (TextView) rowItem.getChildAt(4);
                             Amt.setText(String.format("%.2f",
-                                    Double.parseDouble(Amt.getText().toString()) +
-                                            Report.getDouble(Report.getColumnIndex("TaxableValue"))-Report.getDouble(Report.getColumnIndex("DiscountAmount"))));
+                                    Double.parseDouble(Amt.getText().toString())
+                                            + Report.getDouble(Report.getColumnIndex("TaxableValue")))); // discount already applied
                             Amt.setGravity(Gravity.END);
                             Amt.setPadding(0,0,25,0);
 
@@ -3131,10 +3131,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 //                    double taxamt = Double.parseDouble(Report.getString(Report.getColumnIndex(TaxAmountName)));
 
                     TotalAmount = new TextView(myContext);
-                    double taxVal =Report.getDouble(Report.getColumnIndex("TaxableValue"));
-                    double dis =Report.getDouble(Report.getColumnIndex("DiscountAmount"));
-                    double x = taxVal-dis;
-                    TotalAmount.setText(String.format("%.2f",taxVal-dis));
+                    double taxVal =Report.getDouble(Report.getColumnIndex("TaxableValue")); // discount already applied
+//                    double dis =Report.getDouble(Report.getColumnIndex("DiscountAmount"));
+                    TotalAmount.setText(String.format("%.2f",taxVal));
                     totbillAmt = totbillAmt +Double.parseDouble(TotalAmount.getText().toString());
                     TotalAmount.setGravity(Gravity.END);
                     TotalAmount.setPadding(0,0,25,0);
@@ -4878,10 +4877,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                                 // Amount
                                 TextView Amt = (TextView) rowItem.getChildAt(8);
-                                double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue")));
-                                double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
+                                double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue"))); // discount already applied
+//                                double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
                                 double amt = Double.parseDouble(Amt.getText().toString());
-                                amt += (taxVal-discount);
+                                amt += (taxVal);
                                 Amt.setText(String.format("%.2f",(amt)));
                                 Amt.setGravity(Gravity.END);
                                 Amt.setPadding(0,0,30,0);
@@ -4946,9 +4945,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                         Amount = new TextView(myContext);
-                        double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue")));
-                        double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
-                        Amount.setText(String.format("%.2f",(taxVal-discount)));
+                        double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue"))); // discount already applied
+//                        double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
+                        Amount.setText(String.format("%.2f",taxVal));
                         Amount.setGravity(Gravity.END);
                         Amount.setPadding(0,0,30,0);
 
@@ -5152,10 +5151,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                             // Amount
                             TextView Amt = (TextView) rowItem.getChildAt(8);
-                            double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue")));
-                            double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
+                            double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue"))); // discount already applied
+//                            double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
                             double amt = Double.parseDouble(Amt.getText().toString());
-                            amt += (taxVal-discount);
+                            amt += taxVal;
                             Amt.setText(String.format("%.2f",(amt)));
                             Amt.setGravity(Gravity.END);
                             Amt.setPadding(0,0,30,0);
@@ -5220,9 +5219,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     Amount = new TextView(myContext);
-                    double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue")));
-                    double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
-                    Amount.setText(String.format("%.2f",(taxVal-discount)));
+                    double taxVal = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue"))); // discount already applied
+//                    double discount = Double.parseDouble(Report.getString(Report.getColumnIndex("DiscountAmount")));
+                    Amount.setText(String.format("%.2f", taxVal));
                     Amount.setGravity(Gravity.END);
                     Amount.setPadding(0,0,30,0);
 
@@ -5256,7 +5255,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TextView amt = (TextView) row.getChildAt(8);
 
                 totdisc += Float.parseFloat(String.format("%.2f",Float.parseFloat(disc.getText().toString())));
-                totIGSTTax += Float.parseFloat(String.format("%.2f",Float.parseFloat(igst.getText().toString())));
+                totIGSTTax += Double.parseDouble(String.format("%.2f",Double.parseDouble(igst.getText().toString())));
                 totSales += Double.parseDouble(String.format("%.2f",Double.parseDouble(cgst.getText().toString())));
                 totService += Double.parseDouble(String.format("%.2f",Double.parseDouble(sgst.getText().toString())));
                 totAmt += Double.parseDouble(String.format("%.2f",Double.parseDouble(amt.getText().toString())));
@@ -6584,9 +6583,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                             TextView Price1 = (TextView) rowItem.getChildAt(6);
-                            float rate = Float.parseFloat(Report.getString(Report.getColumnIndex("Value")));
-                            float discount = Float.parseFloat(Report.getString(Report.getColumnIndex("DiscountAmount")));
-                            double price = (rate - discount) * qty_d;
+                            double price = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue")));
                             double price_present = Double.parseDouble(Price1.getText().toString());
                             Price1.setText(String.format("%.2f", price + price_present));
 
@@ -6647,11 +6644,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     SoldQty.setPadding(5,0,0,0);
 
                     Price = new TextView(myContext);
-                    float rate = Float.parseFloat(Report.getString(Report.getColumnIndex("Value")));
-                    float discount = Float.parseFloat(Report.getString(Report.getColumnIndex("DiscountAmount")));
-                    float quant = Float.parseFloat(SoldQty.getText().toString());
+                    double rate = Double.parseDouble(Report.getString(Report.getColumnIndex("TaxableValue")));
 
-                    Price.setText(String.format("%.2f",(rate*quant)-discount));
+                    Price.setText(String.format("%.2f",rate));
                     Price.setGravity(Gravity.END);
                     Price.setPadding(0,0,20,0);
 

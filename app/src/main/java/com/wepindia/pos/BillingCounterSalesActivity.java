@@ -140,8 +140,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     String HomeDeliveryCaption="", TakeAwayCaption="", DineInCaption = "", CounterSalesCaption = "";
     float fTotalsubTaxPercent = 0;
     int iTaxType = 0, iTotalItems = 0, iCustId = 0, iTokenNumber = 0;
-    float fRoundOfValue =0;
-    double dFinalBillValue=0, dChangePayment = 0;
+    float  fRoundOfValue =0;
+    double fChangePayment = 0,dFinalBillValue=0;
     float fWalletPayment = 0;
     float fTotalDiscount = 0, fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPettCashPayment = 0, fPaidTotalPayment = 0;
     double dPettCashPayment = 0;
@@ -427,15 +427,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                     if (mFlag)
                     {
-                        if(!GSTINValidation.checkValidStateCode(gstin,this))
-                        {
-                            messageDialog.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
-                        }
-                        else {
-                            insertCustomer(editTextAddress.getText().toString(), editTextMobile.getText().toString(), editTextName.getText().toString(), 0, 0, 0, gstin);
-                            Toast.makeText(BillingCounterSalesActivity.this, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
-                            ControlsSetEnabled();
-                        }
+                        insertCustomer(editTextAddress.getText().toString(), editTextMobile.getText().toString(), editTextName.getText().toString(), 0, 0, 0, gstin);
+                        Toast.makeText(BillingCounterSalesActivity.this, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
+                        ControlsSetEnabled();
                     }else
                     {
                         messageDialog.Show("Invalid Information","Please enter valid GSTIN for customer");
@@ -506,7 +500,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         fCouponPayment = 0;
         fPaidTotalPayment = 0;
         dPettCashPayment = 0;
-        dChangePayment = 0;
+        fChangePayment = 0;
         fWalletPayment = 0;
         dFinalBillValue = 0;
 
@@ -3183,9 +3177,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             // IGST Tax Amount
             if (RowBillItem.getChildAt(24) != null) {
                 TextView IGSTTaxAmount = (TextView) RowBillItem.getChildAt(24);
-                float igstAmt = (Float.parseFloat(IGSTTaxAmount.getText().toString()));
+                double igstAmt = (Double.parseDouble(IGSTTaxAmount.getText().toString()));
                 if (chk_interstate.isChecked()) {
-                    objBillItem.setIGSTAmount(Float.parseFloat(String.format("%.2f",igstAmt)));
+                    objBillItem.setIGSTAmount(Double.parseDouble(String.format("%.2f",igstAmt)));
                     Log.d("InsertBillItems", "IGST Amt: " + objBillItem.getIGSTAmount());
                 } else {
                     objBillItem.setIGSTAmount(0.00f);
@@ -3402,7 +3396,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         // Sales Tax Amount
         if (chk_interstate.isChecked()) {
-            objBillDetail.setIGSTAmount(Float.parseFloat(String.format("%.2f",Float.parseFloat(tvIGSTValue.getText().toString()))));
+            objBillDetail.setIGSTAmount(Double.parseDouble(String.format("%.2f",Double.parseDouble(tvIGSTValue.getText().toString()))));
             objBillDetail.setCGSTAmount(0.00f);
             objBillDetail.setSGSTAmount(0.00f);
         } else {
@@ -3489,103 +3483,104 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         // Payment types
         if (TenderType == 1) {
             // Cash Payment
-            objBillDetail.setCashPayment(Float.parseFloat(tvBillAmount.getText().toString()));
+            objBillDetail.setCashPayment(Double.parseDouble(String.format("%.2f", Double.parseDouble(tvBillAmount.getText().toString()))));
             Log.d("InsertBillDetail", "Cash:" + tvBillAmount.getText().toString());
 
             // Card Payment
-            objBillDetail.setCardPayment(fCardPayment);
+            objBillDetail.setCardPayment(Double.parseDouble(String.format("%.2f", fCardPayment)));
             Log.d("InsertBillDetail", "Card:" + fCardPayment);
 
             // Coupon Payment
-            objBillDetail.setCouponPayment(fCouponPayment);
+            objBillDetail.setCouponPayment(Double.parseDouble(String.format("%.2f", fCouponPayment)));
             Log.d("InsertBillDetail", "Coupon:" + fCouponPayment);
 
             // PettyCash Payment
 //            objBillDetail.setPettyCashPayment(fPettCashPayment);
 //            Log.d("InsertBillDetail", "PettyCash:" + fPettCashPayment);
 
-            objBillDetail.setdPettyCashPayment(dPettCashPayment);
+            objBillDetail.setdPettyCashPayment(Double.parseDouble(String.format("%.2f", dPettCashPayment)));
             Log.d("InsertBillDetail", "PettyCash:" + dPettCashPayment);
 
             // Wallet Payment
-            objBillDetail.setWalletAmount(fWalletPayment);
+            objBillDetail.setWalletAmount(Double.parseDouble(String.format("%.2f", fWalletPayment)));
             Log.d("InsertBillDetail", "Wallet:" + fWalletPayment);
 
             // PaidTotal Payment
-            objBillDetail.setPaidTotalPayment(fPaidTotalPayment);
+            objBillDetail.setPaidTotalPayment(Double.parseDouble(String.format("%.2f", fPaidTotalPayment)));
 
             // Change Payment
-            objBillDetail.setChangePayment(dChangePayment);
+            objBillDetail.setChangePayment(Double.parseDouble(String.format("%.2f", fChangePayment)));
 
         } else if (TenderType == 2) {
 
             if (PrintBillPayment == 1) {
                 // Cash Payment
-                objBillDetail.setCashPayment(Float.parseFloat(tvBillAmount.getText().toString()));
+                objBillDetail.setCashPayment(Double.parseDouble(String.format("%.2f", Double.parseDouble(tvBillAmount.getText().toString()))));
                 Log.d("InsertBillDetail", "Cash:" + Float.parseFloat(tvBillAmount.getText().toString()));
 
                 // Card Payment
-                objBillDetail.setCardPayment(fCardPayment);
+                objBillDetail.setCardPayment(Double.parseDouble(String.format("%.2f", fCardPayment)));
                 Log.d("InsertBillDetail", "Card:" + fCardPayment);
 
                 // Coupon Payment
-                objBillDetail.setCouponPayment(fCouponPayment);
+                objBillDetail.setCouponPayment(Double.parseDouble(String.format("%.2f", fCouponPayment)));
                 Log.d("InsertBillDetail", "Coupon:" + fCouponPayment);
 
                 // PettyCash Payment
 //                objBillDetail.setPettyCashPayment(fPettCashPayment);
 //                Log.d("InsertBillDetail", "PettyCash:" + fPettCashPayment);
 
-                objBillDetail.setdPettyCashPayment(dPettCashPayment);
+                objBillDetail.setdPettyCashPayment(Double.parseDouble(String.format("%.2f", dPettCashPayment)));
                 Log.d("InsertBillDetail", "PettyCash:" + dPettCashPayment);
 
                 // Wallet Payment
-                objBillDetail.setWalletAmount(fWalletPayment);
+                objBillDetail.setWalletAmount(Double.parseDouble(String.format("%.2f", fWalletPayment)));
                 Log.d("InsertBillDetail", "Wallet:" + fWalletPayment);
 
                 // PaidTotal Payment
-                objBillDetail.setPaidTotalPayment(fPaidTotalPayment);
+                objBillDetail.setPaidTotalPayment(Double.parseDouble(String.format("%.2f", fPaidTotalPayment)));
                 Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
                 // Change Payment
-                objBillDetail.setChangePayment(dChangePayment);
-                Log.d("InsertBillDetail", "ChangePayment:" + dChangePayment);
+                objBillDetail.setChangePayment(Double.parseDouble(String.format("%.2f", fChangePayment)));
+                Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
 
-                objBillDetail.setfRoundOff(fRoundOfValue);
+
+                objBillDetail.setfRoundOff(Double.parseDouble(String.format("%.2f", fRoundOfValue)));
                 Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
             } else {
                 // Cash Payment
-                objBillDetail.setCashPayment(fCashPayment);
+                objBillDetail.setCashPayment(Double.parseDouble(String.format("%.2f", fCashPayment)));
                 Log.d("InsertBillDetail", "Cash:" + fCashPayment);
 
                 // Card Payment
-                objBillDetail.setCardPayment(fCardPayment);
+                objBillDetail.setCardPayment(Double.parseDouble(String.format("%.2f", fCardPayment)));
                 Log.d("InsertBillDetail", "Card:" + fCardPayment);
 
                 // Coupon Payment
-                objBillDetail.setCouponPayment(fCouponPayment);
+                objBillDetail.setCouponPayment(Double.parseDouble(String.format("%.2f", fCouponPayment)));
                 Log.d("InsertBillDetail", "Coupon:" + fCouponPayment);
 
                 // PettyCash Payment
 //                objBillDetail.setPettyCashPayment(fPettCashPayment);
 //                Log.d("InsertBillDetail", "PettyCash:" + fPettCashPayment);
 
-                objBillDetail.setdPettyCashPayment(dPettCashPayment);
+                objBillDetail.setdPettyCashPayment(Double.parseDouble(String.format("%.2f", dPettCashPayment)));
                 Log.d("InsertBillDetail", "PettyCash:" + dPettCashPayment);
 
                 // Wallet Payment
-                objBillDetail.setWalletAmount(fWalletPayment);
+                objBillDetail.setWalletAmount(Double.parseDouble(String.format("%.2f", fWalletPayment)));
                 Log.d("InsertBillDetail", "Wallet:" + fWalletPayment);
 
                 // PaidTotal Payment
-                objBillDetail.setPaidTotalPayment(fPaidTotalPayment);
+                objBillDetail.setPaidTotalPayment(Double.parseDouble(String.format("%.2f", fPaidTotalPayment)));
                 Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
                 // Change Payment
-                objBillDetail.setChangePayment(dChangePayment);
-                Log.d("InsertBillDetail", "ChangePayment:" + dChangePayment);
+                objBillDetail.setChangePayment(Double.parseDouble(String.format("%.2f", fChangePayment)));
+                Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
 
-                objBillDetail.setfRoundOff(fRoundOfValue);
+                objBillDetail.setfRoundOff(Double.parseDouble(String.format("%.2f", fRoundOfValue)));
                 Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
             }
         }
@@ -4371,7 +4366,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     dPettCashPayment = data.getDoubleExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
                     fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
                     fWalletPayment = data.getFloatExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
-                    dChangePayment = data.getDoubleExtra(PayBillActivity.TENDER_CHANGE_VALUE, 0);
+                    fChangePayment = data.getDoubleExtra(PayBillActivity.TENDER_CHANGE_VALUE, 0);
                     fRoundOfValue = data.getFloatExtra(PayBillActivity.TENDER_ROUNDOFF, 0);
                     dFinalBillValue = data.getDoubleExtra(PayBillActivity.TENDER_FINALBILL_VALUE, 0);
                     isDiscounted = data.getBooleanExtra(PayBillActivity.IS_DISCOUNTED, false);
