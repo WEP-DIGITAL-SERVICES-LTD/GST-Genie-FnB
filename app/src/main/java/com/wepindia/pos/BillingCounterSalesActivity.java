@@ -783,7 +783,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         if ((autoCompleteTextViewSearchItem.getText().toString().equals(""))) {
                             messageDialog.Show("Warning", "Enter Item Name");
                         } else {
-                            Cursor MenucodeItem = db.getItemLists(autoCompleteTextViewSearchItem.getText().toString().trim());
+                            //Cursor MenucodeItem = db.getItemLists(autoCompleteTextViewSearchItem.getText().toString().trim());
+                            Cursor MenucodeItem = db.getItemDetail(autoCompleteTextViewSearchItem.getText().toString().trim());
                             if (MenucodeItem.moveToFirst()) {
                                 btn_Clear.setEnabled(true);
                                 AddItemToOrderTable(MenucodeItem);

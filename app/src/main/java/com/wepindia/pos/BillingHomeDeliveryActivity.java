@@ -609,7 +609,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         if ((aTViewSearchItem.getText().toString().equals(""))) {
                             MsgBox.Show("Warning", "Enter Item Name");
                         } else {
-                            Cursor MenucodeItem = db.getItemLists(aTViewSearchItem.getText().toString().trim());
+                            //Cursor MenucodeItem = db.getItemLists(aTViewSearchItem.getText().toString().trim());
+                            Cursor MenucodeItem = db.getItemDetail(aTViewSearchItem.getText().toString().trim());
                             if (MenucodeItem.moveToFirst()) {
                                 btnClear.setEnabled(true);
                                 AddItemToOrderTable(MenucodeItem);
