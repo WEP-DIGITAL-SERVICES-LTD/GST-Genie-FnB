@@ -44,6 +44,7 @@ import com.wep.common.app.gst.GSTR1_B2CL_A_Data;
 import com.wep.common.app.gst.GSTR1_B2CL_Data;
 import com.wep.common.app.gst.GSTR1_CDN_Data;
 import com.wep.common.app.gst.GSTR1_DOCS_Data;
+import com.wep.common.app.gst.GSTR1_DOCS_DetailData;
 import com.wep.common.app.gst.GSTR1_HSN_Data;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
 import com.wep.common.app.gst.GSTR2Data;
@@ -953,6 +954,20 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         String startDate_str = (etReportDateStart.getText().toString()) ;
         String endDate_str = (etReportDateEnd.getText().toString()) ;
         try{
+            String gstin = dbGSTLink.getGSTIN();
+            if(gstin==null)
+                gstin="";
+            String referenceno = dbGSTLink.getOwnerReferenceNo();
+            if(referenceno==null)
+                referenceno="";
+            if(gstin.equals("")) {
+                MsgBox.Show("Insufficient Information", "Kindly configure GSTIN before sending data");
+                return;
+            }else if(referenceno.equals("")) {
+                MsgBox.Show("Insufficient Information", "Kindly configure reference no before sending data");
+                return;
+            }
+
             String start_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(startDate_str)).getTime());
             String end_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(endDate_str)).getTime());
         if(ConnectionDetector.isInternetConnection(myContext)) {
@@ -966,10 +981,16 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
             ArrayList<GSTR1_CDN_Data> cdnList= handle.getGSTR1CDNData(start_milli,end_milli);
             ArrayList<GSTR1B2CSData> list_b2cs= handle.makeGSTR1B2CS( start_milli,  end_milli);
             ArrayList<GSTR1_HSN_Data> hsnList= handle.getGSTR1HSNData(start_milli,end_milli);
-            ArrayList<GSTR1_B2B_A_Data> list_b2ba = new ArrayList<>();// =dataController.getGSTR1B2BAList(start_milli,end_milli);
-            ArrayList<GSTR1_B2CL_A_Data> list_b2cla= new ArrayList<>();// = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
-            ArrayList<GSTR1B2CSAData> list_b2csA= new ArrayList<>();// = makeGSTR1B2CSA( start_milli,  end_milli);
-            ArrayList<GSTR1_DOCS_Data> list_doc= handle.getGSTR1DOCData( start_milli,  end_milli);
+            ArrayList<GSTR1_B2B_A_Data> list_b2ba=dataController.getGSTR1B2BAList(start_milli,end_milli);
+            ArrayList<GSTR1_B2CL_A_Data> list_b2cla = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
+            //ArrayList<GSTR1_B2B_A_Data> list_b2ba = new ArrayList<>();// =dataController.getGSTR1B2BAList(start_milli,end_milli);
+            //ArrayList<GSTR1_B2CL_A_Data> list_b2cla= new ArrayList<>();// = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
+            ArrayList<GSTR1B2CSAData> list_b2csA= new ArrayList<>();
+            //ArrayList<GSTR1B2CSAData> list_b2csA = dataController.getGSTR1B2CSAList( start_milli,  end_milli);
+
+
+            ArrayList<GSTR1_DOCS_DetailData> list_doc= handle.GSTR1_DOCS_DetailData( start_milli,  end_milli);
+
             GSTR1Data gstr1Data = new GSTR1Data( dbGSTLink.getGSTIN(),str[1]+str[2],list_b2b, list_b2ba,list_b2cl,list_b2cla,list_b2cs, list_b2csA,
                     cdnList,hsnList,list_doc);
             GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
@@ -978,12 +999,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
             System.out.println(strJson);
 
             try{
-                String gstin = dbGSTLink.getGSTIN();
-                if(gstin==null)
-                    gstin="";
-                String referenceno = dbGSTLink.getOwnerReferenceNo();
-                if(referenceno==null)
-                    referenceno="";
+
                 HeaderAuthorizationData_POST_APIS += ",GSTINNO@"+gstin.trim();
                 HeaderAuthorizationData_POST_APIS += ",REFERENCE_NO@"+referenceno.trim();
                 JSONObject jsonObject = new JSONObject(respData);

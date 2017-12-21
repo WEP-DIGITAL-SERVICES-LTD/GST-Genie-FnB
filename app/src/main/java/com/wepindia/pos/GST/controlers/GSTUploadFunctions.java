@@ -22,6 +22,7 @@ import com.wep.common.app.gst.GSTR1_CDN_Items;
 import com.wep.common.app.gst.GSTR1_CDN_Items_details;
 import com.wep.common.app.gst.GSTR1_DOCS;
 import com.wep.common.app.gst.GSTR1_DOCS_Data;
+import com.wep.common.app.gst.GSTR1_DOCS_DetailData;
 import com.wep.common.app.gst.GSTR1_HSN_Data;
 import com.wep.common.app.gst.GSTR1_HSN_Details;
 import com.wep.common.app.gst.GSTR2_B2B_Data_Unregistered;
@@ -639,6 +640,15 @@ public class GSTUploadFunctions {
             return (final_hsn_list = new ArrayList<>());
         }
         return final_hsn_list;
+    }
+
+
+    public ArrayList<GSTR1_DOCS_DetailData> GSTR1_DOCS_DetailData(String startDate, String endDate) {
+        ArrayList<GSTR1_DOCS_Data> DocDataList = getGSTR1DOCData(startDate, endDate);
+        GSTR1_DOCS_DetailData DocDetailData = new GSTR1_DOCS_DetailData(DocDataList);
+        ArrayList<GSTR1_DOCS_DetailData> DocDetailDataList = new ArrayList<>();
+        DocDetailDataList.add(DocDetailData);
+        return DocDetailDataList;
     }
 
     public ArrayList<GSTR1_DOCS_Data> getGSTR1DOCData(String startDate, String endDate) {
