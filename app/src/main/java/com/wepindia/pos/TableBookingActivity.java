@@ -567,17 +567,21 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
                         && strMobileNo.equals(tempStrMobileNo)
                         && strTableNo.equals(tempStrTableNo)) {
 
+                    if (IS_DELETE && strMobileNo.equals(deleted_mobile))
+                        MsgBox.Show("Warning", "Update failed. The record has been deleted.");
                     ResetTableBooking();
+                    IS_DELETE = false;
+                    deleted_mobile = "";
 
                 } else {
 
-                    Cursor crsrCust = dbTableBooking.getTableBookingByMobile(tvMobileNo.getText().toString());
-                    if (crsrCust.moveToFirst()) {
-                        if (!strCustomerName.equals(crsrCust.getString(crsrCust.getColumnIndex("CustName")))) {
-                            MsgBox.Show("Note", "Customer has already booked a table. Please use a different mobile number for booking.");
-                            return;
-                        }
-                    }
+//                    Cursor crsrCust = dbTableBooking.getTableBookingByMobile(tvMobileNo.getText().toString());
+//                    if (crsrCust.moveToFirst()) {
+//                        if (strMobileNo.equals(crsrCust.getString(crsrCust.getColumnIndex("CustName")))) {
+//                            MsgBox.Show("Note", "Customer has already booked a table. Please use a different mobile number for booking.");
+//                            return;
+//                        }
+//                    }
 //                    else {
 
                     //TableBookingResponse cc = (TableBookingResponse)v;
@@ -719,6 +723,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
                     TableBookingResponse tableBookingResponse = new TableBookingResponse();
 
                     tableBookingResponse.setsNo(i);
+                    tableBookingResponse.setiTBookId(crsrTBooking.getInt(0));
                     tableBookingResponse.setCustomerName(crsrTBooking.getString(1));
                     tableBookingResponse.setTimeBooking(crsrTBooking.getString(2));
                     tableBookingResponse.setTableNo(Integer.parseInt(crsrTBooking.getString(3)));
@@ -800,6 +805,9 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
 
     }
 
+    boolean IS_DELETE = false;
+    String deleted_mobile;
+
     @Override
     public void onDeleteItemClick(final int position) {
         MsgBox.setTitle("Confirm")
@@ -808,14 +816,23 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         try {
-                            dbTableBooking.DeleteTableBooking_WithDetails(mTableBookingList.get(position).getCustomerName(),
+                            int result = dbTableBooking.DeleteTableBooking_WithDetails(mTableBookingList.get(position).getCustomerName(),
                                     mTableBookingList.get(position).getTimeBooking(), String.valueOf(mTableBookingList.get(position).getTableNo()),
                                     mTableBookingList.get(position).getMobileNo());
-                            mTableBookingList.remove(position);
+//                            mTableBookingList.remove(position);
 
-                            mAdapter = new TableBookingAdapter(mTableBookingList);
-                            mRecyclerView.setAdapter(mAdapter);
-                            mAdapter.notifyDataSetChanged();
+                            if (result > 0) {
+                                IS_DELETE = true;
+                                deleted_mobile = mTableBookingList.get(position).getMobileNo();
+                                DisplayTableBooking();
+                            } else {
+                                MsgBox.Show("Warning", "Not able to delete the record.");
+                            }
+
+//                            mAdapter = new TableBookingAdapter(mTableBookingList);
+//                            mRecyclerView.setAdapter(mAdapter);
+
+//                            mAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
                             MsgBox.Show("Error", e.getMessage());
