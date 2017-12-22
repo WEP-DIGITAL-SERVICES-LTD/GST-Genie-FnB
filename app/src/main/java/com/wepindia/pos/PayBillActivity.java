@@ -1749,7 +1749,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     }
                 },500);
                 //edtChange.setText("0");
-                Toast.makeText(myContext, "Hello"+amount, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(myContext, "Hello"+amount, Toast.LENGTH_SHORT).show();
             }
         }
     }

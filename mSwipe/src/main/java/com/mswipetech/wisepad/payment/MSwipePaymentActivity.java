@@ -506,7 +506,8 @@ public class MSwipePaymentActivity extends WepPrinterBaseActivity implements Car
             DatabaseHandler handler = new DatabaseHandler(MSwipePaymentActivity.this);
             handler.saveTransaction(payment);
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "payment save Exception", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            //Toast.makeText(getApplicationContext(), "payment save Exception", Toast.LENGTH_SHORT).show();
         }
         //finish();
     }

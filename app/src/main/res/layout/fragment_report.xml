@@ -17,21 +17,14 @@
             android:layout_height="match_parent"
             tools:ignore="HardcodedText,UselessParent">
 
-            <TextView
-                android:id="@+id/tvHeadingReportNameSelection"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="2sp" />
+
 
             <TableRow
                 android:id="@+id/rowReportNameSelection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tvHeadingReportNameSelection"
-                android:layout_below="@+id/tvHeadingReportNameSelection">
+                android:layout_marginStart="10dp"
+                >
 
                 <Spinner
                     android:id="@+id/spnrReportNameSelection"
@@ -39,7 +32,19 @@
                     style="@android:style/Widget.Holo.Light.Spinner"
                     android:layout_height="wrap_content" />
             </TableRow>
-
+            <TextView
+                android:id="@+id/tvHeadingReportNameSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/red"
+                android:layout_marginTop="3dp"
+                android:layout_below="@id/rowReportNameSelection"
+                android:text="*Loading report may take some time."
+                />
             <TextView
                 android:id="@+id/tvHeadingReportDateSelection"
                 android:layout_width="420dp"

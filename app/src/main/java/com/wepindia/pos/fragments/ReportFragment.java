@@ -677,6 +677,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         else{
             // adding stock
             double totbillAmt =0;
+
+            //System.out.println("Richa : Please wait while report is being loaded");
             do {
                 TableRow rowReport = new TableRow(myContext);
                 rowReport.setLayoutParams(new ViewGroup.LayoutParams
