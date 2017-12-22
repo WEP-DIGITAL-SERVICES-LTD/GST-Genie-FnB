@@ -594,15 +594,25 @@ public class PrinterUtil {
         if(billOtherChargesItems.size()>0)
         {
             Iterator it1 = billOtherChargesItems.iterator();
+            double otherchargesamount = 0;
             while (it1.hasNext())
             {
                 BillTaxItem billKotItem = (BillTaxItem) it1.next();
-                String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
+                /*String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
                 String TxPercent = getPostAddedSpaceFormat("","",15,1);
                 String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getPrice()),10,1),8 ,1);
                 String pre = TxName + TxPercent + TxValue;
+                esc.addText(pre+"\n");*/
+               otherchargesamount += billKotItem.getPrice();
+            }
+            if(otherchargesamount>0){
+                String TxName = getPostAddedSpaceFormat("","Other Charges",23,1);
+                String TxPercent = getPostAddedSpaceFormat("","",15,1);
+                String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",otherchargesamount),10,1),8 ,1);
+                String pre = TxName + TxPercent + TxValue;
                 esc.addText(pre+"\n");
             }
+
         }
         // Tax Slab
         double dTotTaxAmt = 0;
