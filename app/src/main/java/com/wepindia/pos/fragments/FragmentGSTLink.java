@@ -981,10 +981,11 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
             ArrayList<GSTR1_CDN_Data> cdnList= handle.getGSTR1CDNData(start_milli,end_milli);
             ArrayList<GSTR1B2CSData> list_b2cs= handle.makeGSTR1B2CS( start_milli,  end_milli);
             ArrayList<GSTR1_HSN_Data> hsnList= handle.getGSTR1HSNData(start_milli,end_milli);
-            ArrayList<GSTR1_B2B_A_Data> list_b2ba=dataController.getGSTR1B2BAList(start_milli,end_milli);
-            ArrayList<GSTR1_B2CL_A_Data> list_b2cla = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
-            //ArrayList<GSTR1_B2B_A_Data> list_b2ba = new ArrayList<>();// =dataController.getGSTR1B2BAList(start_milli,end_milli);
-            //ArrayList<GSTR1_B2CL_A_Data> list_b2cla= new ArrayList<>();// = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
+            //ArrayList<GSTR1_B2B_A_Data> list_b2ba=dataController.getGSTR1B2BAList(start_milli,end_milli);
+            //ArrayList<GSTR1_B2CL_A_Data> list_b2cla = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
+            // commenting amend function as API is not avaliable
+            ArrayList<GSTR1_B2B_A_Data> list_b2ba = new ArrayList<>();// =dataController.getGSTR1B2BAList(start_milli,end_milli);
+            ArrayList<GSTR1_B2CL_A_Data> list_b2cla= new ArrayList<>();// = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
             ArrayList<GSTR1B2CSAData> list_b2csA= new ArrayList<>();
             //ArrayList<GSTR1B2CSAData> list_b2csA = dataController.getGSTR1B2CSAList( start_milli,  end_milli);
 
