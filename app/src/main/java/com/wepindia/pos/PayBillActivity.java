@@ -672,7 +672,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             intentResult.putExtra(TENDER_COUPON_VALUE, Double.parseDouble(edtCoupon.getText().toString()));
             intentResult.putExtra(TENDER_PETTYCASH_VALUE, getPettyCash());
             intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Double.parseDouble(edtTenderTotalValue.getText().toString()));
-            intentResult.putExtra(TENDER_CHANGE_VALUE, Double.parseDouble(edtChange.getText().toString()));
+            intentResult.putExtra(TENDER_CHANGE_VALUE,  Math.abs(Double.parseDouble(edtChange.getText().toString())));
             intentResult.putExtra(TENDER_ROUNDOFF, Float.parseFloat(edtRoundOff.getText().toString()));
             intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
             intentResult.putExtra(TENDER_FINALBILL_VALUE, dRoundoffTotal);
