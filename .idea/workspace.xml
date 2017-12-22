@@ -22,7 +22,6 @@
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="barcode dropdown coming after 2 input in billing screen&#10;2. GST data not uploading&#10;3. Bug 698 - Credit amount runs in negative for non-credit customers in 'Home Delivery/Take Away&#10;4. inward and outward item masters crashing on giving cgstrate as .1&#10;5. owner details talking phone number as decimal values&#10;6. ates value changing in price and stock from 9999999999 to something else&#10;   &#10;   8. rates value not talking decimal values on 9999988888&#10;   &#10;   9. new stock value in price and stock not taking large values 9999999999999&#10;   &#10;   10. inward price and stock - existing stock has 2 zeros after decimal while selecting from list and when we click on update it has only 1 zero after decimal">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
@@ -83,11 +82,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="167">
               <caret line="673" column="39" selection-start-line="673" selection-start-column="39" selection-end-line="673" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomeActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="269">
+              <caret line="591" column="21" selection-start-line="591" selection-start-column="21" selection-end-line="591" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -7204,13 +7213,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00143" summary="amount not printing in corresponding column for larger value of amount in bill">
-      <created>1507543871561</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1507543871561</updated>
-    </task>
     <task id="LOCAL-00144" summary="dept and category not displaying properly when items are loaded from csv">
       <created>1507548450599</created>
       <option name="number" value="00144" />
@@ -7547,7 +7549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513930419697</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="Bug 716 - Due amount should get displayed in the bill after paying the amount in excess">
+      <created>1513946875347</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1513946875347</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7631,7 +7640,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Bug 6 - when user changes quantity to 'zero' from '1' in 'Counter Sales', Amount fied is not updated to Amount '0.0' --  issue is that amount is coming inclusive of item wise discount. As per discussion , discount need to be displayed in order table. As of now, displaying msg for discount inclusive in amount." />
     <MESSAGE value="Bug 660 - Application crashes when we try to edit amount in mswipe opening page while adding mobile number.  &#10;Fix - editing amount in Mswipe screen is disabled." />
     <MESSAGE value="checking changes" />
     <MESSAGE value="Bug 662 - Amount auto-populated from mswipe in billing window will vanish after clicking on wallet payment." />
@@ -7656,7 +7664,8 @@
     <MESSAGE value="Doc details not being displayed on ASP panel" />
     <MESSAGE value="commenting amends code for uploading GSTR data as API is not available from ASP panel team" />
     <MESSAGE value="Bug 713 - petty cash amount is getting added in the difference if we do partial payment of credit customer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug 713 - petty cash amount is getting added in the difference if we do partial payment of credit customer" />
+    <MESSAGE value="Bug 716 - Due amount should get displayed in the bill after paying the amount in excess" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug 716 - Due amount should get displayed in the bill after paying the amount in excess" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -8335,14 +8344,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="593" column="35" selection-start-line="593" selection-start-column="35" selection-end-line="593" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/http/HTTPAsyncTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-177">
@@ -8476,6 +8477,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
           <caret line="673" column="39" selection-start-line="673" selection-start-column="39" selection-end-line="673" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="591" column="21" selection-start-line="591" selection-start-column="21" selection-end-line="591" selection-end-column="21" />
           <folding />
         </state>
       </provider>
