@@ -5113,7 +5113,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
         if (edtCustId.getText().toString().equalsIgnoreCase("") || edtCustId.getText().toString().equalsIgnoreCase("0")) {
-        } else {
+        } else if (dPettCashPayment >0)
+        {
             iCustId = Integer.valueOf(edtCustId.getText().toString());
             double fTotalTransaction = db.getCustomerTotalTransaction(iCustId);
             double fCreditAmount = db.getCustomerCreditAmount(iCustId);
@@ -5121,7 +5122,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             fTotalTransaction += Double.parseDouble(tvBillAmount.getText().toString());
 
             long lResult1 = db.updateCustomerTransaction(iCustId,
-                    Double.parseDouble(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
+                    dPettCashPayment, fTotalTransaction, fCreditAmount);
         }
 
         // Bill No Reset Configuration

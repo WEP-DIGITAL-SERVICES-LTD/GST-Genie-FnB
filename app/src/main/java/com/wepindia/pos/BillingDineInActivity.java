@@ -5954,7 +5954,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         if (edtCustId.getText().toString().equalsIgnoreCase("") || edtCustId.getText().toString().equalsIgnoreCase("0"))
         {
         }
-        else
+        else if (dPettCashPayment >0)
         {
             iCustId = Integer.parseInt(edtCustId.getText().toString());
             double fTotalTransaction = dbBillScreen.getCustomerTotalTransaction(iCustId);
@@ -5963,7 +5963,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             fCreditAmount = fCreditAmount - dPettCashPayment;
             fTotalTransaction += Double.parseDouble(tvBillAmount.getText().toString());
 
-            long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId, Double.parseDouble(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
+           // long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId, Double.parseDouble(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
+            long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId, dPettCashPayment, fTotalTransaction, fCreditAmount);
         }
         // Bill No Reset Configuration
 //        Log.d("Richa : ", tvBillNumber.getText().toString());

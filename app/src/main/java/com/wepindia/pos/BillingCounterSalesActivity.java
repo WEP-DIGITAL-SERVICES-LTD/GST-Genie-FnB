@@ -3662,8 +3662,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         if (String.valueOf(customerId).equalsIgnoreCase("") || String.valueOf(customerId).equalsIgnoreCase("0"))
         {
             // No customer Details, do nothing
-        }
-        else
+        }else if (dPettCashPayment >0)
         {
             iCustId = Integer.valueOf(customerId);
             double fTotalTransaction = db.getCustomerTotalTransaction(iCustId);
@@ -3672,7 +3671,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             fCreditAmount = fCreditAmount - dPettCashPayment;
             fTotalTransaction += Double.parseDouble(tvBillAmount.getText().toString());
 
-            long lResult1 = db.updateCustomerTransaction(iCustId, Double.parseDouble(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
+            long lResult1 = db.updateCustomerTransaction(iCustId, dPettCashPayment, fTotalTransaction, fCreditAmount);
         }
 
         // Bill No Reset Configuration
