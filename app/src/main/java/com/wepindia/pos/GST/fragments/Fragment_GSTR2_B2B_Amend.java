@@ -448,7 +448,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
                 (igstamt.equals(""))|| (sgstamt.equals(""))||(cgstamt.equals(""))||(cessamt.equals("")))
         {
             MsgBox.Show(" Error "," Please fill all details ");
-        }else if (objectValidation.validationCheckpoints_GSTR2_B2B( gstin_ori , taxval,igstrate,cgstrate,sgstrate,
+        }else if (objectValidation.validationCheckpoints_GSTR2_B2B( supplierType,gstin_ori , taxval,igstrate,cgstrate,sgstrate,
                                                             igstamt,cgstamt,sgstamt,cessamt))
         {
 
