@@ -316,7 +316,7 @@
                                         android:layout_width="200dp"
                                         android:layout_height="wrap_content"
 
-                                        android:text="Last Transn."
+                                        android:text="Last Petty Transn."
                                         android:textAppearance="?android:attr/textAppearanceSmall"
                                         android:textColor="@color/txtColorAccent"
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
