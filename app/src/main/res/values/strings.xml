@@ -292,9 +292,13 @@
     <string name="table_no">Table No</string>
     <string name="mobile_no">Mobile No</string>
 
-
     //payment mode configuration
     <string name="secret_key">Secret Key</string>
     <string name="key_id">Key Id</string>
     <string name="razor_pay">Razor Pay</string>
+
+    // WEP Printer
+    <string name="title_target">Target</string>
+    <string name="title_activity_discovery">Discover new printers</string>
+
 </resources>

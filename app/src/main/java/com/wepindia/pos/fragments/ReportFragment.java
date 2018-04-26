@@ -5,9 +5,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.nfc.FormatException;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,20 +40,26 @@ import com.wep.common.app.gst.GSTR1_HSN_Details;
 import com.wep.common.app.gst.Model_reconcile;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
+import com.wepindia.pos.BillingCounterSalesActivity;
+import com.wepindia.pos.Constants;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.GenericClasses.ReportHelper;
 import com.wepindia.pos.R;
 import com.wepindia.pos.TabbedReportActivity;
+import com.wepindia.printers.WePTHPrinterBaseActivity;
+import com.wepindia.printers.wep.PrinterConnectionError;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-public class ReportFragment extends Fragment implements View.OnClickListener {
+public class ReportFragment extends Fragment implements View.OnClickListener, PrinterConnectionError {
 
     Context myContext;
     DatabaseHandler dbReport ;
@@ -73,6 +82,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     String GSTEnable = "";
     Cursor billsettingcursor = null;
     private View view;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     public static Button btn_ReportPrint;
     private Button btn_ReportDateFrom,btn_ReportDateTo,
@@ -130,6 +142,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         ReportType = getArguments().getString("REPORT_TYPE");
 
         try {
+
+            sharedPreferences = Preferences.getSharedPreferencesForPrint((TabbedReportActivity) myContext); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+
             InitializeViews();
             ResetAll();
             dbReport.CreateDatabase();
@@ -6725,6 +6741,22 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             {
                 ((TabbedReportActivity)getActivity()).askForConfig();
             }
+        } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+
+            String target = Preferences.getSharedPreferencesForPrint((TabbedReportActivity) myContext).getString(prf, "--Select--");
+
+            WePTHPrinterBaseActivity wepPrinter = new WePTHPrinterBaseActivity();
+
+            wepPrinter.setmTarget(target);
+            wepPrinter.setmContext(myContext);
+            wepPrinter.mInitListener(this);
+
+            ArrayList<ArrayList<String>> list = printReport();
+
+            if (wepPrinter.runPrintReportSequence(list,strReportName,"REPORT")) {
+//                            progressDialog.dismiss();
+                Toast.makeText(myContext, "Report Printed.", Toast.LENGTH_SHORT).show();
+            }
         }
         else
         {
@@ -12348,5 +12380,30 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    public void onError(String errMsg) {
+        configureUsbPrinter();
+    }
+
+    void configureUsbPrinter() {
+        UsbManager manager = (UsbManager) ((TabbedReportActivity) myContext).getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+        while(deviceIterator.hasNext()){
+            UsbDevice device = deviceIterator.next();
+            if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
+                    && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER
+                    && getPrinterName("report").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                editor.putString("report", device.getProductName());
+                editor.putString(device.getProductName(), device.getDeviceName());
+                editor.commit();
+            }
+        }
+    }
+
+    public String getPrinterName(String module) {
+        return Preferences.getSharedPreferencesForPrint((TabbedReportActivity) myContext).getString(module, "--Select--");
     }
 }

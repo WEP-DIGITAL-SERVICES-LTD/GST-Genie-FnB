@@ -16,6 +16,7 @@ import android.os.DeadObjectException;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -35,16 +36,19 @@ import com.wep.common.app.print.Payment;
 import com.wep.common.app.print.PrintIngredientsModel;
 import com.wep.common.app.print.PrintKotBillItem;
 import com.wepindia.printers.heydey.BluetoothDeviceList;
+import com.wepindia.printers.heydey.DiscoverBluetoothPrinter;
 import com.wepindia.printers.heydey.Util;
 import com.wepindia.printers.utils.PrinterUtil;
+import com.wepindia.printers.wep.OnDeviceClickListener;
 
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View.OnClickListener {
+public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View.OnClickListener, OnDeviceClickListener {
 
     private GpService mGpService = null;
     private static final String DEBUG_TAG = HeyDeyBaseActivity.class.getSimpleName();
@@ -63,6 +67,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
     private String tmpList;
     private ArrayList<ArrayList<String>> itemReport;
     protected PrinterUtil printerUtil;
+    private OnDeviceClickListener onDeviceClickListener = null;
 
     public abstract void onConfigurationRequired();
 
@@ -81,8 +86,6 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
             checkPrinterConfig(false);
         }
     }
-
-    ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -157,6 +160,32 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
     @Override
     public void onClick(View v) {
         int id = v.getId();
+    }
+
+    public void askForConfig(OnDeviceClickListener onDeviceClickListener) {
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        // If the adapter is null, then Bluetooth is not supported
+        if (bluetoothAdapter == null) {
+            messageBox("Bluetooth is not supported by the device");
+        } else {
+            // If BT is not on, request that it be enabled.
+            // setupChat() will then be called during onActivityResult
+            if (!bluetoothAdapter.isEnabled()) {
+                Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            } else {
+//                Intent intent = new Intent(HeyDeyBaseActivity.this, BluetoothDeviceList.class);
+//                startActivityForResult(intent, REQUEST_CONNECT_DEVICE);
+
+                this.onDeviceClickListener = onDeviceClickListener;
+
+                FragmentManager fm = getSupportFragmentManager();
+                DiscoverBluetoothPrinter discoverBluetoothPrinter = new DiscoverBluetoothPrinter();
+                discoverBluetoothPrinter.mInitListener(HeyDeyBaseActivity.this);
+                discoverBluetoothPrinter.show(fm, "Discover new devices");
+
+            }
+        }
     }
 
     public void askForConfig() {
@@ -535,5 +564,41 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
     public void printTest() {
         testPrint();
         ;
+    }
+
+    @Override
+    public void onDeviceClicked(String key, HashMap<String, String> device) {
+        if (onDeviceClickListener != null)
+            onDeviceClickListener.onDeviceClicked("Target", device);
+
+        String address = device.get("Heyday");
+        mPortParam.setBluetoothAddr(address);
+        mPortParam.setPortType(4/*mPortParam.getPortType()*/); // 4 For Bluetooth Connectivity
+        mPortParam.setIpAddr(mPortParam.getIpAddr());
+        mPortParam.setPortNumber(mPortParam.getPortNumber());
+        mPortParam.setUsbDeviceName(mPortParam.getUsbDeviceName());
+        if (CheckPortParamters(mPortParam)) {
+            PortParamDataBase database = new PortParamDataBase(this);
+            database.deleteDataBase("" + printerNum);
+            database.insertPortParam(printerNum, mPortParam);
+            // Write Print code
+            //Toast.makeText(this, "Value inserted", Toast.LENGTH_SHORT).show();
+            if (printType.equalsIgnoreCase("TEST")) {
+                Intent intent = new Intent();
+                intent.putExtra("code", code);
+                intent.putExtra("name", name);
+                intent.putExtra("printer", printerNum);
+                setResult(Activity.RESULT_OK, intent);
+                //finish();
+
+            }
+            try{
+                connectOrDisConnectToDevice();
+            }catch (DeadObjectException e){
+
+            }
+        } else {
+            messageBox(getString(R.string.port_parameters_wrong));
+        }
     }
 }

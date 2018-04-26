@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -80,12 +83,16 @@ import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 import com.wepindia.pos.utils.GSTINValidation;
 import com.wepindia.pos.utils.StockOutwardMaintain;
+import com.wepindia.printers.WePTHPrinterBaseActivity;
 import com.wepindia.printers.WepPrinterBaseActivity;
+import com.wepindia.printers.wep.PrinterConnectionError;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.math.RoundingMode;
@@ -93,7 +100,7 @@ import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 
 
-public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implements TextWatcher {
+public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implements TextWatcher, PrinterConnectionError {
 
     String linefeed = "";
     String tx ="";
@@ -164,6 +171,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     float fTotalsubTaxPercent = 0;
     Button btndepart, btncateg, btnitem;
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     TextView tvdeptline, tvcategline;
     String HomeDeliveryCaption="", TakeAwayCaption="", DineInCaption = "", CounterSalesCaption = "";
     int iKOTNo = -1;
@@ -213,28 +223,37 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
         //Toast.makeText(BillingCounterSalesActivity.this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
         //isPrinterAvailable = flag;
-        if(flag == 2)
-        {
-            btnPrintBill.setEnabled(false);
-            btnReprint.setEnabled(false);
-            btnPrintKOT.setEnabled(false);
-            SetPrinterAvailable(false);
-        }
-        else if(flag == 5)
-        {
-            //btnPrintBill.setEnabled(true);
+
+        /*if (getPrinterName( "bill").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+            btnPrintBill.setEnabled(true);
             btnReprint.setEnabled(true);
             btnPrintKOT.setEnabled(true);
-            SetPrinterAvailable(true);
-        }
-        else if(flag == 0)
-        {
-            //btnPrintBill.setEnabled(true);
-            btnReprint.setEnabled(true);
-            btnPrintKOT.setEnabled(true);
-            SetPrinterAvailable(false);
-        }
+        } else if (getPrinterName( "bill").equalsIgnoreCase("Heyday")) {*/
+            if(flag == 2)
+            {
+//                btnPrintBill.setEnabled(false);
+//                btnReprint.setEnabled(false);
+//                btnPrintKOT.setEnabled(false);
+                SetPrinterAvailable(false);
+            }
+            else if(flag == 5)
+            {
+                //btnPrintBill.setEnabled(true);
+//                btnReprint.setEnabled(true);
+//                btnPrintKOT.setEnabled(true);
+                SetPrinterAvailable(true);
+            }
+            else if(flag == 0)
+            {
+                //btnPrintBill.setEnabled(true);
+//                btnReprint.setEnabled(true);
+//                btnPrintKOT.setEnabled(true);
+                SetPrinterAvailable(false);
+            }
+//        }
     }
+
+
     public void SetPrinterAvailable(boolean flag) {
         String status="Offline";
         if(flag)
@@ -260,6 +279,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         tvServiceTax = (TextView) findViewById(R.id.tvServiceTax);
 
         myContext = this;
+        sharedPreferences = Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         dbBillScreen.OpenDatabase();
         try {
             df_2 = new DecimalFormat("0.##");
@@ -436,43 +457,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 }
 
             }
-
-
-           /* if ((crsrSettings != null) && crsrSettings.moveToFirst()) {
-                GSTEnable = crsrSettings.getString(crsrSettings.getColumnIndex("GSTEnable"));
-                HSNEnable_out = crsrSettings.getString(crsrSettings.getColumnIndex("HSNCode_Out"));
-                if (HSNEnable_out == null) {
-                    HSNEnable_out = "0";
-                }
-                POSEnable = crsrSettings.getString(crsrSettings.getColumnIndex("POS_Out"));
-                if (POSEnable == null) {
-                    POSEnable = "0";
-                }
-
-            }
-            if ((GSTEnable != null) && (GSTEnable.equals("1"))) {
-                // setting TAX name
-                tvSalesTax.setText(NAME_CGST_RATE);
-                tvServiceTax.setText(NAME_SGST_RATE);
-                etCustGSTIN.setVisibility(View.VISIBLE);
-
-
-            } else {
-                tvSalesTax.setText(NAME_SALES_RATE);
-                tvServiceTax.setText(NAME_SERVICE_RATE);
-                etCustGSTIN.setVisibility(View.GONE);
-            }*/
-
-            //gst
-            /*if (GSTEnable.equalsIgnoreCase("1")) {
-                if ((HSNEnable_out != null) && (HSNEnable_out.equalsIgnoreCase("1"))) {
-                    tvHSNCode_out.setVisibility(View.VISIBLE);
-                } else {
-                    tvHSNCode_out.setVisibility(View.GONE);
-                }
-            } else { // no gst
-                tvHSNCode_out.setVisibility(View.GONE);
-            }*/
 
             chk_interstate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -6808,18 +6792,18 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                         CalculateTotalAmountforRePrint();
                                     }
                                     isReprint = true;
-                                    if (isPrinterAvailable) {
+//                                    if (isPrinterAvailable) {
                                         PrintNewBill();
                                         int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
                                         Log.d("HomeDeliveryBillingAct:", "1 Items deleted from pending KOT:" + iResult);
                                         ClearAll();
-                                    } else {
+                                   /* } else {
                                         askForConfig();
                                         PrintNewBill();
                                         int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
                                         Log.d("HomeDeliveryBillingAct:", "1 Items deleted from pending KOT:" + iResult);
                                         ClearAll();
-                                    }
+                                    }*/
 
 
 
@@ -7282,7 +7266,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }
         if(proceed == 1)
         {
-            if (isPrinterAvailable) {
+//            if (isPrinterAvailable) {
                 iPrintKOTStatus = 0;
                 int i = SaveKOT();
                 if(i == 0) // print only when KOT is saved successfully
@@ -7313,15 +7297,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 btnPrintBill.setEnabled(true);
                 btnPayBill.setEnabled(true);
 
-            } else {
+           /* } else {
                 Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
                 askForConfig();
-            }
+            }*/
         }
     }
 
     protected void PrintKOT() {
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             if (tblOrderItems.getChildCount() < 1) {
                 MsgBox.Show("Warning", "Insert item before Print KOT");
                 return;
@@ -7373,6 +7357,20 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                             askForConfig();
                         }
                         Toast.makeText(myContext, "KOT is printing... ", Toast.LENGTH_LONG).show();
+                    } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+
+                        String target = Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this).getString(prf, "--Select--");
+
+                        WePTHPrinterBaseActivity wepPrinter = new WePTHPrinterBaseActivity();
+
+                        wepPrinter.setmTarget(target);
+                        wepPrinter.setmContext(this);
+                        wepPrinter.mInitListener(this);
+
+                        if (wepPrinter.runPrintKOTSequence(item, 1)) {
+                            Toast.makeText(this, "KOT is printing....", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
                         Toast.makeText(myContext, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                     }
@@ -7380,10 +7378,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     Toast.makeText(BillingHomeDeliveryActivity.this, "Please enter bill,waiter,table number", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else {
+        /*} else {
             Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
             askForConfig();
-        }
+        }*/
     }
 
     public void printBILL(View view) {
@@ -7415,7 +7413,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }
         if(proceed == 0)
             return;
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             if(jBillingMode == 3)
                 strPaymentStatus = "Paid";
             else
@@ -7456,10 +7454,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     // Close(null);
                 }
             }
-        } else {
+       /* } else {
             Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
             askForConfig();
-        }
+        }*/
     }
     void calculateDiscountAmount()
     {
@@ -7473,7 +7471,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }
     }
     protected void PrintNewBill() {
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             if (tblOrderItems.getChildCount() < 1) {
                 MsgBox.Show("Warning", "Insert item before Print Bill");
                 return;
@@ -7768,6 +7766,90 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         } else {
                             askForConfig();
                         }
+                    } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+
+                        String target = Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this).getString(prf, "--Select--");
+
+                        WePTHPrinterBaseActivity wepPrinter = new WePTHPrinterBaseActivity();
+
+                        String[] tokens = new String[3];
+                        tokens[0] = "";
+                        tokens[1] = "";
+                        tokens[2] = "";
+
+                        Cursor crsrOwnerDetails = null;
+                        try {
+                            crsrOwnerDetails = db.getOwnerDetail_counter();
+
+                            if (crsrOwnerDetails.moveToFirst()) {
+                                try {
+                                    tokens[0] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("GSTIN"));
+                                    tokens[1] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("FirmName"));
+                                    tokens[2] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("Address"));
+                                } catch (Exception e) {
+                                    tokens[0] = "";
+                                    tokens[1] = "";
+                                    tokens[2] = "";
+                                }
+                                if (!tokens[0].equalsIgnoreCase(""))
+                                    item.setAddressLine1(tokens[0]);
+                                if (!tokens[1].equalsIgnoreCase(""))
+                                    item.setAddressLine2(tokens[1]);
+
+                                if(chk_interstate.isChecked())
+                                {
+                                    item.setCustomerName(item.getCustomerName()+ "  ("+(spnr_pos.getSelectedItem().toString())+") ");
+                                    tokens[2] =  tokens[2] + "\n ("+getState_pos(db.getOwnerPOS_counter())+") ";
+                                }
+                                item.setAddressLine3(tokens[2]);
+                            } else {
+                                Log.d(TAG, "Display Owner Details No data in BillSettings table");
+                            }
+                        } catch (Exception ex){
+                            Log.e(TAG,"Unable to fetch data from owner details data from table." +ex.getMessage());
+                        } finally {
+                            if(crsrOwnerDetails != null){
+                                crsrOwnerDetails.close();
+                            }
+                        }
+                        Cursor crsrHeaderFooterSetting = null;
+                        try {
+                            crsrHeaderFooterSetting = db.getBillSettings();
+
+                            if (crsrHeaderFooterSetting.moveToFirst()) {
+                                item.setHeaderLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText1")));
+                                item.setHeaderLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText2")));
+                                item.setHeaderLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText3")));
+                                item.setHeaderLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText4")));
+                                item.setHeaderLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText5")));
+                                item.setFooterLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText1")));
+                                item.setFooterLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText2")));
+                                item.setFooterLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText3")));
+                                item.setFooterLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText4")));
+                                item.setFooterLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText5")));
+                            } else {
+                                Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
+                            }
+                        }catch (Exception ex){
+                            Log.e(TAG,"Unable to fetch header details from billSettings table. From method PrintNewBill()." +ex.getMessage());
+                        } finally {
+                            if(crsrHeaderFooterSetting != null){
+                                crsrHeaderFooterSetting.close();
+                            }
+                        }
+
+                        wepPrinter.setmTarget(target);
+                        wepPrinter.setmContext(this);
+                        wepPrinter.mInitListener(this);
+
+                        if (wepPrinter.runPrintBillSequence(item, 1)) {
+//                            progressDialog.dismiss();
+                            Toast.makeText(this, "Bill Printed.", Toast.LENGTH_SHORT).show();
+                        } else {
+//                            progressDialog.dismiss();
+                        }
+
+
                     } else {
                         Toast.makeText(myContext, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                     }
@@ -7775,12 +7857,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     Toast.makeText(BillingHomeDeliveryActivity.this, "Please Enter Bill, Waiter, Table Number", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else {
+        /*} else {
             Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
             askForConfig();
             MsgBox.Show("Printer Error", "Kindly Note your bill number for reprinting the bill. \n Your order no is  "+
                     tvBillNumber.getText().toString());
-        }
+        }*/
     }
 
     public void ReprintKOT(final View v) {
@@ -8393,16 +8475,28 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     }
 
 
+    @Override
+    public void onError(String errMsg) {
+        configureUsbPrinter();
+    }
+
+    void configureUsbPrinter() {
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+        while(deviceIterator.hasNext()){
+            UsbDevice device = deviceIterator.next();
+            if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
+                    && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER
+                    && getPrinterName("bill").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                editor.putString("bill", device.getProductName());
+                editor.putString(device.getProductName(), device.getDeviceName());
+                editor.commit();
+            }
+        }
+    }
+
+    public String getPrinterName(String module) {
+        return Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this).getString(module, "--Select--");
+    }
 }
-
-
-/*************************************************************************************************************************************
- * End Of File
- * <p>
- * <p>
- * /************************************************************
- * End Of File
- * <p>
- * <p>
- * /
- *************************************************************************************************************************************/

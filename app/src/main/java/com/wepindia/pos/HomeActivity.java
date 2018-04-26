@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -39,6 +44,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTTPRequestCompletedListener {
 
@@ -63,6 +70,11 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     CharSequence s;
     DatabaseHandler dbHomeScreen;
 
+    private UsbDevice device;
+    private String action;
+    private PendingIntent mPermissionIntent;
+    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +95,13 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             InitializeViews();
             Display();
             checkForAutoDayEnd(); // called after display because settingcrsr is being set in Display()
+
+            IntentFilter attach = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+            registerReceiver(mUsbAttachReceiver , attach);
+            registerReceiver(mUsbReceiver , attach);
+            IntentFilter dettach = new IntentFilter(UsbManager.ACTION_USB_DEVICE_DETACHED);
+            registerReceiver(mUsbDetachReceiver , dettach);
+
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -91,6 +110,119 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         s = DateFormat.format("dd-MM-yyyy", d.getTime());
         com.wep.common.app.ActionBarUtils.setupToolbarMenu(this,toolbar,getSupportActionBar(),"Home",strUserName," Date:"+s.toString());
     }
+
+    BroadcastReceiver mUsbAttachReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
+
+                UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+                HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+                Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+                while(deviceIterator.hasNext()){
+                    UsbDevice device = deviceIterator.next();
+                    /*if (device.getVendorId() == Constants.VENDOR_ID_EPSON_POS_PRINTER
+                            && device.getProductId() == Constants.PRODUCT_ID_EPSON_POS_PRINTER
+                            && BillingFragment.getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
+                        editor.putString("bill", "TM Printer");
+                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
+                        editor.commit();
+                        editor.putString("report", "TM Printer");
+                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
+                        editor.commit();
+                        editor.putString("receipt", "TM Printer");
+                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
+                        editor.commit();
+                        editor.putString("deposit_receipt", "TM Printer");
+                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
+                        editor.commit();
+                        Toast.makeText(HomeActivity.this, "EPSON Printer connected.", Toast.LENGTH_SHORT).show();
+                    } else if (device.getVendorId() == Constants.VENDOR_ID_BIXOLON_POS_PRINTER
+                            && device.getProductId() == Constants.PRODUCT_ID_BIXOLON_POS_PRINTER
+                            && BillingFragment.getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)){
+                        editor.putString("bill", Constants.USB_BIXOLON_PRINTER_NAME);
+                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
+                        editor.commit();
+                        editor.putString("report", Constants.USB_BIXOLON_PRINTER_NAME);
+                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
+                        editor.commit();
+                        editor.putString("receipt", Constants.USB_BIXOLON_PRINTER_NAME);
+                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
+                        editor.commit();
+                        editor.putString("deposit_receipt", Constants.USB_BIXOLON_PRINTER_NAME);
+                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
+                        editor.commit();
+                        Toast.makeText(HomeActivity.this, "BIXOLON Printer connected.", Toast.LENGTH_SHORT).show();
+                    } else if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
+                            && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER
+                            && BillingFragment.getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                        editor.putString("bill", device.getProductName());
+                        editor.putString(device.getProductName(), device.getDeviceName());
+                        editor.commit();
+                        editor.putString("report", device.getProductName());
+                        editor.putString(device.getProductName(), device.getDeviceName());
+                        editor.commit();
+                        editor.putString("receipt", device.getProductName());
+                        editor.putString(device.getProductName(), device.getDeviceName());
+                        editor.commit();
+                        editor.putString("deposit_receipt", device.getProductName());
+                        editor.putString(device.getProductName(), device.getDeviceName());
+                        editor.commit();
+                        Toast.makeText(HomeActivity.this, "WeP Printer connected.", Toast.LENGTH_SHORT).show();
+                    }*/
+                }
+            }
+        }
+    };
+
+    BroadcastReceiver mUsbDetachReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
+                UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                if (device.getVendorId() == Constants.VENDOR_ID_EPSON_POS_PRINTER
+                        && device.getProductId() == Constants.PRODUCT_ID_EPSON_POS_PRINTER) {
+
+                    Toast.makeText(HomeActivity.this, "EPSON Printer disconnected.", Toast.LENGTH_SHORT).show();
+                } else if (device.getVendorId() == Constants.VENDOR_ID_BIXOLON_POS_PRINTER
+                        && device.getProductId() == Constants.PRODUCT_ID_BIXOLON_POS_PRINTER){
+
+                    Toast.makeText(HomeActivity.this, "BIXOLON Printer disconnected.", Toast.LENGTH_SHORT).show();
+                } else if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
+                        && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER){
+
+                    Toast.makeText(HomeActivity.this, "WeP Printer disconnected.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
+
+    private BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            action = intent.getAction();
+            device = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+            UsbManager mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+            mPermissionIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, new Intent(ACTION_USB_PERMISSION), 0);
+
+            //If a new device is attached, connect to it
+            if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
+                mUsbManager.requestPermission(device, mPermissionIntent);
+                //    mFlag = false;
+            }
+
+            //If this is our permission request, check result
+            if (ACTION_USB_PERMISSION.equals(action)) {
+                synchronized (this) {
+                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false) && device != null) {
+
+                    } else {
+
+                    }
+                }
+            }
+        }
+    };
 
     public DatabaseHandler getDb(){
         if(dbHomeScreen==null){

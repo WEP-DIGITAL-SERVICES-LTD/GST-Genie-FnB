@@ -9,9 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.wep.common.app.Database.Category;
-import com.wep.common.app.models.Items;
 import com.wepindia.pos.R;
 
 import java.util.ArrayList;

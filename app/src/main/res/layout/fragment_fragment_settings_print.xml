@@ -272,6 +272,17 @@
         android:orientation="horizontal"
         android:padding="@dimen/_5dp_720dp_4dp_600dp">
 
+        <Button
+            android:id="@+id/btnDiscoverPrinter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/background_btn"
+            android:text="Discover"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
         <Button
             android:id="@+id/btnClosePrinter"

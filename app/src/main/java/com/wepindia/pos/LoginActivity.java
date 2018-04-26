@@ -118,7 +118,8 @@ public class LoginActivity extends WepBaseActivity {
             dbLogin.CreateDatabase();
             dbLogin.OpenDatabase();
             //clickevent();
-            initSinglePrinter();
+//            initSinglePrinter();
+            sharedPreferences = Preferences.getSharedPreferencesForPrint(LoginActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
 
 
         } catch (Exception e) {

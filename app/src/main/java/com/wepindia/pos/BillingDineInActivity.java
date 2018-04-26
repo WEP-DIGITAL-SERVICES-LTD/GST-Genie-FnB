@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -81,7 +84,9 @@ import com.wepindia.pos.adapters.TestImageAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 import com.wepindia.pos.utils.StockOutwardMaintain;
+import com.wepindia.printers.WePTHPrinterBaseActivity;
 import com.wepindia.printers.WepPrinterBaseActivity;
+import com.wepindia.printers.wep.PrinterConnectionError;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -89,6 +94,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -99,8 +106,7 @@ import java.util.regex.Pattern;
 
 import java.util.regex.Matcher;
 
-public class BillingDineInActivity extends WepPrinterBaseActivity implements TextWatcher , TestItemsAdapter.OnItemsImageClickListener {
-
+public class BillingDineInActivity extends WepPrinterBaseActivity implements TextWatcher , TestItemsAdapter.OnItemsImageClickListener, PrinterConnectionError {
 
     String linefeed = "";
     String tx ="";
@@ -211,6 +217,9 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
     private ArrayList<Items> mItemsList = new ArrayList<>();
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     public void onConfigurationRequired() {
 
     }
@@ -263,6 +272,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         TextView textViewCenter = (TextView) toolbar.findViewById(com.wep.common.app.R.id.textViewCenter);
         db = new DatabaseHandler(this);
         myContext = BillingDineInActivity.this;
+        sharedPreferences = Preferences.getSharedPreferencesForPrint(BillingDineInActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         try {
             df_2 = new DecimalFormat("0.##");
             df_2.setRoundingMode(RoundingMode.FLOOR);
@@ -8197,7 +8208,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
         if(proceed == 1)
         {
-            if (isPrinterAvailable) {
+//            if (isPrinterAvailable) {
                 iPrintKOTStatus = 0;
                 int i = 0;
 //                if (REPRINT_KOT == 0) {
@@ -8217,15 +8228,15 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     LoadKOTItems(LoadKOT,true);
                 }
 //                }
-            } else {
+           /* } else {
                 Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
                 askForConfig();
-            }
+            }*/
         }
     }
 
     protected void PrintKOT() {
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             if (tblOrderItems.getChildCount() < 1) {
                 MsgBox.Show("Warning", "Insert item before Print KOT");
                 return;
@@ -8290,6 +8301,20 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 //                            iKOTNo += 1;
                         Toast.makeText(myContext, "KOT is printing... ", Toast.LENGTH_LONG).show();
                         isKOTReprint = false;
+                    } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+
+                        String target = Preferences.getSharedPreferencesForPrint(BillingDineInActivity.this).getString(prf, "--Select--");
+
+                        WePTHPrinterBaseActivity wepPrinter = new WePTHPrinterBaseActivity();
+
+                        wepPrinter.setmTarget(target);
+                        wepPrinter.setmContext(this);
+                        wepPrinter.mInitListener(this);
+
+                        if (wepPrinter.runPrintKOTSequence(item, 1)) {
+                            Toast.makeText(this, "KOT is printing....", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
                         Toast.makeText(myContext, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                     }
@@ -8297,10 +8322,10 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     Toast.makeText(BillingDineInActivity.this, "Please enter bill,waiter,table number", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else {
+       /* } else {
             Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
             askForConfig();
-        }
+        }*/
     }
 
     public void previewBill(View view){
@@ -8321,7 +8346,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
         if(proceed == 0)
             return;
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             strPaymentStatus = "Paid";
             PrintBillPayment = 1;
 
@@ -8335,10 +8360,10 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                 PrintPreviewBill();
 //                Toast.makeText(myContext, "Bill Saved Successfully", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
-            askForConfig();
-        }
+//        } else {
+//            Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
+//            askForConfig();
+//        }
     }
 
     public void printBILL(View view) {
@@ -8366,7 +8391,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         }*/
         if(proceed == 0)
             return;
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             strPaymentStatus = "Paid";
             PrintBillPayment = 1;
 
@@ -8389,14 +8414,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
                 }
             }
-        } else {
-            Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
-            askForConfig();
-        }
+//        } else {
+//            Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
+//            askForConfig();
+//        }
     }
 
     protected void PrintNewBill() {
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             if (tblOrderItems.getChildCount() < 1) {
                 MsgBox.Show("Warning", "Insert item before Print Bill");
                 return;
@@ -8592,6 +8617,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                             e.printStackTrace();
                         }
                     }
+
                     String prf = Preferences.getSharedPreferencesForPrint(BillingDineInActivity.this).getString("bill", "--Select--");
                 /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);*/
                     Intent intent = null;
@@ -8680,6 +8706,86 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                         } else {
                             askForConfig();
                         }
+                    } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+
+                        String target = Preferences.getSharedPreferencesForPrint(BillingDineInActivity.this).getString(prf, "--Select--");
+
+                        WePTHPrinterBaseActivity wepPrinter = new WePTHPrinterBaseActivity();
+
+                        String[] tokens = new String[3];
+                        tokens[0] = "";
+                        tokens[1] = "";
+                        tokens[2] = "";
+
+                        Cursor crsrOwnerDetails = null;
+                        try {
+                            crsrOwnerDetails = db.getOwnerDetail_counter();
+
+                            if (crsrOwnerDetails.moveToFirst()) {
+                                try {
+                                    tokens[0] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("GSTIN"));
+                                    tokens[1] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("FirmName"));
+                                    tokens[2] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("Address"));
+                                } catch (Exception e) {
+                                    tokens[0] = "";
+                                    tokens[1] = "";
+                                    tokens[2] = "";
+                                }
+                                if (!tokens[0].equalsIgnoreCase(""))
+                                    item.setAddressLine1(tokens[0]);
+                                if (!tokens[1].equalsIgnoreCase(""))
+                                    item.setAddressLine2(tokens[1]);
+
+                                if(chk_interstate.isChecked())
+                                {
+                                    item.setCustomerName(item.getCustomerName()+ "  ("+(spnr_pos.getSelectedItem().toString())+") ");
+                                    tokens[2] =  tokens[2] + "\n ("+getState_pos(db.getOwnerPOS_counter())+") ";
+                                }
+                                item.setAddressLine3(tokens[2]);
+                            } else {
+                                Log.d(TAG, "Display Owner Details No data in BillSettings table");
+                            }
+                        } catch (Exception ex){
+                            Log.e(TAG,"Unable to fetch data from owner details data from table." +ex.getMessage());
+                        } finally {
+                            if(crsrOwnerDetails != null){
+                                crsrOwnerDetails.close();
+                            }
+                        }
+                        Cursor crsrHeaderFooterSetting = null;
+                        try {
+                            crsrHeaderFooterSetting = db.getBillSettings();
+
+                            if (crsrHeaderFooterSetting.moveToFirst()) {
+                                item.setHeaderLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText1")));
+                                item.setHeaderLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText2")));
+                                item.setHeaderLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText3")));
+                                item.setHeaderLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText4")));
+                                item.setHeaderLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText5")));
+                                item.setFooterLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText1")));
+                                item.setFooterLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText2")));
+                                item.setFooterLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText3")));
+                                item.setFooterLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText4")));
+                                item.setFooterLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText5")));
+                            } else {
+                                Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
+                            }
+                        }catch (Exception ex){
+                            Log.e(TAG,"Unable to fetch header details from billSettings table. From method PrintNewBill()." +ex.getMessage());
+                        } finally {
+                            if(crsrHeaderFooterSetting != null){
+                                crsrHeaderFooterSetting.close();
+                            }
+                        }
+
+                        wepPrinter.setmTarget(target);
+                        wepPrinter.setmContext(this);
+                        wepPrinter.mInitListener(this);
+
+                        if (wepPrinter.runPrintBillSequence(item, 1)) {
+                            Toast.makeText(this, "Bill Printed.", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
                         Toast.makeText(myContext, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                     }
@@ -8687,14 +8793,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     Toast.makeText(BillingDineInActivity.this, "Please Enter Bill, Waiter, Table Number", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else {
+       /* } else {
             Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
             askForConfig();
-        }
+        }*/
     }
 
     protected void PrintPreviewBill() {
-        if (isPrinterAvailable) {
+//        if (isPrinterAvailable) {
             if (tblOrderItems.getChildCount() < 1) {
                 MsgBox.Show("Warning", "Insert item before Print Bill");
                 return;
@@ -8895,6 +9001,90 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                             } else {
                                 askForConfig();
                             }
+                        } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+
+                            String target = Preferences.getSharedPreferencesForPrint(BillingDineInActivity.this).getString(prf, "--Select--");
+
+                            WePTHPrinterBaseActivity wepPrinter = new WePTHPrinterBaseActivity();
+
+                            String[] tokens = new String[3];
+                            tokens[0] = "";
+                            tokens[1] = "";
+                            tokens[2] = "";
+
+                            Cursor crsrOwnerDetails = null;
+                            try {
+                                crsrOwnerDetails = db.getOwnerDetail_counter();
+
+                                if (crsrOwnerDetails.moveToFirst()) {
+                                    try {
+                                        tokens[0] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("GSTIN"));
+                                        tokens[1] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("FirmName"));
+                                        tokens[2] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("Address"));
+                                    } catch (Exception e) {
+                                        tokens[0] = "";
+                                        tokens[1] = "";
+                                        tokens[2] = "";
+                                    }
+                                    if (!tokens[0].equalsIgnoreCase(""))
+                                        item.setAddressLine1(tokens[0]);
+                                    if (!tokens[1].equalsIgnoreCase(""))
+                                        item.setAddressLine2(tokens[1]);
+
+                                    if(chk_interstate.isChecked())
+                                    {
+                                        item.setCustomerName(item.getCustomerName()+ "  ("+(spnr_pos.getSelectedItem().toString())+") ");
+                                        tokens[2] =  tokens[2] + "\n ("+getState_pos(db.getOwnerPOS_counter())+") ";
+                                    }
+                                    item.setAddressLine3(tokens[2]);
+                                } else {
+                                    Log.d(TAG, "Display Owner Details No data in BillSettings table");
+                                }
+                            } catch (Exception ex){
+                                Log.e(TAG,"Unable to fetch data from owner details data from table." +ex.getMessage());
+                            } finally {
+                                if(crsrOwnerDetails != null){
+                                    crsrOwnerDetails.close();
+                                }
+                            }
+                            Cursor crsrHeaderFooterSetting = null;
+                            try {
+                                crsrHeaderFooterSetting = db.getBillSettings();
+
+                                if (crsrHeaderFooterSetting.moveToFirst()) {
+                                    item.setHeaderLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText1")));
+                                    item.setHeaderLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText2")));
+                                    item.setHeaderLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText3")));
+                                    item.setHeaderLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText4")));
+                                    item.setHeaderLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText5")));
+                                    item.setFooterLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText1")));
+                                    item.setFooterLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText2")));
+                                    item.setFooterLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText3")));
+                                    item.setFooterLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText4")));
+                                    item.setFooterLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText5")));
+                                } else {
+                                    Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
+                                }
+                            }catch (Exception ex){
+                                Log.e(TAG,"Unable to fetch header details from billSettings table. From method PrintNewBill()." +ex.getMessage());
+                            } finally {
+                                if(crsrHeaderFooterSetting != null){
+                                    crsrHeaderFooterSetting.close();
+                                }
+                            }
+
+                            wepPrinter.setmTarget(target);
+                            wepPrinter.setmContext(this);
+                            wepPrinter.mInitListener(this);
+
+                            if (wepPrinter.runPrintBillSequence(item, 1)) {
+//                            progressDialog.dismiss();
+                                Toast.makeText(this, "Bill Printed.", Toast.LENGTH_SHORT).show();
+                            } else {
+//                            progressDialog.dismiss();
+                            }
+
+
                         } else {
                             Toast.makeText(myContext, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                         }
@@ -8908,10 +9098,10 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     dbBillScreen.deletePreviewBillTable(0,"");
                 }
             }
-        } else {
+      /*  } else {
             Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
             askForConfig();
-        }
+        }*/
     }
 
     private int tableNumber = 0, tableSplitNumber = 0, kotNumber = 0;
@@ -9650,6 +9840,31 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                 AddItemToOrderTable(Item);
             }
         }
+    }
+
+    @Override
+    public void onError(String errMsg) {
+        configureUsbPrinter();
+    }
+
+    void configureUsbPrinter() {
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+        while(deviceIterator.hasNext()){
+            UsbDevice device = deviceIterator.next();
+            if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
+                    && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER
+                    && getPrinterName("bill").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                editor.putString("bill", device.getProductName());
+                editor.putString(device.getProductName(), device.getDeviceName());
+                editor.commit();
+            }
+        }
+    }
+
+    public String getPrinterName(String module) {
+        return Preferences.getSharedPreferencesForPrint(BillingDineInActivity.this).getString(module, "--Select--");
     }
 }
 

@@ -36,7 +36,6 @@ import android.widget.Toast;
 import com.mswipetech.wisepad.payment.MSwipePaymentActivity;
 import com.mswipetech.wisepad.payment.PasswordChangeActivity;
 import com.mswipetech.wisepad.payment.fragments.FragmentLogin;
-import com.mswipetech.wisepad.sdk.MswipeWisepadController;
 import com.mswipetech.wisepad.sdktest.data.AppPrefrences;
 import com.mswipetech.wisepad.sdktest.view.Constants;
 import com.razorpay.Checkout;
@@ -1469,11 +1468,11 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     }
 
     public void validate(String name, String password) {
-        MswipeWisepadController wisepadController = new MswipeWisepadController(PayBillActivity.this, AppPrefrences.getGateWayEnv(), null);
+       /* MswipeWisepadController wisepadController = new MswipeWisepadController(PayBillActivity.this, AppPrefrences.getGateWayEnv(), null);
         wisepadController.AuthenticateMerchant(loginHandler, name, password);
         progressDialog = new ProgressDialog(PayBillActivity.this);
         progressDialog.setMessage("Please wait...");
-        progressDialog.show();
+        progressDialog.show();*/
     }
 
     public Handler loginHandler = new Handler() {

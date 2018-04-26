@@ -71,17 +71,17 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
         //isPrinterAvailable = flag;
         if(flag == 2)
         {
-            (ReportFragment.getPrintButton()).setEnabled(false);
+//            (ReportFragment.getPrintButton()).setEnabled(false);
             SetPrinterAvailable(false);
         }
         else if(flag == 5)
         {
-            (ReportFragment.getPrintButton()).setEnabled(true);
+//            (ReportFragment.getPrintButton()).setEnabled(true);
             SetPrinterAvailable(true);
         }
         else if(flag == 0)
         {
-            (ReportFragment.getPrintButton()).setEnabled(true);
+//            (ReportFragment.getPrintButton()).setEnabled(true);
             SetPrinterAvailable(false);
         }
     }
@@ -94,8 +94,6 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
         //btn_PrintBill.setEnabled(true);
         //btn_Reprint.setEnabled(true);
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
