@@ -245,7 +245,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-//                        ((TabbedSettingsActivity)myContext).askForConfig(FragmentSettingsPrint.this);
+                        ((TabbedSettingsActivity)myContext).askForConfig(FragmentSettingsPrint.this);
                         break;
                     case 1:
                         createOptionDialogForUsbPrinter();

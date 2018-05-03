@@ -24,12 +24,13 @@ import com.wepindia.pos.fragments.FragmentSettingsPrice;
 import com.wepindia.pos.fragments.FragmentSettingsPrint;
 import com.wepindia.pos.fragments.FragmentSettingsDisplayOwnerDetail;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.printers.WepPrinterBaseActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TabbedSettingsActivity extends WepBaseActivity{
+public class TabbedSettingsActivity extends WepPrinterBaseActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -40,6 +41,16 @@ public class TabbedSettingsActivity extends WepBaseActivity{
     MessageDialog MsgBox;
     ViewPagerAdapter adapter;
 
+
+    @Override
+    public void onConfigurationRequired() {
+
+    }
+
+    @Override
+    public void onPrinterAvailable(int flag) {
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

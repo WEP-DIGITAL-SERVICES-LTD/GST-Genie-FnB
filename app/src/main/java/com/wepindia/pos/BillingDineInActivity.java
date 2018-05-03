@@ -8293,7 +8293,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                         if (isPrinterAvailable) {
                             printHeydeyKOT(item, "KOT");
                         } else {
-                            askForConfig();
+//                            askForConfig();
+                            Toast.makeText(BillingDineInActivity.this, "Printer is not available.", Toast.LENGTH_SHORT).show();
                         }
                         /*if (!isKOTReprint) {
                             dbBillScreen.updateKOTNo(iKOTNo);
@@ -8704,7 +8705,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                         if (isPrinterAvailable) {
                             printHeydeyBILL(item, "BILL");
                         } else {
-                            askForConfig();
+//                            askForConfig();
+                            Toast.makeText(BillingDineInActivity.this, "Printer is not available.", Toast.LENGTH_SHORT).show();
                         }
                     } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
 
@@ -8999,7 +9001,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                 printHeydeyBILL(item, "BILL");
                                 int iResult = db.deletePreviewBillTable(orderId, item.getDate());
                             } else {
-                                askForConfig();
+//                                askForConfig();
+                                Toast.makeText(BillingDineInActivity.this, "Printer is not available.", Toast.LENGTH_SHORT).show();
                             }
                         } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
 

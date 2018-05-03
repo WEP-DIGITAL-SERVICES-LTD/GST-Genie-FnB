@@ -7354,7 +7354,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         if (isPrinterAvailable) {
                             printHeydeyKOT(item, "KOT");
                         } else {
-                            askForConfig();
+//                            askForConfig();
+                            Toast.makeText(BillingHomeDeliveryActivity.this, "Printer is not available.", Toast.LENGTH_SHORT).show();
                         }
                         Toast.makeText(myContext, "KOT is printing... ", Toast.LENGTH_LONG).show();
                     } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
@@ -7764,7 +7765,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         if (isPrinterAvailable) {
                             printHeydeyBILL(item, "BILL");
                         } else {
-                            askForConfig();
+//                            askForConfig();
+                            Toast.makeText(BillingHomeDeliveryActivity.this, "Printer is not available.", Toast.LENGTH_SHORT).show();
                         }
                     } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
 

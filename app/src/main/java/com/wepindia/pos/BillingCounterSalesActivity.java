@@ -3977,7 +3977,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         if (isPrinterAvailable) {
                             printHeydeyBILL(item, "BILL");
                         } else {
-                            askForConfig();
+//                            askForConfig();
+                            Toast.makeText(BillingCounterSalesActivity.this, "Printer is not available.", Toast.LENGTH_SHORT).show();
                         }
                     } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
 
