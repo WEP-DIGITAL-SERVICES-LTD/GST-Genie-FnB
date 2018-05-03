@@ -198,7 +198,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
             printersList.add(printer);
         }
 
-        if (!sharedPreferences.getString("bilreportl","--Select--").equals("--Select--"))
+        if (!sharedPreferences.getString("report","--Select--").equals("--Select--"))
             stringPrinter.add(sharedPreferences.getString("report","--Select--"));
 
         // Receipt Printer
@@ -365,7 +365,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
             messageBox.Show("Select a Printer","In order to print please select a printer");
         }
         else {
-            editor.putString("report", printer.get("PrinterName"));
+            editor.putString("receipt", printer.get("PrinterName"));
             editor.putString(printer.get("PrinterName"), printer.get("Target"));
             editor.commit();
         }
