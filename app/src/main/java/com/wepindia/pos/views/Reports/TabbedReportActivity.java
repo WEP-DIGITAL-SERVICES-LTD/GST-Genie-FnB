@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,9 +28,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
+import com.wep.common.app.utils.Preferences;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.views.Billing.BillingCounterSalesActivity;
 import com.wepindia.printers.WepPrinterBaseActivity;
 
 import java.util.ArrayList;
@@ -49,6 +52,9 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
     public boolean isPrinterAvailable = false;
     private AppCompatDelegate delegate;
     private  TabbedReportActivity.ViewPagerAdapter adapter;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     public void onSohamsaPrinterResponses(String resp) {
 
@@ -107,6 +113,14 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
             //viewPager.addOnPageChangeListener (myOnPageChangeListener);
             tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(viewPager);
+
+            sharedPreferences = Preferences.getSharedPreferencesForPrint(TabbedReportActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+
+            if (getPrinterName(this, "bill").equalsIgnoreCase("NGX")) {
+                mConnectNGX();
+            }
+
         }catch (Exception e)
         {
             e.printStackTrace();

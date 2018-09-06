@@ -96,6 +96,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
             btn_ReportExport,btn_ReportView,btn_ReportClose;
 
     private TextView lblName;
+    TVSPrinterBaseActivity tvsPrinterBaseActivity;
 
 
     public ReportFragment() {
@@ -6778,7 +6779,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
             String target = Preferences.getSharedPreferencesForPrint((TabbedReportActivity) myContext).getString(prf, "--Select--");
 
-            TVSPrinterBaseActivity tvsPrinterBaseActivity = new TVSPrinterBaseActivity();
+            tvsPrinterBaseActivity = new TVSPrinterBaseActivity();
 
             tvsPrinterBaseActivity.setmTarget(target);
             tvsPrinterBaseActivity.setmContext(myContext);
@@ -12435,12 +12436,19 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
     @Override
     public void onError(Printer printer, int errCode, String errMsg) {
+        if (printer == null)
+            return;
 
+        if (printer.getStatus().getConnection() == Printer.FALSE)
+            configureUsbPrinter();
     }
 
     @Override
     public void onError(BixolonPrinter printer, String errMsg) {
+        if (printer == null)
+            return;
 
+        configureUsbPrinter();
     }
 
     @Override
@@ -12450,7 +12458,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
     @Override
     public void onError(int iError) {
-
+        tvsPrinterBaseActivity.mTVSPrinterStatus(iError);
+        if(iError != TVSPrinterBaseActivity.POS_SUCCESS) {
+            configureUsbPrinter();
+        }
     }
 
     void configureUsbPrinter() {
