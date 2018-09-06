@@ -460,6 +460,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
             editor.putString("kot", printer.get("PrinterName"));
             editor.putString(printer.get("PrinterName"), printer.get("Target"));
             editor.commit();
+            Toast.makeText(getActivity(), "KOT Printer Configured Successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -473,6 +474,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
             editor.putString("bill", printer.get("PrinterName"));
             editor.putString(printer.get("PrinterName"), printer.get("Target"));
             editor.commit();
+            Toast.makeText(getActivity(), "Bill Printer Configured Successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -486,6 +488,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
             editor.putString("report", printer.get("PrinterName"));
             editor.putString(printer.get("PrinterName"), printer.get("Target"));
             editor.commit();
+            Toast.makeText(getActivity(), "Report Printer Configured Successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -499,6 +502,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
             editor.putString("receipt", printer.get("PrinterName"));
             editor.putString(printer.get("PrinterName"), printer.get("Target"));
             editor.commit();
+            Toast.makeText(getActivity(), "Receipt Printer Configured Successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -549,7 +553,7 @@ public class FragmentSettingsPrint extends Fragment implements OnDeviceClickList
                 Toast.makeText(getActivity(), "KOT Printer Configured Successfully", Toast.LENGTH_SHORT).show();
                 editor.putString("kot","Sohamsa");
                 editor.commit();
-
+                Toast.makeText(getActivity(), "KOT Printer Configured Successfully", Toast.LENGTH_SHORT).show();
             }
             else if(data.getStringExtra("name").equalsIgnoreCase("bill"))
             {
