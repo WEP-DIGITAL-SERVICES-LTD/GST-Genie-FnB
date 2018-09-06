@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/color_black"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_dialog_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TV_Owner_Details"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"/>
+            <ImageView
+                android:id="@+id/img_paid_mode_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_cross"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/color_black"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtPayBillCustMobileNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mobile No"
+        android:inputType="number"
+        android:maxLength="10"
+        android:visibility="gone" />
+
+    <RadioGroup
+        android:layout_below="@+id/ll_title"
+        android:id="@+id/rgDiscPerAmt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/rbDiscPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Percent" />
+
+        <RadioButton
+            android:id="@+id/rbDiscAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount" />
+    </RadioGroup>
+
+    <ScrollView
+        android:layout_below="@+id/ll_title"
+        android:id="@+id/scrlTenderCouponTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="#DDDDDD" >
+
+        <TableLayout
+            android:id="@+id/tblPayBill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:id="@+id/rowCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary" >
+                <!--android:background="#333333" >-->
+
+
+                <TextView
+                    android:id="@+id/tvCaptionPaybillSno"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:text="S.No"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/tvCaptionPaybillName"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Description"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/tvCaptionPaybillValue"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Amount"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/tvCaptionPaybillAmount"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FFFFFF" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_below="@+id/scrlTenderCouponTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/btnok"
+            android:background="@color/colorPrimary"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:text = "@string/ok"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</RelativeLayout>

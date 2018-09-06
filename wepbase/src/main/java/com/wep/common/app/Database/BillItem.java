@@ -36,6 +36,9 @@ public class BillItem {
 
 	double TaxableValue, originalRate;
 	double cessAmount,fAmount, SubTotal;
+
+	String strOnlineOrderNo;
+
 	// Default constructor
 	public BillItem(){
 		this.Suppliercode=-1;
@@ -87,6 +90,7 @@ public class BillItem {
 		this.isGoodInwarded=0;
 		this.billStatus=0;
 		this.SupplierType="";
+		this.strOnlineOrderNo = "";
 	}
 
 	public double getOriginalRate() {
@@ -560,4 +564,11 @@ public class BillItem {
 		this.fModifierAmount = ModifierAmount;
 	}
 
+	public String getStrOnlineOrderNo() {
+		return strOnlineOrderNo;
+	}
+
+	public void setStrOnlineOrderNo(String strOnlineOrderNo) {
+		this.strOnlineOrderNo = strOnlineOrderNo;
+	}
 }

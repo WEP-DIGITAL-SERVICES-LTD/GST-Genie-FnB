@@ -3,7 +3,7 @@
  * 
  * File Name		:	TenderActivity
  * 
- * Purpose			:	Represents Tender activity, takes care of all
+ * Purpose			:	Represents PayBill activity, takes care of all
  * 						UI back end operations in this activity, such as event
  * 						handling data read from or display in views.
  * 
@@ -97,7 +97,7 @@ public class TenderActivity extends WepBaseActivity{
         /*TextView tvTitleText = (TextView)findViewById(R.id.tvTitleBarCaption);
 		ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
 		ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        tvTitleText.setText("Tender Screen");*/
+        tvTitleText.setText("PayBill Screen");*/
         
         myContext = this;
         
@@ -120,7 +120,7 @@ public class TenderActivity extends WepBaseActivity{
 		}
 		Date d = new Date();
 		CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-		com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Tender Screen",""," Date:"+s.toString());
+		com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"PayBill Screen",""," Date:"+s.toString());
     }
 	
 	private void InitializeViewVariables(){
@@ -170,7 +170,7 @@ public class TenderActivity extends WepBaseActivity{
 
 					if(txtBarcode.getText().toString().equalsIgnoreCase("")){
 
-						MsgBox.Show("Tender", "Please enter coupon bar code before searching!");
+						MsgBox.Show("PayBill", "Please enter coupon bar code before searching!");
 					}else{
 						Cursor CouponSearch = dbTender.getCoupon(txtBarcode.getText().toString());
 						ClearTenderCouponTable();
@@ -421,10 +421,10 @@ public class TenderActivity extends WepBaseActivity{
 							
 							isDiscounted = true;
 							dDiscountPercent = Double.parseDouble(txtDiscValue.getText().toString());
-							Log.v("Tender Discount", "Before rounding discount percent:" + dDiscountPercent);
+							Log.v("PayBill Discount", "Before rounding discount percent:" + dDiscountPercent);
 							dDiscountPercent = Math.round(dDiscountPercent * 100.0)/100.0;
 							
-							Log.v("Tender Discount", "Percent Discount - Discounted:" + isDiscounted + " Discount Percent:" + dDiscountPercent);
+							Log.v("PayBill Discount", "Percent Discount - Discounted:" + isDiscounted + " Discount Percent:" + dDiscountPercent);
 						}
 					}
 					// Discount in amount
@@ -442,10 +442,10 @@ public class TenderActivity extends WepBaseActivity{
 							isDiscounted = true;
 							dDiscountPercent = (Double.parseDouble(txtDiscValue.getText().toString()) * 100) / 
 									Double.parseDouble(strTotal);
-							Log.v("Tender Discount", "Before rounding discount percent:" + dDiscountPercent);
+							Log.v("PayBill Discount", "Before rounding discount percent:" + dDiscountPercent);
 							dDiscountPercent = Math.round(dDiscountPercent * 100.0)/100.0;
 							
-							Log.v("Tender Discount", "Amount Discount - Discounted:" + isDiscounted + " Discount Percent:" + dDiscountPercent);
+							Log.v("PayBill Discount", "Amount Discount - Discounted:" + isDiscounted + " Discount Percent:" + dDiscountPercent);
 						}
 					}
 				}
@@ -458,12 +458,12 @@ public class TenderActivity extends WepBaseActivity{
 		if(!chkComplimentary.isChecked() && Double.parseDouble(lblTenderValue.getText().toString()) < 
 				Double.parseDouble(lblTotalValue.getText().toString())){
 			//Toast.makeText(myContext, "Tendered amount is less than Bill amount", Toast.LENGTH_LONG).show();
-			MsgBox.Show("Tender", "Tendered Amount is less than Bill Amount!");
+			MsgBox.Show("PayBill", "Tendered Amount is less than Bill Amount!");
 		}else{
 			
 			if(chkComplimentary.isChecked() && txtComplimentaryReason
 					.getText().toString().equalsIgnoreCase("")){
-				MsgBox.Show("Tender", "Please enter reason for this complimentary bill!");
+				MsgBox.Show("PayBill", "Please enter reason for this complimentary bill!");
 				return;
 			}
 			
@@ -494,12 +494,12 @@ public class TenderActivity extends WepBaseActivity{
 		if(!chkComplimentary.isChecked() && Double.parseDouble(lblTenderValue.getText().toString()) < 
 				Double.parseDouble(lblTotalValue.getText().toString())){
 			
-			MsgBox.Show("Tender", "Tendered Amount is less than Bill Amount!");
+			MsgBox.Show("PayBill", "Tendered Amount is less than Bill Amount!");
 		}else{
 			
 			if(chkComplimentary.isChecked() && txtComplimentaryReason
 					.getText().toString().equalsIgnoreCase("")){
-				MsgBox.Show("Tender", "Please enter reason for this complimentary bill!");
+				MsgBox.Show("PayBill", "Please enter reason for this complimentary bill!");
 				return;
 			}
 			

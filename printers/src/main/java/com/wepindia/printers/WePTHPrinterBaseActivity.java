@@ -158,7 +158,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
         return true;
     }
 
-    public boolean runPrintReportSequence(ArrayList<ArrayList<String>> Report, String ReportName, String type) {
+    public boolean runPrintReportSequence(List<List<String>> Report, String ReportName, String type) {
         if (!initializeObject()) {
             return false;
         }
@@ -173,7 +173,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
         return true;
     }
 
-    public boolean printReportData(ArrayList<ArrayList<String>> Report, String ReportName, String type) {
+    public boolean printReportData(List<List<String>> Report, String ReportName, String type) {
         if (printer == null) {
             return false;
         }
@@ -217,7 +217,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
         return true;
     }
 
-    private void sendReportData(ArrayList<ArrayList<String>> itemReport, String reportName, String type){
+    private void sendReportData(List<List<String>> itemReport, String reportName, String type){
 
         try{
 
@@ -278,7 +278,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
         }
     }
 
-    private void sendCumulativeReportData(ArrayList<ArrayList<String>> itemReport, String reportName, String type){
+    private void sendCumulativeReportData(List<List<String>> itemReport, String reportName, String type){
 
         try{
 
@@ -730,7 +730,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
             }
             esc.addText("------------------------------------------------"+"\n");
             esc.addText(getSpaceFormater("Total Item(s) : "+totalitemtypes+" /Qty : "+totalquantitycount,String.format("%.2f",subtotal),48,1)+"\n");
-            float discount = item.getFdiscount();
+            double discount = item.getFdiscount();
             float discountPercentage = item.getdiscountPercentage();
             if(discountPercentage > 0)
             {
@@ -864,7 +864,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
                     item.getCouponPaymentValue()>0 || item.getPettyCashPaymentValue()>0 ){
                 esc.addText("================================================"+"\n");
                 if(item.getCardPaymentValue()>0)
-                    esc.addText(getSpaceFormater("Card Payment",String.format("%.2f",item.getCardPaymentValue()),48,1)+"\n");
+                    esc.addText(getSpaceFormater("OtherCard Payment",String.format("%.2f",item.getCardPaymentValue()),48,1)+"\n");
                 if(item.geteWalletPaymentValue()>0)
                     esc.addText(getSpaceFormater("eWallet Payment",String.format("%.2f",item.geteWalletPaymentValue()),48,1)+"\n");
                 if(item.getCouponPaymentValue()>0)
@@ -873,6 +873,14 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
                     esc.addText(getSpaceFormater("PettyCash Payment",String.format("%.2f",item.getPettyCashPaymentValue()),48,1)+"\n");
                 if(item.getCashPaymentValue()>0)
                     esc.addText(getSpaceFormater("Cash Payment",String.format("%.2f",item.getCashPaymentValue()),48,1)+"\n");
+                if(item.getRewardPoints()>0)
+                    esc.addText(getSpaceFormater("Reward Pt Payment",String.format("%.2f",item.getRewardPoints()),48,1)+"\n");
+                if(item.getAepsPaymentValue()>0)
+                    esc.addText(getSpaceFormater("AEPS Payment",String.format("%.2f",item.getAepsPaymentValue()),48,1)+"\n");
+                if(item.getDblMSwipeVale()>0)
+                    esc.addText(getSpaceFormater("MSwipe Payment",String.format("%.2f",item.getDblMSwipeVale()),48,1)+"\n");
+                if(item.getDblPaytmValue()>0)
+                    esc.addText(getSpaceFormater("Paytm Payment",String.format("%.2f",item.getDblPaytmValue()),48,1)+"\n");
             }
 
             if (item.getChangePaymentValue()>0) {

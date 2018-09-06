@@ -552,7 +552,7 @@
                     android:layout_height="40dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/background_btn"
-                    android:onClick="Tender"
+                    android:onClick="PayBill"
                     android:text="Tender"
                     android:textColor="@android:color/white"
                     android:theme="@style/WepButtonWithMarigin" />

@@ -22,7 +22,7 @@ import com.wep.common.app.Database.Supplier_Model;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
-import com.wepindia.pos.adapters.SupplierAdapter;
+import com.wepindia.pos.views.InwardManagement.Adapters.SupplierAdapter;
 
 import java.util.ArrayList;
 

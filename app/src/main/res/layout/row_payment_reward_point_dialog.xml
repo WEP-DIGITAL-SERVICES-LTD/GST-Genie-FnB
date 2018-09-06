@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_dialog_title"
+            android:layout_marginStart="@dimen/margin10"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/reward_points"/>
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/ic_cross"
+            android:gravity="center_vertical"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/rl_title"
+        android:id="@+id/rel1"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/margin10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Mobile No :" />
+
+        <EditText
+            android:id="@+id/editTextMobile"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/label1"
+            android:maxLength="10"
+            android:hint="Mobile"
+            android:inputType="number" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel1"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/label2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Name :" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/label2"
+            android:enabled="false"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel2"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/label3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/total_reward_point_accumulated" />
+
+        <EditText
+            android:id="@+id/edt_reward_point_accumulated"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/label3"
+            android:enabled="false"
+            android:text="0.00"
+            android:hint="Balance"
+            android:inputType="number" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel3"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/label4"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/limit_to_redeem_reward_points" />
+
+        <EditText
+            android:id="@+id/edt_reward_point_limit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/label4"
+            android:enabled="false"
+            android:hint="Balance"
+            android:text="0.00"
+            android:inputType="number" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rel5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel4"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/label5"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/reward_points_to_redeem" />
+
+        <EditText
+            android:id="@+id/edt_reward_point_to_redeem"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/label5"
+            android:enabled="false"
+            android:text="0"
+            android:hint="Balance"
+            android:inputType="number" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rel6"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel5"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/label6"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Maximum allowed payment :" />
+
+        <EditText
+            android:id="@+id/editTextAmountAllowed"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/label6"
+            android:enabled="false"
+            android:hint="0"
+            android:inputType="numberSigned" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewBalanceUpdate"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel6"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text=""
+        android:textColor="@android:color/holo_green_dark"
+         />
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textViewBalanceUpdate"
+        android:layout_below="@+id/textViewBalanceUpdate"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/text_message_payment_default"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/textViewMessage"
+        android:layout_centerHorizontal="true"
+        >
+
+        <!--<Button-->
+            <!--android:id="@+id/btnCancel"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/side_nav_bar"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:layout_margin="3dp"-->
+            <!--android:visibility="gone"-->
+            <!--android:text="Cancel" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btnNutral"-->
+            <!--android:background="@drawable/side_nav_bar"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="gone"-->
+            <!--android:text="Neutral" />-->
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/btnOk"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:text="@string/redeem"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"/>
+    </LinearLayout>
+</RelativeLayout>

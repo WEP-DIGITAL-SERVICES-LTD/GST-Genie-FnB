@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:srcCompat="@mipmap/ic_config_payment_receipt" />
+
+        <TextView
+            style="@style/TV_Title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:text="@string/proceed_to_pay"
+            android:textColor="@android:color/background_light" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/round_shape_draw"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                style="@style/TV_Title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2"
+                android:background="@drawable/bottom_shape_draw"
+                android:padding="5dp"
+                android:text="@string/payment_details" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.2"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_taxable_value_title"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/taxable_value" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_taxable_value"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_tax_amount_title"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tax_amounts" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_tax_amount"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_discount_amt_title"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/discount" />
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_discount_percent"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone"
+                        android:text="0.00" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_discount_amt"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:layout_weight="1" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+                </TableRow>
+
+                <!--<TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tax_amount" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_tax_amt"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </TableRow>-->
+
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/other_charges" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_otherCharges"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_round_off_title"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/round_off" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_round_off"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_shape_draw">
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_bill_amt_title"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:text="@string/bill_amt" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_bill_amt"
+                        style="@style/TV_Owner_Details"
+                        android:layout_width="0dp"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+            <ListView
+                android:id="@+id/ll_proceed_to_pay_dialog_paid_amount_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="3dp"
+                android:padding="5dp" />
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2"
+                android:background="@drawable/round_shape_draw"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_proceed_to_pay_dialog_return_amount_title"
+                    style="@style/TV_Title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/due_amount" />
+
+                <TextView
+                    android:id="@+id/tv_proceed_to_pay_dialog_return_amount"
+                    style="@style/TV_Title"
+                    android:layout_width="0dp"
+                    android:gravity="end"
+                    android:text="0.00"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    />
+            </LinearLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2"
+                android:background="@drawable/round_shape_draw"
+                android:gravity="center"
+                android:padding="8dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_return_amount_title"
+                        style="@style/TV_Title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/due_amount" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_return_amount"
+                        style="@style/TV_Title"
+                        android:layout_width="0dp"
+                        android:gravity="end"
+                        android:text="0.00"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        android:layout_weight="0.05"
+                        android:visibility="gone"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_difference_amount_title"
+                        style="@style/TV_Title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.2"
+                        android:text="@string/difference" />
+
+                    <TextView
+                        android:id="@+id/tv_proceed_to_pay_dialog_difference_amount"
+                        style="@style/TV_Title"
+                        android:layout_width="0dp"
+                        android:gravity="end"
+                        android:text="0.00"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2"
+                android:background="@drawable/round_shape_draw"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <TextView
+                    android:id="@+id/tv_proceed_to_pay_dialog_due_amount_title"
+                    style="@style/TV_Title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/total_paid" />
+
+                <TextView
+                    android:id="@+id/tv_proceed_to_pay_dialog_paid_total_amount"
+                    style="@style/TV_Title"
+                    android:layout_width="0dp"
+                    android:gravity="end"
+                    android:textColor="@color/red"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="0.00"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/round_shape_draw"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                style="@style/TV_Title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2"
+                android:background="@drawable/bottom_shape_draw"
+                android:padding="5dp"
+                android:text="@string/payment_modes" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_proceed_to_pay_dialog_payment_mode"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:padding="5dp" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@drawable/round_shape_draw"
+                    android:padding="5dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/no_of_bill_prints"
+                        app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/et_proceed_to_pay_dialog_no_of_prints"
+                            style="@style/ET_Customized"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:selectAllOnFocus="true"
+                            android:text="1"
+                            android:maxLength="1"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_weight=".001"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight=".2">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/bt_billing_proceed_to_pay_dialog_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:background="@drawable/background_btn"
+            android:theme="@style/WepButtonWithMarigin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/bt_billing_proceed_to_pay_dialog_pay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pay"
+            android:background="@drawable/background_btn"
+            android:theme="@style/WepButtonWithMarigin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/bt_billing_proceed_to_pay_dialog_pay_print"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pay_and_print"
+            android:background="@drawable/background_btn"
+            android:theme="@style/WepButtonWithMarigin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</LinearLayout>

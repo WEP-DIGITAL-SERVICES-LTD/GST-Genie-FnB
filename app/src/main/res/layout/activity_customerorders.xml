@@ -601,7 +601,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/background_btn"
-                    android:onClick="Tender"
+                    android:onClick="PayBill"
                     android:text="@string/tender"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"

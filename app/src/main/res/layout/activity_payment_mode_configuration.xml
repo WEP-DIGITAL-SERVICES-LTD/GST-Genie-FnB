@@ -7,107 +7,269 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_wep" />
 
-    <RelativeLayout
-        android:id="@+id/lnrPaymentReceipt"
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/toolbar">
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="40dp">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/_15dp_720dp_10dp_600dp"
-                android:layout_marginStart="@dimen/_50dp_720dp_45dp_600dp"
-                android:layout_weight="1">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
 
-                <LinearLayout
-                    android:id="@+id/row_first"
+                <CheckBox
+                    android:id="@+id/cb_payment_mode_config_razor_pay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20dp_720dp_15dp_600dp"
-                    android:orientation="horizontal">
+                    android:text="@string/razor_pay"
+                    style="@style/TV_Billing_Item_List"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
 
-                    <CheckBox
-                        android:id="@+id/check_box_razorpay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/tv_razorpay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_25dp_720dp_20dp_600dp"
-                        android:text="@string/razor_pay"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="32sp" />
-                </LinearLayout>
+                <!--android:text= "@string/create_razorpay_account_message"-->
 
-                <LinearLayout
-                    android:id="@+id/row_second"
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/tv_payment_mode_config_id"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/key_id" />
+
+                <EditText
+                    android:id="@+id/et_payment_mode_config_key_id"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:visibility="invisible"/>
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/tv_payment_mode_config_title_secret_key"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/secret_key" />
+
+                <EditText
+                    android:id="@+id/et_payment_mode_config_secret_key"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:visibility="invisible"/>
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_margin="5dp">
+
+                <CheckBox
+                    android:id="@+id/cb_payment_mode_config_aeps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/row_first"
-                    android:layout_marginTop="@dimen/_10dp_720dp_7dp_600dp"
-                    android:orientation="horizontal">
+                    android:text="@string/aeps"
+                    style="@style/TV_Billing_Item_List"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
 
-                    <TextView
-                        android:id="@+id/tv_keyid"
-                        android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/key_id"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp" />
+            </TableRow>
 
-                    <EditText
-                        android:id="@+id/et_keyid"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:layout_marginStart="@dimen/_10dp_720dp_7dp_600dp" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/row_third"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_payment_mode_config_appId"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/row_second"
-                    android:layout_marginTop="@dimen/_10dp_720dp_7dp_600dp"
-                    android:orientation="horizontal">
+                    android:layout_weight=".5"
+                    android:text="@string/aeps_appid" />
 
-                    <TextView
-                        android:id="@+id/tv_secretrkey"
-                        android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/secret_key"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp" />
+                <EditText
+                    android:id="@+id/et_payment_mode_config_aeps_appId"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    android:enabled="false" />
 
-                    <EditText
-                        android:id="@+id/et_secretkey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10dp_720dp_7dp_600dp"
-                        android:enabled="false"
-                        android:maxLength="6" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:visibility="invisible"/>
 
-                </LinearLayout>
 
-            </RelativeLayout>
+            </TableRow>
 
-        </LinearLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_payment_mode_config_title_merchantId"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/aeps_merchantId" />
+
+                <EditText
+                    android:id="@+id/et_payment_mode_config_aeps_merchantId"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:visibility="invisible"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/tv_payment_mode_config_title_aeps_secret_key"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/secret_key" />
+
+                <EditText
+                    android:id="@+id/et_payment_mode_config_aeps_secretkey"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:visibility="invisible"/>
+
+            </TableRow>
+
+        </TableLayout>
+        <TableLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:text="@string/create_razorpay_account_message"/>
+                <TextView
+                    android:id="@+id/tv_razorpaylink"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:textSize="20dp"
+                    android:textColor="@color/blue"
+                    android:text="https://www.razorpay.com"
+                    android:layout_marginStart="10dp"
+                    android:autoLink="web"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="120dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:text="@string/get_registered_for_aeps_credential_message"/>
+                <TextView
+                    android:id="@+id/tv_aepslink"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="false"
+                    android:textSize="20dp"
+                    android:textColor="#0078D7"
+                    android:textStyle="bold"
+                    android:text="enquiry@wepdigital.com"
+                    android:layout_marginStart="10dp"
+
+                    />
+            </LinearLayout>
+        </TableLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/boxButton"

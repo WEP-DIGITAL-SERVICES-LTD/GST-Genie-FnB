@@ -18,6 +18,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wep.common.app.gst.GSTR1_CDN_Details;
@@ -33,6 +34,7 @@ import com.wep.common.app.models.ItemInward;
 import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.models.Items;
+import com.wep.common.app.models.PaymentOptionsBean;
 import com.wep.common.app.print.Payment;
 
 import java.io.File;
@@ -61,7 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     static String colAge = "Age";
 
     // DatabaseVersion
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 4;
     String strDate = "";
     Date strDate_date;
     Calendar Time; // Time variable
@@ -106,15 +108,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TBL_INGREDIENTS = "Ingredients";
     private static final String TBL_SupplierItemLinkage= "SupplierItemLinkage";
     private static final String TBL_PaymentModeConfiguration = "PaymentModeConfiguration";
+    private static final String TBL_TRANSACTION_DETAIL = "TransactionDetails";
+    private static final String TBL_AEPS_TRANSACTIONS = "aeps_transactions";
 
     // Column Names for the tables
     private static final String KEY_ServiceTaxPercent = "ServiceTaxPercent";
-    private static final String KEY_TaxType = "TaxType";
-    private static final String KEY_DiscountType = "DiscountType";
+    public static final String KEY_TaxType = "TaxType";
+    public static final String KEY_DiscountType = "DiscountType";
     private static final String KEY_FastBillingMode = "FastBillingMode";
-    private static final String KEY_CategCode = "CategCode";
-    private static final String KEY_DeptCode = "DeptCode";
-    private static final String KEY_CustId = "CustId";
+    public static final String KEY_CategCode = "CategCode";
+    public static final String KEY_DeptCode = "DeptCode";
+    public static final String KEY_CustId = "CustId";
     private static final String KEY_EmployeeId = "EmployeeId";
     private static final String KEY_SubUdfNumber = "SubUdfNumber";
     private static final String KEY_TableNumber = "TableNumber";
@@ -125,12 +129,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_Amount = "Amount";
     private static final String KEY_ServiceTaxAmount = "ServiceTaxAmount";
     private static final String KEY_DiscountAmount = "DiscountAmount";
-    private static final String KEY_DiscountPercent = "DiscountPercent";
-    private static final String KEY_ItemName = "ItemName";
+    public static final String KEY_DiscountPercent = "DiscountPercent";
+    public static final String KEY_ItemName = "ItemName";
     private static final String KEY_SalesTax = "SalesTax";
     private static final String KEY_OtherTax = "OtherTax";
     private static final String KEY_ItemNumber = "ItemNumber";
-    private static final String KEY_Quantity = "Quantity";
+    public static final String KEY_Quantity = "Quantity";
     private static final String KEY_Rate = "Rate";
     private static final String KEY_Time = "Time";
     private static final String KEY_TokenNumber = "TokenNumber";
@@ -147,21 +151,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_IngredientUOM = "IngredientUOM";
     //private static final String KEY_InvoiceDate = "InvoiceDate";
 
+    //Payment options configuration constants
+    public static final String CASH_PAYMENT_OPTION_CONFIG = "Cash";
+    public static final String CREDIT_CUSTOMER_PAYMENT_OPTION_CONFIG = "Credit Customer";
+    public static final String DISCOUNT_PAYMENT_OPTION_CONFIG = "Discount";
+    public static final String MSWIPE_PAYMENT_OPTION_CONFIG = "MSwipe";
+    public static final String E_WALLET_PAYMENT_OPTION_CONFIG = "E-Wallet";
+    public static final String COUPON_PAYMENT_OPTION_CONFIG = "Coupon";
+    public static final String OTHER_CARDS_PAYMENT_OPTION_CONFIG = "Other Cards";
+    public static final String REWARD_POINTS_PAYMENT_OPTION_CONFIG = "Reward Points";
+    public static final String AEPS_UPI_PAYMENT_OPTION_CONFIG = "AEPS/UPI";
+    public static final String PAYTM_WALLET = "Paytm Wallet";
+
+    private static final String TBL_PAYMENT_OPTIONS_CONFIGURATION = "tbl_payment_options";
+    public static final String KEY_PAYMENT_OPTION_CONFIG_NAME = "name";
+    public static final String KEY_PAYMENT_OPTION_CONFIG_IS_ACTIVE = "isActive";
+    public static final String KEY_AEPS_MerchantId = "AEPS_MerchantId";
+    public static final String KEY_AEPS_AppId = "AEPS_AppId";
+    public static final String KEY_AEPS_SecretKey = "AEPS_SecretKey";
+
     // BillDetail
     private static final String KEY_TotalServiceTaxAmount = "TotalServiceTaxAmount";
     private static final String KEY_BillStatus = "BillStatus";
-    private static final String KEY_CardPayment = "CardPayment";
-    private static final String KEY_CashPayment = "CashPayment";
-    private static final String KEY_CouponPayment = "CouponPayment";
-    private static final String KEY_WalletPayment = "WalletPayment";
+    public static final String KEY_CardPayment = "CardPayment";
+    public static final String KEY_CashPayment = "CashPayment";
+    public static final String KEY_CouponPayment = "CouponPayment";
+    public static final String KEY_WalletPayment = "WalletPayment";
     private static final String KEY_ReprintCount = "ReprintCount";
     private static final String KEY_TotalDiscountAmount = "TotalDiscountAmount";
     private static final String KEY_TotalTaxAmount = "TotalTaxAmount";
+    public static final String KEY_RewardPointsAmount = "RewardPointsAmount";
+    public static final String KEY_AEPSAmount = "AEPSAmount";
+    public static final String KEY_MSWIPE_Amount = "mSwipeAmount";
+    public static final String KEY_PAYTM_WALLET = "paytm_wallet";
 
-    private static final String KEY_PettyCashPayment = "PettyCashPayment";
-    private static final String KEY_PaidTotalPayment = "PaidTotalPayment";
-    private static final String KEY_ChangePayment = "ChangePayment";
-    private static final String KEY_RoundOff = "RoundOff";
+    public static final String KEY_PettyCashPayment = "PettyCashPayment";
+    public static final String KEY_PaidTotalPayment = "PaidTotalPayment";
+    public static final String KEY_ChangePayment = "ChangePayment";
+    public static final String KEY_RoundOff = "RoundOff";
 
     // BillItem
     private static final String KEY_TaxAmount = "TaxAmount";
@@ -174,7 +201,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_BillwithoutStock = "BillwithoutStock";
     private static final String KEY_WeighScale = "WeighScale";
     private static final String KEY_ServiceTaxType = "ServiceTaxType";
-    private static final String KEY_BusinessDate = "BusinessDate";
+    public static final String KEY_BusinessDate = "BusinessDate";
     private static final String KEY_DineIn1From = "DineIn1From";
     private static final String KEY_DineIn1To = "DineIn1To";
     private static final String KEY_DineIn2From = "DineIn2From";
@@ -203,7 +230,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DateAndTime = "DateAndTime";
     private static final String KEY_PriceChange = "PriceChange";
     private static final String KEY_BillwithStock = "BillwithStock";
-    private static final String KEY_Tax = "Tax";
+    public static final String KEY_Tax = "Tax";
     private static final String KEY_KOT = "KOT";
     private static final String KEY_Token = "Token";
     private static final String KEY_Kitchen = "Kitchen";
@@ -240,9 +267,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_DeptName = "DeptName";
 
     // Coupon
-    private static final String KEY_CouponAmount = "CouponAmount";
+    public static final String KEY_CouponAmount = "CouponAmount";
     private static final String KEY_CouponBarcode = "CouponBarcode";
-    private static final String KEY_CouponDescription = "CouponDescription";
+    public static final String KEY_CouponDescription = "CouponDescription";
     private static final String KEY_CouponId = "CouponId";
 
     // Customer
@@ -259,8 +286,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DescriptionText = "DescriptionText";
 
     // DiscountConfig
-    private static final String KEY_DiscDescription = "DiscDescription";
-    private static final String KEY_DiscPercentage = "DiscPercentage";
+    public static final String KEY_DiscDescription = "DiscDescription";
+    public static final String KEY_DiscPercentage = "DiscPercentage";
     private static final String KEY_DiscAmount = "DiscAmount";
 
     // Employee
@@ -273,13 +300,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_AdditionalTaxId = "AdditionalTaxId";
     private static final String KEY_BillWithStock = "BillWithStock";
     private static final String KEY_DeliveryPrice = "DeliveryPrice";
-    private static final String KEY_DineInPrice1 = "DineInPrice1";
-    private static final String KEY_DineInPrice2 = "DineInPrice2";
-    private static final String KEY_DineInPrice3 = "DineInPrice3";
+    public static final String KEY_DineInPrice1 = "DineInPrice1";
+    public static final String KEY_DineInPrice2 = "DineInPrice2";
+    public static final String KEY_DineInPrice3 = "DineInPrice3";
     private static final String KEY_DiscountEnable = "DiscountEnable";
-    private static final String KEY_ItemBarcode = " ItemBarcode";
+    public static final String KEY_ItemBarcode = " ItemBarcode";
     private static final String KEY_LongName = " ItemName";
-    private static final String KEY_MenuCode = " MenuCode";
+    public static final String KEY_MenuCode = " MenuCode";
     private static final String KEY_OptionalTaxId1 = "OptionalTaxId1";
     private static final String KEY_OptionalTaxId2 = "OptionalTaxId2";
     private static final String KEY_PickUpPrice = "PickUpPrice";
@@ -287,7 +314,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TakeAwayPrice = "TakeAwayPrice";
     private static final String KEY_SalesTaxPercent = "SalesTaxPercent";
     private static final String KEY_SerTaxPercent = "ServiceTaxPercent";
-    private static final String KEY_ItemId = "ItemId";
+    public static final String KEY_ItemId = "ItemId";
 
     // KOTModifier
     private static final String KEY_IsChargeable = "IsChargeable";
@@ -439,6 +466,48 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TRX_IMG_DATE = "trxImgDate";
     private static final String KEY_CHEQUE_DATE = "chequeDate";
     private static final String KEY_CHEQUE_NO = "chequeNo";
+    public static final String KEY_id = "_id";
+
+    private static final String KEY_TransactionId = "TransactionId";
+    private static final String KEY_TransactionName = "TransactionName";
+
+    // AEPS transaction saving
+    public static final String KEY_ResponseCode = "ResponseCode";
+    public static final String KEY_RespDescription = "RespDescription";
+    public static final String KEY_MerchantTxnNo = "MerchantTxnNo";
+    public static final String KEY_TxnStatus = "TxnStatus";
+    public static final String KEY_TxnID = "TxnID";
+    public static final String KEY_PaymentDateTime = "PaymentDateTime";
+    public static final String KEY_PaymentID = "PaymentID";
+
+    String QUERY_CREATE_TBL_AEPS_TRANSACTIONS = "CREATE TABLE IF NOT EXISTS " + TBL_AEPS_TRANSACTIONS + "("
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_ResponseCode + " TEXT,"
+            + KEY_RespDescription + " TEXT,"
+            + KEY_MerchantTxnNo + " TEXT,"
+            + KEY_TxnStatus + " TEXT,"
+            + KEY_TxnID + " TEXT,"
+            + KEY_PaymentDateTime + " TEXT,"
+            + KEY_PaymentID + " TEXT,"
+            + KEY_Amount + " TEXT "
+            + " )";
+
+    String QUERY_CREATE_TABLE_TRANSACTION_DETAILS = " CREATE TABLE IF NOT EXISTS " + TBL_TRANSACTION_DETAIL + " ( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_InvoiceNo + " TEXT, "
+            + KEY_InvoiceDate + " TEXT, "
+            + KEY_TransactionName + " TEXT, "
+            + KEY_TransactionId + " TEXT, "
+            + KEY_Amount + " REAL "
+            + ")";
+
+
+    String QUERY_CREATE_TABLE_PAYMENT_OPTIONS_CONFIGURATION = "CREATE TABLE IF NOT EXISTS " +
+            TBL_PAYMENT_OPTIONS_CONFIGURATION + " ( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_PAYMENT_OPTION_CONFIG_NAME + " TEXT, "
+            + KEY_PAYMENT_OPTION_CONFIG_IS_ACTIVE + " INTEGER, UNIQUE ( "
+            + KEY_PAYMENT_OPTION_CONFIG_NAME + "))";
 
 
     String QUERY_CREATE_TBL_TRANSACTIONS = "CREATE TABLE " + TBL_TRANSACTIONS + "("
@@ -592,7 +661,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     static final String TBL_USERS_UNREGISTERED = "USERS_Unregistered";
     static final String TBL_READ_FROM_2A = "ReadFrom2A";
     //static final String TBL_READ_FROM_1A = "ReadFrom1A";
-    static final String TBL_ITEM_Outward = "Item_Outward";
+    public static final String TBL_ITEM_Outward = "Item_Outward";
     static final String TBL_ITEM_Inward = "Item_Inward";
     static final String TBL_OWNER_DETAILS = "OwnerDetails";
 
@@ -699,10 +768,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_RAZORPAY_KEYID = "RazorPay_KeyId";
     public static final String KEY_RAZORPAY_SECRETKEY = "RazorPay_SecretKey";
 
-    String QUERY_CREATE_TABLE_PAYMENT_MODE_CONFIGURATION = "CREATE TABLE " +
-            TBL_PaymentModeConfiguration + " ( " +
-            KEY_RAZORPAY_KEYID + " TEXT, " +
-            KEY_RAZORPAY_SECRETKEY + " TEXT)";
+    public static final String KEY_ONLINE_ORDER_NO = "online_order_no";
+
+    String QUERY_CREATE_TABLE_PAYMENT_MODE_CONFIGURATION = "CREATE TABLE IF NOT EXISTS " +
+            TBL_PaymentModeConfiguration + " ( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_RAZORPAY_KEYID + " TEXT, "
+            + KEY_RAZORPAY_SECRETKEY + " TEXT , "
+            + KEY_AEPS_MerchantId + " TEXT , "
+            + KEY_AEPS_AppId + " TEXT , "
+            + KEY_AEPS_SecretKey + " TEXT "
+            + ")";
 
 
     String QUERY_CREATE_TABLE_OWNER_DETAILS = "CREATE TABLE " + TBL_OWNER_DETAILS + " ( " +
@@ -871,7 +947,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_ServiceTaxPercent + " REAL," + KEY_ModifierAmount + " REAL, " + KEY_TaxType + " NUMERIC, " +
             KEY_KitchenCode + " NUMERIC, " + KEY_CategCode + " NUMERIC, " + KEY_DeptCode + " NUMERIC, " +
             KEY_DiscountPercent + " REAL, " + KEY_DiscountAmount + " REAL, " + KEY_TaxAmount + " REAL, " + KEY_BillStatus+" INTEGER, "+
-            KEY_TaxPercent + " REAL)";
+            KEY_TaxPercent + " REAL,"+ KEY_ONLINE_ORDER_NO + " TEXT)";
 
     String QUERY_CREATE_TABLE_Preview_Outward_Supply_Ledger = "CREATE TABLE " + TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER +
             "( " + KEY_GSTIN + " TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode + " TEXT, " + KEY_InvoiceNo + " TEXT, " +
@@ -918,6 +994,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_BillingMode + " TEXT, "
             + KEY_CouponPayment + " REAL, "
             + KEY_WalletPayment + " REAL, "
+            + KEY_RewardPointsAmount + " REAL, "
+            + KEY_AEPSAmount + " REAL, "
+            + KEY_MSWIPE_Amount + " REAL, "
+            + KEY_PAYTM_WALLET + " REAL, "
             + KEY_CustId + " NUMERIC, "
             + KEY_DeliveryCharge + " REAL, "
             + KEY_TotalServiceTaxAmount + " REAL, "
@@ -932,8 +1012,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_ChangePayment + " REAL, "
             + KEY_RoundOff + " REAL, "
             + KEY_TableNo +" TEXT, "
-            + KEY_Table_Split_No+" TEXT "
-            +")";
+            + KEY_Table_Split_No+" TEXT,"
+            + KEY_ONLINE_ORDER_NO + " TEXT)";
 
     String QUERY_CREATE_TABLE_OUTWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_GSTR1_AMEND + " (" +
             KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode+" TEXT, "+
@@ -1315,6 +1395,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TABLE_Stock_Outward);
             db.execSQL(QUERY_CREATE_TABLE_Stock_Inward);
             db.execSQL(QUERY_CREATE_TABLE_PAYMENT_MODE_CONFIGURATION);
+            db.execSQL(QUERY_CREATE_TABLE_PAYMENT_OPTIONS_CONFIGURATION);
+            db.execSQL(QUERY_CREATE_TABLE_TRANSACTION_DETAILS);
+            db.execSQL(QUERY_CREATE_TBL_AEPS_TRANSACTIONS);
             setDefaultTableValues(db);
         } catch (Exception ex) {
             Toast.makeText(myContext, "OnCreate : " + ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -1325,11 +1408,122 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        Cursor res = db.rawQuery("PRAGMA table_info("+TBL_RIDERSETTLEMENT+")",null);
-        int value = res.getColumnIndex(KEY_InvoiceDate);
-        if(value == -1) db.execSQL("ALTER TABLE " + TBL_RIDERSETTLEMENT +" ADD InvoiceDate TEXT");
+        try {
+            Cursor res = db.rawQuery("PRAGMA table_info(" + TBL_RIDERSETTLEMENT + ")", null);
+            int value = res.getColumnIndex(KEY_InvoiceDate);
+            if (value == -1)
+                db.execSQL("ALTER TABLE " + TBL_RIDERSETTLEMENT + " ADD InvoiceDate TEXT");
+        } catch (Exception ex){
+            Log.i(TAG,"Unable to update database error : " +ex.getMessage());
+        }
 
+        switch (oldVersion) {
+            case 2:
+                Cursor cursorOutwardSupplayLedger = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_LEDGER + "'", null);
+                if (cursorOutwardSupplayLedger.moveToFirst()) {
+                    if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_LEDGER, KEY_ONLINE_ORDER_NO)) { // Column doesn't exist
+                        db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_LEDGER + " ADD COLUMN " + KEY_ONLINE_ORDER_NO + " TEXT ");
+                    }
+                } else { // Table doesn't exist
+                    db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Ledger);
+                }
 
+                Cursor cursorOutwardSupplayLedgerDetails = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "'", null);
+                if (cursorOutwardSupplayLedgerDetails.moveToFirst()) {
+                    if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_ONLINE_ORDER_NO)) { // Column doesn't exist
+                        db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_ONLINE_ORDER_NO + " TEXT ");
+                    }
+                } else { // Table doesn't exist
+                    db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Items_Details);
+                }
+                try{
+                    cvDbValues = new ContentValues();
+                    cvDbValues.put("ReportsName", "Online Order Numbers Report");
+                    cvDbValues.put("ReportsType", 1);
+                    cvDbValues.put("Status", 0);
+                    db.insert(TBL_REPORTSMASTER, null, cvDbValues);
+                } catch (Exception ex){
+                    Log.i(TAG,"Unable to insert 'Online order number' value into 'ReportMaster' table" +ex.getMessage());
+                }
+            case 3:
+                db.execSQL(QUERY_CREATE_TABLE_PAYMENT_OPTIONS_CONFIGURATION);
+                db.execSQL(QUERY_CREATE_TABLE_TRANSACTION_DETAILS);
+                db.execSQL(QUERY_CREATE_TBL_AEPS_TRANSACTIONS);
+
+                try {
+                    cvDbValues = new ContentValues();
+                    cvDbValues.put(KEY_PAYMENT_OPTION_CONFIG_NAME, CASH_PAYMENT_OPTION_CONFIG);
+                    cvDbValues.put(KEY_PAYMENT_OPTION_CONFIG_IS_ACTIVE, 1);
+                    db.insert(TBL_PAYMENT_OPTIONS_CONFIGURATION, null, cvDbValues);
+                } catch (Exception ex) {
+                    Log.e(TAG, "Unable to set payment option config default values." + ex.getMessage());
+                }
+
+                Cursor  cursorPaymentMode = null;
+                try {
+                    cursorPaymentMode = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_PaymentModeConfiguration + "'", null);
+                    if (cursorPaymentMode.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_PaymentModeConfiguration, KEY_AEPS_AppId)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_PaymentModeConfiguration + " ADD COLUMN " + KEY_AEPS_AppId + " TEXT");
+                        }
+                        if (!existsColumnInTable(db, TBL_PaymentModeConfiguration, KEY_AEPS_MerchantId)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_PaymentModeConfiguration + " ADD COLUMN " + KEY_AEPS_MerchantId + " TEXT");
+                        }
+                        if (!existsColumnInTable(db, TBL_PaymentModeConfiguration, KEY_AEPS_SecretKey)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_PaymentModeConfiguration + " ADD COLUMN " + KEY_AEPS_SecretKey + " TEXT");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Ledger);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table item on real field cess amount." + ex.getMessage());
+                } finally {
+                    if (cursorPaymentMode != null) {
+                        cursorPaymentMode.close();
+                    }
+                }
+
+                Cursor  cursorOutwardSupplyItemsDetails = null;
+                try {
+                    cursorOutwardSupplyItemsDetails = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "'", null);
+                    if (cursorOutwardSupplyItemsDetails.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_RewardPointsAmount)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_RewardPointsAmount + " REAL ");
+                        }
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_AEPSAmount)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_AEPSAmount + " REAL ");
+                        }
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_MSWIPE_Amount)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_MSWIPE_Amount + " REAL ");
+                        }
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_PAYTM_WALLET)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_PAYTM_WALLET + " REAL ");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Items_Details);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table OutwardSupplyItemsDetails on real field paytm wallet." + ex.getMessage());
+                } finally {
+                    if (cursorOutwardSupplyItemsDetails != null) {
+                        cursorOutwardSupplyItemsDetails.close();
+                    }
+                }
+
+                try {
+                    cvDbValues = new ContentValues();
+                    cvDbValues.put(KEY_AEPS_AppId, "xx");
+                    cvDbValues.put(KEY_AEPS_MerchantId, "xx"); // Production
+                    cvDbValues.put(KEY_AEPS_SecretKey, "xx");
+                    db.insert(TBL_PaymentModeConfiguration, null, cvDbValues);
+                } catch (Exception ex) {
+                    Log.e(TAG, "Unable to set payment option config default values." + ex.getMessage());
+                }
+
+                break;
+            default:
+                break;
+        }
     }
 
     public void setDefaultTableValues(SQLiteDatabase db) {//user HARDCODING
@@ -1343,7 +1537,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         long l = db.insert(TBL_USER, null, cvDbValues);
         if (l == -1) {
         }
-
 
         /*cvDbValues = new ContentValues();
         //cvDbValues.put(KEY_GSTIN, "G12345678901234");
@@ -1559,6 +1752,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_RAZORPAY_KEYID, "xx");
         cvDbValues.put(KEY_RAZORPAY_SECRETKEY, "xx"); // Production
+        cvDbValues.put(KEY_AEPS_AppId, "xx");
+        cvDbValues.put(KEY_AEPS_MerchantId, "xx"); // Production
+        cvDbValues.put(KEY_AEPS_SecretKey, "xx");
         db.insert(TBL_PaymentModeConfiguration, null, cvDbValues);
 
         // Bill No Reset Configuration
@@ -1879,6 +2075,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ReportsType", 1);
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);*/
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put("ReportsName", "Online Order Numbers Report");
+        cvDbValues.put("ReportsType", 1);
+        cvDbValues.put("Status", 0);
+        db.insert(TBL_REPORTSMASTER, null, cvDbValues);
+
+
+        try {
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_PAYMENT_OPTION_CONFIG_NAME, CASH_PAYMENT_OPTION_CONFIG);
+            cvDbValues.put(KEY_PAYMENT_OPTION_CONFIG_IS_ACTIVE, 1);
+            db.insert(TBL_PAYMENT_OPTIONS_CONFIGURATION, null, cvDbValues);
+        } catch (Exception ex) {
+            Log.e(TAG, "Unable to set payment option config default values." + ex.getMessage());
+        }
     }
 
 
@@ -2508,14 +2720,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return refno;
 
     }
-    public Cursor getOwnerDetail() {
+   /* public Cursor getOwnerDetail() {
         String Selectquery = "Select * FROM " + TBL_OWNER_DETAILS ;
         Cursor result = dbFNB.rawQuery(Selectquery, null);
 
         return result;
 
-    }
-    public Cursor getOwnerDetail_counter() {
+    }*/
+    public Cursor getOwnerDetail() {
         SQLiteDatabase db = getReadableDatabase();
         String Selectquery = "Select * FROM " + TBL_OWNER_DETAILS ;
         Cursor result = null;
@@ -3914,13 +4126,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public long addPaymentReceipt(PaymentReceipt objPaymentReceipt) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put("Reason", objPaymentReceipt.getReason());
-        cvDbValues.put("Amount", objPaymentReceipt.getAmount());
-        cvDbValues.put("BillType", objPaymentReceipt.getBillType());
-        cvDbValues.put("InvoiceDate", objPaymentReceipt.getDate());
-        cvDbValues.put("DescriptionId1", objPaymentReceipt.getDescriptionId1());
-        cvDbValues.put("DescriptionId2", objPaymentReceipt.getDescriptionId2());
-        cvDbValues.put("DescriptionId3", objPaymentReceipt.getDescriptionId3());
+        cvDbValues.put("Reason", objPaymentReceipt.getStrReason());
+        cvDbValues.put("Amount", objPaymentReceipt.getdAmount());
+        cvDbValues.put("BillType", objPaymentReceipt.getiBillType());
+        cvDbValues.put("InvoiceDate", objPaymentReceipt.getStrDate());
+        cvDbValues.put("DescriptionId1", objPaymentReceipt.getiDescriptionId1());
+        cvDbValues.put("DescriptionId2", objPaymentReceipt.getiDescriptionId2());
+        cvDbValues.put("DescriptionId3", objPaymentReceipt.getiDescriptionId3());
         cvDbValues.put(KEY_DescriptionText, objPaymentReceipt.getDescriptionText());
 
         return dbFNB.insert(TBL_PAYMENTRECEIPT, null, cvDbValues);
@@ -5225,18 +5437,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_DiscPercentage, objBillDetail.getTotalDiscountPercentage());
         cvDbValues.put("TotalServiceTaxAmount", objBillDetail.getTotalServiceTaxAmount());
         cvDbValues.put("TotalTaxAmount", objBillDetail.getTotalTaxAmount());
-        cvDbValues.put("CashPayment", objBillDetail.getCashPayment());
-        cvDbValues.put("CardPayment", objBillDetail.getCardPayment());
-        cvDbValues.put("CouponPayment", objBillDetail.getCouponPayment());
         cvDbValues.put("BillStatus", objBillDetail.getBillStatus());
         cvDbValues.put("ReprintCount", objBillDetail.getReprintCount());
         cvDbValues.put("DeliveryCharge", objBillDetail.getDeliveryCharge());
         cvDbValues.put("EmployeeId", objBillDetail.getEmployeeId());
         cvDbValues.put("UserId", objBillDetail.getUserId());
         cvDbValues.put("CustId", objBillDetail.getCustId());
-//        cvDbValues.put("PettyCashPayment", objBillDetail.getPettyCashPayment());
-        cvDbValues.put("PettyCashPayment", objBillDetail.getdPettyCashPayment());
-        cvDbValues.put(KEY_WalletPayment, objBillDetail.getWalletAmount());
+        cvDbValues.put(KEY_CashPayment, objBillDetail.getCashPayment());
+        cvDbValues.put(KEY_CardPayment, objBillDetail.getCardPayment());
+        cvDbValues.put(KEY_CouponPayment, objBillDetail.getCouponPayment());
+        cvDbValues.put(KEY_PettyCashPayment, objBillDetail.getPettyCashPayment());
+        cvDbValues.put(KEY_WalletPayment, objBillDetail.getDblWalletAmount());
+        cvDbValues.put(KEY_RewardPointsAmount, objBillDetail.getDblRewardPoints());
+        cvDbValues.put(KEY_AEPSAmount, objBillDetail.getDblAEPSAmount());
+        cvDbValues.put(KEY_PAYTM_WALLET,objBillDetail.getDblPaytmAmount());
         cvDbValues.put(KEY_RoundOff, objBillDetail.getfRoundOff());
         cvDbValues.put("PaidTotalPayment", objBillDetail.getPaidTotalPayment());
         cvDbValues.put("ChangePayment", objBillDetail.getChangePayment());
@@ -8220,7 +8434,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return billNoPrefix.trim();
     }
-    public String getOwnerPOS() {
+   /* public String getOwnerPOS() {
         String pos = "";
         String selectQuery = "Select POS FROM " + TBL_OWNER_DETAILS;
         Cursor result = dbFNB.rawQuery(selectQuery, null);
@@ -8228,8 +8442,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             pos = result.getString(result.getColumnIndex("POS"));
         }
         return pos;
-    }
-    public String getOwnerPOS_counter() {
+    }*/
+    public String getOwnerPOS() {
         String pos = "";
         String selectQuery = "Select POS FROM " + TBL_OWNER_DETAILS;
         SQLiteDatabase db = getWritableDatabase();
@@ -8241,7 +8455,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
         }catch (Exception e){
             e.printStackTrace();
-            pos = "0";
+            pos = "";
         }finally {
             return pos;
         }
@@ -9173,6 +9387,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_UOM, objBillItem.getUom());
             cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
             cvDbValues.put(KEY_BillStatus, objBillItem.getBillStatus());
+            cvDbValues.put(KEY_ONLINE_ORDER_NO,objBillItem.getStrOnlineOrderNo());
 
             return db.insert(TBL_BILLITEM, null, cvDbValues);
         }catch (Exception e){
@@ -9206,18 +9421,20 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_DiscPercentage, objBillDetail.getTotalDiscountPercentage());
             cvDbValues.put("TotalServiceTaxAmount", objBillDetail.getTotalServiceTaxAmount());
             cvDbValues.put("TotalTaxAmount", objBillDetail.getTotalTaxAmount());
-            cvDbValues.put("CashPayment", objBillDetail.getCashPayment());
-            cvDbValues.put("CardPayment", objBillDetail.getCardPayment());
-            cvDbValues.put("CouponPayment", objBillDetail.getCouponPayment());
             cvDbValues.put("BillStatus", objBillDetail.getBillStatus());
             cvDbValues.put("ReprintCount", objBillDetail.getReprintCount());
             cvDbValues.put("DeliveryCharge", objBillDetail.getDeliveryCharge());
             cvDbValues.put("EmployeeId", objBillDetail.getEmployeeId());
             cvDbValues.put("UserId", objBillDetail.getUserId());
             cvDbValues.put("CustId", objBillDetail.getCustId());
-//            cvDbValues.put("PettyCashPayment", objBillDetail.getPettyCashPayment());
-            cvDbValues.put("PettyCashPayment", objBillDetail.getdPettyCashPayment());
-            cvDbValues.put(KEY_WalletPayment, objBillDetail.getWalletAmount());
+            cvDbValues.put(KEY_CashPayment, objBillDetail.getCashPayment());
+            cvDbValues.put(KEY_CardPayment, objBillDetail.getCardPayment());
+            cvDbValues.put(KEY_CouponPayment, objBillDetail.getCouponPayment());
+            cvDbValues.put(KEY_PettyCashPayment, objBillDetail.getPettyCashPayment());
+            cvDbValues.put(KEY_WalletPayment, objBillDetail.getDblWalletAmount());
+            cvDbValues.put(KEY_RewardPointsAmount, objBillDetail.getDblRewardPoints());
+            cvDbValues.put(KEY_AEPSAmount, objBillDetail.getDblAEPSAmount());
+            cvDbValues.put(KEY_PAYTM_WALLET,objBillDetail.getDblPaytmAmount());
             cvDbValues.put(KEY_RoundOff, objBillDetail.getfRoundOff());
             cvDbValues.put("PaidTotalPayment", objBillDetail.getPaidTotalPayment());
             cvDbValues.put("ChangePayment", objBillDetail.getChangePayment());
@@ -9231,6 +9448,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_SGSTAmount, objBillDetail.getSGSTAmount());
             cvDbValues.put(KEY_cessAmount, objBillDetail.getCessAmount());
             cvDbValues.put(KEY_SubTotal, objBillDetail.getSubTotal());
+            cvDbValues.put(KEY_ONLINE_ORDER_NO, objBillDetail.getStrOnlineOrderNo());
 
             rData = db.insert(TBL_BILLDETAIL, null, cvDbValues);
         }catch (Exception e){
@@ -9337,6 +9555,17 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cursor = null;
         }finally {
             //db.close();
+        }
+        return cursor;
+    }
+
+    public Cursor getDataForGeneratingCSV(String strTableName) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + strTableName, null);
+        } catch (Exception e) {
+            Log.i(TAG, "Unable to run the query method: " + strTableName + " " + e.getMessage());
         }
         return cursor;
     }
@@ -9613,4 +9842,174 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
 
     }
 
+    private boolean existsColumnInTable(SQLiteDatabase inDatabase, String inTable, String columnToCheck) {
+        Cursor mCursor = null;
+        try {
+            // Query 1 row
+            mCursor = inDatabase.rawQuery("SELECT * FROM " + inTable + " LIMIT 0", null);
+
+            // getColumnIndex() gives us the index (0 to ...) of the column - otherwise we get a -1
+            if (mCursor.getColumnIndex(columnToCheck) != -1)
+                return true;
+            else
+                return false;
+
+        } catch (Exception Exp) {
+            // Something went wrong. Missing the database? The table?
+//            Log.d("... - existsColumnInTable", "When checking whether a column exists in the table, an error occurred: " + Exp.getMessage());
+            return false;
+        } finally {
+            if (mCursor != null) mCursor.close();
+        }
+    }
+
+    public Cursor mGetOnlineOrderNoReportsData(String StartDate, String EndDate) {
+        return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
+                KEY_BillStatus +" =1 AND "
+                        + KEY_ONLINE_ORDER_NO + " not like '' and "
+                        + KEY_InvoiceDate+ " BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null,KEY_InvoiceDate);
+    }
+
+    // -----Payment options-----
+    public Cursor getPaymentOptions() {
+        Cursor cursor = null;
+        try {
+            cursor = dbFNB.rawQuery(" SELECT * FROM " + TBL_PAYMENT_OPTIONS_CONFIGURATION, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i(TAG, "unable to run the query method: getPaymentOptions(). " + e.getMessage());
+        }
+        return cursor;
+    }
+
+    public long mInsertUpdatePaymentOptions(PaymentOptionsBean paymentOptionsBean) {
+        long result = -1;
+        SQLiteDatabase db = getReadableDatabase();
+        if (paymentOptionsBean != null) {
+            ContentValues cv = new ContentValues();
+            cv.put(KEY_PAYMENT_OPTION_CONFIG_NAME, paymentOptionsBean.getStrName());
+            cv.put(KEY_PAYMENT_OPTION_CONFIG_IS_ACTIVE, paymentOptionsBean.isActive());
+            if (!mCheckPaymentOptionsDataIsExists(paymentOptionsBean.getStrName())) {
+                result = db.insert(TBL_PAYMENT_OPTIONS_CONFIGURATION, null, cv);
+            } else {
+                String strWhere = KEY_PAYMENT_OPTION_CONFIG_NAME + "=?";
+                result = db.update(TBL_PAYMENT_OPTIONS_CONFIGURATION, cv, strWhere, new String[]{paymentOptionsBean.getStrName()});
+            }
+        }
+        return result;
+    }
+
+    private boolean mCheckPaymentOptionsDataIsExists(String strName) {
+        boolean bResult = false;
+        Cursor cursorPaymentOptions = null;
+        SQLiteDatabase db = getReadableDatabase();
+        try {
+            cursorPaymentOptions = db.rawQuery(" SELECT " + KEY_PAYMENT_OPTION_CONFIG_NAME + " FROM " + TBL_PAYMENT_OPTIONS_CONFIGURATION
+                    + " where " + KEY_PAYMENT_OPTION_CONFIG_NAME + " = '"
+                    + strName + "'", null);
+            if (cursorPaymentOptions != null && cursorPaymentOptions.moveToFirst()) {
+                if (cursorPaymentOptions.getString(cursorPaymentOptions.getColumnIndex(KEY_PAYMENT_OPTION_CONFIG_NAME)) != null) {
+                    bResult = true;
+                }
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, "Unable to check payment options data exists or not ? Method : mCheckPaymentOptionsDataIsExists()." + ex.getMessage());
+        } finally {
+            if (cursorPaymentOptions != null) {
+                cursorPaymentOptions.close();
+            }
+        }
+        return bResult;
+    }
+
+    // -----Retrieve Business Date-----
+    public Cursor getBusinessDate() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(TBL_BILLSETTING, new String[]{"BusinessDate"}, null, null, null, null, null);
+
+    }
+
+    public long insertTransactionDetails(String invoiceNo, String InvoiceDate, String transactionName, String transactionid, double amount) {
+        long result = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_InvoiceNo, invoiceNo);
+        cv.put(KEY_InvoiceDate, InvoiceDate);
+        cv.put(KEY_TransactionName, transactionName);
+        cv.put(KEY_TransactionId, transactionid);
+        cv.put(KEY_Amount, amount);
+
+        result = db.insert(TBL_TRANSACTION_DETAIL, null, cv);
+
+        return result;
+    }
+
+    // -----Retrieve single Customer-----
+    public Cursor getCustomerbyPhone(String strCustPhone) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(TBL_CUSTOMER, new String[]{"*"}, KEY_CustContactNumber + " LIKE '" + strCustPhone + "'", null, null,
+                null, null);
+    }
+
+
+    //Payment mode configuration module database methods
+    public int updatePaymentModeDetailsRazorPay(String keyId, String secretKey) {
+        int result = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        try {
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_RAZORPAY_KEYID, keyId);
+            cvDbValues.put(KEY_RAZORPAY_SECRETKEY, secretKey);
+
+            result = db.update(TBL_PaymentModeConfiguration, cvDbValues, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        } finally {
+            //db.close();
+            return result;
+        }
+    }
+
+    public int updatePaymentModeDetailsAEPS(String appID, String merchantId, String secretKey) {
+        int result = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        try {
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_AEPS_AppId, appID);
+            cvDbValues.put(KEY_AEPS_MerchantId, merchantId);
+            cvDbValues.put(KEY_AEPS_SecretKey, secretKey);
+
+            result = db.update(TBL_PaymentModeConfiguration, cvDbValues, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        } finally {
+            //db.close();
+            return result;
+        }
+    }
+    public long insertAEPSTransDetails(String responseCode, String respDescription, String merchantTxnNo,
+                                       String txnStatus, String txnID, String paymentDateTime, String paymentID, String amount) {
+        long insert = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_ResponseCode, responseCode);
+        cv.put(KEY_RespDescription, respDescription);
+        cv.put(KEY_MerchantTxnNo, merchantTxnNo);
+        cv.put(KEY_TxnStatus, txnStatus);
+        cv.put(KEY_TxnID, txnID);
+        cv.put(KEY_PaymentDateTime, paymentDateTime);
+        cv.put(KEY_PaymentID, paymentID);
+        cv.put(KEY_Amount, amount);
+        insert = db.insert(TBL_AEPS_TRANSACTIONS, null, cv);
+        return insert;
+    }
+
+    public Cursor getAEPSTransDetailByMerchantTxnNo(String merchantTxnNo) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "Select * from " + TBL_AEPS_TRANSACTIONS + " WHERE " + KEY_MerchantTxnNo + " LIKE  '" + merchantTxnNo + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
 }

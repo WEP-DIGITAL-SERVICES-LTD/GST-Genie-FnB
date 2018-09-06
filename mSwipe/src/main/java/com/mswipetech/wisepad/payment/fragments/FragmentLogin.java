@@ -40,6 +40,10 @@ public class FragmentLogin extends DialogFragment {
     public FragmentLogin() {
     }
 
+    public void setCompletedListener(OnLoginCompletedListener completedListener) {
+        this.completedListener = completedListener;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         applicationData = (ApplicationData) getActivity().getApplicationContext();

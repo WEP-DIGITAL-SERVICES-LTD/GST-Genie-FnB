@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="75dp"
-    tools:context="com.wepindia.pos.fragments.Fragment_Outward_Credit_Debit_Note">
+    tools:context="com.wepindia.pos.views.CreditDebitNote.Fragment_Outward_Credit_Debit_Note">
 
     <!-- TODO: Update blank fragment layout -->
 

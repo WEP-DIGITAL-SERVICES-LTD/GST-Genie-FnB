@@ -644,7 +644,7 @@
                                     android:id="@+id/tvColAmount"
                                     android:layout_width="@dimen/_70dp_720dp_65dp_600dp"
                                     android:layout_height="wrap_content"
-                                    android:text="Amount"
+                                    android:text="Taxable Value"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
                                     android:textColor="@color/txtColorAccent"
                                     android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
@@ -1244,7 +1244,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:gravity="center"
-                    android:onClick="Tender"
+                    android:onClick="PayBill"
                     android:text="Pay Bill"
                     android:textAllCaps="false"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"

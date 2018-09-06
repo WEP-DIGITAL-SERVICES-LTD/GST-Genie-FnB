@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.wep.gstcall.api.http.HTTPAsyncTask;
-import com.wepindia.pos.fragments.FragmentGSTLink;
+import com.wepindia.pos.views.Reports.FragmentGSTLink;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

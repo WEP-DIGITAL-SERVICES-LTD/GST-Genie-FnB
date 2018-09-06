@@ -258,7 +258,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:gravity="center"
-                    android:onClick="Tender"
+                    android:onClick="PayBill"
                     android:text="@string/pay_bill"
                     android:textAllCaps="false"
                     android:textSize="@dimen/counter_sale_text_size_14sp_720dp_12sp_600dp"

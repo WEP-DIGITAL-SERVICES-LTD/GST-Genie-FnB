@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/colorPrimary"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_payment_receipt_no"
+        style="@style/TV_Billing_Item_List"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:paddingStart="2dp"
+        android:gravity="center"
+        android:text="Payment/Receipt No" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_payment_receipt_date"
+        style="@style/TV_Billing_Item_List"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:paddingStart="2dp"
+        android:gravity="center"
+        android:text="@string/date" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_payment_receipt_desc"
+        style="@style/TV_Billing_Item_List"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="2dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/description" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_payment_receipt_bill_amt"
+        style="@style/TV_Billing_Item_List"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".4"
+        android:paddingStart="2dp"
+        android:gravity="right|center_vertical"
+        android:text="@string/bill_amount" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".1" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_payment_receipt_reason"
+        style="@style/TV_Billing_Item_List"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="2dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/reason" />
+
+</LinearLayout>

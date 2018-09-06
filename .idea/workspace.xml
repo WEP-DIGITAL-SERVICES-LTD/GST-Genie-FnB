@@ -2,14 +2,241 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <devices>
+          <device id="Nexus 10" />
+        </devices>
+      </config>
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="64718e24-841a-43d2-a597-bf12335cfe2a" name="Default" comment="">
+    <list default="true" id="f63be0db-7ed3-45ac-82d1-08f59c8b5ae5" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OnWalletPaymentResponseListener.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/bixolon/BixolonDiscoveryFragment.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/epos2_printer/EPSONDiscoveryFragment.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/tvs_printer/TVSDiscoveryFragment.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/EMOJI_FILTER.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ExportDatabaseTableAsCSVTask.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Adapters/PayBillPaidAmountAdapter.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Adapters/PayBillRecyclerViewAdapter.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Adapters/PayBillViewHolder.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Listeners/AEPSCompleteListener.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Listeners/OnMSwipeResultResponseListener.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Listeners/OnProceedToPayCompleteListener.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/PayBillFragment.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/Category/Adapters/CategoryAdapter.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/ConfigurationActivity.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/Department/Adapters/DepartmentAdapter.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/PaymentOptions/PaymentModeOptionsFragment.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/PaymentOptions/adapter/PaymentOptionsListAdapter.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/PaymentOptions/adapter/PaymentOptionsListViewHolder.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/PaymentOptions/listeners/OnPaymentOptionListener.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/jniLibs/armeabi/libepos2.so" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/bottom_shape_draw.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/round_shape_draw.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/pay_bill_fragment.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/payment_mode_option_fragment.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/payment_mode_option_row_list.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/proceed_to_pay_dialog_rv_item.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_paid_amount.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_paybill_tablelist.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_payment_cash_dialog.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_payment_petty_cash_dialog.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_payment_receipt_report.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_payment_reward_point_dialog.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_config_payment_receipt.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_aeps.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_cash_payment.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_coupon_payment.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_credit_customer_payment.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_discount.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_e_wallet_payment.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_m_swipe.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_other_cards.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_paytm.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_reward_points.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/values/style.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/merchantsdk-release/build.gradle" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/merchantsdk-release/merchantsdk-release.aar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/libs/BixolonPrinterV236.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/libs/POSSDKForAndroid.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/libs/core-3.3.0.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/libs/ePOS2.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/libs/ngx_btp120_320_sdk_1.0.7r2.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/BixolonPrinterBaseAcivity.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/EPSONPrinterBaseActivity.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/TVSPrinterBaseActivity.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/WifiPrinterBaseActivity.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/bixolon/BixolonPrinterStatus.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/bixolon/DialogManager.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/epson/ShowMsg.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/tvs_printer/ConstantDefine.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/tvs_printer/TestPrintInfo.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/PayBillDialogBean.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/PayBillPaidAmountBean.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/PaymentDetails.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/PaymentOptionsBean.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/SalesReturnBean.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/SalesReturnPrintBean.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/AddRolesActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity_Unused.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Constants.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConvertIngredientActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/ConvertIngredientActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Customer/CustomerDetailActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerOrdersActivity.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/DeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/DeliveryActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/EmployeeActivity_Unused.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/FilePickerActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/FilePickerActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/HTTPAsyncTask_Frag.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/HTTPAsyncTask_Frag.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/TokenAsync_Frag.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/TokenAsync_Frag.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/GoodsInwardNoteActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/IngredientManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/IngredientManagementActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardItemActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardItemActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardStockActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardStockActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Inward_Item_Entry_nonGST_Activity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Inward_Item_Entry_nonGST_Activity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/OutwardItemMaster/ItemManagementActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity_old.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/ItemSupplierLinkageActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/KOTModifierActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/KOTModifierActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/KOTStatusActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/KOTStatusActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/MasterActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/MasterActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ModifyKOTActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/ModifyKOTActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OwnerDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OwnerDetailsActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/PayBillActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PaymentModeConfigurationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PaymentModeConfigurationActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PaymentReceiptActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/PaymentReceipt/PaymentReceiptActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PrintIngredients.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/PrintIngredients.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/PurchaseOrderActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/RiderSettlementActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SplitBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/SplitBillActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StatusActivity_unused.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/PriceAndStock/StockActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/SupplierDetailsActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedAmmendActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Amendment/TabbedAmmendActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedCreditDebitNote.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/CreditDebitNote/TabbedCreditDebitNote.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedReportActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/TabbedReportActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedSettingsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/TabbedSettingsActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedSupplierItemLinkage.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/TabbedSupplierItemLinkage.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/TableActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableBookingActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/TableBookingActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableBookingActivity_old.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/TableBookingActivity_old.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableShiftMergeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/TableShiftMergeActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableStatusActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/TableStatusActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TenderActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TenderActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/UserManagementActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/CDNoteAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/CreditDebitNote/Adapters/CDNoteAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/CategoryAdapter.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/DepartmentAdapter.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/IngredientListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Adapters/IngredientListAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemInwardAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Adapters/ItemInwardAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemOutwardAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Adapters/ItemOutwardAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemsAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Adapters/ItemsAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Adapters/PurchaseOrderAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/SupplierAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Adapters/SupplierAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/SupplierItemLinkageAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Adapters/SupplierItemLinkageAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/SupplierSuggestionAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/Adapters/SupplierSuggestionAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/UserRolesAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/Adapters/UserRolesAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/UsersListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/Adapters/UsersListAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/WaiterAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/Adapters/WaiterAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentCategory.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/Category/FragmentCategory.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentCoupon.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/Coupons/FragmentCoupon.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDepartment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/Department/FragmentDepartment.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/Discount/FragmentDiscount.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/FragmentGSTLink.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentKitchen.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/Kitchen/FragmentKitchen.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentOtherTaxes.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/OtherCharges/FragmentOtherTaxes.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentPayment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/PaymentReceipt/FragmentPayment.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsDisplayOwnerDetail.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsDisplayOwnerDetail.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsGST.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsGST.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsHeaderFooter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsHeaderFooter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsMachine.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsMachine.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsMiscellaneous.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsMiscellaneous.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsOther.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsOther.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrice.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsPrice.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsPrint.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSupplierDetails.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSupplierDetails.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/Fragment_Inward_Credit_Debit_Note.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/CreditDebitNote/Fragment_Inward_Credit_Debit_Note.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/Fragment_Outward_Credit_Debit_Note.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/CreditDebitNote/Fragment_Outward_Credit_Debit_Note.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/AddedItemsToOrderTableClass.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/AddedItemsToOrderTableClass.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/jniLibs/armeabi-v7a/libserialport.so" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/jniLibs/armeabi/libserialport.so" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/jniLibs/x86/libserialport.so" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billingscreen.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billingscreen.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_credit_debit.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_credit_debit.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_discovery.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_discovery.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_stock.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_stock.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_payment_mode_configuration.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_payment_mode_configuration.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_supplier_details.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_supplier_details.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_credit_note.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_credit_note.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_credit_note_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_credit_note_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_debit_note.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_debit_note.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_display_owner_detail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_display_owner_detail.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_display_owner_detail_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_display_owner_detail_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_gst.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_gst.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_gst_old.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_gst_old.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_tabbed_report.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_tabbed_report.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+      <change beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
+      <change beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
+      <change beforePath="$PROJECT_DIR$/mSwipe/build.gradle" afterPath="$PROJECT_DIR$/mSwipe/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
+      <change beforePath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/payment/fragments/FragmentLogin.java" afterPath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/payment/fragments/FragmentLogin.java" />
+      <change beforePath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" afterPath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/data/AppPrefrences.java" />
+      <change beforePath="$PROJECT_DIR$/printers/build.gradle" afterPath="$PROJECT_DIR$/printers/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
+      <change beforePath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity.java" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity.java" />
+      <change beforePath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity_debug.java" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity_debug.java" />
+      <change beforePath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/WePTHPrinterBaseActivity.java" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/WePTHPrinterBaseActivity.java" />
+      <change beforePath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" />
+      <change beforePath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/wep/PrinterConnectionError.java" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/wep/PrinterConnectionError.java" />
+      <change beforePath="$PROJECT_DIR$/printers/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/printers/src/main/res/values/strings.xml" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
+      <change beforePath="$PROJECT_DIR$/wepbase/build.gradle" afterPath="$PROJECT_DIR$/wepbase/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillItem.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillItem.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/Customer.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/Customer.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/PaymentReceipt.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/PaymentReceipt.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillKotItem.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillKotItem.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillServiceTaxItem.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillServiceTaxItem.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,66 +253,58 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/app">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GST-Genie-F-V2.0P" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GST-Genie-F-V2.0P" type="f1a62948:ProjectNode" />
-                <item name=":app" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GST-Genie-F-V2.0P" type="f1a62948:ProjectNode" />
-                <item name=":app" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GST-Genie-F-V2.0P" type="f1a62948:ProjectNode" />
-                <item name=":app" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
+        <projects_view />
       </state>
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="DiscoverBluetoothPrinter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/heydey/DiscoverBluetoothPrinter.java">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="BillingHomeDeliveryActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="194" column="0" lean-forward="false" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+            <state relative-caret-position="271">
+              <caret line="5146" column="72" lean-forward="false" selection-start-line="5146" selection-start-column="72" selection-end-line="5146" selection-end-column="72" />
               <folding>
-                <element signature="e#8164#8230#0" expanded="true" />
-                <element signature="e#8276#8358#0" expanded="true" />
-                <element signature="e#8834#8866#0" expanded="true" />
+                <element signature="e#305376#305536#0" expanded="true" />
+                <element signature="e#305535#305536#0" expanded="true" />
+                <element signature="e#310969#311129#0" expanded="true" />
+                <element signature="e#311128#311129#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FragmentSettingsPrint.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java">
+      <file leaf-file-name="BillingCounterSalesActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-885">
-              <caret line="200" column="48" lean-forward="false" selection-start-line="200" selection-start-column="48" selection-end-line="200" selection-end-column="48" />
+            <state relative-caret-position="339">
+              <caret line="3766" column="9" lean-forward="false" selection-start-line="3628" selection-start-column="7" selection-end-line="3766" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BillingDineInActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="709">
+              <caret line="6009" column="9" lean-forward="false" selection-start-line="6009" selection-start-column="9" selection-end-line="6009" selection-end-column="9" />
               <folding>
-                <element signature="e#4716#4868#0" expanded="true" />
-                <element signature="e#4867#4868#0" expanded="true" />
+                <element signature="e#341076#341236#0" expanded="true" />
+                <element signature="e#341235#341236#0" expanded="true" />
+                <element signature="e#345339#345499#0" expanded="true" />
+                <element signature="e#345498#345499#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="5629" column="18" lean-forward="false" selection-start-line="5629" selection-start-column="18" selection-end-line="5629" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -94,11 +313,48 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onDeviceCli</find>
-      <find>stringPrinter.add</find>
+      <find>payBill(</find>
+      <find>onActivityRes</find>
+      <find>sendBill</find>
+      <find>send</find>
+      <find>PrintNEw</find>
+      <find>PayBill</find>
+      <find>onPrinterAvailable</find>
+      <find>printNGXBILL</find>
+      <find>connected to</find>
+      <find>mBtp</find>
+      <find>KEY_CardPayment</find>
+      <find>mswipe</find>
+      <find>printNew</find>
+      <find>REWARD_POINTS</find>
+      <find>KEY_WalletPayment</find>
+      <find>oncreate</find>
+      <find>InsertBillDetail</find>
+      <find>onProce</find>
+      <find>oncreat</find>
+      <find>onupgrade</find>
+      <find>printngxko</find>
+      <find>PrintNewBill</find>
+      <find>NGX</find>
+      <find>PrintNew</find>
+      <find>PrintNewbil</find>
+      <find>onproce</find>
+      <find>onproces</find>
+      <find>printH</find>
+      <find>printNg</find>
+      <find>addBill</find>
     </findStrings>
+    <replaceStrings>
+      <replace>lOG</replace>
+      <replace>Log</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="*" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -138,6 +394,10 @@
               <ExternalProjectPojo>
                 <option name="name" value=":mSwipe" />
                 <option name="path" value="$PROJECT_DIR$/mSwipe" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value=":merchantsdk-release" />
+                <option name="path" value="$PROJECT_DIR$/merchantsdk-release" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
                 <option name="name" value=":printers" />
@@ -3172,6 +3432,62 @@
             </list>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/merchantsdk-release">
+          <value>
+            <list>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the components produced by project ':merchantsdk-release'. [incubating]" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="components" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the sub-projects of project ':merchantsdk-release'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="projects" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the dependent components of components in project ':merchantsdk-release'. [incubating]" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="dependentComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays all buildscript dependencies declared in project ':merchantsdk-release'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="buildEnvironment" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the insight into a specific dependency in project ':merchantsdk-release'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="dependencyInsight" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays all dependencies declared in project ':merchantsdk-release'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="dependencies" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays a help message." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="help" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the configuration model of project ':merchantsdk-release'. [incubating]" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="model" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the properties of project ':merchantsdk-release'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="properties" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the tasks runnable from project ':merchantsdk-release'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/merchantsdk-release" />
+                <option name="name" value="tasks" />
+              </ExternalTaskPojo>
+            </list>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/printers">
           <value>
             <list>
@@ -5909,6 +6225,160 @@
                       </ExternalModuleBuildClasspathPojo>
                     </value>
                   </entry>
+                  <entry key="$PROJECT_DIR$/merchantsdk-release">
+                    <value>
+                      <ExternalModuleBuildClasspathPojo>
+                        <option name="entries">
+                          <list>
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.1.2/79231e42158f711cbe81eb766d7c3578e38557a4/gradle-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.1.2/1608fa49add4d13366db7844998c6e59711f7e2a/gradle-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/3.1.0/69fa869c4e477847f332b7a6c204462f9aabfced/google-services-3.1.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gms/google-services/3.1.0/166ae4e6acd03b7bbebe221ffa54bc039fece1b9/google-services-3.1.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-core/3.1.2/36e59348ddd26cbed10061dd4760e8ee030b88e4/gradle-core-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-core/3.1.2/ccab33656c1baa6514d88f4d9356db19d0e9823b/gradle-core-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/bundletool/0.1.0-alpha01/f7c303e37818223bd98566fcbea29aa0964c4d06/bundletool-0.1.0-alpha01.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.1.2/84b5fe203cd814a6a48fac7902c7b0bf0d455451/builder-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.1.2/133b1f665104f0ebf01f71b61e4794385d7b5f1b/builder-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-gradle-api/26.1.2/2e0f2d982094f220ddc62f94180ee5187c9c0cdf/lint-gradle-api-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.lint/lint-gradle-api/26.1.2/8c54aedfe9da66e64402de04883cee083c127a3b/lint-gradle-api-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-api/3.1.2/7239d441f5d79f12ff8f6066703e86ddd16a29cf/gradle-api-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-api/3.1.2/427e25639a55911cadcf70657c9b2ded2ad6af2b/gradle-api-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.databinding/compilerCommon/3.1.2/a77b04ed519b3ac7c0e8946ee7e0eb156808f661/compilerCommon-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.databinding/compilerCommon/3.1.2/be65c11ded4242932046f23ecfa5c7ccb0e98f46/compilerCommon-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre8/1.2.0/3d425bfaaa7f8b1affb652c4257aa57e6597e163/kotlin-stdlib-jre8-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre8/1.2.0/505f55b9619bbc5f5e26c77427dd24a6a441eef1/kotlin-stdlib-jre8-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/transform-api/2.0.0-deprecated-use-gradle-api/e4075c49e16e086140fe40eea56b2de7516874ee/transform-api-2.0.0-deprecated-use-gradle-api-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/transform-api/2.0.0-deprecated-use-gradle-api/85bee1acea9e27152b920746c68133b30b11431/transform-api-2.0.0-deprecated-use-gradle-api.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.1/81e81bd6c20b965f88d0462e2559f8759fc6c26d/asm-5.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.1/5ef31c4fe953b1fd00b8a88fa1d6820e8785bb45/asm-5.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/5.1/81e81bd6c20b965f88d0462e2559f8759fc6c26d/asm-analysis-5.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/5.1/6d1bf8989fc7901f868bee3863c44f21aa63d110/asm-analysis-5.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/5.1/81e81bd6c20b965f88d0462e2559f8759fc6c26d/asm-commons-5.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/5.1/25d8a575034dd9cfcb375a39b5334f0ba9c8474e/asm-commons-5.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/5.1/81e81bd6c20b965f88d0462e2559f8759fc6c26d/asm-util-5.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/5.1/b60e33a6bd0d71831e0c249816d01e6c1dd90a47/asm-util-5.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/4.9/d965219b87f79e81b07116d451e684ab2f3acc27/jopt-simple-4.9-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/4.9/ee9e9eaa0a35360dcfeac129ff4923215fd65904/jopt-simple-4.9.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-gradle/5.3.3/186a5a9fd2f4fee04dced62b8d4d97c88337b53d/proguard-gradle-5.3.3-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-gradle/5.3.3/ad23a0505f58d0dfc95bb1472decc397460406c9/proguard-gradle-5.3.3.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.auto.value/auto-value/1.5.2/e96b1f4a9e6630a405434fca857c6b8f777163cf/auto-value-1.5.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.auto.value/auto-value/1.5.2/1b94ab7ec707e2220a0d1a7517488d1843236345/auto-value-1.5.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/22.0/55edc69e4fc937f4e58e577bb144b824c0ec7c55/guava-22.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/22.0/3564ef3803de51fb0530a8377ec6100b33b0d073/guava-22.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.4.0/c57c9f6bcbdb783260d00b80c455d82a6a8b02db/protobuf-java-3.4.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.4.0/b32aba0cbe737a4ca953f71688725972e3ee927c/protobuf-java-3.4.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.4.0/6d5f8e6d209c309d9ef3e30aa81135ee94cc7d49/protobuf-java-util-3.4.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.4.0/96aba8ab71c16018c6adf66771ce15c6491bc0fe/protobuf-java-util-3.4.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.1.2/380fceb109283ad515a05ca6955f97290e392cd8/error_prone_annotations-2.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.1.2/6dcc08f90f678ac33e5ef78c3c752b6f59e63e0c/error_prone_annotations-2.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/aapt2-proto/0.1.0/d1eb93a21a8d3590c3bfac574a8b6dffb2dbd21c/aapt2-proto-0.1.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.1.2/e74f8c12d313fb638cd3e199ea13a544870636d5/builder-model-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.1.2/4504b655fa8fe72302020ca9a2387f3f23fbfb57/builder-model-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.1.2/57f0b608e34a9493508d21f6a07cf34989901602/builder-test-api-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.1.2/ffb00b786822df6538377a90df9f2d11c022efc3/builder-test-api-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.1.2/eeb14343985046cf8c8504a06327db5a50e740ea/sdklib-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.1.2/94697a9dff499b64b6e101bedb89a89825150af/sdklib-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdk-common/26.1.2/569e3d1db94b053b15c81f7662ff8cecc4df785/sdk-common-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdk-common/26.1.2/2cf773af3fb0e1bbd56a80fc6903a9d2a40a248/sdk-common-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/common/26.1.2/fb215315bdbd152415f1fab7358015da3928d7ff/common-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/common/26.1.2/c31bbd68c51ed0ef3b8d7cdd5615acf762473887/common-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/manifest-merger/26.1.2/58ada075a3be42ac5afe8a752a3fdebfcfdaae2b/manifest-merger-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/manifest-merger/26.1.2/79f398427650c76f0c66c89f10e4886a1fe68c26/manifest-merger-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.1.2/8753f005a819994ebc56c3e567168c1fea745cc3/ddmlib-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.1.2/1d423e621fb5c89fed13e41d0ed026cf5d8d7e7b/ddmlib-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.1.2/2791dabd9906f673a77b755ca2f4950fd5248729/protos-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.1.2/ba53bcde9703b2bf9871128952dce844c5d743fa/protos-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/26.1.2/eb4223fe1e164a7c37cd1448f3d89fdc016901de/shared-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/26.1.2/bc21fe64fdaa64e59672e7d546d373f430e7557c/shared-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/tracker/26.1.2/37aae3a59f7220f45f85336f7374d5eaf37e5f7/tracker-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/tracker/26.1.2/2d2260da92e50ac072f89d60a596d03aab3a8757/tracker-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apksig/3.1.2/93d9b522f74c2096cbaf84b088526f205d6b4a89/apksig-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/apksig/3.1.2/5af360dd30015a9a47c8ab0af0e6b05f64760edc/apksig-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.5.0/1b2a0925ff06220c0261b6fd468183cd9e9a9a47/javawriter-2.5.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.5.0/81241ff7078ef14f42ea2a8995fa09c096256e6b/javawriter-2.5.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15on/1.56/118b4633c59394749b2b2f278138beb31c930663/bcpkix-jdk15on-1.56-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15on/1.56/4648af70268b6fdb24674fb1fd7c1fcc73db1231/bcpkix-jdk15on-1.56.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk15on/1.56/93c7b191596378df51c31b7d8717f71b0aeee53c/bcprov-jdk15on-1.56-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk15on/1.56/a153c6f9744a3e9dd6feab5e210e1c9861362ec7/bcprov-jdk15on-1.56.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/5.1/81e81bd6c20b965f88d0462e2559f8759fc6c26d/asm-tree-5.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/5.1/87b38c12a0ea645791ead9d3e74ae5268d1d6c34/asm-tree-5.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/it.unimi.dsi/fastutil/7.2.0/a1a8e178d7813bb9596ee4e3d5e07b90ebe660af/fastutil-7.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/it.unimi.dsi/fastutil/7.2.0/5ad3a2bb04143f70aa0765fc29fc29571a7d6b34/fastutil-7.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/19c6d8dee6803c520d855ff7e8a8c3d97f1271ec/json-simple-1.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/7fb1210ceec26e7e5195894fa83e9e67ea4d2ba/kotlin-reflect-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/4bbda3b5425aa38a9f6960468a29c5ef3e8a28c9/kotlin-reflect-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/3.1.2/83a5696fb290f745f291d24d3b794beb267e124b/baseLibrary-3.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/3.1.2/1b6a1add6a577708b62737dc31c479549f77750d/baseLibrary-3.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.antlr/antlr4/4.5.3/e836b2a7348320a86c3bbd91a032486798e6ab98/antlr4-4.5.3-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.antlr/antlr4/4.5.3/f35db7e4b2446e4174ba6a73db7bd6b3e6bb5da1/antlr4-4.5.3.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/f2d8698c46d1167ff24b06a840a87d91a02db891/commons-io-2.4-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.juniversalchardet/juniversalchardet/1.0.3/77979eaa98f90806f984155f44f63cc1fb60ac25/juniversalchardet-1.0.3-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.juniversalchardet/juniversalchardet/1.0.3/cd49678784c46aa8789c060538e0154013bb421b/juniversalchardet-1.0.3.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.8.0/499341a875fe72e8fcf4ba856ba15f498d348e38/javapoet-1.8.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.8.0/e858dc62ef484048540d27d36f3ec2177a3fa9b1/javapoet-1.8.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/bbb63ca253b483da8ee53a50374593923e3de2e2/gson-2.7-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/annotations/26.1.2/7bc3fd2df32838e5b9b59804cc4c139bb89d26a5/annotations-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/annotations/26.1.2/4f4e0ee71b9ccaa4a70cc86e40fb84ada2ed99a3/annotations-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-base/5.3.3/6c73d839fa1603c38b067bc04d7950e05aef3d22/proguard-base-5.3.3-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.proguard/proguard-base/5.3.3/988b6b0636ce343d4962b3b37f6319dcc6e99a61/proguard-base-5.3.3.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.1.2/63d02e9088ee06e7b37f7314c145b5db7f39812e/layoutlib-api-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.1.2/3697abf628d30042c1082ea846454dfd1e8da3e/layoutlib-api-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/26.1.2/2a9e859006c73fc73b7642cd6560b6daac0b183f/dvlib-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/26.1.2/eb39925fee6e726468fc10344ec988c086301ed7/dvlib-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/repository/26.1.2/ee0b2246a08385bd55f034c90ba0998b6d3a4213/repository-26.1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/repository/26.1.2/c8209ccb8ee0e5e3f293fd71d2a827f440ab811c/repository-26.1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.12/1fdd1a2fed15cdf08780ed564279c0ddbff46419/commons-compress-1.12-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.12/84caa68576e345eb5e7ae61a0e5a9229eb100d7b/commons-compress-1.12.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.2.6/b4e00fa279b1d45af3cb6daebcc1fee3f5402392/httpclient-4.2.6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.2.6/e4ca30a6a3a075053a61c6fc850d2432dc012ba7/httpclient-4.2.6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.1/3ac83213baeab2b21fde6c0bf47ed68ea3e6a8da/httpmime-4.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.1/9ba2dcdf94ce35c8a8e9bff242db0618ca932e92/httpmime-4.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.kxml/kxml2/2.3.0/309cd2cff7260e465792fda3dcbb063b730d8050/kxml2-2.3.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.kxml/kxml2/2.3.0/ccbc77a5fd907ef863c29f3596c6f54ffa4e9442/kxml2-2.3.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/5991ca87ef1fb5544943d9abc5a9a37583fabe03/annotations-13.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.activation/javax.activation/1.2.0/5b034823866d38f38f02bdad7ed8a14e650c61b6/javax.activation-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.activation/javax.activation/1.2.0/bf744c1e2776ed1de3c55c8dac1057ec331ef744/javax.activation-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/jaxb-runtime/2.2.11/29441ae1840574f4ca07a72cd1785ea8a4b8457e/jaxb-runtime-2.2.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/jaxb-runtime/2.2.11/65510afc78679e347b0d774617a97fedac94f8/jaxb-runtime-2.2.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.jimfs/jimfs/1.1/a2e6f6d75b7fa7e8eedb3062e5bfd24cc9fe8591/jimfs-1.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.jimfs/jimfs/1.1/8fbd0579dc68aba6186935cc1bee21d2f3e7ec1c/jimfs-1.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.5/4fd9ac94cd3c26551bc7aecd62fce8e49f076635/httpcore-4.2.5-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.5/472f0f5f8dba5d1962cb9d7739feed739a31c30d/httpcore-4.2.5.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/f3f156cbff0e0fb0d64bfce31a352cce4a33bc19/commons-logging-1.1.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/5043bfebc3db072ed80fbd362e7caf00e885d8ae/commons-logging-1.1.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/61e9f9d11fe3e12ec62f633006e99d75fd7f19c8/commons-codec-1.6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/b7f0fc8f61ecadeb3695f0b9464755eee44374d4/commons-codec-1.6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.0/180a4946e471f9f47d4b6139c5dbc5e7603a8424/kotlin-stdlib-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.0/25eb440d6eeb9fc60299121020fe726eb2100d03/kotlin-stdlib-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/jaxb-core/2.2.11/57f27d326da0d4eddc4077933a4cc77cb50002d2/jaxb-core-2.2.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/jaxb-core/2.2.11/f5745049f5fb9cb9d9b5f513c207727f475983e9/jaxb-core-2.2.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jvnet.staxex/stax-ex/1.7.7/555d23df1be863aeda3846afcb76444fa17880d2/stax-ex-1.7.7-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jvnet.staxex/stax-ex/1.7.7/18bed5a0da27a6b43efe01282f2dc911b1cb3a72/stax-ex-1.7.7.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.fastinfoset/FastInfoset/1.2.13/7e43a54348e59360ebcaa73d34f0ecb122f1c741/FastInfoset-1.2.13-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.fastinfoset/FastInfoset/1.2.13/98f56b9354e27bd2941cc5d461344e240ae51ae/FastInfoset-1.2.13.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre7/1.2.0/d6ced6c0bf21af19fb83f24bb6ff28ea43ddc61f/kotlin-stdlib-jre7-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jre7/1.2.0/ec8b969e26fbcf2265a4d1a1539c4d1d4c5af380/kotlin-stdlib-jre7-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/1.1/dcd31de68a90e41e336f6b7afce0d39285c433d7/j2objc-annotations-1.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/1.1/976d8d30bebc251db406f2bdb3eb01962b5685b3/j2objc-annotations-1.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.mojo/animal-sniffer-annotations/1.14/886474da3f761d39fcbb723d97ecc5089e731f42/animal-sniffer-annotations-1.14-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.mojo/animal-sniffer-annotations/1.14/775b7e22fb10026eed3f86e8dc556dfafe35f2d5/animal-sniffer-annotations-1.14.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.xml.bind/jaxb-api/2.2.12-b140109.1041/d59f43002d3d07c6adaaeedd93e7944c273821d2/jaxb-api-2.2.12-b140109.1041-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.xml.bind/jaxb-api/2.2.12-b140109.1041/7ed0e0d01198614194d56dfb03d9d95aa311824c/jaxb-api-2.2.12-b140109.1041.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/txw2/2.2.11/7745afc4dcc863b724f4a21fb3fc517cd5aaf891/txw2-2.2.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/txw2/2.2.11/2df047d8c187a62f2177bf6013f1f9786cdfc8a2/txw2-2.2.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/2.21/5d42dda44aa68ff87756e93ae0042cd66d2daa78/istack-commons-runtime-2.21-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/2.21/c969d8f15c467f0ef7d7b04889afbe7b5d48e22f/istack-commons-runtime-2.21.jar" />
+                          </list>
+                        </option>
+                        <option name="path" value="$PROJECT_DIR$/merchantsdk-release" />
+                      </ExternalModuleBuildClasspathPojo>
+                    </value>
+                  </entry>
                   <entry key="$PROJECT_DIR$/printers">
                     <value>
                       <ExternalModuleBuildClasspathPojo>
@@ -6540,7 +7010,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardStockActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/ItemSupplierLinkageActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/PrintIngredients.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/PurchaseOrderActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/SupplierDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/TabbedSupplierItemLinkage.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/OutwardItemMaster/ItemManagementActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/PriceAndStock/StockActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/AddRolesActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/UserManagementActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/PaymentReceipt/PaymentReceiptActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/TabbedReportActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/TabbedSettingsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/PayBillFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Configurations/PaymentOptions/PaymentModeOptionsFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Constants.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/SalesReturnPrintBean.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/Customer.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/epson/ShowMsg.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/PaymentReceipt.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillKotItem.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillServiceTaxItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/epson/OnDeviceClickListener.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/tvs_printer/TVSDiscoveryFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_discovery.xml" />
+        <option value="$PROJECT_DIR$/wepbase/build.gradle" />
+        <option value="$PROJECT_DIR$/printers/build.gradle" />
+        <option value="$PROJECT_DIR$/mSwipe/build.gradle" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/epos2_printer/EPSONDiscoveryFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/bixolon/BixolonDiscoveryFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/epos2_printer/AdaptersAndListeners/PrinterDisplayAdapter.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/wep/PrinterConnectionError.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity_debug.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/TVSPrinterBaseActivity.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/EPSONPrinterBaseActivity.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/BixolonPrinterBaseAcivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsPrint.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/FilePickerActivity.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" />
+        <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/WePTHPrinterBaseActivity.java" />
       </list>
     </option>
   </component>
@@ -6550,7 +7070,9 @@
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
@@ -6566,6 +7088,35 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="GST-Genie-F-V2.0P" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GST-Genie-F-V2.0P" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="GST-Genie-F-V2.0P" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GST-Genie-F-V2.0P" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="GST-Genie-F-V2.0P" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GST-Genie-F-V2.0P" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="printers" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="GST-Genie-F-V2.0P" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GST-Genie-F-V2.0P" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="printers" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="libs" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -6589,49 +7140,50 @@
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="fragments" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GST-Genie-F-V2.0P" type="1abcf292:AndroidViewProjectNode" />
-              <item name="printers" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="GST-Genie-F-V2.0P" type="1abcf292:AndroidViewProjectNode" />
-              <item name="printers" type="feadf853:AndroidModuleNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="GST-Genie-F-V2.0P" type="1abcf292:AndroidViewProjectNode" />
-              <item name="printers" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="printers" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GST-Genie-F-V2.0P" type="1abcf292:AndroidViewProjectNode" />
-              <item name="printers" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="printers" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="heydey" type="462c0819:PsiDirectoryNode" />
+              <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="Billing" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="E:/sdk" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="device.picker.selection" value="Baytrail93309A56" />
-    <property name="DEBUGGABLE_DEVICE" value="intel-twg10-Baytrail93309A56" />
+    <property name="last_opened_file_path" value="E:/GST Genie R/v2.7/dev/GST-Genie-R-Internal-POS" />
+    <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.1.2" />
+    <property name="device.picker.selection" value="BaytrailDCFB1857" />
+    <property name="DEBUGGABLE_DEVICE" value="intel-twg10-BaytrailDCFB1857" />
     <property name="DEBUGGABLE_PROCESS" value="com.wepindia.pos" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="DEBUGGER_ID" value="Auto" />
+    <property name="SearchEverywhereHistoryKey" value="Wep&#9;FILE&#9;file://E:/GST Genie FP/V2.1/dev/GST-Genie-F-V2.0P/printers/src/main/java/com/wepindia/printers/WePTHPrinterBaseActivity.java&#10;Data&#9;FILE&#9;file://E:/GST Genie FP/V2.1/dev/GST-Genie-F-V2.0P/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java&#10;BIX&#9;FILE&#9;file://E:/GST Genie FP/V2.1/dev/GST-Genie-F-V2.0P/printers/src/main/java/com/wepindia/printers/BixolonPrinterBaseAcivity.java&#10;EPS&#9;FILE&#9;file://E:/GST Genie FP/V2.1/dev/GST-Genie-F-V2.0P/printers/src/main/java/com/wepindia/printers/EPSONPrinterBaseActivity.java&#10;TVS&#9;FILE&#9;file://E:/GST Genie FP/V2.1/dev/GST-Genie-F-V2.0P/printers/src/main/java/com/wepindia/printers/TVSPrinterBaseActivity.java&#10;WeP&#9;FILE&#9;file://E:/GST Genie FP/V2.1/dev/GST-Genie-F-V2.0P/printers/src/main/java/com/wepindia/printers/WePTHPrinterBaseActivity.java&#10;PayBill&#9;PSI&#9;JAVA://com.wepindia.pos.views.Billing.PayBillFragment&#10;Bixo&#9;FILE&#9;file://E:/GST Genie FP/V2.1/dev/GST-Genie-F-V2.0P/printers/src/main/java/com/wepindia/printers/BixolonPrinterBaseAcivity.java&#10;Hey&#9;PSI&#9;JAVA://com.wepindia.printers.HeyDeyBaseActivity" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.wepindia.pos.views.Billing.Adapters" />
+      <recent name="com.wepindia.pos.views.Billing" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.wepindia.printers" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\GST Genie FP\V2.1\dev\GST-Genie-F-V2.0P\app\src\main\jniLibs\armeabi" />
+      <recent name="E:\GST Genie FP\V2.1\dev\GST-Genie-F-V2.0P\app\src\main\res\layout" />
+      <recent name="E:\GST Genie FP\V2.1\dev\GST-Genie-F-V2.0P\app\src\main\java\com\wepindia\pos" />
+      <recent name="E:\GST Genie FP\V2.1\dev\GST-Genie-F-V2.0P\wepbase\src\main\java\com\wep\common\app\models" />
+      <recent name="E:\GST Genie FP\V2.1\dev\GST-Genie-F-V2.0P\printers\src\main\java\com\wepindia\printers" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -6645,7 +7197,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -6728,24 +7280,6 @@
       <module name="" />
       <envs />
     </configuration>
-    <configuration name="GST-Genie-F-V2.0P:app [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -6813,15 +7347,6 @@
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
     </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Android App.app" />
-      <item index="1" class="java.lang.String" itemvalue="Gradle.GST-Genie-F-V2.0P:app [build]" />
-    </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Gradle.GST-Genie-F-V2.0P:app [build]" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -6831,11 +7356,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="64718e24-841a-43d2-a597-bf12335cfe2a" name="Default" comment="" />
-      <created>1525345528492</created>
+      <changelist id="f63be0db-7ed3-45ac-82d1-08f59c8b5ae5" name="Default" comment="" />
+      <created>1536123033129</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1525345528492</updated>
+      <updated>1536123033129</updated>
     </task>
     <servers />
   </component>
@@ -6843,164 +7368,674 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42738277" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47028863" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39898133" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39898133" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47028863" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39898133" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42738277" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="V2.1: GST Genie F&#10;*Changed Payment Screen&#10;*Added Payment Options (AEPS, Other Cards, Paytm)&#10;*Multiple Print.&#10;*Export Items&#10;*Hide Title Bard&#10;*Fixed item wise discount" />
+    <option name="LAST_COMMIT_MESSAGE" value="V2.1: GST Genie F&#10;*Changed Payment Screen&#10;*Added Payment Options (AEPS, Other Cards, Paytm)&#10;*Multiple Print.&#10;*Export Items&#10;*Hide Title Bard&#10;*Fixed item wise discount" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/heydey/DiscoverBluetoothPrinter.java</url>
-          <line>181</line>
+          <url>file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/EPSONPrinterBaseActivity.java</url>
+          <line>684</line>
           <properties />
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java</url>
-          <line>500</line>
+          <url>file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/EPSONPrinterBaseActivity.java</url>
+          <line>686</line>
           <properties />
-          <option name="timeStamp" value="1" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java</url>
-          <line>361</line>
+          <url>file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/EPSONPrinterBaseActivity.java</url>
+          <line>214</line>
           <properties />
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java</url>
+          <line>173</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java</url>
+          <line>4066</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java</url>
+          <line>4268</line>
+          <properties />
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java</url>
+          <line>4269</line>
+          <properties />
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java</url>
+          <line>6154</line>
+          <properties />
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java</url>
+          <line>3628</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java</url>
+          <line>3760</line>
+          <properties />
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java</url>
+          <line>5871</line>
+          <properties />
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java</url>
+          <line>8680</line>
+          <properties />
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="20" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>printersList</expression-string>
+        <expression-string>paymentModeinBillcrsr.getString(paymentModeinBillcrsr.getColumnIndex(DatabaseHandler.KEY_PAYTM_WALLET))</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>stringPrinter</expression-string>
+        <expression-string>obj.getmPaytmAmount()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>printersList.get(spinnerReceipt.getSelectedItemPosition())</expression-string>
+        <expression-string>device.getDeviceName()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>spinnerReceipt.getSelectedItemPosition()</expression-string>
+        <expression-string>device.getProductName()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>printer.get(&quot;PrinterName&quot;)</expression-string>
+        <expression-string>dblDiscount</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ColDisc.getText().toString()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ColDisc.get</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>tvDiscountAmount.getText().toString()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/wep/OnDeviceClickListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="27" column="62" lean-forward="false" selection-start-line="27" selection-start-column="62" selection-end-line="27" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_discovery.xml">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="152">
+          <caret line="60" column="15" lean-forward="false" selection-start-line="60" selection-start-column="15" selection-end-line="60" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/heydey/DeviceBootReceiver.java">
+    <entry file="file://$PROJECT_DIR$/upgradeModule/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/merchantsdk-release/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gstAPI/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="28" column="7" lean-forward="false" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mSwipe/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="32" column="11" lean-forward="false" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="67" column="11" lean-forward="false" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/heydey/DiscoverBluetoothPrinter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/bixolon/BixolonDiscoveryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="48" column="20" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/tvs_printer/TVSDiscoveryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="33" column="13" lean-forward="false" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/printer_choice_adapter.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/epos2_printer/AdaptersAndListeners/PrinterDisplayAdapter.java" />
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/epson/PrinterConnectionError.java" />
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/wep/PrinterConnectionError.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
-          <caret line="194" column="0" lean-forward="false" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+          <caret line="13" column="30" lean-forward="false" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity_debug.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="581" column="27" lean-forward="false" selection-start-line="581" selection-start-column="27" selection-end-line="581" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/PrintIngredients.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="6763" column="43" lean-forward="true" selection-start-line="6763" selection-start-column="43" selection-end-line="6763" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/printers/libs/ePOS2.jar!/com/epson/epos2/discovery/Discovery.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="136" column="45" lean-forward="false" selection-start-line="136" selection-start-column="45" selection-end-line="136" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/sdk/platforms/android-26/android.jar!/java/lang/reflect/Method.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="72" column="25" lean-forward="false" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/jniLibs/armeabi-v7a/libserialport.so">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="41" lean-forward="true" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/epos2_printer/EPSONDiscoveryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-221">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
-            <element signature="e#8164#8230#0" expanded="true" />
-            <element signature="e#8276#8358#0" expanded="true" />
-            <element signature="e#8834#8866#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#4086#4118#0" expanded="false" />
+            <element signature="e#4885#5500#0" expanded="false" />
+            <element signature="e#5186#5202#0" expanded="false" />
+            <element signature="e#5499#5500#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java">
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-885">
-          <caret line="200" column="48" lean-forward="false" selection-start-line="200" selection-start-column="48" selection-end-line="200" selection-end-column="48" />
+        <state relative-caret-position="26">
+          <caret line="14" column="34" lean-forward="false" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
           <folding>
-            <element signature="e#4716#4868#0" expanded="true" />
-            <element signature="e#4867#4868#0" expanded="true" />
+            <element signature="e#6411#6412#0" expanded="false" />
+            <element signature="e#6449#6450#0" expanded="false" />
+            <element signature="e#6602#6603#0" expanded="false" />
+            <element signature="e#6635#6636#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1337">
+          <caret line="251" column="94" lean-forward="false" selection-start-line="251" selection-start-column="94" selection-end-line="251" selection-end-column="94" />
+          <folding>
+            <element signature="e#5571#13618#0" expanded="false" />
+            <element signature="e#13617#13618#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_kotstatus.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-239">
+          <caret line="134" column="12" lean-forward="false" selection-start-line="134" selection-start-column="12" selection-end-line="134" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/KOTStatusActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="49" column="44" lean-forward="true" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_delivery.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1172">
+          <caret line="210" column="42" lean-forward="false" selection-start-line="210" selection-start-column="42" selection-end-line="210" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/DeliveryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="64" column="40" lean-forward="false" selection-start-line="64" selection-start-column="40" selection-end-line="64" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="326" column="46" lean-forward="false" selection-start-line="326" selection-start-column="37" selection-end-line="326" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="603" column="44" lean-forward="false" selection-start-line="603" selection-start-column="37" selection-end-line="603" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="1330" column="37" lean-forward="false" selection-start-line="1330" selection-start-column="37" selection-end-line="1330" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/PayBillFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="343" column="59" lean-forward="false" selection-start-line="343" selection-start-column="37" selection-end-line="343" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/TVSPrinterBaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="2573" column="98" lean-forward="true" selection-start-line="2573" selection-start-column="98" selection-end-line="2573" selection-end-column="98" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/EPSONPrinterBaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="256" column="70" lean-forward="true" selection-start-line="256" selection-start-column="70" selection-end-line="256" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/BixolonPrinterBaseAcivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="497" column="78" lean-forward="false" selection-start-line="497" selection-start-column="78" selection-end-line="497" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsPrint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="362" column="32" lean-forward="false" selection-start-line="362" selection-start-column="32" selection-end-line="362" selection-end-column="32" />
+          <folding>
+            <element signature="e#5131#5284#0" expanded="false" />
+            <element signature="e#5283#5284#0" expanded="false" />
+            <element signature="e#5679#5833#0" expanded="false" />
+            <element signature="e#5832#5833#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4079">
+          <caret line="148" column="40" lean-forward="false" selection-start-line="148" selection-start-column="40" selection-end-line="148" selection-end-column="40" />
+          <folding>
+            <element signature="e#5098#5099#0" expanded="false" />
+            <element signature="e#5157#5158#0" expanded="false" />
+            <element signature="e#5202#5203#0" expanded="false" />
+            <element signature="e#5239#5240#0" expanded="false" />
+            <element signature="e#5266#5267#0" expanded="false" />
+            <element signature="e#5321#5322#0" expanded="false" />
+            <element signature="e#5362#5363#0" expanded="false" />
+            <element signature="e#5401#5402#0" expanded="false" />
+            <element signature="e#5430#5431#0" expanded="false" />
+            <element signature="e#5489#5490#0" expanded="false" />
+            <element signature="e#5534#5535#0" expanded="false" />
+            <element signature="e#5573#5574#0" expanded="false" />
+            <element signature="e#5602#5603#0" expanded="false" />
+            <element signature="e#5661#5662#0" expanded="false" />
+            <element signature="e#5706#5707#0" expanded="false" />
+            <element signature="e#5744#5745#0" expanded="false" />
+            <element signature="e#5772#5773#0" expanded="false" />
+            <element signature="e#5829#5830#0" expanded="false" />
+            <element signature="e#5872#5873#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/FilePickerActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="57" column="121" lean-forward="false" selection-start-line="57" selection-start-column="121" selection-end-line="57" selection-end-column="121" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTLinkActivity_Unused.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="58" column="21" lean-forward="false" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/fragments/AuthFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TaxConfigSubActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="53" column="20" lean-forward="true" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/VoucherActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="29" column="20" lean-forward="true" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentTax.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="30" column="24" lean-forward="false" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="5629" column="18" lean-forward="false" selection-start-line="5629" selection-start-column="18" selection-end-line="5629" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="3766" column="9" lean-forward="false" selection-start-line="3628" selection-start-column="7" selection-end-line="3766" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="709">
+          <caret line="6009" column="9" lean-forward="false" selection-start-line="6009" selection-start-column="9" selection-end-line="6009" selection-end-column="9" />
+          <folding>
+            <element signature="e#341076#341236#0" expanded="true" />
+            <element signature="e#341235#341236#0" expanded="true" />
+            <element signature="e#345339#345499#0" expanded="true" />
+            <element signature="e#345498#345499#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="1358" column="132" lean-forward="true" selection-start-line="1341" selection-start-column="15" selection-end-line="1358" selection-end-column="132" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="733" column="119" lean-forward="true" selection-start-line="716" selection-start-column="10" selection-end-line="733" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/WePTHPrinterBaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="882" column="123" lean-forward="false" selection-start-line="882" selection-start-column="123" selection-end-line="882" selection-end-column="123" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="5146" column="72" lean-forward="false" selection-start-line="5146" selection-start-column="72" selection-end-line="5146" selection-end-column="72" />
+          <folding>
+            <element signature="e#305376#305536#0" expanded="true" />
+            <element signature="e#305535#305536#0" expanded="true" />
+            <element signature="e#310969#311129#0" expanded="true" />
+            <element signature="e#311128#311129#0" expanded="true" />
           </folding>
         </state>
       </provider>

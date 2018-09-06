@@ -1259,6 +1259,21 @@
                         android:theme="@style/WepButtonWithMarigin" />
 
                     <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnExportCSV"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:text="Export CSV"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                        android:theme="@style/WepButtonWithMarigin" />
+
+                    <com.wep.common.app.views.WepButton
                         android:id="@+id/btnAddItem"
                         android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
                         android:layout_height="wrap_content"

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TV_Title">
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TV_Owner_Details">
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:gravity">left|center</item>
+    </style>
+
+    <style name="Text_Hint_Size_Inc" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ET_Customized">
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
+    <style name="Custom_Dialog" parent="android:Theme.Holo.Light.Dialog" >
+        <item name="android:windowBackground">@android:color/background_light</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="TV_Billing_Item_List">
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="ET_Owner_Details">
+        <item name="android:textColor">@android:color/background_dark</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:imeOptions">flagNoExtractUi</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
+</resources>

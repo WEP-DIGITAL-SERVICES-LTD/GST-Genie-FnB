@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.wepindia.pos.fragments.FragmentSettingsDisplayOwnerDetail">
+    tools:context="com.wepindia.pos.views.Settings.FragmentSettingsDisplayOwnerDetail">
 
     <LinearLayout
         android:layout_width="match_parent"

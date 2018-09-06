@@ -120,6 +120,8 @@ public class ReportHelper{
 				BillNumber.setText("Bill Number");
 			}
 
+
+
 			TextView TotalItems = null;
 			TotalItems = new TextView(activityContext);
 			TotalItems.setWidth(100);
@@ -178,6 +180,7 @@ public class ReportHelper{
 
 				rowColumnCaption.addView(TotalItems);
 			}
+
 			rowColumnCaption.addView(Discount);
 			rowColumnCaption.addView(IGSTTax);
 			rowColumnCaption.addView(SalesTax);
@@ -247,7 +250,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(NetIssued);
 
 		}
-		else if(ReportName.equalsIgnoreCase("Bill wise Report") ){
+		else if(ReportName.equalsIgnoreCase("Bill wise Report") || ReportName.equalsIgnoreCase("Online Order Numbers Report")){
 
 			TextView Date = new TextView(activityContext);
 			Date.setWidth(120);
@@ -272,6 +275,12 @@ public class ReportHelper{
 			TotalItems.setTextSize(15);
 			TotalItems.setTextColor(Color.WHITE);
 			TotalItems.setText("Items");
+
+			TextView tvOnlineOrderNumber = new TextView(activityContext);
+			tvOnlineOrderNumber.setWidth(120);
+			tvOnlineOrderNumber.setTextSize(15);
+			tvOnlineOrderNumber.setTextColor(Color.WHITE);
+			tvOnlineOrderNumber.setText("OnlineOrderNo");
 
 			TextView Amount = new TextView(activityContext);
 			Amount.setWidth(100);
@@ -307,6 +316,9 @@ public class ReportHelper{
 			rowColumnCaption.addView(Date);
 			rowColumnCaption.addView(BillNumber);
 			rowColumnCaption.addView(TotalItems);
+			if(ReportName.equalsIgnoreCase("Online Order Numbers Report")){
+				rowColumnCaption.addView(tvOnlineOrderNumber);
+			}
 			rowColumnCaption.addView(Discount);
 			rowColumnCaption.addView(SalesTax);
 			//rowColumnCaption.addView(ServiceTax); richa making single tax

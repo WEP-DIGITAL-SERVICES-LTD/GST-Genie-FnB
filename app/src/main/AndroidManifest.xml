@@ -69,7 +69,7 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".ConfigurationActivity"
+            android:name=".views.Configurations.ConfigurationActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
@@ -79,47 +79,37 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".KOTModifierActivity"
+            android:name=".views.Billing.KOTModifierActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".StatusActivity_unused"
+            android:name=".views.Billing.KOTStatusActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".KOTStatusActivity"
+            android:name=".views.Billing.TableStatusActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TableStatusActivity"
+            android:name=".views.Billing.TableBookingActivity_old"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TableBookingActivity_old"
-            android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity
-            android:name=".PaymentReceiptActivity"
+            android:name=".views.PaymentReceipt.PaymentReceiptActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".CustomerDetailActivity"
+            android:name=".views.Customer.CustomerDetailActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".EmployeeActivity_Unused"
-            android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity
-            android:name=".ItemManagementActivity"
+            android:name=".views.Masters.OutwardItemMaster.ItemManagementActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
@@ -129,12 +119,12 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-            android:name=".StockActivity"
+            android:name=".views.Masters.PriceAndStock.StockActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".MasterActivity"
+            android:name=".views.Masters.MasterActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
@@ -144,65 +134,59 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".BillingScreenActivity_Unused"
+            android:name=".views.Billing.BillingHomeDeliveryActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".BillingHomeDeliveryActivity"
+            android:name=".views.Billing.BillingDineInActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".BillingDineInActivity"
-            android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppThemeWep"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity
-            android:name=".TableActivity"
+            android:name=".views.Billing.TableActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".SplitBillActivity"
+            android:name=".views.Billing.SplitBillActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TableShiftMergeActivity"
+            android:name=".views.Billing.TableShiftMergeActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".ModifyKOTActivity"
+            android:name=".views.Billing.ModifyKOTActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".CustomerOrdersActivity"
+            android:name=".views.Billing.CustomerOrdersActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".DeliveryActivity"
+            android:name=".views.Billing.DeliveryActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".RiderSettlementActivity"
+            android:name=".views.Billing.RiderSettlementActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".AddRolesActivity"
+            android:name=".views.Masters.UserMaster.AddRolesActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".UserManagementActivity"
+            android:name=".views.Masters.UserMaster.UserManagementActivity"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
@@ -233,7 +217,7 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".PayBillActivity"
+            android:name=".views.Billing.PayBillActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
@@ -285,35 +269,35 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".Inward_Item_Entry_nonGST_Activity"
+            android:name=".views.InwardManagement.Inward_Item_Entry_nonGST_Activity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".IngredientManagementActivity"
+            android:name=".views.InwardManagement.IngredientManagementActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".ConvertIngredientActivity"
+            android:name=".views.InwardManagement.ConvertIngredientActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".PrintIngredients"
+            android:name=".views.InwardManagement.PrintIngredients"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.Design.Light.BottomSheetDialog"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".GoodsInwardNoteActivity"
+            android:name=".views.InwardManagement.GoodsInwardNoteActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".PurchaseOrderActivity"
+            android:name=".views.InwardManagement.PurchaseOrderActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeWep"
@@ -354,18 +338,18 @@
 
         <activity android:name="com.wepindia.printers.MainActivity" />
         <activity
-            android:name=".TabbedReportActivity"
+            android:name=".views.Reports.TabbedReportActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TabbedSettingsActivity"
+            android:name=".views.Settings.TabbedSettingsActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name="com.mswipetech.wisepad.sdktest.view.TransactionActivity" />
         <activity
-            android:name=".BillingCounterSalesActivity"
+            android:name=".views.Billing.BillingCounterSalesActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeWep"
@@ -377,44 +361,44 @@
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TabbedSupplierItemLinkage"
+            android:name=".views.InwardManagement.TabbedSupplierItemLinkage"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TabbedCreditDebitNote"
+            android:name=".views.CreditDebitNote.TabbedCreditDebitNote"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TabbedAmmendActivity"
+            android:name=".views.Amendment.TabbedAmmendActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".InwardActivity"
+            android:name=".views.InwardManagement.InwardActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".SupplierDetailsActivity"
+            android:name=".views.InwardManagement.SupplierDetailsActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".InwardItemActivity"
+            android:name=".views.InwardManagement.InwardItemActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".ItemSupplierLinkageActivity"
+            android:name=".views.InwardManagement.ItemSupplierLinkageActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TableBookingActivity"
+            android:name=".views.Billing.TableBookingActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".InwardStockActivity"></activity>
+        <activity android:name=".views.InwardManagement.InwardStockActivity"></activity>
     </application>
 
 </manifest>

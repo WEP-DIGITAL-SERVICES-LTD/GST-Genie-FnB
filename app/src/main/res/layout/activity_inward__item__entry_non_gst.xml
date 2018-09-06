@@ -15,7 +15,7 @@
         android:background="#FFFFFF"
         android:orientation="vertical"
         android:weightSum="2"
-        tools:context="com.wepindia.pos.Inward_Item_Entry_nonGST_Activity"
+        tools:context="com.wepindia.pos.views.InwardManagement.Inward_Item_Entry_nonGST_Activity"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 

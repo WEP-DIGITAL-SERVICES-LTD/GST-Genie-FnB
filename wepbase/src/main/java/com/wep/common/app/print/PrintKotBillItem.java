@@ -12,15 +12,19 @@ public class PrintKotBillItem implements Serializable {
     private String tableNo;
     private String waiterName;
     private int waiterNo;
+    private String salesManId = "";
     private int boldHeader;
     private int AmountInNextLine;
     private int ownerDetail;
+    private int itemWiseDiscountPrint;
     private int printService;
     private String orderBy;
     private String customerName;
+    private String companyLogoPath = "";
     private String date;
     private String time;
     private double subTotal;
+    private String taxInvoiceText = "";
     private double netTotal;
     private String addressLine1 = "";
     private String addressLine2 = "";
@@ -51,26 +55,32 @@ public class PrintKotBillItem implements Serializable {
     private String strTotalSalesTaxAmount = "";
     private String strTotalServiceTaxAmount = "";
     private float fTotalsubTaxPercent = 0;
-    private float fdiscount = 0;
+    private double fdiscount = 0;
     private float fdiscountPercentage = 0;
     private String isInterState = "";
     private String isDuplicate = "";
+    private String strOnlineOrderNo = "";
 
     private int UTGSTEnabled = 0;
     private int HSNPrintEnabled_out = 0;
     private double roundOff = 0;
+
     private  double cardPaymentValue =0.00;
     private  double pettyCashPaymentValue =0.00;
     private  double eWalletPaymentValue =0.00;
     private  double couponPaymentValue =0.00;
     private  double cashPaymentValue =0.00;
     private double changePaymentValue =0.00;
+    private double rewardPoints = 0.00;
+    private  double aepsPaymentValue =0.00;
+    private double dblMSwipeVale = 0.00;
+    private double dblPaytmValue = 0.00;
 
     public PrintKotBillItem() {
     }
 
     // please check all the parameters are present in this constructor or not, before calling from your activity
-    public PrintKotBillItem(String billNo, String tableNo, String waiterName, int waiterNo,
+    public PrintKotBillItem(String billNo, String tableNo, String waiterName, String salesManId,
                             int boldHeader, int ownerDetail, int printService, String orderBy,
                             String customerName, String date, String time, double subTotal,
                             double netTotal, String addressLine1, String addressLine2, String addressLine3,
@@ -81,13 +91,13 @@ public class PrintKotBillItem implements Serializable {
                             ArrayList<BillServiceTaxItem> billcessTaxItems, ArrayList<BillSubTaxItem> billSubTaxItems,
                             ArrayList<BillTaxSlab> billTaxSlabs, ArrayList<BillTaxItem> billOtherChargesItems,
                             String strBillingModeName, String strBillingMode, String strPaymentStatus, String strTotalSalesTaxAmount,
-                            String strTotalServiceTaxAmount, float fTotalsubTaxPercent, float fdiscount,
+                            String strTotalServiceTaxAmount, float fTotalsubTaxPercent, double fdiscount,
                             float fdiscountPercentage, String isInterState, String isDuplicate, int UTGSTEnabled,
-                            int HSNPrintEnabled_out, float roundOff) {
+                            int HSNPrintEnabled_out, double roundOff, String taxInvoiceText, int itemWiseDiscountPrint) {
         this.billNo = billNo;
         this.tableNo = tableNo;
         this.waiterName = waiterName;
-        this.waiterNo = waiterNo;
+        this.salesManId = salesManId;
         this.boldHeader = boldHeader;
         this.ownerDetail = ownerDetail;
         this.printService = printService;
@@ -97,6 +107,7 @@ public class PrintKotBillItem implements Serializable {
         this.time = time;
         this.subTotal = subTotal;
         this.netTotal = netTotal;
+        this.taxInvoiceText = taxInvoiceText;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.addressLine3 = addressLine3;
@@ -130,6 +141,119 @@ public class PrintKotBillItem implements Serializable {
         this.UTGSTEnabled = UTGSTEnabled;
         this.HSNPrintEnabled_out = HSNPrintEnabled_out;
         this.roundOff = roundOff;
+        this.itemWiseDiscountPrint = itemWiseDiscountPrint;
+    }
+
+    public String getCompanyLogoPath() {
+        return companyLogoPath;
+    }
+
+    public void setCompanyLogoPath(String companyLogoPath) {
+        this.companyLogoPath = companyLogoPath;
+    }
+
+    public String getSalesManId() {
+        return salesManId;
+    }
+
+    public void setSalesManId(String salesManId) {
+        this.salesManId = salesManId;
+    }
+
+    public int getItemWiseDiscountPrint() {
+        return itemWiseDiscountPrint;
+    }
+
+    public void setItemWiseDiscountPrint(int itemWiseDiscountPrint) {
+        this.itemWiseDiscountPrint = itemWiseDiscountPrint;
+    }
+
+    public String getTaxInvoiceText() {
+        return taxInvoiceText;
+    }
+
+    public void setTaxInvoiceText(String taxInvoiceText) {
+        this.taxInvoiceText = taxInvoiceText;
+    }
+
+    public String getStrBillingMode() {
+        return strBillingMode;
+    }
+
+    public void setStrBillingMode(String strBillingMode) {
+        this.strBillingMode = strBillingMode;
+    }
+
+    public String getStrPaymentStatus() {
+        return strPaymentStatus;
+    }
+
+    public void setStrPaymentStatus(String strPaymentStatus) {
+        this.strPaymentStatus = strPaymentStatus;
+    }
+
+    public String getStrTotalSalesTaxAmount() {
+        return strTotalSalesTaxAmount;
+    }
+
+    public void setStrTotalSalesTaxAmount(String strTotalSalesTaxAmount) {
+        this.strTotalSalesTaxAmount = strTotalSalesTaxAmount;
+    }
+
+    public String getStrTotalServiceTaxAmount() {
+        return strTotalServiceTaxAmount;
+    }
+
+    public void setStrTotalServiceTaxAmount(String strTotalServiceTaxAmount) {
+        this.strTotalServiceTaxAmount = strTotalServiceTaxAmount;
+    }
+
+    public float getfTotalsubTaxPercent() {
+        return fTotalsubTaxPercent;
+    }
+
+    public void setfTotalsubTaxPercent(float fTotalsubTaxPercent) {
+        this.fTotalsubTaxPercent = fTotalsubTaxPercent;
+    }
+
+    public float getFdiscountPercentage() {
+        return fdiscountPercentage;
+    }
+
+    public void setFdiscountPercentage(float fdiscountPercentage) {
+        this.fdiscountPercentage = fdiscountPercentage;
+    }
+
+    public double getRewardPoints() {
+        return rewardPoints;
+    }
+
+    public void setRewardPoints(double rewardPoints) {
+        this.rewardPoints = rewardPoints;
+    }
+
+    public double getAepsPaymentValue() {
+        return aepsPaymentValue;
+    }
+
+    public void setAepsPaymentValue(double aepsPaymentValue) {
+        this.aepsPaymentValue = aepsPaymentValue;
+    }
+
+    public double getDblMSwipeVale() {
+        return dblMSwipeVale;
+    }
+
+    public void setDblMSwipeVale(double dblMSwipeVale) {
+        this.dblMSwipeVale = dblMSwipeVale;
+    }
+
+    public double getDblPaytmValue() {
+        return dblPaytmValue;
+    }
+
+    public void setDblPaytmValue(double dblPaytmValue) {
+        this.dblPaytmValue = dblPaytmValue;
     }
 
     public double getChangePaymentValue() {
@@ -364,11 +488,11 @@ public class PrintKotBillItem implements Serializable {
         this.fdiscountPercentage = fdiscountPercentage;
     }
 
-    public float getFdiscount() {
+    public double getFdiscount() {
         return fdiscount;
     }
 
-    public void setFdiscount(float fdiscount) {
+    public void setFdiscount(double fdiscount) {
         this.fdiscount = fdiscount;
     }
 
@@ -557,6 +681,14 @@ public class PrintKotBillItem implements Serializable {
 
     public void setPaymentStatus(String PaymentStatus) {
         this.strPaymentStatus = PaymentStatus;
+    }
+
+    public String getStrOnlineOrderNo() {
+        return strOnlineOrderNo;
+    }
+
+    public void setStrOnlineOrderNo(String strOnlineOrderNo) {
+        this.strOnlineOrderNo = strOnlineOrderNo;
     }
 
     // --------------------

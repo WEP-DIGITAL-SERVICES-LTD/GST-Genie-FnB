@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="tab_color_monochromatic">#0097A7</color>
+    <color name="widget_color">#0097A7</color>
+    <!--<color name="disable_button">#9E9D24</color>-->
+    <color name="disable_button">#00BCD4</color>
 
+    <color name="play_Store_green">#007E00</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name ="test">#B3C833</color>
+    <color name="grey">#A9A9A9</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
+    <color name="red">#D50000</color>
+    <color name="green">#4CAF50</color>
+    <color name="textDisable">#424242</color>
+    <color name="orange">#EF6C00</color>
+    <color name="app_color_background">#eeeeee</color>
+    <color name="table_header_gst">#acf6f8</color>
+    <color name="holo_blue">#31d3f0</color>
+    <color name="blue_test">#3399ff</color>
+
+    <!--<color name="parrot_green">#4BAA50</color>-->
+    <color name="parrot_green">#00ACC1</color>
+
+    <color name="keyNormal">#ECEFF1</color>
+    <color name="keyPressed">#D1D6D9</color>
 </resources>

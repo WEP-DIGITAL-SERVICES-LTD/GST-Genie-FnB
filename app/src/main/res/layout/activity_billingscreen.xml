@@ -340,7 +340,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:gravity="center"
-                    android:onClick="Tender"
+                    android:onClick="PayBill"
                     android:theme="@style/WepButtonWithMarigin"
                     android:layout_marginLeft="@dimen/btn_marigin"
                     android:layout_marginRight="@dimen/btn_marigin"

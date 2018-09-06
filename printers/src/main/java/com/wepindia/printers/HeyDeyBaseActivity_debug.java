@@ -43,6 +43,7 @@ import org.apache.commons.lang.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 public abstract class HeyDeyBaseActivity_debug extends WepBaseActivity implements View.OnClickListener {
@@ -63,7 +64,7 @@ public abstract class HeyDeyBaseActivity_debug extends WepBaseActivity implement
     private String name = "priyabrat";
     private PrintKotBillItem item;
     private String tmpList="";
-    private ArrayList<ArrayList<String>> itemReport;
+    private List<List<String>> itemReport;
     protected PrinterUtil printerUtil;
 
     public abstract void onConfigurationRequired();
@@ -578,7 +579,7 @@ public abstract class HeyDeyBaseActivity_debug extends WepBaseActivity implement
         printReceiptPrint();
     }
 
-    public void printHeydeyReport(ArrayList<ArrayList<String>> Report, String ReportName, String type) {
+    public void printHeydeyReport(List<List<String>> Report, String ReportName, String type) {
         printType = type;
         String reportName = ReportName;
         itemReport = Report;

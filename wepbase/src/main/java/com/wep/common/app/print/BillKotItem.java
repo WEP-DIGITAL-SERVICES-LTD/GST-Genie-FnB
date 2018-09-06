@@ -11,6 +11,7 @@ public class BillKotItem implements Serializable {
     private double qty;
     private double rate;
     private double amount;
+    private double discount;
     private String HSNCode;
     private String UOM;
     private String TaxIndex;
@@ -35,6 +36,14 @@ public class BillKotItem implements Serializable {
         this.HSNCode = HSNCode;
         this.UOM = UOM;
         this.TaxIndex = TaxIndex;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public String getTaxIndex() {

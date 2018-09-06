@@ -470,11 +470,16 @@ public class PrinterUtil {
         }
 
         esc.addText("Bill no         : "+item.getBillNo()+"\n");
+
+
         if(item.getBillingMode().equals("1"))
             esc.addText("Table           : "+item.getTableNo()+"\n");
         esc.addText("Date            : "+item.getDate() +"    Time : "+item.getTime() +"\n");
        /* esc.addText("Date            : "+item.getDate() +"\n");
         esc.addText("Time            : "+item.getTime() +"\n");*/
+        if(item.getStrOnlineOrderNo() != null && !item.getStrOnlineOrderNo().isEmpty()){
+            esc.addText("Online Order No : "+item.getStrOnlineOrderNo() + "\n");
+        }
         esc.addText("Cashier         : "+item.getOrderBy()+"\n");
 
         if (!item.getCustomerName().equals("") && !item.getCustomerName().contains("-")) {
@@ -576,7 +581,7 @@ public class PrinterUtil {
         }
         esc.addText("------------------------------------------------"+"\n");
         esc.addText(getSpaceFormater("Total Item(s) : "+totalitemtypes+" /Qty : "+totalquantitycount,String.format("%.2f",subtotal),48,1)+"\n");
-        float discount = item.getFdiscount();
+        double discount = item.getFdiscount();
         float discountPercentage = item.getdiscountPercentage();
         if(discountPercentage > 0)
         {
@@ -710,7 +715,7 @@ public class PrinterUtil {
                 item.getCouponPaymentValue()>0 || item.getPettyCashPaymentValue()>0 ){
             esc.addText("================================================"+"\n");
             if(item.getCardPaymentValue()>0)
-                esc.addText(getSpaceFormater("Card Payment",String.format("%.2f",item.getCardPaymentValue()),48,1)+"\n");
+                esc.addText(getSpaceFormater("OtherCard Payment",String.format("%.2f",item.getCardPaymentValue()),48,1)+"\n");
             if(item.geteWalletPaymentValue()>0)
                 esc.addText(getSpaceFormater("eWallet Payment",String.format("%.2f",item.geteWalletPaymentValue()),48,1)+"\n");
             if(item.getCouponPaymentValue()>0)
@@ -719,6 +724,14 @@ public class PrinterUtil {
                 esc.addText(getSpaceFormater("PettyCash Payment",String.format("%.2f",item.getPettyCashPaymentValue()),48,1)+"\n");
             if(item.getCashPaymentValue()>0)
                 esc.addText(getSpaceFormater("Cash Payment",String.format("%.2f",item.getCashPaymentValue()),48,1)+"\n");
+            if(item.getRewardPoints()>0)
+                esc.addText(getSpaceFormater("Reward Pt Payment",String.format("%.2f",item.getRewardPoints()),48,1)+"\n");
+            if(item.getAepsPaymentValue()>0)
+                esc.addText(getSpaceFormater("AEPS Payment",String.format("%.2f",item.getAepsPaymentValue()),48,1)+"\n");
+            if(item.getDblMSwipeVale()>0)
+                esc.addText(getSpaceFormater("MSwipe Payment",String.format("%.2f",item.getDblMSwipeVale()),48,1)+"\n");
+            if(item.getDblPaytmValue()>0)
+                esc.addText(getSpaceFormater("Paytm Payment",String.format("%.2f",item.getDblPaytmValue()),48,1)+"\n");
         }
 
         if (item.getChangePaymentValue()>0) {
@@ -1002,7 +1015,7 @@ public class PrinterUtil {
         return str;
     }
 
-    public String getPrintReport(ArrayList<ArrayList<String>> itemReport, String reportName) {
+    public String getPrintReport(List<List<String>> itemReport, String reportName) {
         EscCommand esc = new EscCommand();
         esc.addPrintAndFeedLines((byte)3);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
@@ -1015,7 +1028,7 @@ public class PrinterUtil {
 
         for(int j=0;j<itemReport.size();j++)
         {
-            ArrayList<String> arrayListColumn = itemReport.get(j);
+            List<String> arrayListColumn = itemReport.get(j);
             StringBuffer sb = new StringBuffer();
             for (int i=0;i<arrayListColumn.size();i++)
             {

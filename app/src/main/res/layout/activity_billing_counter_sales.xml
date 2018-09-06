@@ -26,6 +26,21 @@
             android:weightSum="5">
 
             <EditText
+                android:id="@+id/etCustId"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.96"
+                android:gravity="center"
+                android:hint="Customer GSTIN"
+                android:inputType="text"
+                android:maxLength="15"
+                android:minHeight="40dp"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:visibility="gone"
+                android:textSize="@dimen/text_size_14sp_720dp_10sp_600dp" />
+
+            <EditText
                 android:id="@+id/etCustGSTIN"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -284,7 +299,6 @@
                                 android:background="@color/colorPrimaryLight">
 
                                 <TextView
-
                                     android:id="@+id/tvColItemName"
                                     android:layout_width="@dimen/counter_sale_135dp_720dp_105dp_600dp"
                                     android:layout_height="wrap_content"
@@ -330,7 +344,7 @@
                                     android:id="@+id/tvColAmount"
                                     android:layout_width="@dimen/_70dp_720dp_65dp_600dp"
                                     android:layout_height="wrap_content"
-                                    android:text="Amount"
+                                    android:text="Taxable Value"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
                                     android:textColor="@color/txtColorAccent"
                                     android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
@@ -902,7 +916,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_btn"
                 android:gravity="center"
-                android:onClick="Tender"
+                android:onClick="PayBill"
                 android:text="@string/pay_bill"
                 android:textAllCaps="false"
                 android:textSize="@dimen/button_14sp_720dp_12sp_600dp"

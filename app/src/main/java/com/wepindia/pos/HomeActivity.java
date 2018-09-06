@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -23,6 +24,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
+import com.wep.common.app.utils.Preferences;
 import com.wep.gstcall.api.http.HTTPAsyncTask;
 import com.wep.gstcall.api.util.Config;
 import com.wepindia.pos.GenericClasses.BillNoReset;
@@ -39,6 +43,14 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.StockInwardMaintain;
 import com.wepindia.pos.utils.StockOutwardMaintain;
+import com.wepindia.pos.views.Amendment.TabbedAmmendActivity;
+import com.wepindia.pos.views.Billing.BillingCounterSalesActivity;
+import com.wepindia.pos.views.Billing.BillingHomeDeliveryActivity;
+import com.wepindia.pos.views.Billing.TableActivity;
+import com.wepindia.pos.views.CreditDebitNote.TabbedCreditDebitNote;
+import com.wepindia.pos.views.Masters.MasterActivity;
+import com.wepindia.pos.views.PaymentReceipt.PaymentReceiptActivity;
+import com.wepindia.pos.views.Reports.TabbedReportActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,9 +87,15 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     private PendingIntent mPermissionIntent;
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,6 +113,9 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             InitializeViews();
             Display();
             checkForAutoDayEnd(); // called after display because settingcrsr is being set in Display()
+
+            sharedPreferences = Preferences.getSharedPreferencesForPrint(this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
 
             IntentFilter attach = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
             registerReceiver(mUsbAttachReceiver , attach);
@@ -122,59 +143,126 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                 Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
                 while(deviceIterator.hasNext()){
                     UsbDevice device = deviceIterator.next();
-                    /*if (device.getVendorId() == Constants.VENDOR_ID_EPSON_POS_PRINTER
-                            && device.getProductId() == Constants.PRODUCT_ID_EPSON_POS_PRINTER
-                            && BillingFragment.getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
-                        editor.putString("bill", "TM Printer");
-                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
-                        editor.commit();
-                        editor.putString("report", "TM Printer");
-                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
-                        editor.commit();
-                        editor.putString("receipt", "TM Printer");
-                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
-                        editor.commit();
-                        editor.putString("deposit_receipt", "TM Printer");
-                        editor.putString("TM Printer", "USB:"+device.getDeviceName());
-                        editor.commit();
-                        Toast.makeText(HomeActivity.this, "EPSON Printer connected.", Toast.LENGTH_SHORT).show();
-                    } else if (device.getVendorId() == Constants.VENDOR_ID_BIXOLON_POS_PRINTER
-                            && device.getProductId() == Constants.PRODUCT_ID_BIXOLON_POS_PRINTER
-                            && BillingFragment.getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)){
-                        editor.putString("bill", Constants.USB_BIXOLON_PRINTER_NAME);
-                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
-                        editor.commit();
-                        editor.putString("report", Constants.USB_BIXOLON_PRINTER_NAME);
-                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
-                        editor.commit();
-                        editor.putString("receipt", Constants.USB_BIXOLON_PRINTER_NAME);
-                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
-                        editor.commit();
-                        editor.putString("deposit_receipt", Constants.USB_BIXOLON_PRINTER_NAME);
-                        editor.putString(Constants.USB_BIXOLON_PRINTER_NAME, device.getSerialNumber());
-                        editor.commit();
-                        Toast.makeText(HomeActivity.this, "BIXOLON Printer connected.", Toast.LENGTH_SHORT).show();
-                    } else if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
-                            && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER
-                            && BillingFragment.getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
-                        editor.putString("bill", device.getProductName());
-                        editor.putString(device.getProductName(), device.getDeviceName());
-                        editor.commit();
-                        editor.putString("report", device.getProductName());
-                        editor.putString(device.getProductName(), device.getDeviceName());
-                        editor.commit();
-                        editor.putString("receipt", device.getProductName());
-                        editor.putString(device.getProductName(), device.getDeviceName());
-                        editor.commit();
-                        editor.putString("deposit_receipt", device.getProductName());
-                        editor.putString(device.getProductName(), device.getDeviceName());
-                        editor.commit();
+                    if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
+                            && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER) {
+
+                        if (getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                            editor.putString("bill", device.getProductName());
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "report").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                            editor.putString("report", device.getProductName());
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "receipt").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                            editor.putString("receipt", device.getProductName());
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "deposit_receipt").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                            editor.putString("deposit_receipt", device.getProductName());
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
                         Toast.makeText(HomeActivity.this, "WeP Printer connected.", Toast.LENGTH_SHORT).show();
-                    }*/
+                    }
+                    if (device.getVendorId() == Constants.VENDOR_ID_EPSON_POS_PRINTER
+                            && device.getProductId() == Constants.PRODUCT_ID_EPSON_POS_PRINTER) {
+
+                        if (getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
+                            editor.putString("bill", Constants.USB_EPSON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "report").equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
+                            editor.putString("report", Constants.USB_EPSON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "receipt").equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
+                            editor.putString("receipt", Constants.USB_EPSON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "deposit_receipt").equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
+                            editor.putString("deposit_receipt", Constants.USB_EPSON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+                        Toast.makeText(HomeActivity.this, "EPSON Printer connected.", Toast.LENGTH_SHORT).show();
+                    }
+                    if (device.getVendorId() == Constants.VENDOR_ID_BIXOLON_POS_PRINTER
+                            && device.getProductId() == Constants.PRODUCT_ID_BIXOLON_POS_PRINTER) {
+
+                        if (getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)) {
+                            editor.putString("bill", Constants.USB_BIXOLON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "report").equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)) {
+                            editor.putString("report", Constants.USB_BIXOLON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "receipt").equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)) {
+                            editor.putString("receipt", Constants.USB_BIXOLON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "deposit_receipt").equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)) {
+                            editor.putString("deposit_receipt", Constants.USB_BIXOLON_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+                        Toast.makeText(HomeActivity.this, "BIXOLON Printer connected.", Toast.LENGTH_SHORT).show();
+                    }
+                    if (device.getVendorId() == Constants.VENDOR_ID_TVS_POS_PRINTER
+                            && device.getProductId() == Constants.PRODUCT_ID_TVS_POS_PRINTER) {
+
+                        if (getPrinterName(HomeActivity.this, "bill").equalsIgnoreCase(Constants.USB_TVS_PRINTER_NAME)) {
+                            editor.putString("bill", Constants.USB_TVS_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "report").equalsIgnoreCase(Constants.USB_TVS_PRINTER_NAME)) {
+                            editor.putString("report", Constants.USB_TVS_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "receipt").equalsIgnoreCase(Constants.USB_TVS_PRINTER_NAME)) {
+                            editor.putString("receipt", Constants.USB_TVS_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+
+                        if (getPrinterName(HomeActivity.this, "deposit_receipt").equalsIgnoreCase(Constants.USB_TVS_PRINTER_NAME)) {
+                            editor.putString("deposit_receipt", Constants.USB_TVS_PRINTER_NAME);
+                            editor.putString(device.getProductName(), device.getDeviceName());
+                            editor.commit();
+                        }
+                        Toast.makeText(HomeActivity.this, "TVS Printer connected.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
     };
+
+    public static String getPrinterName(HomeActivity homeActivity, String module) {
+        return Preferences.getSharedPreferencesForPrint(homeActivity).getString(module, "--Select--");
+    }
 
     BroadcastReceiver mUsbDetachReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {

@@ -17,6 +17,9 @@
 
     <string name="InwardSupplyEntry"><u>Inward Supply Entry</u></string>
 
+    <string name="online_order_no">Online Order No</string>
+    <string name="online_order_no_alpha_numeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+
     <string-array name="supplier_types">
         <item>Supplier Type</item>
         <item>Registered</item>
@@ -216,7 +219,6 @@
 
     <string name="menu_code_empty">Menu Code can not be empty for Item Name  </string>
     <string name="menu_code_invalid">Please Enter Menu Code as integer for Item Name  </string>
-    <string name="insufficient_information">Please enter all the required data  </string>
     <string name="item_name_empty">Item Name can not be empty for Menu Code  </string>
     <string name="item_name_invalid">Please Enter Item Name as character for Menu Code  </string>
     <string name="supply_type_empty">Supply Type can not be empty for Item Name  </string>
@@ -267,6 +269,83 @@
     <string name="login">Log In</string>
     <string name="exit">Exit</string>
 
+    <string name="pay">Pay</string>
+    <string name="pay_and_print">Pay &amp; Print</string>
+    <string name="payment_modes">Payment Modes*</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="round_off">Round Off</string>
+    <string name="total_paid">Total Paid Amount</string>
+    <string name="difference">Differences</string>
+    <string name="petty_cash">Petty Cash</string>
+    <string name="wallet">Wallet</string>
+    <string name="card">Card</string>
+    <string name="tax_amount">Tax</string>
+    <string name="discount_not_applicable_in_reverse_message">Discount is not applicable in reverse tax</string>
+    <string name="choose_one_discount_message">Kindly choose only one discount</string>
+    <string name="reward_points_disabled_message">Reward Points feature is disabled</string>
+    <string name="no_discount_choosen_message">No discount choosen</string>
+    <string name="discount_not_applicable_in_itemwise_discount_message">Discount not allowed here as itemwise discount is enabled</string>
+    <string name="accumulated_reward_points_less_than_limit">This customer cannot redeem as minimum reward points limit is not reached</string>
+    <string name="no_reward_points_to_redeem">No reward points to redeem</string>
+    <string name="invalid_information">Invalid Information</string>
+    <string name="invalid_attempt">Invalid Attempt</string>
+    <string name="incomplete_action">Incomplete Action</string>
+    <string name="zero_no_print_bill">Number of bill prints should be greater than zero</string>
+    <string name="empty_no_print_bill">Number of bill prints cannot be empty.</string>
+    <string name="totalPaidAmount_less_than_billAmount_message">Check Bill Amount is Paid or not. Total Paid Amount is less than Bill Amount</string>
+    <string name="empty_owner_pos_message">Owner pos not configured.Kindly enter owner details in Settings</string>
+    <string name="inappropriate_entry">Inappropriate Entry</string>
+    <string name="invalid_salesmanId_message">Invalid SalesMan Id</string>
+    <string name="inactive_customer_message">This customer is inactive</string>
+    <string name="amount_greater_than_billamt_error_message">Other Card amount cannot be greater than bill amount</string>
+    <string name="overwrite_payment_amount_confirmation_message">This payment mode is already present. Do you want to overwrite the amount</string>
+    <string name="no_of_bill_prints">No of Bill Prints</string>
+    <string name="autosetting_cust_State_message">Auto setting customer state</string>
+    <string name="additional_disc_per">Additional Discount %</string>
+    <string name="please_select_discount_message">Please select discount</string>
+    <string name="remaining_amount">Remaining Amount</string>
+    <string name="pending_amount">Pending Amount</string>
+    <string name="return_amount">Amount To Return</string>
+    <string name="due_amount">Due Amount</string>
+    <string name="paid_amount">Paid Amount</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="cash">Cash</string>
+    <string name="e_wallet">E-Wallet</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="credit_customer">Credit Customer</string>
+    <string name="sodexo">Sodexo</string>
+    <string name="m_swipe">MSwipe</string>
+    <string name="coupon">Coupon</string>
+    <string name="other_cards">Other Cards</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="redeem">Redeem</string>
+    <string name="total_reward_point_accumulated">Total reward points accumulated</string>
+    <string name="limit_to_redeem_reward_points">Limit to redeem reward points</string>
+    <string name="reward_points_to_redeem">Reward points to redeem</string>
+    <string name="paid_mode_delete_msg">Are you sure to delete this payment mode</string>
+    <string name="note">Note</string>
+    <string name="no_due_amount_message">Please note no due amount to be paid.</string>
+    <string name="paytm_amount_cannot_be_greater_than_bill_amount">Paytm wallet amount cannot be greater than bill amount</string>
+    <string name="proceed_to_pay">Proceed To Pay</string>
+    <string name="taxable_value">Taxable Value</string>
+    <string name="tax_amounts">Tax Amount</string>
+    <string name="discount">Discount</string>
+    <string name="other_charges">Other Charges</string>
+    <string name="bill_amt">Bill Amount</string>
+    <string name="insufficient_information">Insufficient Information</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="reward_points">Reward Points</string>
+    <string name="date">Date</string>
+    <string name="description">Description</string>
+    <string name="bill_amount">Bill Amount</string>
+    <string name="reason">Reason</string>
+    <string name="aeps">AEPS</string>
+    <string name="aeps_appid">App Id</string>
+    <string name="aeps_merchantId">Merchant Id</string>
+    <string name="create_razorpay_account_message">Create new razorpay account</string>
+    <string name="get_registered_for_aeps_credential_message">Get registered for AEPS credentials. Contact us at </string>
 
     // counter sale
     <string name="add">Add</string>
