@@ -49,6 +49,9 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.GenericClasses.ReportHelper;
 import com.wepindia.pos.R;
 import com.wepindia.pos.views.Reports.TabbedReportActivity;
+import com.wepindia.printers.BixolonPrinterBaseAcivity;
+import com.wepindia.printers.EPSONPrinterBaseActivity;
+import com.wepindia.printers.TVSPrinterBaseActivity;
 import com.wepindia.printers.WePTHPrinterBaseActivity;
 import com.wepindia.printers.wep.PrinterConnectionError;
 
@@ -6726,27 +6729,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
         if (prf.equalsIgnoreCase("Sohamsa"))
         {
             List<List<String>> list = printReport();
-            /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);
-            intent.putExtra("printType", "REPORT");
-            intent.putExtra("reportName", strReportName);
-            intent.putExtra("printData", list);
-            startActivity(intent);*/
-            // ((TabbedReportActivity)getActivity()).printSohamsaReport(list,strReportName,"REPORT");
         }
         else if (prf.equalsIgnoreCase("Heyday"))
         {
             List<List<String>> list = printReport();
-            /*Intent intent = new Intent(getApplicationContext(), PrinterFragment.class);
-            intent.putExtra("printType", "REPORT");
-            intent.putExtra("reportName", strReportName);
-            intent.putExtra("printData", list);
-            startActivity(intent);*/
-            if(((TabbedReportActivity)getActivity()).isPrinterAvailable)
-            {
+            if(((TabbedReportActivity)getActivity()).isPrinterAvailable) {
                 ((TabbedReportActivity)getActivity()).printHeydeyReport(list,strReportName,"REPORT");
             }
-            else
-            {
+            else {
                 ((TabbedReportActivity)getActivity()).askForConfig();
             }
         } else if(prf.equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
@@ -6765,6 +6755,59 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 //                            progressDialog.dismiss();
                 Toast.makeText(myContext, "Report Printed.", Toast.LENGTH_SHORT).show();
             }
+        } else if (prf.equalsIgnoreCase("NGX")) {
+            List<List<String>> list = printReport();
+            ((TabbedReportActivity)getActivity()).printNGXReport(list,strReportName,"REPORT");
+        } else if (prf.equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)) {
+
+            String target = Preferences.getSharedPreferencesForPrint((TabbedReportActivity) myContext).getString(prf, "--Select--");
+
+            BixolonPrinterBaseAcivity bixolon = new BixolonPrinterBaseAcivity();
+
+            bixolon.setmTarget(target);
+            bixolon.setmContext(myContext);
+            bixolon.mInitListener(this);
+
+            List<List<String>> list = printReport();
+
+            if (bixolon.runPrintReportSequence(list,strReportName,"REPORT")) {
+//                            progressDialog.dismiss();
+                Toast.makeText(myContext, "Report Printed.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (prf.equalsIgnoreCase(Constants.USB_TVS_PRINTER_NAME)) {
+
+            String target = Preferences.getSharedPreferencesForPrint((TabbedReportActivity) myContext).getString(prf, "--Select--");
+
+            TVSPrinterBaseActivity tvsPrinterBaseActivity = new TVSPrinterBaseActivity();
+
+            tvsPrinterBaseActivity.setmTarget(target);
+            tvsPrinterBaseActivity.setmContext(myContext);
+            tvsPrinterBaseActivity.mInitListener(this);
+
+            List<List<String>> list = printReport();
+
+            if (tvsPrinterBaseActivity.runPrintReportSequence(list,strReportName,"REPORT")) {
+                //Toast.makeText(myContext, "Report Printed.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (prf.equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
+            String target = Preferences.getSharedPreferencesForPrint(getActivity()).getString(prf, "--Select--");
+
+            EPSONPrinterBaseActivity epson = new EPSONPrinterBaseActivity();
+
+            epson.setmTarget(target);
+            epson.setmContext(myContext);
+            epson.mInitListener(this);
+
+            List<List<String>> list = printReport();
+
+            if (epson.runPrintReportSequence(list,strReportName,"REPORT")) {
+//                            progressDialog.dismiss();
+                Toast.makeText(myContext, "Report Printed.", Toast.LENGTH_SHORT).show();
+            } else {
+//                            progressDialog.dismiss();
+            }
+
+
         }
         else
         {

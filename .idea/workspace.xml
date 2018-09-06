@@ -15,7 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f63be0db-7ed3-45ac-82d1-08f59c8b5ae5" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,7 +37,28 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="TabbedReportActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/TabbedReportActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2873">
+              <caret line="38" column="13" lean-forward="false" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReportFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="6802" column="72" lean-forward="false" selection-start-line="6802" selection-start-column="72" selection-end-line="6802" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -6772,7 +6793,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/epos2_printer/AdaptersAndListeners/PrinterDisplayAdapter.java" />
         <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/wep/PrinterConnectionError.java" />
         <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity_debug.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java" />
         <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/TVSPrinterBaseActivity.java" />
@@ -6789,6 +6809,7 @@
         <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/WePTHPrinterBaseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsPrint.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java" />
       </list>
     </option>
   </component>
@@ -6869,6 +6890,14 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GST-Genie-F-V2.0P" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="Reports" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -7096,11 +7125,19 @@
       <option name="project" value="LOCAL" />
       <updated>1536229295308</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="V2.1: Fixed home activity background image.">
+      <created>1536229908415</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1536229908415</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -7117,7 +7154,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -7200,7 +7237,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="V2.1: GST Genie F&#10;*Changed Payment Screen&#10;*Added Payment Options (AEPS, Other Cards, Paytm)&#10;*Multiple Print.&#10;*Export Items&#10;*Hide Title Bard&#10;*Fixed item wise discount" />
     <MESSAGE value="V2.1: Added Toast msg while saving printers." />
-    <option name="LAST_COMMIT_MESSAGE" value="V2.1: Added Toast msg while saving printers." />
+    <MESSAGE value="V2.1: Fixed home activity background image." />
+    <option name="LAST_COMMIT_MESSAGE" value="V2.1: Fixed home activity background image." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7327,27 +7365,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/upgradeModule/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/merchantsdk-release/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gstAPI/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wepbase/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="402">
@@ -7423,13 +7440,6 @@
         <state relative-caret-position="62">
           <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="6763" column="43" lean-forward="true" selection-start-line="6763" selection-start-column="43" selection-end-line="6763" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -7762,6 +7772,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-935">
           <caret line="50" column="13" lean-forward="false" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/BillNoReset.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-411">
+          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="46" column="13" lean-forward="false" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/TabbedReportActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2873">
+          <caret line="38" column="13" lean-forward="false" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/ReportFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="6802" column="72" lean-forward="false" selection-start-line="6802" selection-start-column="72" selection-end-line="6802" selection-end-column="72" />
           <folding />
         </state>
       </provider>
