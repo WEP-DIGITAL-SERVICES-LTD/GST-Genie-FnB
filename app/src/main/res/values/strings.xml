@@ -269,6 +269,9 @@
     <string name="login">Log In</string>
     <string name="exit">Exit</string>
 
+    <string name="save">Save</string>
+    <string name="save_print">Save &amp; Print</string>
+    <string name="reprint">RePrint</string>
     <string name="pay">Pay</string>
     <string name="pay_and_print">Pay &amp; Print</string>
     <string name="payment_modes">Payment Modes*</string>

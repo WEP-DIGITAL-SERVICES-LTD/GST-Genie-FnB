@@ -21,8 +21,6 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wepindia.printers.utils.PrinterUtil;
 import com.wepindia.printers.wep.PrinterConnectionError;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -354,7 +352,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
 
         try {
 
-//            sendReceiptData(item);
+            sendReceiptData(item);
         }
         catch (Exception e) {
             printerConnectionError.onError(e.getMessage());
@@ -380,7 +378,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
         return true;
     }
 
-    /*private void sendReceiptData(PaymentReceipt item){
+    private void sendReceiptData(PaymentReceipt item){
 
         try{
 
@@ -433,7 +431,8 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
             esc.addText("Amount          : "+String.valueOf(item.getdAmount())+"\n");
             esc.addText("Reason          : "+item.getStrReason()+"\n");
             esc.addText("================================================"+"\n");
-            esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+
+          /*  esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
             esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
             if(item.getFooterLine1()!=null && !item.getFooterLine1().equals(""))
                 esc.addText(item.getFooterLine1()+"\n");
@@ -444,7 +443,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
             if(item.getFooterLine4()!=null && !item.getFooterLine4().equals(""))
                 esc.addText(item.getFooterLine4()+"\n");
             if(item.getFooterLine5()!=null && !item.getFooterLine5().equals(""))
-                esc.addText(item.getFooterLine5()+"\n");
+                esc.addText(item.getFooterLine5()+"\n");*/
 
             esc.addPrintAndFeedLines((byte)3);
             Vector<Byte> datas = esc.getCommand();
@@ -454,7 +453,7 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
         } catch (Exception e) {
             printerConnectionError.onError(e.getMessage());
         }
-    }*/
+    }
 
     private boolean printDepositReceiptData(Customer item) {
         if (printer == null) {

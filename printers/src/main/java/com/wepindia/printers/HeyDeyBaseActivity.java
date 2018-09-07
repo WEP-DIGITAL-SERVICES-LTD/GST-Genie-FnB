@@ -21,18 +21,14 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.text.TextPaint;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.epson.epos2.printer.Printer;
 import com.gprinter.aidl.GpService;
 import com.gprinter.command.EscCommand;
 import com.gprinter.command.GpCom;
@@ -63,9 +59,6 @@ import com.wepindia.printers.wep.OnDeviceClickListener;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -990,7 +983,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
     public void printHeydeyPaymentReceipt(PaymentReceipt item, String type) {
         if(printerUtil != null) {
             printType = type;
-//            tmpList = printerUtil.getPrintPaymentReceipt(item);
+            tmpList = printerUtil.getPrintPaymentReceipt(item);
             printReceiptPrint();
         }
     }

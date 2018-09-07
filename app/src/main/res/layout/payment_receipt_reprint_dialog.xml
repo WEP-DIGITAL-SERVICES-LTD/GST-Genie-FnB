@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginTop="15dp">
+        <RadioGroup
+            android:id="@+id/rgType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbPayment"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Payment" />
+
+            <RadioButton
+                android:id="@+id/rbReceipt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Receipt" />
+        </RadioGroup>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:textSize="20sp"
+            android:text="Enter Payment/Receipt No."/>
+        <EditText
+            style="@style/ET_Owner_Details"
+            android:id="@+id/txtDineInReprintBillNumber"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:hint="Payment/Receipt No."
+            android:inputType="number" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:gravity="left|center_vertical"
+            android:text="Enter Invoice Date"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_inv_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:hint="dd-MM-yyyy"/>
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin1"
+                android:gravity="center"
+                android:id="@+id/btnCal_reprint"
+                android:background="@drawable/btn_calendar" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

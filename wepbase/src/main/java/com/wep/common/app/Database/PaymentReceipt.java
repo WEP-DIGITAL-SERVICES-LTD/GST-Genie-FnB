@@ -1,300 +1,272 @@
-/*
- * **************************************************************************
- * Project Name		:	VAJRA
- * 
- * File Name		:	PaymentReceipt
- * 
- * Purpose			:	Represents PaymentReceipt table, takes care of intializing
- * 						assining and returning values of all the variables.
- * 
- * DateOfCreation	:	16-October-2012
- * 
- * Author			:	Balasubramanya Bharadwaj B S
- * 
- * **************************************************************************
- */
-
 package com.wep.common.app.Database;
 
-public class PaymentReceipt {
-	
-	// Private variables
-	String strDate, strReason;
-	int iBillType, iDescriptionId1, iDescriptionId2, iDescriptionId3, paymentReceiptNo;
-	double dAmount;
-	String DescriptionText;
-	private String isDuplicate;
-	private int headerPrintBold;
-	private String HeaderLine1;
-	private String HeaderLine2;
-	private String HeaderLine3;
-	private String HeaderLine4;
-	private String HeaderLine5;
-	private String FooterLine1;
-	private String FooterLine2;
-	private String FooterLine3;
-	private String FooterLine4;
-	private String FooterLine5;
-	
-	// Default constructor
-	public PaymentReceipt(){
-		
-		this.strDate = "";
-		this.strReason = "";
-		this.iBillType = 0;
-		this.iDescriptionId1 = 0;
-		this.iDescriptionId2 = 0;
-		this.iDescriptionId3 = 0;
-		this.dAmount = 0;
-		this.DescriptionText= "";
-		
-	}
-	
-	// Parameterized constructor
-	public PaymentReceipt(String Date,String Reason,int BillType,String DescriptionText,int DescriptionId1,int DescriptionId2,int DescriptionId3,float Amount){
-		
-		this.strDate = Date;
-		this.strReason = Reason;
-		this.iBillType = BillType;
-		this.iDescriptionId1 = DescriptionId1;
-		this.iDescriptionId2 = DescriptionId2;
-		this.iDescriptionId3 = DescriptionId3;
-		this.dAmount = Amount;
-		this.DescriptionText = DescriptionText;
-			
-	}
+import android.os.Parcel;
+import android.os.Parcelable;
 
-	public int getPaymentReceiptNo() {
-		return paymentReceiptNo;
-	}
+/**
+ * Created by SachinV on 15-02-2018.
+ */
 
-	public void setPaymentReceiptNo(int paymentReceiptNo) {
-		this.paymentReceiptNo = paymentReceiptNo;
-	}
+public class PaymentReceipt implements Parcelable {
 
-	public void setdAmount(double dAmount) {
-		this.dAmount = dAmount;
-	}
+    private String strDate, strReason;
+    private int iBillType, paymentReceiptNo;
+    private Double dAmount;
+    private String DescriptionText;
+    private String isDuplicate;
+    private int headerPrintBold;
+    private String HeaderLine1;
+    private String HeaderLine2;
+    private String HeaderLine3;
+    private String HeaderLine4;
+    private String HeaderLine5;
+    private String FooterLine1;
+    private String FooterLine2;
+    private String FooterLine3;
+    private String FooterLine4;
+    private String FooterLine5;
 
-	public double getdAmount() {
-		return dAmount;
-	}
+    public PaymentReceipt(){
+        this.strDate = "";
+        this.strReason = "";
+        this.iBillType = 0;
+        this.headerPrintBold = 0;
+        this.paymentReceiptNo = 0;
+        this.dAmount = 0.00;
+        this.DescriptionText= "";
+        this.HeaderLine1= "";
+        this.HeaderLine2= "";
+        this.HeaderLine3= "";
+        this.HeaderLine4= "";
+        this.HeaderLine5= "";
+        this.FooterLine1= "";
+        this.FooterLine2= "";
+        this.FooterLine3= "";
+        this.FooterLine4= "";
+        this.FooterLine5= "";
 
-	public String getStrDate() {
-		return strDate;
-	}
+    }
 
-	public void setStrDate(String strDate) {
-		this.strDate = strDate;
-	}
+    public PaymentReceipt(int paymentReceiptNo, String strDate, String strReason, int iBillType, Double dAmount, String descriptionText) {
+        this.paymentReceiptNo = paymentReceiptNo;
+        this.strDate = strDate;
+        this.strReason = strReason;
+        this.iBillType = iBillType;
+        this.dAmount = dAmount;
+        DescriptionText = descriptionText;
+    }
 
-	public String getStrReason() {
-		return strReason;
-	}
+    protected PaymentReceipt(Parcel in) {
+        strDate = in.readString();
+        strReason = in.readString();
+        iBillType = in.readInt();
+        paymentReceiptNo = in.readInt();
+        if (in.readByte() == 0) {
+            dAmount = null;
+        } else {
+            dAmount = in.readDouble();
+        }
+        DescriptionText = in.readString();
+        isDuplicate = in.readString();
+        headerPrintBold = in.readInt();
+        HeaderLine1 = in.readString();
+        HeaderLine2 = in.readString();
+        HeaderLine3 = in.readString();
+        HeaderLine4 = in.readString();
+        HeaderLine5 = in.readString();
+        FooterLine1 = in.readString();
+        FooterLine2 = in.readString();
+        FooterLine3 = in.readString();
+        FooterLine4 = in.readString();
+        FooterLine5 = in.readString();
+    }
 
-	public void setStrReason(String strReason) {
-		this.strReason = strReason;
-	}
+    public static final Creator<PaymentReceipt> CREATOR = new Creator<PaymentReceipt>() {
+        @Override
+        public PaymentReceipt createFromParcel(Parcel in) {
+            return new PaymentReceipt(in);
+        }
 
-	public int getiBillType() {
-		return iBillType;
-	}
+        @Override
+        public PaymentReceipt[] newArray(int size) {
+            return new PaymentReceipt[size];
+        }
+    };
 
-	public void setiBillType(int iBillType) {
-		this.iBillType = iBillType;
-	}
+    public int getHeaderPrintBold() {
+        return headerPrintBold;
+    }
 
-	public int getiDescriptionId1() {
-		return iDescriptionId1;
-	}
+    public void setHeaderPrintBold(int headerPrintBold) {
+        this.headerPrintBold = headerPrintBold;
+    }
 
-	public void setiDescriptionId1(int iDescriptionId1) {
-		this.iDescriptionId1 = iDescriptionId1;
-	}
+    public String getIsDuplicate() {
+        return isDuplicate;
+    }
 
-	public int getiDescriptionId2() {
-		return iDescriptionId2;
-	}
+    public void setIsDuplicate(String isDuplicate) {
+        this.isDuplicate = isDuplicate;
+    }
 
-	public void setiDescriptionId2(int iDescriptionId2) {
-		this.iDescriptionId2 = iDescriptionId2;
-	}
+    public String getHeaderLine1() {
+        return HeaderLine1;
+    }
 
-	public int getiDescriptionId3() {
-		return iDescriptionId3;
-	}
+    public void setHeaderLine1(String headerLine1) {
+        HeaderLine1 = headerLine1;
+    }
 
-	public void setiDescriptionId3(int iDescriptionId3) {
-		this.iDescriptionId3 = iDescriptionId3;
-	}
+    public String getHeaderLine2() {
+        return HeaderLine2;
+    }
 
-	public String getIsDuplicate() {
-		return isDuplicate;
-	}
+    public void setHeaderLine2(String headerLine2) {
+        HeaderLine2 = headerLine2;
+    }
 
-	public void setIsDuplicate(String isDuplicate) {
-		this.isDuplicate = isDuplicate;
-	}
+    public String getHeaderLine3() {
+        return HeaderLine3;
+    }
 
-	public int getHeaderPrintBold() {
-		return headerPrintBold;
-	}
+    public void setHeaderLine3(String headerLine3) {
+        HeaderLine3 = headerLine3;
+    }
 
-	public void setHeaderPrintBold(int headerPrintBold) {
-		this.headerPrintBold = headerPrintBold;
-	}
+    public String getHeaderLine4() {
+        return HeaderLine4;
+    }
 
-	public String getHeaderLine1() {
-		return HeaderLine1;
-	}
+    public void setHeaderLine4(String headerLine4) {
+        HeaderLine4 = headerLine4;
+    }
 
-	public void setHeaderLine1(String headerLine1) {
-		HeaderLine1 = headerLine1;
-	}
+    public String getHeaderLine5() {
+        return HeaderLine5;
+    }
 
-	public String getHeaderLine2() {
-		return HeaderLine2;
-	}
+    public void setHeaderLine5(String headerLine5) {
+        HeaderLine5 = headerLine5;
+    }
 
-	public void setHeaderLine2(String headerLine2) {
-		HeaderLine2 = headerLine2;
-	}
+    public String getFooterLine1() {
+        return FooterLine1;
+    }
 
-	public String getHeaderLine3() {
-		return HeaderLine3;
-	}
+    public void setFooterLine1(String footerLine1) {
+        FooterLine1 = footerLine1;
+    }
 
-	public void setHeaderLine3(String headerLine3) {
-		HeaderLine3 = headerLine3;
-	}
+    public String getFooterLine2() {
+        return FooterLine2;
+    }
 
-	public String getHeaderLine4() {
-		return HeaderLine4;
-	}
+    public void setFooterLine2(String footerLine2) {
+        FooterLine2 = footerLine2;
+    }
 
-	public void setHeaderLine4(String headerLine4) {
-		HeaderLine4 = headerLine4;
-	}
+    public String getFooterLine3() {
+        return FooterLine3;
+    }
 
-	public String getHeaderLine5() {
-		return HeaderLine5;
-	}
+    public void setFooterLine3(String footerLine3) {
+        FooterLine3 = footerLine3;
+    }
 
-	public void setHeaderLine5(String headerLine5) {
-		HeaderLine5 = headerLine5;
-	}
+    public String getFooterLine4() {
+        return FooterLine4;
+    }
 
-	public String getFooterLine1() {
-		return FooterLine1;
-	}
+    public void setFooterLine4(String footerLine4) {
+        FooterLine4 = footerLine4;
+    }
 
-	public void setFooterLine1(String footerLine1) {
-		FooterLine1 = footerLine1;
-	}
+    public String getFooterLine5() {
+        return FooterLine5;
+    }
 
-	public String getFooterLine2() {
-		return FooterLine2;
-	}
+    public void setFooterLine5(String footerLine5) {
+        FooterLine5 = footerLine5;
+    }
 
-	public void setFooterLine2(String footerLine2) {
-		FooterLine2 = footerLine2;
-	}
+    public int getPaymentReceiptNo() {
+        return paymentReceiptNo;
+    }
 
-	public String getFooterLine3() {
-		return FooterLine3;
-	}
+    public void setPaymentReceiptNo(int paymentReceiptNo) {
+        this.paymentReceiptNo = paymentReceiptNo;
+    }
 
-	public void setFooterLine3(String footerLine3) {
-		FooterLine3 = footerLine3;
-	}
+    public String getStrDate() {
+        return strDate;
+    }
 
-	public String getFooterLine4() {
-		return FooterLine4;
-	}
+    public void setStrDate(String strDate) {
+        this.strDate = strDate;
+    }
 
-	public void setFooterLine4(String footerLine4) {
-		FooterLine4 = footerLine4;
-	}
+    public String getStrReason() {
+        return strReason;
+    }
 
-	public String getFooterLine5() {
-		return FooterLine5;
-	}
+    public void setStrReason(String strReason) {
+        this.strReason = strReason;
+    }
 
-	public void setFooterLine5(String footerLine5) {
-		FooterLine5 = footerLine5;
-	}
+    public int getiBillType() {
+        return iBillType;
+    }
 
-	public String getDescriptionText() {
-		return DescriptionText;
-	}
+    public void setiBillType(int iBillType) {
+        this.iBillType = iBillType;
+    }
 
-	public void setDescriptionText(String descriptionText) {
-		DescriptionText = descriptionText;
-	}
+    public Double getdAmount() {
+        return dAmount;
+    }
 
-	// getting Date
-	public String getDate(){
-		return this.strDate;
-	}
-	
-	// getting Reason
-	public String getReason(){
-		return this.strReason;
-	}
-	
-	// getting BillType
-	public int getBillType(){
-		return this.iBillType;
-	}
-	
-	// getting DescriptionId1
-	public int getDescriptionId1(){
-		return this.iDescriptionId1;
-	}
-	
-	// getting DescriptionId2
-	public int getDescriptionId2(){
-		return this.iDescriptionId2;
-	}
-		
-	// getting DescriptionId3
-	public int getDescriptionId3(){
-		return this.iDescriptionId3;
-	}
-	
-	// setting Date
-	public void setDate(String Date){
-		this.strDate = Date;
-	}
-	
-	// setting Reason
-	public void setReason(String Reason){
-		this.strReason = Reason;
-	}
-		
-	// setting BillType
-	public void setBillType(int BillType){
-		this.iBillType = BillType;
-	}
-		
-	// setting DescriptionId1
-	public void setDescriptionId1(int DescriptionId1){
-		this.iDescriptionId1 = DescriptionId1;
-	}
-		
-	// setting DescriptionId2
-	public void setDescriptionId2(int DescriptionId2){
-		this.iDescriptionId2 = DescriptionId2;
-	}
-			
-	// setting DescriptionId3
-	public void setDescriptionId3(int DescriptionId3){
-		this.iDescriptionId3 = DescriptionId3;
-	}
-			
-	// setting Amount
-	public void setAmount(float Amount){
-		this.dAmount = Amount;
-	}
+    public void setdAmount(Double dAmount) {
+        this.dAmount = dAmount;
+    }
 
+    public String getDescriptionText() {
+        return DescriptionText;
+    }
+
+    public void setDescriptionText(String descriptionText) {
+        DescriptionText = descriptionText;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeString(strDate);
+        parcel.writeString(strReason);
+        parcel.writeInt(iBillType);
+        parcel.writeInt(paymentReceiptNo);
+        if (dAmount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(dAmount);
+        }
+        parcel.writeString(DescriptionText);
+        parcel.writeString(isDuplicate);
+        parcel.writeInt(headerPrintBold);
+        parcel.writeString(HeaderLine1);
+        parcel.writeString(HeaderLine2);
+        parcel.writeString(HeaderLine3);
+        parcel.writeString(HeaderLine4);
+        parcel.writeString(HeaderLine5);
+        parcel.writeString(FooterLine1);
+        parcel.writeString(FooterLine2);
+        parcel.writeString(FooterLine3);
+        parcel.writeString(FooterLine4);
+        parcel.writeString(FooterLine5);
+    }
 }

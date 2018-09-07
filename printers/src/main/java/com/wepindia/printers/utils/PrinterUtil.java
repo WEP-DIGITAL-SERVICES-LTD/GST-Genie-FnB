@@ -6,6 +6,7 @@ import android.util.Base64;
 import com.Bitmap.CreateBitmap;
 import com.Utils.TextAlign;
 import com.gprinter.command.EscCommand;
+import com.wep.common.app.Database.PaymentReceipt;
 import com.wep.common.app.print.BillKotItem;
 import com.wep.common.app.print.BillServiceTaxItem;
 import com.wep.common.app.print.BillSubTaxItem;
@@ -1062,6 +1063,77 @@ public class PrinterUtil {
                 esc.addText("========================================"+"\n");
         }
         esc.addText("========================================"+"\n");
+        esc.addPrintAndFeedLines((byte)3);
+        Vector<Byte> datas = esc.getCommand();
+        Byte[] Bytes = datas.toArray(new Byte[datas.size()]);
+        byte[] bytes = ArrayUtils.toPrimitive(Bytes);
+        String str = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return str;
+    }
+
+    public String getPrintPaymentReceipt(PaymentReceipt item) {
+        EscCommand esc = new EscCommand();
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        if (item.getiBillType() == 1) {
+            if(item.getIsDuplicate().equals(""))
+                esc.addText("PAYMENT"+"\n");
+            else
+                esc.addText("PAYMENT"+"\n"+item.getIsDuplicate()+"\n");
+        } else {
+            if(item.getIsDuplicate().equals(""))
+                esc.addText("RECEIPT"+"\n");
+            else
+                esc.addText("RECEIPT"+"\n"+item.getIsDuplicate()+"\n");
+        }
+
+        if (item.getHeaderPrintBold() == 1)
+            esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);
+
+        if(item.getHeaderLine1()!=null && !item.getHeaderLine1().equals("")) {
+            esc.addText(item.getHeaderLine1()+"\n");
+        }
+        if(item.getHeaderLine2()!=null && !item.getHeaderLine2().equals("")) {
+            esc.addText(item.getHeaderLine2()+"\n");
+        }
+        if(item.getHeaderLine3()!=null && !item.getHeaderLine3().equals("")) {
+            esc.addText(item.getHeaderLine3()+"\n");
+        }
+        if(item.getHeaderLine4()!=null && !item.getHeaderLine4().equals("")) {
+            esc.addText(item.getHeaderLine4()+"\n");
+        }
+        if(item.getHeaderLine5()!=null && !item.getHeaderLine5().equals("")) {
+            esc.addText(item.getHeaderLine5()+"\n");
+        }
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+
+        esc.addText("================================================"+"\n");
+        if (item.getiBillType() == 1) {
+            esc.addText("Payment No.     : " + String.valueOf(item.getPaymentReceiptNo()) + "\n");
+        }
+        else {
+            esc.addText("Receipt No.     : " + String.valueOf(item.getPaymentReceiptNo()) + "\n");
+        }
+        esc.addText("Invoice Date    : "+item.getStrDate()+"\n");
+        esc.addText("Description     : "+item.getDescriptionText()+"\n");
+        esc.addText("Amount          : "+String.valueOf(item.getdAmount())+"\n");
+        esc.addText("Reason          : "+item.getStrReason()+"\n");
+        esc.addText("================================================"+"\n");
+        /*esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        if(item.getFooterLine1()!=null && !item.getFooterLine1().equals(""))
+            esc.addText(item.getFooterLine1()+"\n");
+        if(item.getFooterLine2()!=null && !item.getFooterLine2().equals(""))
+            esc.addText(item.getFooterLine2()+"\n");
+        if(item.getFooterLine3()!=null && !item.getFooterLine3().equals(""))
+            esc.addText(item.getFooterLine3()+"\n");
+        if(item.getFooterLine4()!=null && !item.getFooterLine4().equals(""))
+            esc.addText(item.getFooterLine4()+"\n");
+        if(item.getFooterLine5()!=null && !item.getFooterLine5().equals(""))
+            esc.addText(item.getFooterLine5()+"\n");*/
+
         esc.addPrintAndFeedLines((byte)3);
         Vector<Byte> datas = esc.getCommand();
         Byte[] Bytes = datas.toArray(new Byte[datas.size()]);

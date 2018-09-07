@@ -125,8 +125,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DiscId = "DiscId";
     private static final String KEY_KitchenCode = "KitchenCode";
     private static final String KEY_ModifierAmount = "ModifierAmount";
-    private static final String KEY_Reason = "Reason";
-    private static final String KEY_Amount = "Amount";
+    public static final String KEY_Reason = "Reason";
+    public static final String KEY_PAYMENT_RECEIPT_NO = "PaymentReceiptNo";
+    public static final String KEY_Amount = "Amount";
     private static final String KEY_ServiceTaxAmount = "ServiceTaxAmount";
     private static final String KEY_DiscountAmount = "DiscountAmount";
     public static final String KEY_DiscountPercent = "DiscountPercent";
@@ -283,7 +284,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Description
     private static final String KEY_DescriptionId = "DescriptionId";
-    private static final String KEY_DescriptionText = "DescriptionText";
+    public static final String KEY_DescriptionText = "DescriptionText";
 
     // DiscountConfig
     public static final String KEY_DiscDescription = "DiscDescription";
@@ -1247,11 +1248,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             " NUMERIC, " + KEY_DataBits + " NUMERIC, " + KEY_Parity + " NUMERIC, " + KEY_PortName + " TEXT, " +
             KEY_StopBits + " NUMERIC)";
 
-    String QUERY_CREATE_TABLE_PAYMENTRECEIPT = "CREATE TABLE " + TBL_PAYMENTRECEIPT + "(" + KEY_Reason +
-            " TEXT, " + KEY_Id + " INTEGER PRIMARY KEY, " + KEY_Amount + " REAL, " + KEY_BillType + " NUMERIC, " +
-            KEY_DescriptionText + " TEXT, " +
-            KEY_InvoiceDate + " TEXT, " + KEY_DescriptionId1 + " NUMERIC, " + KEY_DescriptionId2 + " NUMERIC, " +
-            KEY_DescriptionId3 + " NUMERIC)";
+    String QUERY_CREATE_TABLE_PAYMENTRECEIPT = "CREATE TABLE IF NOT EXISTS " + TBL_PAYMENTRECEIPT + "("
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_PAYMENT_RECEIPT_NO + " INTEGER, "
+            + KEY_Reason + " TEXT, "
+            + KEY_Amount + " REAL, "
+            + KEY_BillType + " NUMERIC, "
+            + KEY_DescriptionText + " TEXT, "
+            + KEY_InvoiceDate + " TEXT, "
+            + KEY_DescriptionId1 + " NUMERIC, "
+            + KEY_DescriptionId2 + " NUMERIC, "
+            + KEY_DescriptionId3 + " NUMERIC " + ")";
 
     String QUERY_CREATE_TABLE_PENDINGKOT = "CREATE TABLE " + TBL_PENDINGKOT + "( "
             + KEY_IsCheckedOut + " NUMERIC, "
@@ -1408,6 +1415,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        Cursor cursorUpgrade = null;
+
         try {
             Cursor res = db.rawQuery("PRAGMA table_info(" + TBL_RIDERSETTLEMENT + ")", null);
             int value = res.getColumnIndex(KEY_InvoiceDate);
@@ -1419,23 +1428,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         switch (oldVersion) {
             case 2:
-                Cursor cursorOutwardSupplayLedger = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_LEDGER + "'", null);
-                if (cursorOutwardSupplayLedger.moveToFirst()) {
-                    if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_LEDGER, KEY_ONLINE_ORDER_NO)) { // Column doesn't exist
-                        db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_LEDGER + " ADD COLUMN " + KEY_ONLINE_ORDER_NO + " TEXT ");
-                    }
-                } else { // Table doesn't exist
-                    db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Ledger);
-                }
 
-                Cursor cursorOutwardSupplayLedgerDetails = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "'", null);
-                if (cursorOutwardSupplayLedgerDetails.moveToFirst()) {
-                    if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_ONLINE_ORDER_NO)) { // Column doesn't exist
-                        db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_ONLINE_ORDER_NO + " TEXT ");
-                    }
-                } else { // Table doesn't exist
-                    db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Items_Details);
-                }
                 try{
                     cvDbValues = new ContentValues();
                     cvDbValues.put("ReportsName", "Online Order Numbers Report");
@@ -1445,6 +1438,43 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 } catch (Exception ex){
                     Log.i(TAG,"Unable to insert 'Online order number' value into 'ReportMaster' table" +ex.getMessage());
                 }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_LEDGER + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_LEDGER, KEY_ONLINE_ORDER_NO)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_LEDGER + " ADD COLUMN " + KEY_ONLINE_ORDER_NO + " TEXT ");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Items_Details);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table item on real field cess amount." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_ONLINE_ORDER_NO)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_ONLINE_ORDER_NO + " TEXT ");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Items_Details);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table item on real field cess amount." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
             case 3:
                 db.execSQL(QUERY_CREATE_TABLE_PAYMENT_OPTIONS_CONFIGURATION);
                 db.execSQL(QUERY_CREATE_TABLE_TRANSACTION_DETAILS);
@@ -1459,10 +1489,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     Log.e(TAG, "Unable to set payment option config default values." + ex.getMessage());
                 }
 
-                Cursor  cursorPaymentMode = null;
                 try {
-                    cursorPaymentMode = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_PaymentModeConfiguration + "'", null);
-                    if (cursorPaymentMode.moveToFirst()) {
+                    cvDbValues = new ContentValues();
+                    cvDbValues.put(KEY_AEPS_AppId, "xx");
+                    cvDbValues.put(KEY_AEPS_MerchantId, "xx"); // Production
+                    cvDbValues.put(KEY_AEPS_SecretKey, "xx");
+                    db.insert(TBL_PaymentModeConfiguration, null, cvDbValues);
+                } catch (Exception ex) {
+                    Log.e(TAG, "Unable to set payment option config default values." + ex.getMessage());
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_PaymentModeConfiguration + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
                         if (!existsColumnInTable(db, TBL_PaymentModeConfiguration, KEY_AEPS_AppId)) { // Column doesn't exist
                             db.execSQL("ALTER TABLE " + TBL_PaymentModeConfiguration + " ADD COLUMN " + KEY_AEPS_AppId + " TEXT");
                         }
@@ -1478,15 +1518,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 } catch (Exception ex) {
                     Log.i(TAG, "Error on alter table item on real field cess amount." + ex.getMessage());
                 } finally {
-                    if (cursorPaymentMode != null) {
-                        cursorPaymentMode.close();
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
                     }
                 }
 
-                Cursor  cursorOutwardSupplyItemsDetails = null;
+                cursorUpgrade = null;
                 try {
-                    cursorOutwardSupplyItemsDetails = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "'", null);
-                    if (cursorOutwardSupplyItemsDetails.moveToFirst()) {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
                         if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_RewardPointsAmount)) { // Column doesn't exist
                             db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_RewardPointsAmount + " REAL ");
                         }
@@ -1505,19 +1545,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 } catch (Exception ex) {
                     Log.i(TAG, "Error on alter table OutwardSupplyItemsDetails on real field paytm wallet." + ex.getMessage());
                 } finally {
-                    if (cursorOutwardSupplyItemsDetails != null) {
-                        cursorOutwardSupplyItemsDetails.close();
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
                     }
                 }
 
+                cursorUpgrade = null;
                 try {
-                    cvDbValues = new ContentValues();
-                    cvDbValues.put(KEY_AEPS_AppId, "xx");
-                    cvDbValues.put(KEY_AEPS_MerchantId, "xx"); // Production
-                    cvDbValues.put(KEY_AEPS_SecretKey, "xx");
-                    db.insert(TBL_PaymentModeConfiguration, null, cvDbValues);
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_PAYMENTRECEIPT + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_PAYMENTRECEIPT, KEY_PAYMENT_RECEIPT_NO)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_PAYMENTRECEIPT + " ADD COLUMN " + KEY_PAYMENT_RECEIPT_NO + " INTEGER ");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_PAYMENTRECEIPT);
+                    }
                 } catch (Exception ex) {
-                    Log.e(TAG, "Unable to set payment option config default values." + ex.getMessage());
+                    Log.i(TAG, "Error on alter table Payment Receipt on real field paytm wallet." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
                 }
 
                 break;
@@ -4126,13 +4174,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public long addPaymentReceipt(PaymentReceipt objPaymentReceipt) {
         cvDbValues = new ContentValues();
 
+        cvDbValues.put("PaymentReceiptNo", objPaymentReceipt.getPaymentReceiptNo());
         cvDbValues.put("Reason", objPaymentReceipt.getStrReason());
         cvDbValues.put("Amount", objPaymentReceipt.getdAmount());
         cvDbValues.put("BillType", objPaymentReceipt.getiBillType());
         cvDbValues.put("InvoiceDate", objPaymentReceipt.getStrDate());
-        cvDbValues.put("DescriptionId1", objPaymentReceipt.getiDescriptionId1());
-        cvDbValues.put("DescriptionId2", objPaymentReceipt.getiDescriptionId2());
-        cvDbValues.put("DescriptionId3", objPaymentReceipt.getiDescriptionId3());
+//        cvDbValues.put("DescriptionId1", objPaymentReceipt.getDescriptionId1());
+//        cvDbValues.put("DescriptionId2", objPaymentReceipt.getDescriptionId2());
+//        cvDbValues.put("DescriptionId3", objPaymentReceipt.getDescriptionId3());
         cvDbValues.put(KEY_DescriptionText, objPaymentReceipt.getDescriptionText());
 
         return dbFNB.insert(TBL_PAYMENTRECEIPT, null, cvDbValues);
@@ -10011,5 +10060,23 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         String query = "Select * from " + TBL_AEPS_TRANSACTIONS + " WHERE " + KEY_MerchantTxnNo + " LIKE  '" + merchantTxnNo + "'";
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
+    }
+
+    public Cursor checkDuplicatePaymentReceipt(int receiptPaymentNo, String invoiceDate, int billType) {
+        Cursor result = null;
+        SQLiteDatabase db = getReadableDatabase();
+        String queryString = "Select * FROM " + TBL_PAYMENTRECEIPT + " WHERE " + KEY_PAYMENT_RECEIPT_NO + " = " + receiptPaymentNo + " AND " +
+                KEY_InvoiceDate + " LIKE '" + invoiceDate + "' AND " + KEY_BillType + "=" + billType;
+        result = db.rawQuery(queryString, null);
+        return result;
+    }
+
+    public Cursor getPaymentReceipt(int billNo, String invoiceDate, int billType) {
+        Cursor result = null;
+        SQLiteDatabase db = getReadableDatabase();
+        String queryString = "Select * FROM " + TBL_PAYMENTRECEIPT + " WHERE " + KEY_PAYMENT_RECEIPT_NO + " = " + billNo + " AND " +
+                KEY_InvoiceDate + " LIKE '" + invoiceDate + "' AND " + KEY_BillType + "=" + billType;
+        result = db.rawQuery(queryString, null);
+        return result;
     }
 }

@@ -1,304 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_wep" />
 
     <RelativeLayout
-        android:id="@+id/lnrPaymentReceipt"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/toolbar">
+        android:layout_height="0dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginRight="300dp"
+        android:layout_weight="2"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
+        <TableRow
+            android:id="@+id/rowType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:gravity="center">
+            android:layout_centerHorizontal="true">
 
-            <RelativeLayout
+            <RadioGroup
+                android:id="@+id/rgType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:gravity="center">
+                android:orientation="horizontal">
 
-                <TableRow
-                    android:id="@+id/rowType"
-                    android:layout_width="wrap_content"
+                <RadioButton
+                    android:id="@+id/rbPayment"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp">
+                    android:checked="true"
+                    android:text="Payment" />
 
-                    <RadioGroup
-                        android:id="@+id/rgType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rbPayment"
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="Payment" />
-
-                        <RadioButton
-                            android:id="@+id/rbReceipt"
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"
-                            android:text="Receipt" />
-                    </RadioGroup>
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/rowDateSelection"
-                    android:layout_width="wrap_content"
+                <RadioButton
+                    android:id="@+id/rbReceipt"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/rowType"
-                    android:layout_below="@+id/rowType">
+                    android:text="Receipt" />
+            </RadioGroup>
+        </TableRow>
 
-                    <TextView
-                        android:id="@+id/tvPaymentReceiptDate"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Date"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
-
-                    <EditText
-                        android:id="@+id/etPaymentReceiptDate"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:ems="5"
-                        android:focusable="false"
-                        android:inputType="text"
-                        android:textSize="15dp" />
-
-                    <Button
-                        android:id="@+id/btn_PaymentReceiptDate"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/btn_calendar"
-                        android:onClick="DateSelection" />
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/rowDescription1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/rowDateSelection"
-                    android:layout_below="@+id/rowDateSelection"
-                    android:layout_marginTop="25dp">
-
-                    <TextView
-                        android:id="@+id/tvDescription1"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Description"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
-
-                    <Spinner
-                        android:id="@+id/spnrDescription1"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/rowDescription2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/rowDescription1"
-                    android:layout_below="@+id/rowDescription1"
-                    android:layout_marginTop="30dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tvDescription2"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="25dp"
-                        android:text="Description 2"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
-
-                    <Spinner
-                        android:id="@+id/spnrDescription2"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/rowDescription3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/rowDescription2"
-                    android:layout_below="@+id/rowDescription2"
-                    android:layout_marginTop="30dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tvDescription3"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="25dp"
-                        android:text="Description 3"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
-
-                    <Spinner
-                        android:id="@+id/spnrDescription3"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/rowReason"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/rowDescription3"
-                    android:layout_below="@+id/rowDescription3"
-                    android:layout_marginTop="25dp">
-
-                    <TextView
-                        android:id="@+id/tvReason"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Reason"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
-
-                    <EditText
-                        android:id="@+id/etPaymentReceiptReason"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:inputType="text"
-                        android:maxLength="20" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/rowAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/rowReason"
-                    android:layout_below="@+id/rowReason"
-                    android:layout_marginTop="25dp">
-
-                    <TextView
-                        android:id="@+id/tvAmount"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Amount"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
-
-                    <EditText
-                        android:id="@+id/etPaymentReceiptAmount"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:inputType="numberDecimal"
-                        android:maxLength="6" />
-                </TableRow>
-            </RelativeLayout>
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:id="@+id/boxButton"
-            android:layout_width="match_parent"
+        <TableRow
+            android:id="@+id/rowPaymentReceiptNo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+            android:layout_alignLeft="@+id/rowType"
+            android:layout_below="@+id/rowType"
+            android:layout_marginTop="25dp">
 
             <TextView
-                android:id="@+id/tvHorizontalLine"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_above="@+id/boxSubBtn"
-                android:layout_marginBottom="2dp"
-                android:background="#000000" />
-
-            <LinearLayout
-                android:id="@+id/boxSubBtn"
-                android:layout_width="match_parent"
+                android:id="@+id/tvPaymentReceiptNo"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:padding="7dp">
+                android:text="Payment/Receipt No.*"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btnPrintPaymentReceipt"
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/background_btn"
-                    android:onClick="PrintPaymentReceipt"
-                    android:text="Print"
-                    android:textColor="@android:color/white"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:visibility="gone" />
+            <EditText
+                style="@style/ET_Owner_Details"
+                android:id="@+id/etPaymentReceiptNo"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:maxLength="4"
+                android:inputType="number"
+                android:textSize="15dp" />
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btnSavePaymentReceipt"
-                    android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/background_btn"
-                    android:onClick="SavePaymentReceipt"
-                    android:text="Save"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp"
-                    android:theme="@style/WepButtonWithMarigin" />
+        </TableRow>
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btnClearPaymentReceipt"
-                    android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/background_btn"
-                    android:onClick="ClearPaymentReceipt"
-                    android:text="Clear"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp"
-                    android:theme="@style/WepButtonWithMarigin" />
+        <TableRow
+            android:id="@+id/rowDateSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/rowPaymentReceiptNo"
+            android:layout_below="@+id/rowPaymentReceiptNo"
+            android:layout_marginTop="25dp">
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btnClosePaymentReceipt"
-                    android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_btn"
-                    android:onClick="ClosePaymentReceipt"
-                    android:text="Close"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp"
-                    android:theme="@style/WepButtonWithMarigin" />
-            </LinearLayout>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tvPaymentReceiptDate"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Date*"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/etPaymentReceiptDate"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:ems="5"
+                android:focusable="false"
+                android:inputType="text"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_PaymentReceiptDate"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/btn_calendar"
+                android:onClick="DateSelection" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowDescription1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/rowDateSelection"
+            android:layout_below="@+id/rowDateSelection"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/tvDescription1"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Description*"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/spnrDescription1"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowDescription2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/rowDescription1"
+            android:layout_below="@+id/rowDescription1"
+            android:layout_marginTop="30dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvDescription2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:text="Description 2"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/spnrDescription2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowDescription3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/rowDescription2"
+            android:layout_below="@+id/rowDescription2"
+            android:layout_marginTop="30dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvDescription3"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:text="Description 3"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/spnrDescription3"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowReason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/rowDescription3"
+            android:layout_below="@+id/rowDescription3"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/tvReason"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Reason"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                style="@style/ET_Owner_Details"
+                android:id="@+id/etPaymentReceiptReason"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:inputType="text"
+                android:maxLength="30" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/rowReason"
+            android:layout_below="@+id/rowReason"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Amount*"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                style="@style/ET_Owner_Details"
+                android:id="@+id/etPaymentReceiptAmount"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:inputType="numberDecimal"/>
+        </TableRow>
+
     </RelativeLayout>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight=".005"
+        android:background="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/bt_pay_receipt_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/bt_pay_receipt_add_print"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="@string/save_print"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/bt_pay_receipt_reprint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="@string/reprint"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/bt_pay_receipt_clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="@string/clear"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7" />
+
+    </LinearLayout>
+
+</LinearLayout>
