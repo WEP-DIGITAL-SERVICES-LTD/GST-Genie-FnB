@@ -274,7 +274,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_CouponId = "CouponId";
 
     // Customer
-    private static final String KEY_CustAddress = "CustAddress";
+    public static final String KEY_CustAddress = "CustAddress";
     private static final String KEY_CustContactNumber = "CustContactNumber";
     //private static final String KEY_CustName = "CustName";
     private static final String KEY_LastTransaction = "LastTransaction";

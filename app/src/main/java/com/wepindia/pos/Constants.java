@@ -7,7 +7,7 @@ package com.wepindia.pos;
 public interface Constants {
 
     // PDF Invoice
-    String PDF_INVOICE_DIRECTORY = "WeP_Retail_Invoices";
+    String PDF_INVOICE_DIRECTORY = "WeP_FnB_Invoices";
 
     //Printer
     public static final String USB_EPSON_PRINTER_NAME = "TM Printer";

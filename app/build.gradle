@@ -74,13 +74,14 @@ dependencies {
     implementation 'com.jaredrummler:material-spinner:1.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.shehabic.droppy:Droppy:0.6.0@aar'
-//    implementation project(path: ':wepbase')
-//    implementation project(path: ':printers')
+    //    implementation project(path: ':wepbase')
+    //    implementation project(path: ':printers')
     implementation files('libs/opencsv-2.3.jar')
     implementation 'com.razorpay:checkout:1.4.9'
     implementation project(':merchantsdk-release')
     implementation 'com.google.firebase:firebase-core:10.2.6'
     implementation 'com.google.firebase:firebase-messaging:10.2.6'
+    implementation files('libs/itextg-5.5.8.jar')
 }
 
 //apply plugin: 'com.google.gms.google-services'
