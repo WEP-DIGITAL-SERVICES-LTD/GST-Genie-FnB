@@ -220,7 +220,10 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        if (getPrinterName(this, "bill").equalsIgnoreCase("Heyday")){
+        if (getPrinterName(this, "bill").equalsIgnoreCase("Heyday")
+                || getPrinterName(this, "kot").equalsIgnoreCase("Heyday")
+                || getPrinterName(this, "report").equalsIgnoreCase("Heyday")
+                || getPrinterName(this, "receipt").equalsIgnoreCase("Heyday")){
             BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if (mBluetoothAdapter == null) {
                 // Device does not support Bluetooth
@@ -233,7 +236,10 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
             }
             registerBroadcast();
             PRINTER_CODE = 2;
-        } else   if (getPrinterName(this, "bill").equalsIgnoreCase("NGX")){
+        } else   if (getPrinterName(this, "bill").equalsIgnoreCase("NGX")
+                || getPrinterName(this, "kot").equalsIgnoreCase("NGX")
+                || getPrinterName(this, "report").equalsIgnoreCase("NGX")
+                || getPrinterName(this, "receipt").equalsIgnoreCase("NGX")){
             try {
                 if (mBtp == null)
                     mBtp = BluetoothPrinter.INSTANCE;

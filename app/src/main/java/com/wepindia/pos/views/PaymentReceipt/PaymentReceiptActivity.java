@@ -172,7 +172,7 @@ public class PaymentReceiptActivity extends WepPrinterBaseActivity implements Pr
 		sharedPreferences = Preferences.getSharedPreferencesForPrint(PaymentReceiptActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
 		editor = sharedPreferences.edit();
 
-		if (getPrinterName(this, "bill").equalsIgnoreCase("NGX")) {
+		if (getPrinterName(this, "receipt").equalsIgnoreCase("NGX")) {
 			mConnectNGX();
 		}
         
@@ -528,12 +528,8 @@ public class PaymentReceiptActivity extends WepPrinterBaseActivity implements Pr
 				Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
 			}
 		} else  if (prf.equalsIgnoreCase("NGX"))  {
-			if(((PaymentReceiptActivity) myContext).isPrinterAvailable) {
-				((PaymentReceiptActivity) myContext).printNGXPaymentReceipt(item, "Invoice");
-				Toast.makeText(myContext, "Payment/Receipt Printed", Toast.LENGTH_SHORT).show();
-			} else {
-				Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
-			}
+			((PaymentReceiptActivity) myContext).printNGXPaymentReceipt(item, "Invoice");
+			Toast.makeText(myContext, "Payment/Receipt Printed", Toast.LENGTH_SHORT).show();
 		} else if (prf.equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)) {
 			String target = Preferences.getSharedPreferencesForPrint(PaymentReceiptActivity.this).getString(prf, "--Select--");
 			BixolonPrinterBaseAcivity bixolon = new BixolonPrinterBaseAcivity();
