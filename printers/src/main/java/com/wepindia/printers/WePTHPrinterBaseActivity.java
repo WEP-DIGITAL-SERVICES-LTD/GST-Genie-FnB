@@ -21,6 +21,9 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wepindia.printers.utils.PrinterUtil;
 import com.wepindia.printers.wep.PrinterConnectionError;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -590,6 +593,21 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
             //esc.addPrintAndFeedLines((byte)2);
             esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
             esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+
+            if (item.getCompanyLogoPath() != null
+                    && !item.getCompanyLogoPath().isEmpty()
+                    && !item.getCompanyLogoPath().equalsIgnoreCase("1234567890")) {
+                InputStream ims = new FileInputStream(item.getCompanyLogoPath());
+//                Bitmap logoData = BitmapFactory.decodeStream(ims);
+
+                Bitmap logoData = ShrinkBitmap(item.getCompanyLogoPath(), 200, 200);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                logoData.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                esc.addRastBitImage(logoData, logoData.getWidth(), 0);
+                esc.addText("\n");
+            }
+
             esc.addText("TAX INVOICE"+item.getIsDuplicate()+"\n");
 
             if (item.getBoldHeader() == 1)

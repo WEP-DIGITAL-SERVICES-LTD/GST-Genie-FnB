@@ -4400,6 +4400,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 tokens[0] = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("GSTIN"));
                                 tokens[1] = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FirmName"));
                                 tokens[2] = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("Address"));
+                                item.setCompanyLogoPath(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex(DatabaseHandler.KEY_TINCIN)));
                             } catch (Exception e) {
                                 tokens[0] = "";
                                 tokens[1] = "";
@@ -4460,6 +4461,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     tokens[0] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("GSTIN"));
                                     tokens[1] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("FirmName"));
                                     tokens[2] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("Address"));
+                                    item.setCompanyLogoPath(crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex(DatabaseHandler.KEY_TINCIN)));
                                 } catch (Exception e) {
                                     tokens[0] = "";
                                     tokens[1] = "";

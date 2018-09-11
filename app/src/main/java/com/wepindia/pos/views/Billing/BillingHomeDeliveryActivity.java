@@ -8037,6 +8037,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                     tokens[0] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("GSTIN"));
                                     tokens[1] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("FirmName"));
                                     tokens[2] = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex("Address"));
+                                    item.setCompanyLogoPath(crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex(DatabaseHandler.KEY_TINCIN)));
                                 } catch (Exception e) {
                                     tokens[0] = "";
                                     tokens[1] = "";

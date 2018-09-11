@@ -411,7 +411,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_USER_DESIGNATION = "Designation";
     private static final String KEY_USER_LOGIN = "LoginId";
     private static final String KEY_USER_ADHAR = "AadhaarNo";
-    private static final String KEY_USER_EMAIL = "Email";
+    public static final String KEY_USER_EMAIL = "Email";
     private static final String KEY_USER_ADDRESS = "Address";
     private static final String KEY_USER_FILE_LOCATION = "FileLocation";
     private static final String KEY_USER_PASS = "Password";
@@ -426,8 +426,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_T_ID = "tId";
     private static final String KEY_BATCH_NO = "batchNo";
     private static final String KEY_VOUCHER_NO = "voucherNo";
-    private static final String KEY_REFERENCE_NO = "refNo";
-    private static final String KEY_BillNoPrefix = "BillNoPrefix";
+    public static final String KEY_REFERENCE_NO = "refNo";
+    public static final String KEY_BillNoPrefix = "BillNoPrefix";
     private static final String KEY_SALES_TYPE = "saleType";
     private static final String KEY_CARD_NO = "cardNo";
 
@@ -8402,24 +8402,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public long addOwnerDetails(String name, String gstin, String phone, String email, String address, String pos, String office, String RefernceNo, String billPrefix)
-    {
+    public long addOwnerDetails(String name, String gstin, String phone,
+                                String email, String address, String pos, String office,
+                                String RefernceNo, String billPrefix, String companyLogoPath) {
         long status = 0;
         ContentValues cvDbValues = new ContentValues();
-        cvDbValues.put(KEY_Owner_Name,name);
-        cvDbValues.put(KEY_GSTIN,gstin);
-        cvDbValues.put(KEY_PhoneNo,phone);
-        cvDbValues.put(KEY_USER_EMAIL,email);
-        cvDbValues.put(KEY_USER_ADDRESS,address);
-        cvDbValues.put(KEY_POS,pos);
-        cvDbValues.put(KEY_IsMainOffice,office);
-        cvDbValues.put(KEY_REFERENCE_NO,RefernceNo);
-        cvDbValues.put(KEY_BillNoPrefix,billPrefix);
+        cvDbValues.put(KEY_Owner_Name, name);
+        cvDbValues.put(KEY_GSTIN, gstin);
+        cvDbValues.put(KEY_PhoneNo, phone);
+        cvDbValues.put(KEY_USER_EMAIL, email);
+        cvDbValues.put(KEY_USER_ADDRESS, address);
+        cvDbValues.put(KEY_POS, pos);
+        cvDbValues.put(KEY_IsMainOffice, office);
+        cvDbValues.put(KEY_REFERENCE_NO, RefernceNo);
+        cvDbValues.put(KEY_BillNoPrefix, billPrefix);
         cvDbValues.put(KEY_FIRM_NAME, name);
-        cvDbValues.put(KEY_DeviceId, "MACID_00");
-        cvDbValues.put(KEY_DeviceName, "TAB2200+");
 
-        cvDbValues.put(KEY_TINCIN, "1234567890");
+        cvDbValues.put(KEY_TINCIN, companyLogoPath);
         cvDbValues.put(KEY_IsMainOffice, "YES");
 
 
@@ -8432,7 +8431,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //Log.d(TAG,"Inserted Successfully with code "+status);
         } catch (Exception e) {
             status = 0;
-            Log.d(TAG,e.toString());
+            Log.e(TAG, e.getMessage());
+        }
+        return status;
+
+    }
+
+    public long updateOwnerCompanyLogo(String companyLogoPath, String gstin) {
+        long status = 0;
+        ContentValues cvDbValues = new ContentValues();
+
+        cvDbValues.put(KEY_TINCIN, companyLogoPath);
+
+        try {
+            status = dbFNB.update(TBL_OWNER_DETAILS, cvDbValues, KEY_GSTIN + " LIKE '" + gstin + "'", null);
+            //Log.d(TAG,"code "+status);
+            if (status > 0) {
+
+            }
+            //Log.d(TAG,"Inserted Successfully with code "+status);
+        } catch (Exception e) {
+            status = 0;
+            Log.e(TAG, e.getMessage());
         }
         return status;
 

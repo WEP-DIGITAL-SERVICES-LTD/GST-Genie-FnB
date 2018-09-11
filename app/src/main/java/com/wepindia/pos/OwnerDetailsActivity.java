@@ -43,6 +43,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
     Spinner spinner1, spinner2;
 
     private boolean mFlag = false;
+    private String strImageUri = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,9 +271,9 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         }
 
         Status = dbHelper.addOwnerDetails(Name.getText().toString(), Gstin.getText().toString().trim().toUpperCase(),
-                Phone.getText().toString(), Email.getText().toString(),
-                Address.getText().toString(), sub,
-                spinner2.getSelectedItem().toString(), RefernceNo.getText().toString(), BillNoPrefix.getText().toString());
+                Phone.getText().toString(), Email.getText().toString(), Address.getText().toString(),
+                spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), RefernceNo.getText().toString(), BillNoPrefix.getText().toString(), "");
+
         if(Status>0){
             Cursor cursor = dbHelper.getOwnerDetail();
             if(cursor!=null && cursor.moveToFirst())

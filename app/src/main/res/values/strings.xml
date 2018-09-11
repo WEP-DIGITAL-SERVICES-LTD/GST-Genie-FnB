@@ -1,6 +1,8 @@
 <resources>
 
-    <string name ="nameValidtaion">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.</string>
+    <string name="nameValidation">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.#</string>
+    <string name="gstinValidation">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="passwordValidation">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.#@</string>
 
     <string name="app_name">GST Genie F</string>
     <string name="hello_world">Hello world!</string>
@@ -14,6 +16,8 @@
     <string name="title_activity_fast_selling_report">FastSellingReportActivity</string>
     <string name="title_activity_upload_file_picker">UploadFilePickerActivity</string>
     <string name="title_activity_tax_config_sub">TaxConfigSubActivity</string>
+    <string name="apply">Apply</string>
+    <string name="remove_logo">Remove Logo</string>
 
     <string name="InwardSupplyEntry"><u>Inward Supply Entry</u></string>
 

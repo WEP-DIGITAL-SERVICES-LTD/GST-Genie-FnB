@@ -76,6 +76,12 @@ public class TabbedSettingsActivity extends WepPrinterBaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        Bundle bundle3=new Bundle();
+        bundle3.putString("REPORT_TYPE", "3");
+        FragmentSettingsOwnerDetail reportFragment3 = new FragmentSettingsOwnerDetail();
+        reportFragment3.setArguments(bundle3);
+        adapter.addFragment(reportFragment3, "Owner Detail");
+
         Bundle bundle1=new Bundle();
         bundle1.putString("REPORT_TYPE", "1");
         FragmentSettingsHeaderFooter reportFragment1 = new FragmentSettingsHeaderFooter();
@@ -106,12 +112,6 @@ public class TabbedSettingsActivity extends WepPrinterBaseActivity {
         FragmentSettingsGST reportFragment5 = new FragmentSettingsGST();
         reportFragment5.setArguments(bundle5);
         adapter.addFragment(reportFragment5, "GST");
-
-        Bundle bundle3=new Bundle();
-        bundle3.putString("REPORT_TYPE", "3");
-        FragmentSettingsDisplayOwnerDetail reportFragment3 = new FragmentSettingsDisplayOwnerDetail();
-        reportFragment3.setArguments(bundle3);
-        adapter.addFragment(reportFragment3, "Owner Detail");
 
         Bundle bundle6=new Bundle();
         bundle6.putString("REPORT_TYPE", "6");

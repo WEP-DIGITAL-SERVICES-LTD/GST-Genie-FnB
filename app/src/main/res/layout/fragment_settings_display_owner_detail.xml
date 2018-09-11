@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_body"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5">
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginTop = "20dp"
+            android:layout_marginBottom = "20dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/TV_Owner_Details"
+                    android:layout_weight="2"
+                    android:textStyle="normal"
+                    android:gravity="center_vertical"
+                    android:text="FIRM NAME*" />
+
+                <EditText
+                    android:id="@+id/et_od_firm_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    style="@style/ET_Owner_Details"
+                    android:hint="Enter Name"
+                    android:singleLine="true"
+                    android:maxLength="50"
+                    android:digits= "@string/nameValidation"
+                    android:gravity="center_vertical"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    style="@style/TV_Owner_Details"
+                    android:text="GSTIN*"
+                    android:gravity="center_vertical"/>
+
+                <EditText
+                    android:id="@+id/et_od_gstin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    style="@style/ET_Owner_Details"
+                    android:hint="eg. 00ABCDE0123A1ZZ"
+                    android:inputType="text"
+                    android:gravity="center_vertical"
+                    android:maxLength="15" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    style="@style/TV_Owner_Details"
+                    android:text="PHONE*"
+                    />
+
+                <EditText
+                    android:id="@+id/et_od_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    style="@style/ET_Owner_Details"
+                    android:hint="eg 9000000001"
+                    android:inputType="number"
+                    android:gravity="center_vertical"
+                    android:maxLength="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    style="@style/TV_Owner_Details"
+                    android:text="E-MAIL*"
+                    />
+
+                <EditText
+                    android:id="@+id/et_od_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    style="@style/ET_Owner_Details"
+                    android:hint="Enter e-mail"
+                    android:gravity="center_vertical"
+                    android:inputType="textEmailAddress" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="ADDRESS*"
+                    style="@style/TV_Owner_Details"
+                    />
+
+                <EditText
+                    android:id="@+id/et_od_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxLength="80"
+                    style="@style/ET_Owner_Details"
+                    android:hint="Enter Address"
+                    android:gravity="center_vertical"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    style="@style/TV_Owner_Details"
+                    android:text="BillNo Prefix"
+                    />
+
+                <EditText
+                    android:id="@+id/et_od_bill_no_prefix"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/ET_Owner_Details"
+                    android:layout_weight="1"
+                    android:hint="eg ABCD"
+                    android:inputType="text"
+                    android:gravity="center_vertical"
+                    android:digits="@string/nameValidation"
+                    android:maxLength="8" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    style="@style/TV_Owner_Details"
+                    android:text="POS*"
+                    />
+
+                <Spinner
+                    android:id="@+id/sp_od_pos"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:entries="@array/poscode"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    style="@style/TV_Owner_Details"
+                    android:text="Reference No"
+                    />
+
+                <EditText
+                    android:id="@+id/et_od_reference_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    style="@style/ET_Owner_Details"
+                    android:digits="@string/nameValidation"
+                    android:gravity="center_vertical"
+                    android:inputType="text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="IS MAIN OFFICE"
+                    />
+
+                <Spinner
+                    android:id="@+id/sp_od_is_main_office"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_browse_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/ic_image_blank"/>
+
+            <ImageButton
+                android:id="@+id/bt_browse_image"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="3dp"
+                android:background="#E0E0E0"
+                android:gravity="left|center_vertical"
+                android:src="@drawable/ic_photo_camera_black_24dp"
+                android:padding="6dp"/>
+            <!-- <Button
+                 android:id="@+id/bt_browse_image"
+                 android:layout_width="100dp"
+                 android:layout_height="30dp"
+                 android:text=" edit image"
+                 android:textSize="12dp"
+                 android:layout_marginTop="3dp"
+                 android:background="#E0E0E0"
+                 android:textAllCaps="false"
+                 android:textColor="@color/black"
+                 android:gravity="left|center_vertical"
+                 android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+                 android:padding="6dp"/>-->
+
+            <TextView
+                style="@style/TV_Owner_Details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Company Logo"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvOtherSettingHLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@+id/boxBtn"
+        android:background="#000000" />
+
+    <LinearLayout
+        android:layout_weight=".1"
+        android:id="@+id/ll_od_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:background="@drawable/background_btn"
+                android:id="@+id/bt_od_apply"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="@string/apply"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"/>
+
+            <!--  <Button
+                  android:id="@+id/bt_browse_image"
+                  style="@style/Button_Login"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight=".6"
+                  android:text="@string/browse_image_company_logo" />-->
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight=".5" />
+
+            <Button
+                android:background="@drawable/background_btn"
+                android:id="@+id/bt_remove_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="@string/remove_logo"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:visibility="gone"
+                android:id="@+id/image_path"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
