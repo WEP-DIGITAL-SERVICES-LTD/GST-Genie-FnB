@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 
+import com.gprinter.command.EscCommand;
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -35,11 +36,12 @@ public class FragmentSettingsOther extends Fragment {
     RadioButton rbHeaderBoldEnable, rbHeaderBoldDisable;
     RadioButton rbPrintServiceEnable, rbPrintServiceDisable;
     RadioButton rbBillAmountRoundOffEnable, rbBillAmountRoundOffDisable;
-    Button btnApply, btnClose;
+    RadioButton rbJurisdictionsEnable, rbJurisdictionsDisable;
     RadioButton rbCummulativeHeadingEnable, rbCummulativeHeadingDisable; // richa_2012
     RadioButton rbTableSplitingEnable, rbTableSplitingDisable;
     BillSetting objBillSettings = new BillSetting();
     Button btnApplyOtherSettings,btnCloseOtherSettings;
+    Button btnApply, btnClose;
 
 
     public FragmentSettingsOther() {
@@ -145,6 +147,9 @@ public class FragmentSettingsOther extends Fragment {
         //richa_2012
         rbCummulativeHeadingEnable = (RadioButton) view.findViewById(R.id.rbCummulativeHeadingEnable);
         rbCummulativeHeadingDisable = (RadioButton) view.findViewById(R.id.rbCummulativeHeadingDisable);
+
+        rbJurisdictionsEnable = (RadioButton) view.findViewById(R.id.rbJurisdictionsEnable);
+        rbJurisdictionsDisable = (RadioButton) view.findViewById(R.id.rbJurisdictionsDisable);
 
         rbEnvironment_Production = (RadioButton) view.findViewById(R.id.rbEnvironment_Production);
         rbEnvironment_Demo = (RadioButton) view.findViewById(R.id.rbEnvironment_Demo);
@@ -257,6 +262,13 @@ public class FragmentSettingsOther extends Fragment {
                 rbCummulativeHeadingDisable.setChecked(true);
             }
 
+            // Jurisdictions Enable
+            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS_STATUS)) == 1) {
+                rbJurisdictionsEnable.setChecked(true);
+            } else {
+                rbJurisdictionsDisable.setChecked(true);
+            }
+
             // Fast Billing Mode
             if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("Environment")) == 1) {
                 rbEnvironment_Production.setChecked(true);
@@ -309,7 +321,7 @@ public class FragmentSettingsOther extends Fragment {
         int iKOT = 0, iToken = 0, iKitchen = 0;
         int iOtherChargesItemwise = 0, iOtherChargesBillwise = 0, iRestoreDefault = 0;
         int fastBillingMode = 0, iItemNoReset = 0, iPrintPreview = 0, iTableSpliting = 0;
-        int CummulativeHeadingEnable = 0; //richa_2012
+        int CummulativeHeadingEnable = 0, Jurisdiction = 0; //richa_2012
         int environment =1;
         int printOwnerDetail = 0, boldHeader = 0, printService = 0, billAmountRounfOff = 0;
 
@@ -389,10 +401,18 @@ public class FragmentSettingsOther extends Fragment {
         // richa_2012
         // CuumulativeHeading Enable
         if (rbCummulativeHeadingEnable.isChecked() == true) {
-            CummulativeHeadingEnable = 1;
+            Jurisdiction = 1;
         } else {
-            CummulativeHeadingEnable = 0;
+            Jurisdiction = 0;
         }
+
+        // Jurisdictions Enable
+        if (rbJurisdictionsEnable.isChecked() == true) {
+            Jurisdiction = 1;
+        } else {
+            Jurisdiction = 0;
+        }
+
         // Fast Billing Mode
         if (rbEnvironment_Production.isChecked() == true) {
             environment = 1;
@@ -451,6 +471,7 @@ public class FragmentSettingsOther extends Fragment {
         objBillSettings.setPrintPreview(iPrintPreview);
         objBillSettings.setTableSpliting(iTableSpliting);
         objBillSettings.setCummulativeHeadingEnable(CummulativeHeadingEnable); // richa_2012
+        objBillSettings.setiJurisdictionsPrintStatus(Jurisdiction);
         objBillSettings.setEnvironment(environment);
 
         objBillSettings.setPrintOwnerDetail(printOwnerDetail);

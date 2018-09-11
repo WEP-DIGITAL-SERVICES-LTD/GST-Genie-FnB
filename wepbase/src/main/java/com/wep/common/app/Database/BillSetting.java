@@ -34,7 +34,7 @@ public class BillSetting {
 	int idinein, icountersales, ipickup, ihomedelivery, GSTEnable;
 	int fastBillingMode, iItemNoReset, iPrintPreview;
 	int CummulativeHeadingEnable ; // richa_2012
-	int iTableSpliting;
+	int iTableSpliting, iJurisdictionsPrintStatus;
 	int PrintOwnerDetail, BoldHeader, PrintService;
 	int GSTIN, GSTIN_out, POS, POS_out, HSNCode, HSNCode_out, ReverseCharge, ReverseCharge_out;
     int UTGSTEnabled_out , Environment, HSNPrintenabled_out;
@@ -68,6 +68,7 @@ public class BillSetting {
 		this.strDineIn1Caption = "";
 		this.strDineIn2Caption = "";
 		this.strDineIn3Caption = "";
+		this.iJurisdictionsPrintStatus = 0;
 
 		this.iLoginWith = 0;
 		this.iDateAndTime = 0;
@@ -129,7 +130,7 @@ public class BillSetting {
 					   int ihomedelivery, int GSTEnable, int fastBillingMode, int iItemNoReset, int iPrintPreview,
 					   int cummulativeHeadingEnable, int iTableSpliting, int printOwnerDetail, int boldHeader,
 					   int printService, int GSTIN, int GSTIN_out, int POS, int POS_out, int HSNCode, int HSNCode_out,
-					   int reverseCharge, int reverseCharge_out, int UTGSTEnabled_out, int environment, int HSNPrintenabled_out) {
+					   int reverseCharge, int reverseCharge_out, int UTGSTEnabled_out, int environment, int HSNPrintenabled_out, int iJurisdictionsPrintStatus) {
 		this.strBusinessDate = strBusinessDate;
 		this.strHeaderText = strHeaderText;
 		this.strFooterText = strFooterText;
@@ -196,6 +197,15 @@ public class BillSetting {
 		this.UTGSTEnabled_out = UTGSTEnabled_out;
 		Environment = environment;
 		this.HSNPrintenabled_out = HSNPrintenabled_out;
+		this.iJurisdictionsPrintStatus = iJurisdictionsPrintStatus;
+	}
+
+	public int getiJurisdictionsPrintStatus() {
+		return iJurisdictionsPrintStatus;
+	}
+
+	public void setiJurisdictionsPrintStatus(int iJurisdictionsPrintStatus) {
+		this.iJurisdictionsPrintStatus = iJurisdictionsPrintStatus;
 	}
 
 	public int getBillAmountRounfOff() {

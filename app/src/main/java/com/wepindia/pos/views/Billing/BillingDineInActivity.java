@@ -186,7 +186,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     double dFinalBillValue=0;
     double fWalletPayment = 0;
     double dServiceTaxPercent = 0, dOtherChrgs = 0;
-    String strPaymentStatus = "", strMakeOrder = "";
+    String strPaymentStatus = "", strMakeOrder = "", strJurisdictionsPrint = "";
     Date d;
     int PrintBillPayment = 0;
     AutoCompleteTextView aTViewSearchItem, aTViewSearchMenuCode,autoCompleteTextViewSearchItemBarcode;
@@ -197,7 +197,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
     TextView tvHSNCode_out;
     Date strDate_date;
-    int tableSplit =0;
+    int tableSplit =0, JURISDICTIONS_PRINT_STATUS = 0;
     float fTotalsubTaxPercent = 0;
     Button btndepart, btncateg, btnitem;
     TextView tvdeptline, tvcategline,tvcessValue;
@@ -357,6 +357,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
                 ItemwiseDiscountEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("DiscountType"));
                 tableSplit = crsrSettings.getInt(crsrSettings.getColumnIndex("TableSpliting"));
+
+                JURISDICTIONS_PRINT_STATUS = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS_STATUS));
+
+                if (crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS)) != null)
+                    strJurisdictionsPrint = crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS));
 
                 isForwardTaxEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("Tax"));
 
@@ -8618,9 +8623,9 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     else
                         pdfItem.setTrainingMode(false);
 
-                    /*if (JURISDICTIONS_PRINT_STATUS == 1 && strJurisdictionsPrint != null)
+                    if (JURISDICTIONS_PRINT_STATUS == 1 && strJurisdictionsPrint != null)
                         pdfItem.setStrJurisdictionsPrint(strJurisdictionsPrint);
-                    else*/
+                    else
                         pdfItem.setStrJurisdictionsPrint("");
 
                     Cursor crsrHeaderFooterSetting = null;

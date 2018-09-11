@@ -24,6 +24,21 @@
     <string name="online_order_no">Online Order No</string>
     <string name="online_order_no_alpha_numeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
 
+    <!-- Header & footer fragment strings -->
+    <string name="header_text">Header Text</string>
+    <string name="footer_text">Footer Text</string>
+    <string name="header_text_line_one">Header Text Line 1</string>
+    <string name="header_text_line_two">Header Text Line 2</string>
+    <string name="header_text_line_three">Header Text Line 3</string>
+    <string name="header_text_line_four">Header Text Line 4</string>
+    <string name="header_text_line_five">Header Text Line 5</string>
+    <string name="footer_text_line_one">Footer Text Line 1</string>
+    <string name="footer_text_line_two">Footer Text Line 2</string>
+    <string name="footer_text_line_three">Footer Text Line 3</string>
+    <string name="footer_text_line_four">Footer Text Line 4</string>
+    <string name="footer_text_line_five">Footer Text Line 5</string>
+    <string name="jurisdictions_text">Jurisdictions Text</string>
+
     <string-array name="supplier_types">
         <item>Supplier Type</item>
         <item>Registered</item>

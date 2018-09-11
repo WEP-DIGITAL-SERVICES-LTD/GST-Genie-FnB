@@ -1065,12 +1065,18 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
                 HSNPRINTENABLED = crsrSettings.getInt(crsrSettings.getColumnIndex("HSNPrintEnabled_out"));
                 UTGSTENABLED = crsrSettings.getInt(crsrSettings.getColumnIndex("UTGSTEnabled"));
+
+                if (crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS)) != null)
+                    strJurisdictionsPrint = crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS));
+
                 if(UTGSTENABLED ==1)
                     tvServiceTax_text.setText("UTGST-Tax :");
                 else
                     tvServiceTax_text.setText("SGST-Tax :");
 
                 isForwardTaxEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("Tax"));
+
+                JURISDICTIONS_PRINT_STATUS = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS_STATUS));
 
                 if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
                     REVERSETAX = true;

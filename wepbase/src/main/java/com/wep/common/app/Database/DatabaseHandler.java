@@ -209,16 +209,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DineIn2To = "DineIn2To";
     private static final String KEY_DineIn3From = "DineIn3From";
     private static final String KEY_DineIn3To = "DineIn3To";
-    private static final String KEY_FooterText1 = "FooterText1";
-    private static final String KEY_FooterText2 = "FooterText2";
-    private static final String KEY_FooterText3 = "FooterText3";
-    private static final String KEY_FooterText4 = "FooterText4";
-    private static final String KEY_FooterText5 = "FooterText5";
-    private static final String KEY_HeaderText1 = "HeaderText1";
-    private static final String KEY_HeaderText2 = "HeaderText2";
-    private static final String KEY_HeaderText3 = "HeaderText3";
-    private static final String KEY_HeaderText4 = "HeaderText4";
-    private static final String KEY_HeaderText5 = "HeaderText5";
+    public static final String KEY_FooterText1 = "FooterText1";
+    public static final String KEY_FooterText2 = "FooterText2";
+    public static final String KEY_FooterText3 = "FooterText3";
+    public static final String KEY_FooterText4 = "FooterText4";
+    public static final String KEY_FooterText5 = "FooterText5";
+    public static final String KEY_HeaderText1 = "HeaderText1";
+    public static final String KEY_HeaderText2 = "HeaderText2";
+    public static final String KEY_HeaderText3 = "HeaderText3";
+    public static final String KEY_HeaderText4 = "HeaderText4";
+    public static final String KEY_HeaderText5 = "HeaderText5";
+    public static final String KEY_JURISDICTIONS = "jurisdictions";
+    public static final String KEY_JURISDICTIONS_STATUS = "jurisdictions_status";
     private static final String KEY_KOTType = "KOTType";
     private static final String KEY_MaximumTables = "MaximumTables";
     private static final String KEY_MaximumWaiters = "MaximumWaiters";
@@ -1155,6 +1157,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_HeaderText3 + " TEXT, "
             + KEY_HeaderText4 + " TEXT, "
             + KEY_HeaderText5 + " TEXT, "
+            + KEY_JURISDICTIONS_STATUS + " NUMERIC,"
+            + KEY_JURISDICTIONS + " TEXT,"
             + KEY_KOTType + " NUMERIC, "
             + KEY_MaximumTables + " NUMERIC, "
             + KEY_MaximumWaiters + " NUMERIC, "
@@ -1562,6 +1566,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     }
                 } catch (Exception ex) {
                     Log.i(TAG, "Error on alter table Payment Receipt on real field paytm wallet." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_BILLSETTING + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_BILLSETTING, KEY_JURISDICTIONS)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_BILLSETTING + " ADD COLUMN " + KEY_JURISDICTIONS + " TEXT ");
+                        }
+                        if (!existsColumnInTable(db, TBL_BILLSETTING, KEY_JURISDICTIONS_STATUS)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_BILLSETTING + " ADD COLUMN " + KEY_JURISDICTIONS_STATUS + " NUMERIC DEFAULT 0 ");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_BILLSETTING);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
                 } finally {
                     if (cursorUpgrade != null) {
                         cursorUpgrade.close();
@@ -3149,7 +3174,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }*/
     // Temp functions - Header-Footer Text update
     public int updateHeaderFooterText(String strHeader1, String strHeader2, String strHeader3, String strHeader4, String strHeader5,
-                                      String strFooter1, String strFooter2, String strFooter3, String strFooter4, String strFooter5) {
+                                      String strFooter1, String strFooter2, String strFooter3, String strFooter4, String strFooter5,
+                                      String strJurisdictions) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("FooterText1", strFooter1);
         contentValues.put("FooterText2", strFooter2);
@@ -3161,6 +3187,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put("HeaderText3", strHeader3);
         contentValues.put("HeaderText4", strHeader4);
         contentValues.put("HeaderText5", strHeader5);
+        contentValues.put(KEY_JURISDICTIONS, strJurisdictions);
         return dbFNB.update(TBL_BILLSETTING, contentValues, null, null);
     }
 
@@ -3249,6 +3276,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HeaderBold, objBillSetting.getBoldHeader());
         cvDbValues.put(KEY_PrintService, objBillSetting.getPrintService());
         cvDbValues.put(KEY_BillAmountRoundOff, objBillSetting.getBillAmountRounfOff());
+        cvDbValues.put(KEY_JURISDICTIONS_STATUS, objBillSetting.getiJurisdictionsPrintStatus());
 
         return dbFNB.update(TBL_BILLSETTING, cvDbValues, null, null);
     }

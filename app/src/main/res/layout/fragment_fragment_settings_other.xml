@@ -221,7 +221,31 @@
                                     android:text="Disable" />
                             </RadioGroup>
 
+                            <TextView
+                                android:id="@+id/tvJurisdictions"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Jurisdictions Print" />
 
+                            <RadioGroup
+                                android:id="@+id/rgJurisdictions"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rbJurisdictionsEnable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Enable" />
+
+                                <RadioButton
+                                    android:id="@+id/rbJurisdictionsDisable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Disable" />
+                            </RadioGroup>
 
                         </LinearLayout>
                     </FrameLayout>

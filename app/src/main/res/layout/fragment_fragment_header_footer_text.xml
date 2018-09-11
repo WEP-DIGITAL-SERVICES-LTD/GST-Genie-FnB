@@ -1,238 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="600dp"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/boxBtn"
-        android:layout_marginTop="60dp"
-        android:layout_centerHorizontal="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.4"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:stretchColumns="*">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:id="@+id/tv_header"
-                android:textStyle="bold"
-                android:text="Header Text Line 1"/>
-
-            <EditText
-                android:id="@+id/headerText1"
-                android:layout_toEndOf="@id/tv_header"
-                android:layout_alignBaseline="@id/tv_header"
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                android:hint="Header Text"
-                android:inputType="text"
-                android:maxLines="1"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textStyle="bold"
-                android:layout_marginTop="30dp"
-                android:layout_below="@+id/tv_header"
-                android:id="@+id/tv_headerline2"
-                android:text="Header Text Line 2"/>
+                <TextView
+                    android:id="@+id/tv_header"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/header_text_line_one" />
 
-            <EditText
-                android:id="@+id/headerText2"
-                android:layout_toEndOf="@id/tv_headerline2"
-                android:layout_alignBaseline="@id/tv_headerline2"
+                <EditText
+                    android:id="@+id/et_settings_header_text_one"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/header_text"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                android:hint="Header Text"
-                android:layout_below="@+id/headerText1"
-                android:inputType="text"
-                android:maxLines="1"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textStyle="bold"
-                android:layout_marginTop="30dp"
-                android:layout_below="@+id/tv_headerline2"
-                android:id="@+id/tv_headerline3"
-                android:text="Header Text Line 3"/>
+                <TextView
+                    android:id="@+id/tv_headerline2"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/header_text_line_two" />
 
-            <EditText
-                android:id="@+id/headerText3"
-                android:layout_toEndOf="@id/tv_headerline3"
-                android:layout_alignBaseline="@id/tv_headerline3"
+                <EditText
+                    android:id="@+id/et_settings_header_text_two"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/header_text"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                android:hint="Header Text"
-                android:layout_below="@+id/headerText2"
-                android:inputType="text"
-                android:maxLines="1"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:layout_marginTop="30dp"
-                android:layout_below="@+id/tv_headerline3"
-                android:id="@+id/tv_headerline4"
-                android:text="Header Text Line 4" />
+                <TextView
+                    android:id="@+id/tv_headerline3"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/header_text_line_three" />
 
-            <EditText
-                android:id="@+id/headerText4"
-                android:layout_toEndOf="@id/tv_headerline4"
-                android:layout_alignBaseline="@id/tv_headerline4"
+                <EditText
+                    android:id="@+id/et_settings_header_text_three"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/header_text"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                android:hint="Header Text"
-                android:layout_below="@+id/headerText3"
-                android:inputType="text"
-                android:maxLines="1"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:layout_marginTop="30dp"
-                android:layout_below="@+id/tv_headerline4"
-                android:id="@+id/tv_headerline5"
-                android:text="Header Text Line 5"/>
+                <TextView
+                    android:id="@+id/tv_headerline4"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/header_text_line_four" />
 
-            <EditText
-                android:id="@+id/headerText5"
-                android:layout_toEndOf="@id/tv_headerline5"
-                android:layout_alignBaseline="@id/tv_headerline5"
+                <EditText
+                    android:id="@+id/et_settings_header_text_four"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/header_text"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                android:hint="Header Text"
-                android:layout_below="@+id/headerText4"
-                android:inputType="text"
-                android:maxLines="1"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Footer Text Line 1"
-                android:id="@+id/tv_footer1"
-                android:layout_below="@id/tv_headerline5"
-                android:layout_marginTop="30dp"/>
+                <TextView
+                    android:id="@+id/tv_headerline5"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/header_text_line_five" />
 
-            <EditText
-                android:id="@+id/addressLineFooter1"
+                <EditText
+                    android:id="@+id/et_settings_header_text_five"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/header_text"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tv_footer1"
-                android:layout_alignBaseline="@id/tv_footer1"
-                android:layout_below="@+id/headerText5"
-                android:layout_margin="40dp"
-                android:hint="Footer Text"
-                android:lines="5"
-                android:singleLine="true"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Footer Text Line 2"
-                android:id="@+id/tv_footer2"
-                android:layout_below="@id/tv_footer1"
-                android:layout_marginTop="30dp"/>
+                <TextView
+                    android:id="@+id/tv_footer1"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/footer_text_line_one" />
 
-            <EditText
-                android:id="@+id/addressLineFooter2"
+                <EditText
+                    android:id="@+id/et_settings_Footer_one"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/footer_text"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tv_footer2"
-                android:layout_alignBaseline="@id/tv_footer2"
-                android:layout_below="@+id/addressLineFooter1"
-                android:layout_margin="40dp"
-                android:hint="Footer Text"
-                android:lines="5"
-                android:singleLine="true"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Footer Text Line 3"
-                android:id="@+id/tv_footer3"
-                android:layout_below="@id/tv_footer2"
-                android:layout_marginTop="30dp"/>
+                <TextView
+                    android:id="@+id/tv_footer2"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/footer_text_line_two" />
 
-            <EditText
-                android:id="@+id/addressLineFooter3"
+                <EditText
+                    android:id="@+id/et_settings_Footer_two"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/footer_text"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tv_footer3"
-                android:layout_alignBaseline="@id/tv_footer3"
-                android:layout_below="@+id/addressLineFooter2"
-                android:layout_margin="40dp"
-                android:hint="Footer Text"
-                android:lines="5"
-                android:singleLine="true"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Footer Text Line 4"
-                android:id="@+id/tv_footer4"
-                android:layout_below="@id/tv_footer3"
-                android:layout_marginTop="30dp"/>
+                <TextView
+                    android:id="@+id/tv_footer3"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/footer_text_line_three" />
 
-            <EditText
-                android:id="@+id/addressLineFooter4"
+                <EditText
+                    android:id="@+id/et_settings_Footer_three"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/footer_text"
+                    android:inputType="text" />
+            </TableRow>
+
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tv_footer4"
-                android:layout_alignBaseline="@id/tv_footer4"
-                android:layout_below="@+id/addressLineFooter3"
-                android:layout_margin="40dp"
-                android:hint="Footer text"
-                android:lines="5"
-                android:singleLine="true"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Footer Text Line 5"
-                android:id="@+id/tv_footer5"
-                android:layout_below="@id/tv_footer4"
-                android:layout_marginTop="30dp"/>
+                <TextView
+                    android:id="@+id/tv_footer4"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
 
-            <EditText
-                android:id="@+id/addressLineFooter5"
+                    android:text="@string/footer_text_line_four" />
+
+                <EditText
+                    android:id="@+id/et_settings_Footer_four"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/footer_text"
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tv_footer5"
-                android:layout_alignBaseline="@id/tv_footer5"
-                android:layout_below="@+id/addressLineFooter4"
-                android:layout_margin="40dp"
-                android:hint="Footer Text"
-                android:lines="5"
-                android:singleLine="true"
-                android:imeOptions="flagNoExtractUi" />
+                android:layout_margin="5dp">
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_footer5"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/footer_text_line_five" />
+
+                <EditText
+                    android:id="@+id/et_settings_Footer_five"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/footer_text"
+                    android:inputType="text" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/tv_jurisdictions"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/jurisdictions_text" />
+
+                <EditText
+                    android:id="@+id/et_settings_jurisdictions"
+                    style="@style/ET_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:hint="@string/jurisdictions_text"
+                    android:inputType="text"
+                    android:maxLength="150"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:id="@+id/tv_jurisdictions_text_count"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:textSize="15dp"/>
+
+            </TableRow>
+
+
+        </TableLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.4"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -240,14 +302,26 @@
         android:layout_above="@+id/boxBtn"
         android:background="#000000" />
 
-    <RelativeLayout
-        android:id="@+id/boxBtn"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="@dimen/_5dp_720dp_4dp_600dp">
+        android:layout_height="0dp"
+        android:layout_weight=".1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvOtherSettingHLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/boxBtn"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnApplyHeaderFooter"
@@ -274,5 +348,6 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
             android:theme="@style/WepButtonWithMarigin" />
-    </RelativeLayout>
-</RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
