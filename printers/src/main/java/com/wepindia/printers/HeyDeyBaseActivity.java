@@ -1660,7 +1660,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
             stringBuilder.append("================================================"+"\n");
             stringBuilder.append("Deposit Date    : "+item.getBusinessDate()+"\n");
             stringBuilder.append("Customer Name   : "+item.getStrCustName()+"\n");
-            stringBuilder.append("Mobile No.      : "+item.getStrCustContactNumber()+"\n");
+            stringBuilder.append("Mobile No.      : "+item.getStrCustPhone()+"\n");
             stringBuilder.append("Deposit Amount  : "+item.getDblDepositAmt()+"\n");
             stringBuilder.append("Credit Amount   : "+item.getdCreditAmount()+"\n");
             stringBuilder.append("================================================"+"\n");

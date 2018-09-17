@@ -1193,7 +1193,7 @@ public class TVSPrinterBaseActivity extends WepBaseActivity {
                     PRINTER_LINE_HEIGHT, TestPrintInfo.TEXT_HORIZONTAL_TIME1,
                     TestPrintInfo.TEXT_VERTICAL_TIME1);
 
-            iPrintStatus = testprint.TestPrintText(pos_usb, PRINT_MODE_STANDARD, "Mobile No.      : " + item.getStrCustContactNumber() + "\n",
+            iPrintStatus = testprint.TestPrintText(pos_usb, PRINT_MODE_STANDARD, "Mobile No.      : " + item.getStrCustPhone() + "\n",
                     TestPrintInfo.POS_FONT_TYPE_COMPRESSED,
                     TestPrintInfo.POS_FONT_STYLE_NORMAL,
                     ConstantDefine.TextAlignmentLeft,

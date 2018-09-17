@@ -17,7 +17,10 @@ package com.wepindia.pos.views.Customer;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -45,40 +48,51 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bixolon.printer.BixolonPrinter;
+import com.epson.epos2.printer.Printer;
 import com.wep.common.app.Database.Customer;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
+import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
+import com.wepindia.pos.Constants;
 import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.GSTINValidation;
+import com.wepindia.pos.views.Billing.BillingCounterSalesActivity;
+import com.wepindia.printers.BixolonPrinterBaseAcivity;
+import com.wepindia.printers.EPSONPrinterBaseActivity;
+import com.wepindia.printers.TVSPrinterBaseActivity;
+import com.wepindia.printers.WePTHPrinterBaseActivity;
+import com.wepindia.printers.WepPrinterBaseActivity;
+import com.wepindia.printers.wep.PrinterConnectionError;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-public class CustomerDetailActivity extends WepBaseActivity {
+public class CustomerDetailActivity extends WepPrinterBaseActivity implements PrinterConnectionError {
 
     // Context object
     Context myContext;
-
-
-
     // DatabaseHandler object
     DatabaseHandler dbCustomer = new DatabaseHandler(CustomerDetailActivity.this);
     // MessageDialog object
     MessageDialog MsgBox;
     List<String> labelsItemName = null;
     // View handlers
-    EditText txtName, txtPhone, txtAddress, txtSearchPhone, txtCreditAmount ,txGSTIN, txtCustomerCreditLimit;
-    WepButton btnAdd, btnEdit,btnClearCustomer,btnCloseCustomer;
+    EditText txtName, txtPhone, txtAddress, txtSearchPhone, txtCreditAmount ,txGSTIN, txtCustomerCreditLimit, etCreditDepositAmt;
+    TextView tvCustomerDepositAmt;
+    WepButton btnAdd, btnEdit,btnClearCustomer,btnCloseCustomer, btnEditPrint;
     TableLayout tblCustomer;
     AutoCompleteTextView txtSearchName;
     TextView tv_CustomerDetailMsg;
     String upon_rowClick_Phn = "";
     // Variables
-    String Id, Name, Phone, Address, LastTransaction, TotalTransaction, CreditAmount, strUserName = "", strCustGSTIN ="";
+    String Id, Name, Phone, Address, LastTransaction, TotalTransaction, CreditAmount, DepositAmount, strUserName = "", strCustGSTIN ="";
     private Toolbar toolbar;
 
     private float mHeadingTextSize;
@@ -96,6 +110,16 @@ public class CustomerDetailActivity extends WepBaseActivity {
     private final static int mSamsungT561ScreenResolutionWidth = 800;
     private final static int mDataMiniScreenResolutionWidth = 752;
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    TVSPrinterBaseActivity tvsPrinterBaseActivity;
+
+    public boolean isPrinterAvailable = false;
+
+    String BUSINESS_DATE = "";
+    int BOLD_HEADER = 0;
+
     private TextView mItemNameTextView;
     private TextView mHSNTextView;
     private TextView mQuantityTextView;
@@ -103,6 +127,43 @@ public class CustomerDetailActivity extends WepBaseActivity {
     private TextView mAmountTextView;
     private TextView mDeleteTextView;
 
+
+    @Override
+    public void onConfigurationRequired() {
+
+    }
+
+    @Override
+    public void onPrinterAvailable(int flag) {
+        if(flag == 2)
+        {
+//                btn_PrintBill.setEnabled(false);
+//                btn_Reprint.setEnabled(false);
+            SetPrinterAvailable(false);
+        }
+        else if(flag == 5)
+        {
+//                btn_PrintBill.setEnabled(true);
+//                btn_Reprint.setEnabled(true);
+            SetPrinterAvailable(true);
+        }
+        else if(flag == 0)
+        {
+//                btn_PrintBill.setEnabled(true);
+//                btn_Reprint.setEnabled(true);
+            SetPrinterAvailable(false);
+        }
+    }
+
+    public void SetPrinterAvailable(boolean flag) {
+        String status="Offline";
+        if(flag)
+            status = "Available";
+        Toast.makeText(CustomerDetailActivity.this, "Bill Printer Status : " + status, Toast.LENGTH_SHORT).show();
+        isPrinterAvailable = flag;
+        //btn_PrintBill.setEnabled(true);
+        //btn_Reprint.setEnabled(true);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,6 +175,10 @@ public class CustomerDetailActivity extends WepBaseActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sharedPreferences = Preferences.getSharedPreferencesForPrint(CustomerDetailActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        initSettingsData();
 
         myContext = this;
         MsgBox = new MessageDialog(myContext);
@@ -136,14 +201,18 @@ public class CustomerDetailActivity extends WepBaseActivity {
             txtPhone = (EditText) findViewById(R.id.etCustomerPhone);
             txtCreditAmount = (EditText) findViewById(R.id.etCreditAmount);
             txtCustomerCreditLimit = (EditText) findViewById(R.id.etCreditCreditLimit);
+            etCreditDepositAmt = (EditText) findViewById(R.id.etCreditDepositAmt);
+            tvCustomerDepositAmt = (TextView) findViewById(R.id.tvCustomerDepositAmt);
             txtCreditAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
             txtCustomerCreditLimit.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
+            etCreditDepositAmt.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
             txtSearchName = (AutoCompleteTextView) findViewById(R.id.etSearchCustomerName);
             txtSearchPhone = (EditText) findViewById(R.id.etSearchCustomerPhone);
             txGSTIN = (EditText) findViewById(R.id.etCustomerGSTIN);
 
             btnAdd = (WepButton) findViewById(R.id.btnAddCustomer);
             btnEdit = (WepButton) findViewById(R.id.btnEditCustomer);
+            btnEditPrint = (WepButton) findViewById(R.id.btnEditPrintCustomer);
             btnClearCustomer = (WepButton) findViewById(R.id.btnClearCustomer);
             btnCloseCustomer = (WepButton) findViewById(R.id.btnCloseCustomer);
 
@@ -156,7 +225,13 @@ public class CustomerDetailActivity extends WepBaseActivity {
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EditCustomer(v);
+                    EditCustomer(v, false);
+                }
+            });
+            btnEditPrint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditCustomer(v, true);
                 }
             });
             btnClearCustomer.setOnClickListener(new View.OnClickListener() {
@@ -436,6 +511,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
 
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
+                                btnEditPrint.setEnabled(true);
                             }
                         }
                     });
@@ -565,6 +641,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
 
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
+                                btnEditPrint.setEnabled(true);
                             }
                         }
                     });
@@ -693,8 +770,12 @@ public class CustomerDetailActivity extends WepBaseActivity {
                                 txtCustomerCreditLimit.setText(rowCreditLimit.getText());
                                 txGSTIN.setText(gstin.getText().toString());
 
+                                tvCustomerDepositAmt.setVisibility(View.VISIBLE);
+                                etCreditDepositAmt.setVisibility(View.VISIBLE);
+
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
+                                btnEditPrint.setEnabled(true);
                             }
                         }
                     });
@@ -776,11 +857,11 @@ public class CustomerDetailActivity extends WepBaseActivity {
     }
 
     private void InsertCustomer(String strAddress, String strContactNumber, String strName, double fLastTransaction,
-                                double fTotalTransaction, double fCreditAmount, String gstin, double creditLimit) {
+                                double fTotalTransaction, double fCreditAmount, String gstin, double creditLimit, double depositAmount) {
         long lRowId;
 
         Customer objCustomer = new Customer(strAddress, strName, strContactNumber, fLastTransaction, fTotalTransaction,
-                fCreditAmount, gstin,creditLimit);
+                fCreditAmount, gstin,creditLimit, depositAmount);
 
         lRowId = dbCustomer.addCustomer(objCustomer);
 
@@ -803,6 +884,9 @@ public class CustomerDetailActivity extends WepBaseActivity {
         txtAddress.setText("");
         txtCreditAmount.setText("0.00");
         txtCustomerCreditLimit.setText("0.00");
+        tvCustomerDepositAmt.setVisibility(View.GONE);
+        etCreditDepositAmt.setVisibility(View.GONE);
+        etCreditDepositAmt.setText("0.00");
         txtSearchPhone.setText("");
         txtSearchName.setText("");
         txGSTIN.setText("");
@@ -812,7 +896,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
         tv_CustomerDetailMsg.setVisibility(View.GONE);
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
-
+        btnEditPrint.setEnabled(false);
     }
 
 
@@ -846,13 +930,16 @@ public class CustomerDetailActivity extends WepBaseActivity {
                         return;
                     }
                     else{
+
+                        double dDepositamount = 0.00;
+
                         double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("") ? 0.00 :
                                 Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
 
                         double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("") ? 0.00 :
                                 Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
 
-                        InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount, GSTIN, dCreditLimit);
+                        InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount + dDepositamount, GSTIN, dCreditLimit, dDepositamount);
                         Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
                         ResetCustomer();
                         ClearCustomerTable();
@@ -868,11 +955,12 @@ public class CustomerDetailActivity extends WepBaseActivity {
     }
 
 
-    public void EditCustomer(View v) {
+    public void EditCustomer(View v, boolean isPrint) {
         Name = txtName.getText().toString();
         Phone = txtPhone.getText().toString();
         Address = txtAddress.getText().toString();
         CreditAmount = txtCreditAmount.getText().toString();
+        DepositAmount = etCreditDepositAmt.getText().toString().trim();
         String GSTIN = txGSTIN.getText().toString().trim().toUpperCase();
         if (Name.equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Please enter customer name before adding customer");
@@ -897,6 +985,9 @@ public class CustomerDetailActivity extends WepBaseActivity {
         if (GSTIN == null) {
             GSTIN = "";
         }
+        if (DepositAmount.isEmpty()) {
+            DepositAmount = "0.00";
+        }
         boolean mFlag = GSTINValidation.checkGSTINValidation(GSTIN);
         if (mFlag)
         {
@@ -905,20 +996,36 @@ public class CustomerDetailActivity extends WepBaseActivity {
                 MsgBox.Show("Invalid Information","Please Enter Valid StateCode for GSTIN");
                 return;
             }else {
+
+                double dDepositAmount = etCreditDepositAmt.getText().toString().trim().equals("") ? 0.00 :
+                        Double.parseDouble(String.format("%.2f", Double.parseDouble(etCreditDepositAmt.getText().toString().trim())));
+
                 double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("") ? 0.00 :
                         Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
 
                 double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("") ? 0.00 :
                         Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
 
+                Customer customer = new Customer();
 
-                Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
-                        + " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction + " GSTIN : " + GSTIN
-                        + " Credit Limit : " + dCreditLimit);
-                int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
-                        Double.parseDouble(LastTransaction), Double.parseDouble(TotalTransaction), dCreditAmount, GSTIN, dCreditLimit);
+                customer.setStrCustAddress(Address);
+                customer.setStrCustPhone(Phone);
+                customer.setStrCustName(Name);
+                customer.setiCustId(Integer.parseInt(Id));
+                customer.setdLastTransaction(Double.parseDouble(LastTransaction));
+                customer.setdTotalTransaction(Double.parseDouble(TotalTransaction));
+                customer.setdCreditAmount(dCreditAmount + dDepositAmount);
+                customer.setStrCustGSTIN(GSTIN);
+                customer.setdCreditLimit(dCreditLimit);
+                customer.setDblDepositAmt(dDepositAmount);
+
+                int iResult = dbCustomer.updateCustomer(customer);
+
                 Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
                 Toast.makeText(myContext, "Cus tomer Updated Successfully", Toast.LENGTH_LONG).show();
+                if (isPrint) {
+                    PrintAmountDepositReceipt(customer);
+                }
                 ResetCustomer();
                 if (iResult > 0) {
                     ClearCustomerTable();
@@ -934,6 +1041,135 @@ public class CustomerDetailActivity extends WepBaseActivity {
         }
 
 
+    }
+
+
+    private void initSettingsData() {
+        Cursor crsrSettings = null;
+        try {
+            crsrSettings = dbCustomer.getBillSettings();
+            if (crsrSettings != null && crsrSettings.moveToFirst()) {
+                BUSINESS_DATE = crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_BusinessDate));
+                BOLD_HEADER = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_HeaderBold));
+            }
+        } catch (Exception e) {
+            Log.i("Customer Master","Settings init() error on customer master fragment screen. " +e.getMessage());
+        }finally {
+            if(crsrSettings != null){
+                crsrSettings.close();
+            }
+        }
+    }
+
+    private void PrintAmountDepositReceipt(Customer item) {
+
+        String prf = Preferences.getSharedPreferencesForPrint(CustomerDetailActivity.this).getString("receipt", "--Select--");
+
+        if (!etCreditDepositAmt.getText().toString().isEmpty()&& !etCreditDepositAmt.getText().toString().equals(".")) {
+            Cursor crsrHeaderFooterSetting = null;
+            if (item.getIsDuplicate() == null)
+                item.setIsDuplicate("");
+            item.setHeaderPrintBold(BOLD_HEADER);
+            item.setBusinessDate(BUSINESS_DATE);
+            item.setDblDepositAmt(Double.parseDouble(String.format("%.2f", Double.parseDouble(etCreditDepositAmt.getText().toString().trim()))));
+            try {
+                crsrHeaderFooterSetting = dbCustomer.getBillSettings();
+
+                if (crsrHeaderFooterSetting.moveToFirst()) {
+                    item.setHeaderLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText1")));
+                    item.setHeaderLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText2")));
+                    item.setHeaderLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText3")));
+                    item.setHeaderLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText4")));
+                    item.setHeaderLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText5")));
+                    item.setFooterLine1(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText1")));
+                    item.setFooterLine2(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText2")));
+                    item.setFooterLine3(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText3")));
+                    item.setFooterLine4(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText4")));
+                    item.setFooterLine5(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText5")));
+                } else {
+                    Log.d("Print_Customer_Receipt", "DisplayHeaderFooterSettings No data in BillSettings table");
+                }
+            }catch (Exception ex){
+                Log.e("Print_Customer_Receipt","Unable to fetch header details from billSettings table. From method PrintAmountDepositReceipt()." +ex.getMessage());
+            } finally {
+                if(crsrHeaderFooterSetting != null){
+                    crsrHeaderFooterSetting.close();
+                }
+            }
+
+            if (getPrinterName("receipt").equalsIgnoreCase(Constants.USB_EPSON_PRINTER_NAME)) {
+                String target = Preferences.getSharedPreferencesForPrint(CustomerDetailActivity.this).getString(prf, "--Select--");
+                EPSONPrinterBaseActivity epson = new EPSONPrinterBaseActivity();
+
+                epson.setmTarget(target);
+                epson.setmContext(myContext);
+                epson.mInitListener(this);
+
+                if (epson.runPrintDepositReceiptSequence(item, "Invoice")) {
+//                            progressDialog.dismiss();
+                    Toast.makeText(myContext, "Printed.", Toast.LENGTH_SHORT).show();
+                } else {
+//                            progressDialog.dismiss();
+                }
+
+            } else  if (getPrinterName("receipt").equalsIgnoreCase("Heyday"))  {
+                if (isPrinterAvailable) {
+                    printHeydeyDepositAmountReceipt(item, "Invoice");
+                } else {
+                    Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
+                }
+            } else  if (getPrinterName("receipt").equalsIgnoreCase("NGX"))  {
+                if (isPrinterAvailable) {
+                    printNGXDepositAmountReceipt(item, "Invoice");
+                } else {
+                    Toast.makeText(myContext, "Printer is not ready", Toast.LENGTH_SHORT).show();
+                }
+            } else if(getPrinterName("receipt").equalsIgnoreCase(Constants.USB_BIXOLON_PRINTER_NAME)) {
+                String target = Preferences.getSharedPreferencesForPrint(CustomerDetailActivity.this).getString(prf, "--Select--");
+                BixolonPrinterBaseAcivity bixolon = new BixolonPrinterBaseAcivity();
+
+                bixolon.setmTarget(target);
+                bixolon.setmContext(myContext);
+                bixolon.mInitListener(this);
+
+                if (bixolon.runPrintDepositReceiptSequence(item)) {
+//                            progressDialog.dismiss();
+                    Toast.makeText(myContext, "Deposit Amount Receipt Printed", Toast.LENGTH_SHORT).show();
+                } else {
+//                            progressDialog.dismiss();
+                }
+            } else if(getPrinterName("receipt").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                String target = Preferences.getSharedPreferencesForPrint(CustomerDetailActivity.this).getString(prf, "--Select--");
+
+                WePTHPrinterBaseActivity wepPrinter = new WePTHPrinterBaseActivity();
+
+                wepPrinter.setmTarget(target);
+                wepPrinter.setmContext(myContext);
+                wepPrinter.mInitListener(this);
+
+                if (wepPrinter.runPrintDepositReceiptSequence(item)) {
+                    Toast.makeText(myContext, "Deposit Amount Receipt Printed", Toast.LENGTH_SHORT).show();
+                }
+
+            } else if(getPrinterName("receipt").equalsIgnoreCase(Constants.USB_TVS_PRINTER_NAME)) {
+                String target = Preferences.getSharedPreferencesForPrint(CustomerDetailActivity.this).getString(prf, "--Select--");
+                tvsPrinterBaseActivity = new TVSPrinterBaseActivity();
+
+                tvsPrinterBaseActivity.setmTarget(target);
+                tvsPrinterBaseActivity.setmContext(myContext);
+                tvsPrinterBaseActivity.mInitListener(this);
+
+                if (tvsPrinterBaseActivity.runPrintDepositReceiptSequence(item)) {
+                    //Toast.makeText(myContext, "Deposit Amount Receipt Printed", Toast.LENGTH_SHORT).show();
+                }
+            } else if(getPrinterName("receipt").equalsIgnoreCase(Constants.USB_WiFi_PRINTER_NAME)){
+                MsgBox.Show("Warning", "Deposit Amount Receipt can't be printed on WiFi printer. Please configure Bluetooth/USB printers.");
+            }
+        }
+    }
+
+    public String getPrinterName(String module) {
+        return Preferences.getSharedPreferencesForPrint(CustomerDetailActivity.this).getString(module, "--Select--");
     }
 
     public void ClearCustomer(View v) {
@@ -1039,5 +1275,52 @@ public class CustomerDetailActivity extends WepBaseActivity {
                     .setNegativeButton(android.R.string.no, null).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onError(Printer printer, int errCode, String errMsg) {
+        if (printer == null)
+            return;
+
+        if (printer.getStatus().getConnection() == Printer.FALSE)
+            configureUsbPrinter();
+    }
+
+    @Override
+    public void onError(BixolonPrinter printer, String errMsg) {
+        if (printer == null)
+            return;
+
+        configureUsbPrinter();
+    }
+
+    @Override
+    public void onError(String errMsg) {
+        configureUsbPrinter();
+    }
+
+    @Override
+    public void onError(int iError) {
+        tvsPrinterBaseActivity.mTVSPrinterStatus(iError);
+        if(iError != TVSPrinterBaseActivity.POS_SUCCESS) {
+            configureUsbPrinter();
+        }
+    }
+
+
+    void configureUsbPrinter() {
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+        while(deviceIterator.hasNext()){
+            UsbDevice device = deviceIterator.next();
+            if (device.getVendorId() == Constants.VENDOR_ID_WEP_POS_PRINTER
+                    && device.getProductId() == Constants.PRODUCT_ID_WEP_POS_PRINTER
+                    && getPrinterName("bill").equalsIgnoreCase(Constants.USB_WEP_PRINTER_NAME)) {
+                editor.putString("bill", device.getProductName());
+                editor.putString(device.getProductName(), device.getDeviceName());
+                editor.commit();
+            }
+        }
     }
 }

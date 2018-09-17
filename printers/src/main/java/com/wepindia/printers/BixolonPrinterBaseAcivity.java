@@ -1701,7 +1701,7 @@ public class BixolonPrinterBaseAcivity extends WepBaseActivity {
                     BixolonPrinter.TEXT_SIZE_HORIZONTAL1 | BixolonPrinter.TEXT_SIZE_VERTICAL1,
                     false);
 
-            mBixolonPrinter.printText("Mobile No.      : "+item.getStrCustContactNumber()+"\n",
+            mBixolonPrinter.printText("Mobile No.      : "+item.getStrCustPhone()+"\n",
                     BixolonPrinter.ALIGNMENT_LEFT,
                     BixolonPrinter.TEXT_ATTRIBUTE_FONT_A,
                     BixolonPrinter.TEXT_SIZE_HORIZONTAL1 | BixolonPrinter.TEXT_SIZE_VERTICAL1,

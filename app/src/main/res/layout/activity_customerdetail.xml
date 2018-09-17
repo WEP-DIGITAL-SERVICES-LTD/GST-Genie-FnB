@@ -235,6 +235,28 @@
                                     android:text="0.00" />
                             </TableRow>
 
+                            <TableRow
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:visibility="gone"
+                                    android:id="@+id/tvCustomerDepositAmt"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Deposit Amount"
+                                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                                <EditText
+                                    android:visibility="gone"
+                                    android:id="@+id/etCreditDepositAmt"
+                                    android:layout_width="225dp"
+                                    android:layout_height="wrap_content"
+                                    android:ems="5"
+                                    android:inputType="numberDecimal"
+                                    android:text="0.00" />
+                            </TableRow>
+
 
                         </LinearLayout>
                         <TextView
@@ -397,10 +419,16 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight=".3" />
+
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnAddCustomer"
-                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/background_btn"
                         android:onClick="AddCustomer"
                         android:text="Add"
@@ -409,10 +437,16 @@
                         android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight=".3" />
+
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnEditCustomer"
-                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                         android:background="@drawable/background_btn"
                         android:onClick="EditCustomer"
@@ -422,10 +456,35 @@
                         android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight=".3" />
+
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnEditPrintCustomer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:background="@drawable/background_btn"
+                        android:onClick="EditCustomer"
+                        android:text="Update &amp; Print"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                        android:theme="@style/WepButtonWithMarigin" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight=".3" />
+
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnClearCustomer"
-                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                         android:background="@drawable/background_btn"
                         android:onClick="ClearCustomer"
@@ -435,10 +494,16 @@
                         android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight=".3" />
+
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnCloseCustomer"
-                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                         android:background="@drawable/background_btn"
                         android:onClick="CloseCustomer"
@@ -447,6 +512,12 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight=".3" />
+
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

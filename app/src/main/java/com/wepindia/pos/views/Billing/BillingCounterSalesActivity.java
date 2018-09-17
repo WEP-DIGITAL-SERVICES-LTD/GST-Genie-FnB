@@ -543,7 +543,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private void insertCustomer(String strAddress, String strContactNumber, String strName, float fLastTransaction, float fTotalTransaction, float fCreditAmount, String gstin)
     {
         long lRowId;
-        Customer objCustomer = new Customer(strAddress, strName, strContactNumber, fLastTransaction, fTotalTransaction, fCreditAmount, gstin,0.00);
+        Customer objCustomer = new Customer(strAddress, strName, strContactNumber, fLastTransaction, fTotalTransaction, fCreditAmount, gstin,0.00, 0.00);
         lRowId = db.addCustomers(objCustomer);
         if (edtCustMobile.getText().toString().length() == 10)
         {

@@ -8871,7 +8871,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         long lRowId;
 
         Customer objCustomer = new Customer(strAddress, strName, strContactNumber, fLastTransaction, fTotalTransaction,
-                fCreditAmount, gstin,0.00);
+                fCreditAmount, gstin,0.00, 0.00);
 
         lRowId = dbBillScreen.addCustomer(objCustomer);
         /*edtCustId.setText(String.valueOf(lRowId));*/

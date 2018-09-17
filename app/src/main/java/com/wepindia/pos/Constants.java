@@ -6,6 +6,8 @@ package com.wepindia.pos;
 
 public interface Constants {
 
+    public String SALES_MAN_ID_KEY = "Salesman";
+
     // PDF Invoice
     String PDF_INVOICE_DIRECTORY = "WeP_FnB_Invoices";
 

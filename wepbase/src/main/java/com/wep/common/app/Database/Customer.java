@@ -22,7 +22,7 @@ import android.os.Parcelable;
 public class Customer implements Parcelable {
 
 	// Private Variable
-	String strCustName, strCustContactNumber, strCustAddress, strCustGSTIN, strEmailId;
+	String strCustName, strCustPhone, strCustAddress, strCustGSTIN, strEmailId;
 	int iCustId, iDepositAmtStatus, iRewardPoints,isActive,_id, isDelete;
 	double dLastTransaction, dTotalTransaction;
 	double dCreditAmount, dCreditLimit;
@@ -48,7 +48,7 @@ public class Customer implements Parcelable {
 	// Default constructor
 	public Customer() {
 		this.strCustName = "";
-		this.strCustContactNumber = "";
+		this.strCustPhone = "";
 		this.strCustAddress = "";
 		this.strCustGSTIN = "";
 		this.strEmailId = "";
@@ -83,20 +83,21 @@ public class Customer implements Parcelable {
 
 	// Parameterized construcor
 	public Customer(String CustAddress, String CustName, String CustContactNumber, double LastTransaction,
-					double TotalTransaction, double CreaditAmount,String gstin, double dCreditLimit) {
+					double TotalTransaction, double CreaditAmount,String gstin, double dCreditLimit, double dblDepositAmt) {
 		this.strCustAddress = CustAddress;
 		this.strCustName = CustName;
-		this.strCustContactNumber = CustContactNumber;
+		this.strCustPhone = CustContactNumber;
 		this.dLastTransaction = LastTransaction;
 		this.dTotalTransaction = TotalTransaction;
 		this.dCreditAmount = CreaditAmount;
 		this.dCreditLimit = dCreditLimit;
+		this.dblDepositAmt = dblDepositAmt;
 		this.strCustGSTIN= gstin;
 	}
 
 	protected Customer(Parcel in) {
 		strCustName = in.readString();
-		strCustContactNumber = in.readString();
+		strCustPhone = in.readString();
 		strCustAddress = in.readString();
 		strCustGSTIN = in.readString();
 		strEmailId = in.readString();
@@ -150,12 +151,12 @@ public class Customer implements Parcelable {
 		this.strCustName = strCustName;
 	}
 
-	public String getStrCustContactNumber() {
-		return strCustContactNumber;
+	public String getStrCustPhone() {
+		return strCustPhone;
 	}
 
-	public void setStrCustContactNumber(String strCustContactNumber) {
-		this.strCustContactNumber = strCustContactNumber;
+	public void setStrCustPhone(String strCustPhone) {
+		this.strCustPhone = strCustPhone;
 	}
 
 	public String getStrCustAddress() {
@@ -164,6 +165,14 @@ public class Customer implements Parcelable {
 
 	public void setStrCustAddress(String strCustAddress) {
 		this.strCustAddress = strCustAddress;
+	}
+
+	public String getStrCustGSTIN() {
+		return strCustGSTIN;
+	}
+
+	public void setStrCustGSTIN(String strCustGSTIN) {
+		this.strCustGSTIN = strCustGSTIN;
 	}
 
 	public String getStrEmailId() {
@@ -244,6 +253,14 @@ public class Customer implements Parcelable {
 
 	public void setdCreditAmount(double dCreditAmount) {
 		this.dCreditAmount = dCreditAmount;
+	}
+
+	public double getdCreditLimit() {
+		return dCreditLimit;
+	}
+
+	public void setdCreditLimit(double dCreditLimit) {
+		this.dCreditLimit = dCreditLimit;
 	}
 
 	public double getOpeningBalance() {
@@ -390,90 +407,8 @@ public class Customer implements Parcelable {
 		this.iCustPincode = iCustPincode;
 	}
 
-	public double getdCreditLimit() {
-		return dCreditLimit;
-	}
-
-	public void setdCreditLimit(double dCreditLimit) {
-		this.dCreditLimit = dCreditLimit;
-	}
-
-	public String getStrCustGSTIN() {
-		return strCustGSTIN;
-	}
-
-	public void setStrCustGSTIN(String strCustGSTIN) {
-		this.strCustGSTIN = strCustGSTIN;
-	}
-
-	// getting CustAddress
-	public String getCustAddress() {
-		return this.strCustAddress;
-	}
-
-	// getting CustName
-	public String getCustName() {
-		return this.strCustName;
-	}
-
-	// getting Contact number
-	public String getCustContactNumber() {
-		return this.strCustContactNumber;
-	}
-
-	// getting CustId
-	public int getCustId() {
-		return this.iCustId;
-	}
-
-	// getting LastTransaction
-	public double getLastTransaction() {
-		return this.dLastTransaction;
-	}
-
-	// getting TotalTransaction
-	public double getTotalTransaction() {
-		return this.dTotalTransaction;
-	}
-
-	// getting CreditAmount
-	public double getCreditAmount() {
-		return this.dCreditAmount;
-	}
-
-	// setting CustAddress
-	public void setCustAddress(String CustAddress) {
-		this.strCustAddress = CustAddress;
-	}
-
-	// setting CustName
-	public void setCustName(String CustName) {
-		this.strCustName = CustName;
-	}
-
-	// setting CustContactNumber
-	public void setCustContactNumber(String CustContactNumber) {
-		this.strCustContactNumber = CustContactNumber;
-	}
-
-	// setting EmployeeId
-	public void setCustId(int CustId) {
-		this.iCustId = CustId;
-	}
-
-	// setting LastTransaction
-	public void setLastTransaction(double LastTransaction) {
-		this.dLastTransaction = LastTransaction;
-	}
-
-	// setting TotalTransaction
-	public void setTotalTransaction(double TotalTransaction) {
-		this.dTotalTransaction = TotalTransaction;
-	}
-
-	// setting CreaditAmount
-	public void setCeraditAmount(double CreaditAmount) {
-		this.dCreditAmount = CreaditAmount;
+	public static Creator<Customer> getCREATOR() {
+		return CREATOR;
 	}
 
 	@Override
@@ -484,7 +419,7 @@ public class Customer implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel parcel, int i) {
 		parcel.writeString(strCustName);
-		parcel.writeString(strCustContactNumber);
+		parcel.writeString(strCustPhone);
 		parcel.writeString(strCustAddress);
 		parcel.writeString(strCustGSTIN);
 		parcel.writeString(strEmailId);

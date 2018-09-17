@@ -81,7 +81,7 @@ public class InwardInvoiceEntry_Activity extends Activity  {
         TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
         ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
         ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrPaymentReceipt));
+//        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrPaymentReceipt));
         tvTitleText.setText("Inward Supply Module");
 
         //setContentView(R.layout.activity_inward_invoice_entry);

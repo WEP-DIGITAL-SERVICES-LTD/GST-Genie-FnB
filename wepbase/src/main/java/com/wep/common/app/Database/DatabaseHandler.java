@@ -221,6 +221,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_HeaderText5 = "HeaderText5";
     public static final String KEY_JURISDICTIONS = "jurisdictions";
     public static final String KEY_JURISDICTIONS_STATUS = "jurisdictions_status";
+    public static final String KEY_SALES_MAN_ID = "sales_man_id";
     private static final String KEY_KOTType = "KOTType";
     private static final String KEY_MaximumTables = "MaximumTables";
     private static final String KEY_MaximumWaiters = "MaximumWaiters";
@@ -283,6 +284,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TotalTransaction = "TotalTransaction";
     private static final String KEY_CreditAmount = "CreditAmount";
     private static final String KEY_CreditLimit = "CreditLimit";
+    public static final String KEY_CUST_DEPOSIT_AMOUNT = "DepositAmount";
 
     // Description
     private static final String KEY_DescriptionId = "DescriptionId";
@@ -641,6 +643,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_USER_ADHAR + " TEXT,"
             + KEY_USER_EMAIL + " TEXT,"
             + KEY_USER_ADDRESS + " TEXT,"
+            + KEY_SALES_MAN_ID + " TEXT,"
             + KEY_USER_FILE_LOCATION + " TEXT" + ")";
 
 
@@ -1159,6 +1162,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_HeaderText5 + " TEXT, "
             + KEY_JURISDICTIONS_STATUS + " NUMERIC,"
             + KEY_JURISDICTIONS + " TEXT,"
+            + KEY_SALES_MAN_ID + " NUMERIC, "
             + KEY_KOTType + " NUMERIC, "
             + KEY_MaximumTables + " NUMERIC, "
             + KEY_MaximumWaiters + " NUMERIC, "
@@ -1218,10 +1222,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     String QUERY_CREATE_TABLE_COUPON = "CREATE TABLE " + TBL_COUPON + " (" + KEY_CouponAmount + " REAL, " +
             KEY_CouponBarcode + " TEXT, " + KEY_CouponDescription + " TEXT," + KEY_CouponId + " INTEGER PRIMARY KEY)";
 
-    String QUERY_CREATE_TABLE_CUSTOMER = "CREATE TABLE " + TBL_CUSTOMER + " (" + KEY_CustAddress + " TEXT, " +
-            KEY_CustContactNumber + " NUMERIC, " + KEY_CustId + " INTEGER PRIMARY KEY, " + KEY_CustName + " TEXT, " +
-            KEY_LastTransaction + " REAL, " + KEY_TotalTransaction + " REAL, " + KEY_CreditAmount +
-            " REAL, "+ KEY_CreditLimit +" REAL, " + KEY_GSTIN + " TEXT)";
+    String QUERY_CREATE_TABLE_CUSTOMER = "CREATE TABLE " + TBL_CUSTOMER + " (" +
+            KEY_CustAddress + " TEXT, " +
+            KEY_CustContactNumber + " NUMERIC, " +
+            KEY_CustId + " INTEGER PRIMARY KEY, " +
+            KEY_CustName + " TEXT, " +
+            KEY_LastTransaction + " REAL, " +
+            KEY_TotalTransaction + " REAL, " +
+            KEY_CreditAmount + " REAL, "+
+            KEY_CreditLimit +" REAL, " +
+            KEY_CUST_DEPOSIT_AMOUNT + " REAL," +
+            KEY_GSTIN + " TEXT)";
 
     String QUERY_CREATE_TABLE_DELETEDKOT = "CREATE TABLE " + TBL_DELETEDKOT + "(" + KEY_Reason + " TEXT, " +
             KEY_EmployeeId + " NUMERIC," + KEY_SubUdfNumber + " NUMERIC," + KEY_TableNumber + " NUMERIC," +
@@ -1582,6 +1593,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         if (!existsColumnInTable(db, TBL_BILLSETTING, KEY_JURISDICTIONS_STATUS)) { // Column doesn't exist
                             db.execSQL("ALTER TABLE " + TBL_BILLSETTING + " ADD COLUMN " + KEY_JURISDICTIONS_STATUS + " NUMERIC DEFAULT 0 ");
                         }
+                        if (!existsColumnInTable(db, TBL_BILLSETTING, KEY_SALES_MAN_ID)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_BILLSETTING + " ADD COLUMN " + KEY_SALES_MAN_ID + " NUMERIC DEFAULT 0 ");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_BILLSETTING);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_CUSTOMER + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_CUSTOMER, KEY_CUST_DEPOSIT_AMOUNT)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_CUSTOMER + " ADD COLUMN " + KEY_CUST_DEPOSIT_AMOUNT + " REAL default 0");
+                        }
                     } else { // Table doesn't exist
                         db.execSQL(QUERY_CREATE_TABLE_BILLSETTING);
                     }
@@ -1644,6 +1676,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_USER_ADHAR, "Adhaar1");
         cvDbValues.put(KEY_USER_EMAIL, "wep@india.com");
         cvDbValues.put(KEY_USER_ADDRESS, "lavelle road");
+        cvDbValues.put(KEY_SALES_MAN_ID, "");
         cvDbValues.put(KEY_USER_FILE_LOCATION, "xx");
         long status = 0;
         try {
@@ -1664,6 +1697,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_USER_ADHAR, "Adhaar1");
         cvDbValues.put(KEY_USER_EMAIL, "wep@india.com");
         cvDbValues.put(KEY_USER_ADDRESS, "lavelle road");
+        cvDbValues.put(KEY_SALES_MAN_ID, "");
         cvDbValues.put(KEY_USER_FILE_LOCATION, "xx");
         status = 0;
         try {
@@ -1806,6 +1840,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
         cvDbValues.put(KEY_Environment, 1); // Production
         cvDbValues.put(KEY_HSNPrintEnabled_out, 0); // Disabled
+        cvDbValues.put(KEY_SALES_MAN_ID, 0); // Disabled
 
         cvDbValues.put(KEY_PrintOwnerDetail, 0); // Disabled
         cvDbValues.put(KEY_HeaderBold, 0); // Disabled
@@ -3277,6 +3312,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_PrintService, objBillSetting.getPrintService());
         cvDbValues.put(KEY_BillAmountRoundOff, objBillSetting.getBillAmountRounfOff());
         cvDbValues.put(KEY_JURISDICTIONS_STATUS, objBillSetting.getiJurisdictionsPrintStatus());
+        cvDbValues.put(KEY_SALES_MAN_ID, objBillSetting.getiSalesManId());
 
         return dbFNB.update(TBL_BILLSETTING, cvDbValues, null, null);
     }
@@ -4265,13 +4301,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public long addCustomer(Customer objCustomer) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put("CustName", objCustomer.getCustName());
-        cvDbValues.put("LastTransaction", objCustomer.getLastTransaction());
-        cvDbValues.put("TotalTransaction", objCustomer.getTotalTransaction());
-        cvDbValues.put("CustContactNumber", objCustomer.getCustContactNumber());
-        cvDbValues.put("CustAddress", objCustomer.getCustAddress());
-        cvDbValues.put("CreditAmount", objCustomer.getCreditAmount());
+        cvDbValues.put("CustName", objCustomer.getStrCustName());
+        cvDbValues.put("LastTransaction", objCustomer.getdLastTransaction());
+        cvDbValues.put("TotalTransaction", objCustomer.getdTotalTransaction());
+        cvDbValues.put("CustContactNumber", objCustomer.getStrCustPhone());
+        cvDbValues.put("CustAddress", objCustomer.getStrCustAddress());
+        cvDbValues.put("CreditAmount", objCustomer.getdCreditAmount());
         cvDbValues.put("CreditLimit", objCustomer.getdCreditLimit());
+        cvDbValues.put("DepositAmount", objCustomer.getDblDepositAmt());
         cvDbValues.put(KEY_GSTIN, objCustomer.getStrCustGSTIN());
 
         return dbFNB.insert(TBL_CUSTOMER, null, cvDbValues);
@@ -4353,21 +4390,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // -----Update Customer table-----
-    public int updateCustomer(String strCustAddress, String strCustContactNumber, String strCustName, int iCustId,
-                              double fLastTransaction, double fTotalTransaction, double fCreditAmount, String gstin,
-                              double creditLimit) {
+    public int updateCustomer(Customer customer) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put("CustAddress", strCustAddress);
-        cvDbValues.put("CustContactNumber", strCustContactNumber);
-        cvDbValues.put("CustName", strCustName);
-        cvDbValues.put("LastTransaction", fLastTransaction);
-        cvDbValues.put("TotalTransaction", fTotalTransaction);
-        cvDbValues.put("CreditAmount", fCreditAmount);
-        cvDbValues.put("CreditLimit", creditLimit);
-        cvDbValues.put(KEY_GSTIN, gstin);
+        cvDbValues.put("CustAddress", customer.getStrCustAddress());
+        cvDbValues.put("CustContactNumber", customer.getStrCustPhone());
+        cvDbValues.put("CustName", customer.getStrCustName());
+        cvDbValues.put("LastTransaction", customer.getdLastTransaction());
+        cvDbValues.put("TotalTransaction", customer.getdTotalTransaction());
+        cvDbValues.put("CreditAmount", customer.getdCreditAmount());
+        cvDbValues.put("CreditLimit", customer.getdCreditLimit());
+        cvDbValues.put("DepositAmount", customer.getDblDepositAmt());
+        cvDbValues.put(KEY_GSTIN, customer.getStrCustGSTIN());
 
-        return dbFNB.update(TBL_CUSTOMER, cvDbValues, "CustId=" + iCustId, null);
+        return dbFNB.update(TBL_CUSTOMER, cvDbValues, "CustId =" + customer.getiCustId(), null);
     }
 
     // -----Update Customer table-----
@@ -7892,6 +7928,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put("Email", user.getUserEmail());
         contentValues.put("Address", user.getUserAddress());
         contentValues.put("FileLocation", user.getUserFileLoc());
+        contentValues.put(KEY_SALES_MAN_ID, user.getStrSalesManId());
         try {
             status = dbFNB.insert(TBL_USERS, null, contentValues);
 
@@ -7916,6 +7953,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put("Email", user.getUserEmail());
         contentValues.put("Address", user.getUserAddress());
         contentValues.put("FileLocation", user.getUserFileLoc());
+        contentValues.put(KEY_SALES_MAN_ID, user.getStrSalesManId());
         try {
             status = dbFNB.update(TBL_USERS, contentValues, KEY_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
 
@@ -7946,6 +7984,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 user.setUserAdhar(cursor.getString(cursor.getColumnIndex("AadhaarNo")));
                 user.setUserEmail(cursor.getString(cursor.getColumnIndex("Email")));
                 user.setUserAddress(cursor.getString(cursor.getColumnIndex("Address")));
+                user.setStrSalesManId(cursor.getString(cursor.getColumnIndex(KEY_SALES_MAN_ID)));
                 list.add(user);
             }
         }
@@ -8136,6 +8175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
         cvDbValues.put(KEY_Environment, 1); // Production
         cvDbValues.put(KEY_HSNPrintEnabled_out, 0); // disabled
+        cvDbValues.put(KEY_SALES_MAN_ID, 0); // disabled
 
         cvDbValues.put(KEY_PrintOwnerDetail, 0); // Disabled
         cvDbValues.put(KEY_HeaderBold, 0); // Disabled
@@ -9208,12 +9248,12 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         try{
             ContentValues cvDbValues = new ContentValues();
-            cvDbValues.put("CustName", objCustomer.getCustName());
-            cvDbValues.put("LastTransaction", objCustomer.getLastTransaction());
-            cvDbValues.put("TotalTransaction", objCustomer.getTotalTransaction());
-            cvDbValues.put("CustContactNumber", objCustomer.getCustContactNumber());
-            cvDbValues.put("CustAddress", objCustomer.getCustAddress());
-            cvDbValues.put("CreditAmount", objCustomer.getCreditAmount());
+            cvDbValues.put("CustName", objCustomer.getStrCustName());
+            cvDbValues.put("LastTransaction", objCustomer.getdLastTransaction());
+            cvDbValues.put("TotalTransaction", objCustomer.getdTotalTransaction());
+            cvDbValues.put("CustContactNumber", objCustomer.getStrCustPhone());
+            cvDbValues.put("CustAddress", objCustomer.getStrCustAddress());
+            cvDbValues.put("CreditAmount", objCustomer.getdCreditAmount());
             cvDbValues.put(KEY_GSTIN, objCustomer.getStrCustGSTIN());
             return db.insert(TBL_CUSTOMER, null, cvDbValues);
         }catch (Exception e){
@@ -9485,6 +9525,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
             cvDbValues.put(KEY_BillStatus, objBillItem.getBillStatus());
             cvDbValues.put(KEY_ONLINE_ORDER_NO,objBillItem.getStrOnlineOrderNo());
+            cvDbValues.put(KEY_SALES_MAN_ID, objBillItem.getStrSalesManId());
 
             return db.insert(TBL_BILLITEM, null, cvDbValues);
         }catch (Exception e){
@@ -9546,6 +9587,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_cessAmount, objBillDetail.getCessAmount());
             cvDbValues.put(KEY_SubTotal, objBillDetail.getSubTotal());
             cvDbValues.put(KEY_ONLINE_ORDER_NO, objBillDetail.getStrOnlineOrderNo());
+            cvDbValues.put(KEY_SALES_MAN_ID, objBillDetail.getStrSalesManId());
 
             rData = db.insert(TBL_BILLDETAIL, null, cvDbValues);
         }catch (Exception e){

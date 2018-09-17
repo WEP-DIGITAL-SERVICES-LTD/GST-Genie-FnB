@@ -689,13 +689,13 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 			objCustomer = new Customer();
 
 			// Customer Name
-			objCustomer.setCustName(txtCustName.getText().toString());
+			objCustomer.setStrCustName(txtCustName.getText().toString());
 
 			// Customer Phone
-			objCustomer.setCustContactNumber(txtCustPhone.getText().toString());
+			objCustomer.setStrCustPhone(txtCustPhone.getText().toString());
 
 			// Customer Address
-			objCustomer.setCustAddress(txtCustAddress.getText().toString());
+			objCustomer.setStrCustAddress(txtCustAddress.getText().toString());
 
 			// Insert customer details to database
 			lResult = dbCustomerOrder.addCustomer(objCustomer);

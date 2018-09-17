@@ -1335,7 +1335,7 @@ public class EPSONPrinterBaseActivity extends WepBaseActivity implements Receive
             textData.append("============================================"+"\n");
             textData.append("Deposit Date    : "+item.getBusinessDate()+"\n");
             textData.append("Customer Name   : "+item.getStrCustName()+"\n");
-            textData.append("Mobile No.      : "+item.getStrCustContactNumber()+"\n");
+            textData.append("Mobile No.      : "+item.getStrCustPhone()+"\n");
             textData.append("Deposit Amount  : "+item.getDblDepositAmt()+"\n");
             textData.append("Credit Amount   : "+item.getdCreditAmount()+"\n");
             textData.append("============================================"+"\n");

@@ -111,7 +111,7 @@ public class GSTHomeActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
 
     public void InwardInvoiceEntry(View view)
     {
-        startActivity(new Intent(myContext,InwardInvoiceEntry_Activity.class));
+//        startActivity(new Intent(myContext,InwardInvoiceEntry_Activity.class));
     }
 
     public void GSTR2_upload_forDay(View view)
