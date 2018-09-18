@@ -626,7 +626,7 @@ public void onFocusChange(View v, boolean hasFocus) {
                 (RadioButton) findViewById(R.id.rbReverseTax);
 
         btnGenerateCSV = (WepButton) findViewById(R.id.btnGenerateCSV);
-        btnExportCSV = (WepButton) findViewById(R.id.btnExportCSV);
+        btnExportCSV = (WepButton) findViewById(R.id.btnOutwardItemExportCSV);
         btnAdd = (WepButton) findViewById(R.id.btnAddItem);
         btnEdit = (WepButton) findViewById(R.id.btnEditItem);
         btnClearItem = (WepButton) findViewById(R.id.btnClearItem);
@@ -914,7 +914,7 @@ public void onFocusChange(View v, boolean hasFocus) {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ExportDatabaseTableAsCSVTask exportDatabaseTableAsCSVTask =
-                                ExportDatabaseTableAsCSVTask.getInstance(ItemManagementActivity.this, dbItems);
+                                ExportDatabaseTableAsCSVTask.getInstance(ItemManagementActivity.this, dbItems, 0);
                         exportDatabaseTableAsCSVTask.execute(DatabaseHandler.TBL_ITEM_Outward);
                     }
                 });

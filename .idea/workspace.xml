@@ -16,15 +16,18 @@
   <component name="ChangeListManager">
     <list default="true" id="f75575d7-bac9-4432-b1d4-509972d385c0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ExportDatabaseTableAsCSVTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ExportDatabaseTableAsCSVTask.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardItemActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardItemActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/OutwardItemMaster/ItemManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/OutwardItemMaster/ItemManagementActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/UserManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/UserManagementActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsMachine.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsMachine.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsOther.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsOther.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_user_management.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_user_management.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_machine.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_machine.xml" />
       <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java" />
       <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillItem.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillItem.java" />
       <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java" />
+      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
       <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/PaymentReceipt.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/PaymentReceipt.java" />
       <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/User.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/models/User.java" />
     </list>
@@ -42,35 +45,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="FragmentSettingsMachine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsMachine.java">
+      <file leaf-file-name="InwardItemActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardItemActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="97" column="11" lean-forward="false" selection-start-line="97" selection-start-column="11" selection-end-line="97" selection-end-column="11" />
+            <state relative-caret-position="33">
+              <caret line="647" column="86" lean-forward="false" selection-start-line="647" selection-start-column="86" selection-end-line="647" selection-end-column="86" />
+              <folding>
+                <element signature="e#29041#29056#0" expanded="true" />
+                <element signature="e#29058#29256#0" expanded="true" />
+                <element signature="e#29255#29256#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExportDatabaseTableAsCSVTask.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ExportDatabaseTableAsCSVTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="91">
+              <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java">
+      <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="172" column="50" lean-forward="false" selection-start-line="172" selection-start-column="50" selection-end-line="172" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_fragment_settings_machine.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_machine.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="112" column="20" lean-forward="false" selection-start-line="112" selection-start-column="20" selection-end-line="112" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="108">
+              <caret line="9867" column="0" lean-forward="false" selection-start-line="9867" selection-start-column="0" selection-end-line="9867" selection-end-column="0" />
+              <folding>
+                <marker date="1537266463935" expanded="true" signature="402422:402626" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,11 +85,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btnPassBook</find>
-      <find>dbCus</find>
-      <find>dbCustomer</find>
-      <find>Pass</find>
-      <find>KEY_TOTAL_AMOUNT</find>
       <find>CloseCustomer</find>
       <find>no customer data</find>
       <find>oncreat</find>
@@ -109,6 +110,11 @@
       <find>HomeActivity.dbHandler</find>
       <find>oncreate</find>
       <find>btnAbout</find>
+      <find>About</find>
+      <find>btnOutwardItemExportCSV</find>
+      <find>KEY_Rate</find>
+      <find>btnGenerateCSVInward</find>
+      <find>curCSV</find>
     </findStrings>
     <replaceStrings>
       <replace>db</replace>
@@ -6799,10 +6805,15 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Customer/CustomerDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
-        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_machine.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsMachine.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/OutwardItemMaster/ItemManagementActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardItemActivity.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ExportDatabaseTableAsCSVTask.java" />
       </list>
     </option>
   </component>
@@ -6863,18 +6874,24 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Settings" type="462c0819:PsiDirectoryNode" />
+              <item name="InwardManagement" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GST-Genie-F-V2.0P" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="Masters" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GST-Genie-F-V2.0P" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="Masters" type="462c0819:PsiDirectoryNode" />
+              <item name="OutwardItemMaster" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -7105,7 +7122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1537264306423</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="V2.1: Added Software version in settings and removed from About Company section in login screen.">
+      <created>1537264982719</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1537264982719</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -7183,7 +7207,8 @@
     <MESSAGE value="V2.1: Added Customer Deposit Amount Receipt." />
     <MESSAGE value="V2.1: Added Customer Passbook." />
     <MESSAGE value="V2.1: Added Machine Settings (Restore Bill Data)." />
-    <option name="LAST_COMMIT_MESSAGE" value="V2.1: Added Machine Settings (Restore Bill Data)." />
+    <MESSAGE value="V2.1: Added Software version in settings and removed from About Company section in login screen." />
+    <option name="LAST_COMMIT_MESSAGE" value="V2.1: Added Software version in settings and removed from About Company section in login screen." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7248,16 +7273,43 @@
           <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
+          <line>9867</line>
+          <properties />
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ExportDatabaseTableAsCSVTask.java</url>
+          <line>114</line>
+          <properties />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="24" />
+      <option name="time" value="29" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>curCSV.getString(curCSV.getColumnIndex(&quot;MenuCode&quot;))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_MenuCode))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_MenuCode)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>dPettCashPayment</expression-string>
         <language-id>JAVA</language-id>
@@ -7285,21 +7337,6 @@
       </expression>
       <expression>
         <expression-string>Double.parseDouble(String.format(&quot;%.2f&quot;, (dblTotalAmountFinal)))</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>getCustomerPassbookTotalCreditAmount(customerPassbookBean.getStrCustomerID(), customerPassbookBean.getStrPhoneNo())</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>dblTotalCrdeitAmount</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>dblTotalDepositAmount</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -7906,16 +7943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="8356" column="7" lean-forward="false" selection-start-line="8351" selection-start-column="3" selection-end-line="8356" selection-end-column="7" />
-          <folding>
-            <marker date="1537264045063" expanded="true" signature="402416:402620" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_machine.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -7950,6 +7977,71 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="172" column="50" lean-forward="false" selection-start-line="172" selection-start-column="50" selection-end-line="172" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="783" column="38" lean-forward="false" selection-start-line="783" selection-start-column="38" selection-end-line="783" selection-end-column="38" />
+          <folding>
+            <element signature="e#38500#38529#0" expanded="false" />
+            <element signature="e#38580#38610#0" expanded="false" />
+            <element signature="e#38660#38689#0" expanded="false" />
+            <element signature="e#39018#39055#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="1261" column="64" lean-forward="false" selection-start-line="1261" selection-start-column="41" selection-end-line="1261" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/OutwardItemMaster/ItemManagementActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="916" column="112" lean-forward="false" selection-start-line="916" selection-start-column="112" selection-end-line="916" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/InwardManagement/InwardItemActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="647" column="86" lean-forward="false" selection-start-line="647" selection-start-column="86" selection-end-line="647" selection-end-column="86" />
+          <folding>
+            <element signature="e#29041#29056#0" expanded="true" />
+            <element signature="e#29058#29256#0" expanded="true" />
+            <element signature="e#29255#29256#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="9867" column="0" lean-forward="false" selection-start-line="9867" selection-start-column="0" selection-end-line="9867" selection-end-column="0" />
+          <folding>
+            <marker date="1537266463935" expanded="true" signature="402422:402626" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ExportDatabaseTableAsCSVTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding />
         </state>
       </provider>

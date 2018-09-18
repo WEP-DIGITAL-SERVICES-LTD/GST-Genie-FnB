@@ -41,6 +41,7 @@ import com.wepindia.pos.FilePickerActivity;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.UploadFilePickerActivity;
+import com.wepindia.pos.utils.ExportDatabaseTableAsCSVTask;
 import com.wepindia.pos.views.InwardManagement.Adapters.ItemInwardAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.StockInwardMaintain;
@@ -76,7 +77,7 @@ public class InwardItemActivity extends WepBaseActivity {
     DatabaseHandler dbInwardItem;
     public AlertDialog.Builder MsgBox;
     public MessageDialog MsgBox1;
-    WepButton btnGenerateCSVInward,btnAdd, btnEdit, btnUploadExcel, btnSaveExcel, btnCloseItem, btnClearItem, btnResetQuantity;
+    WepButton btnGenerateCSVInward,btnAdd, btnEdit, btnUploadExcel, btnSaveExcel, btnCloseItem, btnClearItem, btnResetQuantity, btnInwardItemExportCSV;
     Spinner spnrUOM,spnr_supplytype;
     EditText et_inw_ItemBarcode,et_inw_HSNCode;
     AutoCompleteTextView autocomplete_inw_ItemName;
@@ -196,6 +197,16 @@ public class InwardItemActivity extends WepBaseActivity {
                 @Override
                 public void onClick(View view) {
                     generateCSV();
+                }
+            });
+            btnInwardItemExportCSV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (InwardItemList.size() == 0) {
+                        Toast.makeText(myContext, "Please first add some item to export.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        generateExportCSV();
+                    }
                 }
             });
             btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -617,6 +628,28 @@ public class InwardItemActivity extends WepBaseActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void generateExportCSV(){
+        File temp = new File(CSV_GENERATE_PATH + "ExportItemsFromDatabase.csv");
+        AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
+                .setIcon(R.drawable.ic_launcher)
+                .setTitle("Export CSV Alert")
+                .setMessage("Are you sure to export existing item database into csv file.")
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ExportDatabaseTableAsCSVTask exportDatabaseTableAsCSVTask =
+                                ExportDatabaseTableAsCSVTask.getInstance(InwardItemActivity.this, dbInwardItem, 1);
+                        exportDatabaseTableAsCSVTask.execute(DatabaseHandler.TBL_ITEM_Inward);
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 
@@ -1153,6 +1186,7 @@ public class InwardItemActivity extends WepBaseActivity {
         tv_AverageRate  = (TextView)findViewById(R.id.tv_AverageRate);
 
         btnGenerateCSVInward = (WepButton) findViewById(R.id.btnGenerateCSVInward);
+        btnInwardItemExportCSV = (WepButton) findViewById(R.id.btnInwardItemExportCSV);
         btnAdd = (WepButton) findViewById(R.id.btnAddItem);
         btnEdit = (WepButton) findViewById(R.id.btnEditItem);
         //btnResetQuantity = (WepButton) findViewById(R.id.btnResetQuantity);

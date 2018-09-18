@@ -137,7 +137,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_OtherTax = "OtherTax";
     private static final String KEY_ItemNumber = "ItemNumber";
     public static final String KEY_Quantity = "Quantity";
-    private static final String KEY_Rate = "Rate";
+    public static final String KEY_Rate = "Rate";
     private static final String KEY_Time = "Time";
     private static final String KEY_TokenNumber = "TokenNumber";
     private static final String KEY_TokenNumber_SubNo = "TokenNumber_SubNo";
@@ -683,7 +683,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     static final String TBL_READ_FROM_2A = "ReadFrom2A";
     //static final String TBL_READ_FROM_1A = "ReadFrom1A";
     public static final String TBL_ITEM_Outward = "Item_Outward";
-    static final String TBL_ITEM_Inward = "Item_Inward";
+    public static final String TBL_ITEM_Inward = "Item_Inward";
     static final String TBL_OWNER_DETAILS = "OwnerDetails";
 
     private static final String TBL_BILLDETAIL = "OutwardSuppyItemsDetails";
