@@ -21,6 +21,8 @@ import android.os.Parcelable;
 
 public class Customer implements Parcelable {
 
+	public static final String CUSTOMER_PARCELABLE_KEY ="customer";
+
 	// Private Variable
 	String strCustName, strCustPhone, strCustAddress, strCustGSTIN, strEmailId;
 	int iCustId, iDepositAmtStatus, iRewardPoints,isActive,_id, isDelete;

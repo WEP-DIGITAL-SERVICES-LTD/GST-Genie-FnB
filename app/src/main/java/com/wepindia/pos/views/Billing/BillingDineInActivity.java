@@ -76,6 +76,7 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.DeletedKOT;
 import com.wep.common.app.Database.Department;
 import com.wep.common.app.Database.PendingKOT;
+import com.wep.common.app.models.CustomerPassbookBean;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.models.PaymentDetails;
 import com.wep.common.app.print.BillKotItem;
@@ -181,7 +182,6 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     int iTaxType = 0, iTotalItems = 0, iCustId = 0, iTokenNumber = 0;
     float fTotalDiscount = 0;
     double fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPaidTotalPayment = 0;
-    double dPettCashPayment = 0;
     double fChangePayment = 0, fRoundOfValue =0;
     double dFinalBillValue=0;
     double fWalletPayment = 0;
@@ -3334,7 +3334,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         fCardPayment = 0;
         fCouponPayment = 0;
         fPaidTotalPayment = 0;
-        dPettCashPayment = 0;
+        dblPettyCashPayment = 0;
         fChangePayment = 0;
         fWalletPayment = 0;
         dFinalBillValue = 0;
@@ -6050,17 +6050,21 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         if (edtCustId.getText().toString().equalsIgnoreCase("") || edtCustId.getText().toString().equalsIgnoreCase("0"))
         {
         }
-        else if (dPettCashPayment >0)
+        else if (dblPettyCashPayment >0)
         {
             iCustId = Integer.parseInt(edtCustId.getText().toString());
             double fTotalTransaction = dbBillScreen.getCustomerTotalTransaction(iCustId);
             double fCreditAmount = dbBillScreen.getCustomerCreditAmount(iCustId);
             //fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());
-            fCreditAmount = fCreditAmount - dPettCashPayment;
+            fCreditAmount = fCreditAmount - dblPettyCashPayment;
             fTotalTransaction += Double.parseDouble(tvBillAmount.getText().toString());
 
            // long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId, Double.parseDouble(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
-            long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId, dPettCashPayment, fTotalTransaction, fCreditAmount);
+            long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId, dblPettyCashPayment, fTotalTransaction, fCreditAmount);
+
+            if (lResult1 > -1 && dblPettyCashPayment > 0) {
+                mStoreCustomerPassbookData(iCustId, dblPettyCashPayment, tvBillNumber.getText().toString());
+            }
         }
         // Bill No Reset Configuration
 //        Log.d("Richa : ", tvBillNumber.getText().toString());
@@ -6068,6 +6072,100 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         long Result2 = db.UpdateBillNoResetInvoiceNos(Integer.parseInt(tvBillNumber.getText().toString()));
 //        System.out.println(Result2);
 //        Log.d("Richa :- ", String.valueOf(dbBillScreen.getNewBillNumber()));
+    }
+
+    //Customer passbook transaction implementation
+    private void mStoreCustomerPassbookData(int iCustId, double dblCustCreditAmount, String strBillNo) {
+        Cursor cursorCustomerData = null;
+        try {
+            cursorCustomerData = db.getCustomer(iCustId);
+            if (cursorCustomerData != null && cursorCustomerData.getCount() > 0) {
+                if (cursorCustomerData.moveToFirst()) {
+                    //if (cursorCustomerData.getDouble(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_OpeningBalance)) > 0) {
+                    CustomerPassbookBean customerPassbookBean = new CustomerPassbookBean();
+                    customerPassbookBean.setStrCustomerID(cursorCustomerData.getInt(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_CustId)) + "");
+                    customerPassbookBean.setStrName(cursorCustomerData.getString(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_CustName)));
+                    customerPassbookBean.setStrPhoneNo(cursorCustomerData.getString(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_CustContactNumber)));
+                    customerPassbookBean.setDblOpeningBalance(0);
+                    customerPassbookBean.setDblDepositAmount(0);
+                    customerPassbookBean.setDblDepositAmount(dblCustCreditAmount);
+                    //double dblTotalAmountFromCustPassbookDB = getCustomerPassbookAvailableAmount(customerPassbookBean.getStrCustomerID(), customerPassbookBean.getStrPhoneNo());
+                    double dblTotalDepositAmount = getCustomerPassbookTotalDepositAndOpeningAmount(customerPassbookBean.getStrCustomerID(), customerPassbookBean.getStrPhoneNo());
+                    double dblTotalCrdeitAmount = getCustomerPassbookTotalCreditAmount(customerPassbookBean.getStrCustomerID(), customerPassbookBean.getStrPhoneNo());
+                    //double dblTotalAmountFinal = (Double.parseDouble(String.format("%.2f", dblCustCreditAmount)) + Math.abs(dblTotalAmountFromCustPassbookDB));
+                    double dblTotalAmountFinal;
+                    dblTotalAmountFinal = dblTotalCrdeitAmount - (dblTotalDepositAmount + customerPassbookBean.getDblDepositAmount());
+                    customerPassbookBean.setDblTotalAmount(Double.parseDouble(String.format("%.2f", (dblTotalAmountFinal))));
+                    if (trainingMode)
+                        customerPassbookBean.setStrDescription(Constants.BILL_NO + " : TM" + strBillNo);
+                    else
+                        customerPassbookBean.setStrDescription(Constants.BILL_NO + " : " + strBillNo);
+
+                    Date date1 = new Date();
+                    try {
+                        date1 = new SimpleDateFormat("dd-MM-yyyy").parse(BUSINESS_DATE);
+                    } catch (Exception e) {
+                        Log.e(TAG, "" + e);
+                        Log.e(TAG, "" + e);
+                    }
+                    customerPassbookBean.setStrDate("" + date1.getTime());
+                    customerPassbookBean.setDblCreditAmount(0);
+                    customerPassbookBean.setDblPettyCashTransaction(dblCustCreditAmount);
+                    customerPassbookBean.setDblRewardPoints(0);
+                    try {
+                        //Commented for git push purpose
+                        db.addCustomerPassbook(customerPassbookBean);
+                    } catch (Exception ex) {
+                        Log.i(TAG, "Inserting data into customer passbook in billing screen: " + ex.getMessage());
+                    }
+                    // }
+                }
+            } else {
+                Log.i(TAG, "No customer data selected for storing customer passbook in billing screen.");
+            }
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to store the customer passbook data in billing screen." + ex.getMessage());
+        } finally {
+            if (cursorCustomerData != null) {
+                cursorCustomerData.close();
+            }
+        }
+    }
+
+    private double getCustomerPassbookTotalDepositAndOpeningAmount(String strCustID, String strCustPhoneNo) {
+        double dblResult = 0;
+        Cursor cursorCustPassbookDeposit = null;
+        try {
+            cursorCustPassbookDeposit = db.getCustomerPassbook_TotalDepositOpeningAmountForSelectedCustomer(strCustID, strCustPhoneNo);
+            if (cursorCustPassbookDeposit != null && cursorCustPassbookDeposit.moveToFirst()) {
+                dblResult = cursorCustPassbookDeposit.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "Fetching customer passbook total deposited and opening amount of selected customer. " + e.getMessage());
+        } finally {
+            if (cursorCustPassbookDeposit != null) {
+                cursorCustPassbookDeposit.close();
+            }
+        }
+        return dblResult;
+    }
+
+    private double getCustomerPassbookTotalCreditAmount(String strCustID, String strCustPhoneNo) {
+        double dblResult = 0;
+        Cursor cursorCustPassbookCredit = null;
+        try {
+            cursorCustPassbookCredit = db.getCustomerPassbook_TotalCreditAmountForSelectedCustomer(strCustID, strCustPhoneNo);
+            if (cursorCustPassbookCredit != null && cursorCustPassbookCredit.moveToFirst()) {
+                dblResult = cursorCustPassbookCredit.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "Fetching customer passbook total credited amount of selected customer. " + e.getMessage());
+        } finally {
+            if (cursorCustPassbookCredit != null) {
+                cursorCustPassbookCredit.close();
+            }
+        }
+        return dblResult;
     }
 
     void calculateDiscountAmount()
@@ -6974,7 +7072,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             bundle.putDouble(Constants.DISCOUNTAMOUNT, Double.parseDouble(tvDiscountAmount.getText().toString()));
             bundle.putInt(Constants.TAXTYPE, isForwardTaxEnabled);
             //bundle.putInt(CUSTID, Integer.parseInt(tvCustId.getText().toString()));
-            bundle.putString(Constants.PHONENO, edtCustPhoneNo.getText().toString());
+            bundle.putString(Constants.PHONENO, edtCustDineInPhoneNo.getText().toString());
             bundle.putParcelableArrayList(Constants.ORDERLIST, orderItemList);
             if (chk_interstate.isChecked()) {
                 double igstAmount = Double.parseDouble(tvIGSTValue.getText().toString());
@@ -7531,7 +7629,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     fTotalDiscount = data.getFloatExtra(PayBillActivity.DISCOUNT_AMOUNT, 0);
 
 //                    dblPettCashPayment = data.getFloatExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
-                    dPettCashPayment = data.getDoubleExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
+                    dblPettyCashPayment = data.getDoubleExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
                     fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
                     fWalletPayment = data.getFloatExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
                     fChangePayment = data.getDoubleExtra(PayBillActivity.TENDER_CHANGE_VALUE, 0);
@@ -8697,13 +8795,16 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                 pdfItem.setCustomerName(crsrCustomer.getString(crsrCustomer.getColumnIndex(DatabaseHandler.KEY_CustName)));
                                 pdfItem.setCustomerAddress(crsrCustomer.getString(crsrCustomer.getColumnIndex(DatabaseHandler.KEY_CustAddress)));
                                 pdfItem.setCustomerGstin(crsrCustomer.getString(crsrCustomer.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
-                                String customerStateCode = pdfItem.getCustomerGstin().substring(0, 2);
+                                String customerStateCode = "";
                                 String customerPos = "";
-                                for (int i = 0; i < arrayPOS.length; i++) {
-                                    if (arrayPOS[i].contains(customerStateCode))
-                                        customerPos = arrayPOS[i];
+                                if (!pdfItem.getCustomerGstin().isEmpty()) {
+                                    customerStateCode = pdfItem.getCustomerGstin().substring(0, 2);
+                                    for (int i = 0; i < arrayPOS.length; i++) {
+                                        if (arrayPOS[i].contains(customerStateCode))
+                                            customerPos = arrayPOS[i];
+                                    }
+                                    customerPos = customerPos.substring(0, customerPos.length() - 2);
                                 }
-                                customerPos = customerPos.substring(0, customerPos.length() - 2);
                                 pdfItem.setCustomerState(customerPos);
 
                             } else {

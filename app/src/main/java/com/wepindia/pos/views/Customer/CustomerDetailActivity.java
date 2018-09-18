@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -41,8 +42,10 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -53,6 +56,7 @@ import com.epson.epos2.printer.Printer;
 import com.wep.common.app.Database.Customer;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
+import com.wep.common.app.models.CustomerPassbookBean;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.Constants;
@@ -62,6 +66,7 @@ import com.wepindia.pos.R;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.GSTINValidation;
 import com.wepindia.pos.views.Billing.BillingCounterSalesActivity;
+import com.wepindia.pos.views.Customer.CustomerPassbook.CustomerPassbookDialogFragment;
 import com.wepindia.printers.BixolonPrinterBaseAcivity;
 import com.wepindia.printers.EPSONPrinterBaseActivity;
 import com.wepindia.printers.TVSPrinterBaseActivity;
@@ -69,6 +74,7 @@ import com.wepindia.printers.WePTHPrinterBaseActivity;
 import com.wepindia.printers.WepPrinterBaseActivity;
 import com.wepindia.printers.wep.PrinterConnectionError;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -84,8 +90,8 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
     MessageDialog MsgBox;
     List<String> labelsItemName = null;
     // View handlers
-    EditText txtName, txtPhone, txtAddress, txtSearchPhone, txtCreditAmount ,txGSTIN, txtCustomerCreditLimit, etCreditDepositAmt;
-    TextView tvCustomerDepositAmt;
+    EditText txtName, txtPhone, txtAddress, txtSearchPhone, txtCreditAmount ,txGSTIN, txtCustomerCreditLimit, etCreditDepositAmt, etCustomerOpeningBal;
+    TextView tvCustomerDepositAmt, tvCustomerOpeningBal;
     WepButton btnAdd, btnEdit,btnClearCustomer,btnCloseCustomer, btnEditPrint;
     TableLayout tblCustomer;
     AutoCompleteTextView txtSearchName;
@@ -203,9 +209,12 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
             txtCustomerCreditLimit = (EditText) findViewById(R.id.etCreditCreditLimit);
             etCreditDepositAmt = (EditText) findViewById(R.id.etCreditDepositAmt);
             tvCustomerDepositAmt = (TextView) findViewById(R.id.tvCustomerDepositAmt);
+            etCustomerOpeningBal = (EditText) findViewById(R.id.etCustomerOpeningBal);
+            tvCustomerOpeningBal = (TextView) findViewById(R.id.tvCustomerOpeningBal);
             txtCreditAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
             txtCustomerCreditLimit.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
             etCreditDepositAmt.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
+            etCustomerOpeningBal.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
             txtSearchName = (AutoCompleteTextView) findViewById(R.id.etSearchCustomerName);
             txtSearchPhone = (EditText) findViewById(R.id.etSearchCustomerPhone);
             txGSTIN = (EditText) findViewById(R.id.etCustomerGSTIN);
@@ -276,6 +285,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                                 ClearCustomerTable();
                                 DisplayCustomerSearch(txtSearchPhone.getText().toString());
                                 txtSearchName.setText("");
+
                                 btnAdd.setEnabled(false);
                                 //btnEdit.setEnabled(true);
                                 tv_CustomerDetailMsg.setVisibility(View.VISIBLE);
@@ -319,6 +329,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                             ClearCustomerTable();
                             DisplayCustomerSearchbyName(txtSearchName.getText().toString());
                             txtSearchPhone.setText("");
+
                             btnAdd.setEnabled(false);
                             tv_CustomerDetailMsg.setVisibility(View.VISIBLE);
                             //}
@@ -401,7 +412,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         crsrCustomer = dbCustomer.getCustomer(PhoneNo);
 
         TableRow rowCustomer = null;
-        TextView tvSno, tvId, tvName, tvLastTransaction, tvTotalTransaction, tvPhone, tvAddress, tvCreditAmount, tvCreditLimit;
+        TextView tvSno, tvId, tvName, tvLastTransaction, tvTotalTransaction, tvPhone, tvAddress, tvCreditAmount, tvCreditLimit, tvOpeningBalance;
         ImageButton btnImgDelete;
         int i = 1;
         if (crsrCustomer != null && crsrCustomer.getCount() > 0) {
@@ -456,8 +467,6 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                     tvCreditAmount.setPadding(0,0,10,0);
                     rowCustomer.addView(tvCreditAmount);
 
-
-
                     // Delete
                     int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
                     btnImgDelete = new ImageButton(myContext);
@@ -479,6 +488,10 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                     tvCreditLimit.setText(String.format("%.2f",limit));
                     rowCustomer.addView(tvCreditLimit);
 
+                    tvOpeningBalance = new TextView(myContext);
+                    tvAddress.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex(DatabaseHandler.KEY_OPENING_BALANCE)));
+                    rowCustomer.addView(tvOpeningBalance);
+
                     rowCustomer.setOnClickListener(new View.OnClickListener() {
 
                         public void onClick(View v) {
@@ -495,6 +508,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                                 TextView rowCreditAmount = (TextView) Row.getChildAt(7);
                                 TextView gstin = (TextView)Row.getChildAt(9);
                                 TextView rowCreditLimit = (TextView) Row.getChildAt(10);
+                                TextView rowOpeningBalance = (TextView) Row.getChildAt(11);
 
 
                                 Id = rowId.getText().toString();
@@ -508,6 +522,9 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                                 txtCreditAmount.setText(rowCreditAmount.getText());
                                 txGSTIN.setText(gstin.getText().toString());
                                 txtCustomerCreditLimit.setText(rowCreditLimit.getText());
+
+                                etCustomerOpeningBal.setEnabled(false);
+                                etCustomerOpeningBal.setText(String.format("%.2f", Double.parseDouble(rowOpeningBalance.getText().toString().trim())));
 
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
@@ -533,7 +550,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         crsrCustomer = dbCustomer.getCustomerList(CustomerName);
 
         TableRow rowCustomer = null;
-        TextView tvSno, tvId, tvName, tvLastTransaction, tvTotalTransaction, tvPhone, tvAddress, tvCreditAmount, tvCreditLimit;
+        TextView tvSno, tvId, tvName, tvLastTransaction, tvTotalTransaction, tvPhone, tvAddress, tvCreditAmount, tvCreditLimit, tvOpeningBalance;
         ImageButton btnImgDelete;
         int i = 1;
         if (crsrCustomer != null && crsrCustomer.getCount() > 0) {
@@ -610,6 +627,10 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                     tvCreditLimit.setText(String.format("%.2f",limit));
                     rowCustomer.addView(tvCreditLimit);
 
+                    tvOpeningBalance = new TextView(myContext);
+                    tvAddress.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex(DatabaseHandler.KEY_OPENING_BALANCE)));
+                    rowCustomer.addView(tvOpeningBalance);
+
                     rowCustomer.setOnClickListener(new View.OnClickListener() {
 
                         public void onClick(View v) {
@@ -626,6 +647,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                                 TextView rowCreditAmount = (TextView) Row.getChildAt(7);
                                 TextView gstin = (TextView) Row.getChildAt(9);
                                 TextView rowCreditLimit = (TextView) Row.getChildAt(10);
+                                TextView rowOpeningBalance = (TextView) Row.getChildAt(11);
 
                                 Id = rowId.getText().toString();
                                 LastTransaction = rowLastTransaction.getText().toString();
@@ -638,6 +660,10 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                                 txtCreditAmount.setText(rowCreditAmount.getText());
                                 txtCustomerCreditLimit.setText(rowCreditLimit.getText());
                                 txGSTIN.setText(gstin.getText().toString());
+                                txtCustomerCreditLimit.setText(rowCreditLimit.getText());
+
+                                etCustomerOpeningBal.setEnabled(false);
+                                etCustomerOpeningBal.setText(String.format("%.2f", Double.parseDouble(rowOpeningBalance.getText().toString().trim())));
 
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
@@ -666,80 +692,152 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         crsrCustomer = dbCustomer.getAllCustomer();
 
         TableRow rowCustomer = null;
-        TextView tvSno, tvId, tvName, tvLastTransaction, tvTotalTransaction, tvPhone, tvAddress, tvCreditAmount,tvCreditLimit;
+        TextView tvSno, tvId, tvName, tvLastTransaction, tvTotalTransaction, tvPhone, tvAddress, tvCreditAmount,tvCreditLimit,tvOpeningBalance;
+        Button btnPassBook;
         ImageButton btnImgDelete;
         int i = 1;
         if (crsrCustomer != null && crsrCustomer.getCount() > 0) {
             if (crsrCustomer.moveToFirst()) {
                 do {
+                    TableRow.LayoutParams param = new TableRow.LayoutParams(
+                            0,
+                            LayoutParams.MATCH_PARENT,
+                            1.0f
+                    );
+
                     rowCustomer = new TableRow(myContext);
                     rowCustomer.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
                     rowCustomer.setBackgroundResource(R.drawable.row_background);
+                    rowCustomer.setOrientation(LinearLayout.HORIZONTAL);
 
                     tvSno = new TextView(myContext);
                     tvSno.setTextSize(18);
                     tvSno.setText(String.valueOf(i));
-                    tvSno.setGravity(1);
+                    tvSno.setGravity(Gravity.CENTER);
+                    tvSno.setLayoutParams(new TableRow.LayoutParams(
+                            0,
+                            LayoutParams.MATCH_PARENT,
+                            0.5f
+                    ));
                     rowCustomer.addView(tvSno);
 
                     tvId = new TextView(myContext);
                     tvId.setTextSize(18);
                     tvId.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustId")));
+                    tvId.setGravity(Gravity.CENTER_VERTICAL);
+                    tvId.setLayoutParams(param);
                     rowCustomer.addView(tvId);
 
                     tvName = new TextView(myContext);
                     tvName.setTextSize(18);
-                    tvName.setPadding(7,0,0,0);
+//                    tvName.setPadding(7,0,0,0);
                     tvName.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
+                    tvName.setGravity(Gravity.CENTER_VERTICAL);
+                    tvName.setLayoutParams(param);
                     rowCustomer.addView(tvName);
 
                     tvLastTransaction = new TextView(myContext);
                     tvLastTransaction.setTextSize(18);
-                    tvLastTransaction.setGravity(Gravity.LEFT);
                     //tvLastTransaction.setPadding(15,0,0,0);
-                    tvLastTransaction.setText(String.format("%.2f",crsrCustomer.getDouble(crsrCustomer.getColumnIndex("LastTransaction"))));
+                    tvLastTransaction.setText(String.format("%.2f",crsrCustomer.getDouble(crsrCustomer.getColumnIndex("LastTransaction"))) + " ");
+                    tvLastTransaction.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+                    tvLastTransaction.setLayoutParams(param);
                     rowCustomer.addView(tvLastTransaction);
 
                     tvTotalTransaction = new TextView(myContext);
                     tvTotalTransaction.setTextSize(18);
-                    tvTotalTransaction.setGravity(Gravity.LEFT);
+                    tvTotalTransaction.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                     //tvTotalTransaction.setPadding(38,0,0,0);
-                    tvTotalTransaction.setText(String.format("%.2f",crsrCustomer.getDouble(crsrCustomer.getColumnIndex("TotalTransaction"))));
+                    tvTotalTransaction.setText(String.format("%.2f",crsrCustomer.getDouble(crsrCustomer.getColumnIndex("TotalTransaction"))) + " ");
+                    tvTotalTransaction.setLayoutParams(param);
                     rowCustomer.addView(tvTotalTransaction);
 
                     tvPhone = new TextView(myContext);
                     tvPhone.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustContactNumber")));
+                    tvPhone.setLayoutParams(param);
                     rowCustomer.addView(tvPhone);
 
                     tvAddress = new TextView(myContext);
                     tvAddress.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress")));
+                    tvAddress.setLayoutParams(param);
                     rowCustomer.addView(tvAddress);
 
                     tvCreditAmount = new TextView(myContext);
                     double amt = crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditAmount"));
-                    tvCreditAmount.setText(String.format("%.2f",amt));
+                    tvCreditAmount.setText(String.format("%.2f",amt) + " ");
                     tvCreditAmount.setTextSize(18);
-                    tvCreditAmount.setGravity(Gravity.LEFT);
+                    tvCreditAmount.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+                    tvCreditAmount.setLayoutParams(param);
                     //tvCreditAmount.setPadding(15,0,0,0);
                     rowCustomer.addView(tvCreditAmount);
+
+                    TableRow.LayoutParams special = new TableRow.LayoutParams(
+                            0,
+                            LayoutParams.MATCH_PARENT,
+                            1f
+                    );
+
+                    special.setMargins(5, 5, 5, 5);
+
+                    final Customer customer = new Customer();
+
+                    customer.setiCustId(crsrCustomer.getInt(crsrCustomer.getColumnIndex("CustId")));
+                    customer.setStrCustName(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
+                    customer.setStrCustGSTIN(crsrCustomer.getString(crsrCustomer.getColumnIndex("GSTIN")));
+                    customer.setStrCustPhone(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustContactNumber")));
+                    customer.setStrCustAddress(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress")));
+                    customer.setdLastTransaction(crsrCustomer.getDouble(crsrCustomer.getColumnIndex("LastTransaction")));
+                    customer.setdTotalTransaction(crsrCustomer.getDouble(crsrCustomer.getColumnIndex("TotalTransaction")));
+                    customer.setdCreditLimit(crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditLimit")));
+                    customer.setdCreditAmount(crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditAmount")));
+
+                    //Passbook
+                    btnPassBook = new Button(myContext);
+//                    btnPassBook.setLayoutParams(new TableRow.LayoutParams(80, 40));
+                    btnPassBook.setBackgroundResource(R.drawable.background_btn);
+                    btnPassBook.setTextColor(getResources().getColor(R.color.white));
+                    btnPassBook.setText("Passbook");
+                    btnPassBook.setGravity(Gravity.CENTER);
+                    btnPassBook.setLayoutParams(special);
+                    btnPassBook.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FragmentManager fm = getSupportFragmentManager();
+                            CustomerPassbookDialogFragment customerPassbookDialogFragment = new CustomerPassbookDialogFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable(Customer.CUSTOMER_PARCELABLE_KEY, customer);
+                            customerPassbookDialogFragment.setArguments(bundle);
+                            customerPassbookDialogFragment.setCancelable(true);
+                            customerPassbookDialogFragment.show(fm, Constants.CUSTOMER_PASSBOOK_TAG);
+                        }
+                    });
+                    rowCustomer.addView(btnPassBook);
 
                     // Delete
                     int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
                     btnImgDelete = new ImageButton(myContext);
                     btnImgDelete.setImageResource(res);
-                    btnImgDelete.setLayoutParams(new TableRow.LayoutParams(60, 40));
+                    btnImgDelete.setLayoutParams(new TableRow.LayoutParams(0, 40, 0.4f));
+//                    btnImgDelete.setLayoutParams(param);
                     btnImgDelete.setOnClickListener(mListener);
                     rowCustomer.addView(btnImgDelete);
 
                     TextView tvGSTIN = new TextView(myContext);
                     tvGSTIN.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("GSTIN")));
                     tvGSTIN.setGravity(1);
+                    tvGSTIN.setLayoutParams(param);
                     rowCustomer.addView(tvGSTIN);
 
                     tvCreditLimit = new TextView(myContext);
                     double limit = crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditLimit"));
-                    tvCreditLimit.setText(String.format("%.2f",limit));
+                    tvCreditLimit.setText(String.format("%.2f",limit) + " ");
+                    tvCreditLimit.setLayoutParams(param);
                     rowCustomer.addView(tvCreditLimit);
+
+                    tvOpeningBalance = new TextView(myContext);
+                    tvOpeningBalance.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex(DatabaseHandler.KEY_OPENING_BALANCE)));
+                    tvOpeningBalance.setLayoutParams(param);
+                    rowCustomer.addView(tvOpeningBalance);
 
                     rowCustomer.setOnClickListener(new View.OnClickListener() {
 
@@ -755,8 +853,9 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                                 TextView rowPhone = (TextView) Row.getChildAt(5);
                                 TextView rowAddress = (TextView) Row.getChildAt(6);
                                 TextView rowCreditAmount = (TextView) Row.getChildAt(7);
-                                TextView rowCreditLimit = (TextView) Row.getChildAt(10);
-                                TextView gstin = (TextView) Row.getChildAt(9);
+                                TextView rowCreditLimit = (TextView) Row.getChildAt(11);
+                                TextView gstin = (TextView) Row.getChildAt(10);
+                                TextView rowOpeningBalance = (TextView) Row.getChildAt(12);
 
                                 Id = rowId.getText().toString();
                                 LastTransaction = rowLastTransaction.getText().toString();
@@ -772,7 +871,8 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
 
                                 tvCustomerDepositAmt.setVisibility(View.VISIBLE);
                                 etCreditDepositAmt.setVisibility(View.VISIBLE);
-
+                                etCustomerOpeningBal.setEnabled(false);
+                                etCustomerOpeningBal.setText(String.format("%.2f", Double.parseDouble(rowOpeningBalance.getText().toString().trim())));
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
                                 btnEditPrint.setEnabled(true);
@@ -857,16 +957,27 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
     }
 
     private void InsertCustomer(String strAddress, String strContactNumber, String strName, double fLastTransaction,
-                                double fTotalTransaction, double fCreditAmount, String gstin, double creditLimit, double depositAmount) {
+                                double fTotalTransaction, double fCreditAmount, String gstin, double creditLimit, double depositAmount, double openingBal) {
         long lRowId;
 
-        Customer objCustomer = new Customer(strAddress, strName, strContactNumber, fLastTransaction, fTotalTransaction,
-                fCreditAmount, gstin,creditLimit, depositAmount);
+        Customer customer = new Customer();
 
-        lRowId = dbCustomer.addCustomer(objCustomer);
+        customer.setStrCustAddress(strAddress);
+        customer.setStrCustPhone(strContactNumber);
+        customer.setStrCustName(strName);
+        customer.setdLastTransaction(fLastTransaction);
+        customer.setdTotalTransaction(fTotalTransaction);
+        customer.setdCreditAmount(fCreditAmount + openingBal);
+        customer.setStrCustGSTIN(gstin);
+        customer.setdCreditLimit(creditLimit);
+        customer.setOpeningBalance(openingBal);
+        customer.setDblDepositAmt(depositAmount);
 
-        Log.d("Customer", "Row Id: " + String.valueOf(lRowId));
-
+        lRowId = dbCustomer.addCustomer(customer);
+        
+        if (lRowId > 0) {
+            mStoreCustomerPassbookData(customer.getStrCustName(),customer.getStrCustPhone(),0);
+        }
     }
 
     private void ClearCustomerTable() {
@@ -887,6 +998,8 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         tvCustomerDepositAmt.setVisibility(View.GONE);
         etCreditDepositAmt.setVisibility(View.GONE);
         etCreditDepositAmt.setText("0.00");
+        etCustomerOpeningBal.setEnabled(true);
+        etCustomerOpeningBal.setText("0.00");
         txtSearchPhone.setText("");
         txtSearchName.setText("");
         txGSTIN.setText("");
@@ -905,6 +1018,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         Name = txtName.getText().toString();
         Phone = txtPhone.getText().toString();
         Address = txtAddress.getText().toString();
+        CreditAmount = txtCreditAmount.getText().toString();
         CreditAmount = txtCreditAmount.getText().toString();
         String GSTIN  = txGSTIN.getText().toString().trim().toUpperCase();
 
@@ -933,13 +1047,17 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
 
                         double dDepositamount = 0.00;
 
+                        double dOpeningBalance = etCustomerOpeningBal.getText().toString().trim().equals("") ? 0.00 :
+                                Double.parseDouble(String.format("%.2f", Double.parseDouble(etCustomerOpeningBal.getText().toString().trim())));
+
                         double dCreditAmount = txtCreditAmount.getText().toString().trim().equals("") ? 0.00 :
                                 Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCreditAmount.getText().toString().trim())));
 
                         double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("") ? 0.00 :
                                 Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
 
-                        InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount + dDepositamount, GSTIN, dCreditLimit, dDepositamount);
+                        InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount,
+                                GSTIN, dCreditLimit, dDepositamount, dOpeningBalance);
                         Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
                         ResetCustomer();
                         ClearCustomerTable();
@@ -1023,11 +1141,12 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
 
                 Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
                 Toast.makeText(myContext, "Cus tomer Updated Successfully", Toast.LENGTH_LONG).show();
-                if (isPrint) {
-                    PrintAmountDepositReceipt(customer);
-                }
-                ResetCustomer();
                 if (iResult > 0) {
+                    mStoreCustomerPassbookData(customer.getStrCustName(),customer.getStrCustPhone(),1);
+                    if (isPrint) {
+                        PrintAmountDepositReceipt(customer);
+                    }
+                    ResetCustomer();
                     ClearCustomerTable();
                     DisplayCustomer();
                     loadAutoCompleteData();
@@ -1039,10 +1158,112 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         {
             MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
         }
-
-
     }
 
+    private void mStoreCustomerPassbookData(String strCustName, String strCustPhoneNo, int iMode){
+        Cursor cursorCustomerData = null;
+        try{
+            cursorCustomerData = dbCustomer.getCustomer(strCustName,strCustPhoneNo);
+            if(cursorCustomerData != null && cursorCustomerData.getCount() > 0){
+                if (cursorCustomerData.moveToFirst()) {
+                    // if(cursorCustomerData.getDouble(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_OpeningBalance)) > 0) {
+                    CustomerPassbookBean customerPassbookBean = new CustomerPassbookBean();
+                    customerPassbookBean.setStrCustomerID(cursorCustomerData.getInt(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_CustId)) + "");
+                    customerPassbookBean.setStrName(cursorCustomerData.getString(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_CustName)));
+                    customerPassbookBean.setStrPhoneNo(cursorCustomerData.getString(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_CustContactNumber)));
+                    customerPassbookBean.setDblOpeningBalance(0);
+                    customerPassbookBean.setDblCreditAmount(0);
+                    switch(iMode){
+                        case 0: // Add
+                            customerPassbookBean.setDblOpeningBalance(cursorCustomerData.getDouble(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_OPENING_BALANCE)));
+                            customerPassbookBean.setDblTotalAmount(cursorCustomerData.getDouble(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_OPENING_BALANCE)));
+                            customerPassbookBean.setStrDescription(Constants.OPENING_BALANCE);
+                            break;
+                        case 1: // Update
+                            customerPassbookBean.setDblCreditAmount(Double.parseDouble(String.format("%.2f",(Double.parseDouble(etCreditDepositAmt.getText().toString())))));
+                                   /* double dblTotalAmountFromCustPassbookDB = getCustomerPassbookAvailableAmount(customerPassbookBean.getStrCustomerID(),customerPassbookBean.getStrPhoneNo());
+                                    double dblTotalAmountFinal = 0.00;
+                                    if(cursorCustomerData.getDouble(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_OpeningBalance)) > 0
+                                            || cursorCustomerData.getDouble(cursorCustomerData.getColumnIndex(DatabaseHandler.KEY_CreditAmount)) > 0) {
+                                        //dblTotalAmountFinal = (Double.parseDouble(String.format("%.2f", (Double.parseDouble(edtDepositAmt.getText().toString())))) - Math.abs(dblTotalAmountFromCustPassbookDB));
+                                        dblTotalAmountFinal = (Double.parseDouble(String.format("%.2f",  Math.abs(dblTotalAmountFromCustPassbookDB - (Double.parseDouble(edtDepositAmt.getText().toString()))))));
+                                    } else {
+                                        dblTotalAmountFinal = (Double.parseDouble(String.format("%.2f", (Double.parseDouble(edtDepositAmt.getText().toString())))) + dblTotalAmountFromCustPassbookDB);
+                                    }*/
+                            double dblTotalDepositAmount = getCustomerPassbookTotalDepositAndOpeningAmount(customerPassbookBean.getStrCustomerID(),customerPassbookBean.getStrPhoneNo());
+                            double dblTotalCrdeitAmount = getCustomerPassbookTotalCreditAmount(customerPassbookBean.getStrCustomerID(),customerPassbookBean.getStrPhoneNo());
+                            customerPassbookBean.setDblTotalAmount(Double.parseDouble(String.format("%.2f",((dblTotalCrdeitAmount + customerPassbookBean.getDblCreditAmount())
+                                    - dblTotalDepositAmount))));
+                            customerPassbookBean.setStrDescription(Constants.DEPOSIT);
+                            break;
+                        default:
+                            break;
+                    }
+                    Date date1 = new Date();
+                    try {
+                        date1 = new SimpleDateFormat("dd-MM-yyyy").parse(BUSINESS_DATE);
+                    } catch (Exception e) {
+                        Log.e("Customer Master", "" + e);
+                        Log.e("Customer Master", "" + e);
+                    }
+                    customerPassbookBean.setStrDate("" + date1.getTime());
+                    customerPassbookBean.setDblDepositAmount(0);
+                    customerPassbookBean.setDblPettyCashTransaction(0);
+                    customerPassbookBean.setDblRewardPoints(0);
+                    try {
+                        dbCustomer.addCustomerPassbook(customerPassbookBean);
+                    }catch (Exception ex){
+                        Log.i("Customer Master","Inserting data into customer passbook : " +ex.getMessage());
+                    }
+                    // }
+                }
+            } else {
+                Log.i("Customer Master","No customer data selected for storing customer passbook.");
+            }
+        } catch (Exception ex){
+            Log.i("Customer Master","Unable to store the customer passbook data." +ex.getMessage());
+        } finally {
+            if(cursorCustomerData != null){
+                cursorCustomerData.close();
+            }
+        }
+    }
+
+    private double getCustomerPassbookTotalDepositAndOpeningAmount(String strCustID, String strCustPhoneNo){
+        double dblResult = 0;
+        Cursor cursorCustPassbookDeposit = null;
+        try {
+            cursorCustPassbookDeposit = dbCustomer.getCustomerPassbook_TotalDepositOpeningAmountForSelectedCustomer(strCustID, strCustPhoneNo);
+            if(cursorCustPassbookDeposit != null && cursorCustPassbookDeposit.moveToFirst()){
+                dblResult = cursorCustPassbookDeposit.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.i("Customer Master","Fetching customer passbook total deposited and opening amount of selected customer. " +e.getMessage());
+        }finally {
+            if(cursorCustPassbookDeposit != null){
+                cursorCustPassbookDeposit.close();
+            }
+        }
+        return dblResult;
+    }
+
+    private double getCustomerPassbookTotalCreditAmount(String strCustID, String strCustPhoneNo){
+        double dblResult = 0;
+        Cursor cursorCustPassbookCredit = null;
+        try {
+            cursorCustPassbookCredit = dbCustomer.getCustomerPassbook_TotalCreditAmountForSelectedCustomer(strCustID, strCustPhoneNo);
+            if(cursorCustPassbookCredit != null && cursorCustPassbookCredit.moveToFirst()){
+                dblResult = cursorCustPassbookCredit.getDouble(0);
+            }
+        } catch (Exception e) {
+            Log.i("Customer Master","Fetching customer passbook total credited amount of selected customer. " +e.getMessage());
+        }finally {
+            if(cursorCustPassbookCredit != null){
+                cursorCustPassbookCredit.close();
+            }
+        }
+        return dblResult;
+    }
 
     private void initSettingsData() {
         Cursor crsrSettings = null;

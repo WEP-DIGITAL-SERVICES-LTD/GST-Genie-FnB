@@ -402,4 +402,14 @@
     <string name="title_target">Target</string>
     <string name="title_activity_discovery">Discover new printers</string>
 
+    <!-- Customer passbook strings -->
+    <string name="customer_passbook">Customer Passbook</string>
+    <string name="cust_phone_no_title">Phone No</string>
+    <string name="cust_name_title">Customer Name</string>
+    <string name="view">View</string>
+    <string name="passbook">Passbook</string>
+    <string name="debit_amount">Debit Amount</string>
+    <string name="credit_amount">Credit Amount</string>
+    <string name="available_balance">Available Balance</string>
+
 </resources>

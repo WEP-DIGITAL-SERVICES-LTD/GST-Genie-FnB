@@ -29,6 +29,7 @@ import com.wep.common.app.gst.get.GetGSTR1Summary;
 import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
 import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
+import com.wep.common.app.models.CustomerPassbookBean;
 import com.wep.common.app.models.GSTR2_B2B_Amend;
 import com.wep.common.app.models.ItemInward;
 import com.wep.common.app.models.ItemOutward;
@@ -278,13 +279,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Customer
     public static final String KEY_CustAddress = "CustAddress";
-    private static final String KEY_CustContactNumber = "CustContactNumber";
+    public static final String KEY_CustContactNumber = "CustContactNumber";
     //private static final String KEY_CustName = "CustName";
     private static final String KEY_LastTransaction = "LastTransaction";
     private static final String KEY_TotalTransaction = "TotalTransaction";
     private static final String KEY_CreditAmount = "CreditAmount";
     private static final String KEY_CreditLimit = "CreditLimit";
     public static final String KEY_CUST_DEPOSIT_AMOUNT = "DepositAmount";
+    public static final String KEY_OpeningBalance = "OpeningBalance";
 
     // Description
     private static final String KEY_DescriptionId = "DescriptionId";
@@ -444,7 +446,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_CASH_AMOUNT = "cashAmount";
     private static final String KEY_BASE_AMOUNT = "baseAmount";
     private static final String KEY_TIP_AMOUNT = "tipAmount";
-    private static final String KEY_TOTAL_AMOUNT = "totalAmount";
+    public static final String KEY_TOTAL_AMOUNT = "totalAmount";
 
     private static final String KEY_AUTH_CODE = "authCode";
     private static final String KEY_RRNO = "rrNo";
@@ -484,6 +486,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_TxnID = "TxnID";
     public static final String KEY_PaymentDateTime = "PaymentDateTime";
     public static final String KEY_PaymentID = "PaymentID";
+
+    //Customer passbook table name and fields
+    public static final String TBL_CUSTOMER_PASSBOOK = "tbl_customer_passbook";
+    public static final String KEY_CUSTOMER_ID = "cust_id";
+    public static final String KEY_CUSTOMER_NAME = "name";
+    public static final String KEY_CUSTOMER_PHONE_NO = "phone_number";
+    public static final String KEY_DATE = "date";
+    public static final String KEY_OPENING_BALANCE = "opening_balance";
+    public static final String KEY_DEPOSIT_AMOUNT = "deposit_amount";
+    public static final String KEY_CREDIT_AMOUNT = "credit_amount";
+    public static final String KEY_PETTY_CASH_TRANSACTION = "petty_cash_transaction";
+    public static final String KEY_REWARD_POINTS = "reward_points";
+    public static final String KEY_DESCRIPTION = "description";
 
     String QUERY_CREATE_TBL_AEPS_TRANSACTIONS = "CREATE TABLE IF NOT EXISTS " + TBL_AEPS_TRANSACTIONS + "("
             + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -948,7 +963,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             +KEY_OriginalRate+" REAL, "+
             KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_Amount + " REAL, " +KEY_IsReverseTaxEnabled + " TEXT, " + KEY_IGSTRate + " REAL," +
             KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," +
-            KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," +
+            KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," + KEY_SALES_MAN_ID + " TEXT," +
             KEY_SubTotal + " REAl, " + KEY_BillingMode + " TEXT, " + KEY_ServiceTaxAmount + " REAL, " +
             KEY_ServiceTaxPercent + " REAL," + KEY_ModifierAmount + " REAL, " + KEY_TaxType + " NUMERIC, " +
             KEY_KitchenCode + " NUMERIC, " + KEY_CategCode + " NUMERIC, " + KEY_DeptCode + " NUMERIC, " +
@@ -960,7 +975,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_InvoiceDate + " TEXT, " + KEY_SupplyType + " TEXT, " +
             KEY_BusinessType + " TEXT, " + KEY_TaxationType + " TEXT, " + KEY_HSNCode + " TEXT, "
             + KEY_ItemNumber + " NUMERIC, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, "
-            +KEY_OriginalRate+" REAL, "+
+            +KEY_OriginalRate+" REAL, "+  KEY_SALES_MAN_ID + " TEXT, " +
             KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_Amount + " REAL, " +KEY_IsReverseTaxEnabled + " TEXT, " + KEY_IGSTRate + " REAL," +
             KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," +
             KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," +
@@ -1013,6 +1028,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_DiscPercentage + " REAL,"
             + KEY_TotalTaxAmount + " REAL, "
             + KEY_UserId + " NUMERIC, "
+            + KEY_SALES_MAN_ID + " TEXT, "
             + KEY_PettyCashPayment + " REAL, "
             + KEY_PaidTotalPayment + " REAL, "
             + KEY_ChangePayment + " REAL, "
@@ -1225,14 +1241,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     String QUERY_CREATE_TABLE_CUSTOMER = "CREATE TABLE " + TBL_CUSTOMER + " (" +
             KEY_CustAddress + " TEXT, " +
             KEY_CustContactNumber + " NUMERIC, " +
-            KEY_CustId + " INTEGER PRIMARY KEY, " +
+            KEY_CustId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             KEY_CustName + " TEXT, " +
             KEY_LastTransaction + " REAL, " +
             KEY_TotalTransaction + " REAL, " +
             KEY_CreditAmount + " REAL, "+
             KEY_CreditLimit +" REAL, " +
+            KEY_OPENING_BALANCE + " REAL, " +
             KEY_CUST_DEPOSIT_AMOUNT + " REAL," +
             KEY_GSTIN + " TEXT)";
+
+    //Customer passbook table create query
+    String QUERY_CREATE_TABLE_CUSTOMER_PASSBOOK = " CREATE TABLE IF NOT EXISTS " + TBL_CUSTOMER_PASSBOOK + " ( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_CUSTOMER_ID + " TEXT, "
+            + KEY_CUSTOMER_NAME + " TEXT, "
+            + KEY_CUSTOMER_PHONE_NO + " TEXT, "
+            + KEY_DATE + " TEXT, "
+            + KEY_OPENING_BALANCE + " REAL, "
+            + KEY_DEPOSIT_AMOUNT + " REAL, "
+            + KEY_CREDIT_AMOUNT + " REAL, "
+            + KEY_PETTY_CASH_TRANSACTION + " REAL, "
+            + KEY_REWARD_POINTS + " REAL, "
+            + KEY_DESCRIPTION + " TEXT, "
+            + KEY_TOTAL_AMOUNT + " REAL, "
+            + KEY_BILL_NO + " TEXT "
+            + ")";
 
     String QUERY_CREATE_TABLE_DELETEDKOT = "CREATE TABLE " + TBL_DELETEDKOT + "(" + KEY_Reason + " TEXT, " +
             KEY_EmployeeId + " NUMERIC," + KEY_SubUdfNumber + " NUMERIC," + KEY_TableNumber + " NUMERIC," +
@@ -1420,6 +1454,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TABLE_PAYMENT_OPTIONS_CONFIGURATION);
             db.execSQL(QUERY_CREATE_TABLE_TRANSACTION_DETAILS);
             db.execSQL(QUERY_CREATE_TBL_AEPS_TRANSACTIONS);
+            db.execSQL(QUERY_CREATE_TABLE_CUSTOMER_PASSBOOK);
             setDefaultTableValues(db);
         } catch (Exception ex) {
             Toast.makeText(myContext, "OnCreate : " + ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -1494,6 +1529,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 db.execSQL(QUERY_CREATE_TABLE_PAYMENT_OPTIONS_CONFIGURATION);
                 db.execSQL(QUERY_CREATE_TABLE_TRANSACTION_DETAILS);
                 db.execSQL(QUERY_CREATE_TBL_AEPS_TRANSACTIONS);
+                db.execSQL(QUERY_CREATE_TABLE_CUSTOMER_PASSBOOK);
 
                 try {
                     cvDbValues = new ContentValues();
@@ -1614,8 +1650,65 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         if (!existsColumnInTable(db, TBL_CUSTOMER, KEY_CUST_DEPOSIT_AMOUNT)) { // Column doesn't exist
                             db.execSQL("ALTER TABLE " + TBL_CUSTOMER + " ADD COLUMN " + KEY_CUST_DEPOSIT_AMOUNT + " REAL default 0");
                         }
+                        if (!existsColumnInTable(db, TBL_CUSTOMER, KEY_OPENING_BALANCE)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_CUSTOMER + " ADD COLUMN " + KEY_OPENING_BALANCE + " REAL default 0");
+                        }
                     } else { // Table doesn't exist
                         db.execSQL(QUERY_CREATE_TABLE_BILLSETTING);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_LEDGER + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_LEDGER, KEY_SALES_MAN_ID)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_LEDGER + " ADD COLUMN " + KEY_SALES_MAN_ID + " TEXT");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Ledger);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, KEY_SALES_MAN_ID)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " ADD COLUMN " + KEY_SALES_MAN_ID + " TEXT");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Items_Details);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER, KEY_SALES_MAN_ID)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER + " ADD COLUMN " + KEY_SALES_MAN_ID + " TEXT");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Preview_Outward_Supply_Ledger);
                     }
                 } catch (Exception ex) {
                     Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
@@ -4308,10 +4401,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("CustAddress", objCustomer.getStrCustAddress());
         cvDbValues.put("CreditAmount", objCustomer.getdCreditAmount());
         cvDbValues.put("CreditLimit", objCustomer.getdCreditLimit());
+        cvDbValues.put(KEY_OPENING_BALANCE, objCustomer.getOpeningBalance());
         cvDbValues.put("DepositAmount", objCustomer.getDblDepositAmt());
         cvDbValues.put(KEY_GSTIN, objCustomer.getStrCustGSTIN());
 
         return dbFNB.insert(TBL_CUSTOMER, null, cvDbValues);
+    }
+
+    public long addCustomerPassbook(CustomerPassbookBean customerPassbookBean) {
+        SQLiteDatabase db = getReadableDatabase();
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_CUSTOMER_ID, customerPassbookBean.getStrCustomerID());
+        cvDbValues.put(KEY_CUSTOMER_NAME, customerPassbookBean.getStrName());
+        cvDbValues.put(KEY_CUSTOMER_PHONE_NO, customerPassbookBean.getStrPhoneNo());
+        cvDbValues.put(KEY_DATE, customerPassbookBean.getStrDate());
+        cvDbValues.put(KEY_OPENING_BALANCE, customerPassbookBean.getDblOpeningBalance());
+        cvDbValues.put(KEY_DEPOSIT_AMOUNT, customerPassbookBean.getDblDepositAmount());
+        cvDbValues.put(KEY_CREDIT_AMOUNT, customerPassbookBean.getDblCreditAmount());
+        cvDbValues.put(KEY_PETTY_CASH_TRANSACTION, customerPassbookBean.getDblPettyCashTransaction());
+        cvDbValues.put(KEY_REWARD_POINTS, customerPassbookBean.getDblRewardPoints());
+        cvDbValues.put(KEY_BILL_NO, customerPassbookBean.getStrBillNo());
+        cvDbValues.put(KEY_DESCRIPTION, customerPassbookBean.getStrDescription());
+        cvDbValues.put(KEY_TOTAL_AMOUNT, customerPassbookBean.getDblTotalAmount());
+        return db.insert(TBL_CUSTOMER_PASSBOOK, null, cvDbValues);
     }
 
     // -----Retrieve All customers-----
@@ -4321,17 +4433,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Retrieve single Customer-----
     public Cursor getCustomer(int iCustId) {
-        return dbFNB.query(TBL_CUSTOMER, new String[]{"*"}, "CustId=" + iCustId, null, null, null, null);
+        SQLiteDatabase db = getWritableDatabase();
+        return db.query(TBL_CUSTOMER, new String[]{"*"}, "CustId =" + iCustId, null, null, null, null);
     }
 
     // -----Retrieve single Customer-----
     public Cursor getCustomer(String strCustPhone) {
-        return dbFNB.query(TBL_CUSTOMER, new String[]{"*"}, "CustContactNumber='" + strCustPhone + "'", null, null,
+        SQLiteDatabase db = getWritableDatabase();
+        return db.query(TBL_CUSTOMER, new String[]{"*"}, "CustContactNumber='" + strCustPhone + "'", null, null,
                 null, null);
     }
 
     public Cursor getCustomerList(String Name) {
-        return dbFNB.rawQuery("SELECT * FROM " + TBL_CUSTOMER + " WHERE CustName LIKE '" + Name + "%'", null);
+        SQLiteDatabase db = getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + TBL_CUSTOMER + " WHERE CustName LIKE '" + Name + "%'", null);
     }
 
     public double getCustomerTotalTransaction(int iCustId) {
@@ -4386,6 +4501,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             e.printStackTrace();
             result = 0;
         }
+        return result;
+    }
+
+    //Customer passbook data fetch based on the user selected dates and customer phone number or ID
+    public Cursor getCustomerPassbookData(int iCustID, String strPhoneNo, String strFromDate, String strToDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        String selectQuery = "SELECT * FROM " + TBL_CUSTOMER_PASSBOOK + "  WHERE " + KEY_CUSTOMER_ID
+                + " = '" + iCustID + "' AND " + KEY_CUSTOMER_PHONE_NO + " = '" + strPhoneNo + "' AND " +
+                KEY_DATE + " BETWEEN '" + strFromDate + "' AND '" + strToDate + "'";
+        Cursor result = db.rawQuery(selectQuery, null);
+        return result;
+    }
+
+    public Cursor getCustomerPassbookData(int iCustID, String strPhoneNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        String selectQuery = "SELECT * FROM " + TBL_CUSTOMER_PASSBOOK + "  WHERE " + KEY_CUSTOMER_ID
+                + " = '" + iCustID + "' AND " + KEY_CUSTOMER_PHONE_NO + " = '" + strPhoneNo + "'";
+        Cursor result = db.rawQuery(selectQuery, null);
+        return result;
+    }
+
+    public Cursor getCustomerPassbook_TotalDepositOpeningAmountForSelectedCustomer(String strCustID, String strPhoneNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        String selectQuery = "SELECT sum(deposit_amount) as totalDeposit FROM tbl_customer_passbook " + " WHERE "
+                + KEY_CUSTOMER_ID
+                + " = '" + strCustID + "' AND " + KEY_CUSTOMER_PHONE_NO + " = '" + strPhoneNo + "'";
+        Cursor result = db.rawQuery(selectQuery, null);
+        return result;
+    }
+
+    public Cursor getCustomerPassbook_TotalCreditAmountForSelectedCustomer(String strCustID, String strPhoneNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        String selectQuery = "SELECT sum(credit_amount  + opening_balance) as totalCredit FROM tbl_customer_passbook " + " WHERE "
+                + KEY_CUSTOMER_ID
+                + " = '" + strCustID + "' AND " + KEY_CUSTOMER_PHONE_NO + " = '" + strPhoneNo + "'";
+        Cursor result = db.rawQuery(selectQuery, null);
         return result;
     }
 
@@ -10090,6 +10241,12 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
                 null, null);
     }
 
+    public Cursor getCustomer(String strCustName, String strCustPhone) {
+        SQLiteDatabase db = getReadableDatabase();
+        String selectionString = KEY_CustContactNumber + " LIKE '" + strCustPhone + "' AND " + KEY_CustName + " LIKE '" + strCustName + "'";
+        return db.query(TBL_CUSTOMER, new String[]{"*"}, selectionString, null, null,
+                null, null);
+    }
 
     //Payment mode configuration module database methods
     public int updatePaymentModeDetailsRazorPay(String keyId, String secretKey) {

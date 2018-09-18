@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:id="@+id/ll_customer_passbook_dialog_list_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/row_background"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_customer_passbook_dialog_list_row_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Test"
+            style="@style/TV_Billing_Screen_black" />
+
+        <TextView
+            android:id="@+id/tv_customer_passbook_dialog_list_row_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Test"
+            style="@style/TV_Billing_Screen_black" />
+
+        <TextView
+            android:id="@+id/tv_customer_passbook_dialog_list_row_debit_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Test"
+            style="@style/TV_Billing_Screen_black_right_aligned" />
+
+        <TextView
+            android:id="@+id/tv_customer_passbook_dialog_list_row_credit_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Test"
+            style="@style/TV_Billing_Screen_black_right_aligned" />
+
+        <TextView
+            android:id="@+id/tv_customer_passbook_dialog_list_row_total_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Test"
+            style="@style/TV_Billing_Screen_black_right_aligned" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

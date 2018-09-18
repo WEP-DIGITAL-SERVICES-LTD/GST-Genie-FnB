@@ -36,7 +36,7 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.views.InwardManagement.InwardActivity;
 import com.wepindia.pos.views.Masters.OutwardItemMaster.ItemManagementActivity;
 import com.wepindia.pos.LoginActivity;
-import com.wepindia.pos.PaymentModeConfigurationActivity;
+import com.wepindia.pos.views.PaymentConfigurations.PaymentConfiguration;
 import com.wepindia.pos.R;
 import com.wepindia.pos.views.Masters.PriceAndStock.StockActivity;
 import com.wepindia.pos.views.Settings.TabbedSettingsActivity;
@@ -176,7 +176,7 @@ public class MasterActivity extends WepBaseActivity {
 
         }  else if(v.getContentDescription().toString().equalsIgnoreCase("PaymentMode")){
             // Launch Payment mode configuration activity
-            Intent intentPaymentMode = new Intent(myContext,PaymentModeConfigurationActivity.class);
+            Intent intentPaymentMode = new Intent(myContext,PaymentConfiguration.class);
             intentPaymentMode.putExtra("USER_NAME", strUserName);
             startActivity(intentPaymentMode);
         }

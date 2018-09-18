@@ -6,7 +6,11 @@ package com.wepindia.pos;
 
 public interface Constants {
 
+    public static final String CUSTOMER_PASSBOOK_TAG = "Customer Passbook";
     public String SALES_MAN_ID_KEY = "Salesman";
+    public static final String OPENING_BALANCE = "Opening Balance";
+    public static final String DEPOSIT = "Deposit";
+    public static final String BILL_NO = "BillNo";
 
     // PDF Invoice
     String PDF_INVOICE_DIRECTORY = "WeP_FnB_Invoices";

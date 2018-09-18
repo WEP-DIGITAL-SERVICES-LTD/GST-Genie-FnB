@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            android:padding="5dp"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/ic_form_update" />
+
+        <TextView
+            android:id="@+id/tv_customer_passbook_dialog_title"
+            style="@style/TV_Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="left|center"
+            android:text="@string/customer_passbook"
+            android:textColor="@android:color/background_light" />
+
+        <ImageView
+            android:id="@+id/iv_customer_passbook_dialog_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:srcCompat="@mipmap/ic_cross" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".1">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/cust_name_title"
+                    android:padding="2dp"
+                    app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_customer_passbook_dialog_customer_name"
+                        style="@style/ET_Owner_Details"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/cust_phone_no_title"
+                    android:padding="2dp"
+                    app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_customer_passbook_dialog_customer_phone_no"
+                        style="@style/ET_Owner_Details"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="phone" />
+                </android.support.design.widget.TextInputLayout>
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/bt_customer_passbook_dialog_from_date"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/btn_calendar" />
+
+                <EditText
+                    android:id="@+id/et_customer_passbook_dialog_from_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="bottom"
+                    android:ems="5"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:hint="From Date"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="invisible"/>
+
+                <EditText
+                    android:id="@+id/et_customer_passbook_dialog_to_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="bottom"
+                    android:ems="5"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:hint="To Date"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:id="@+id/bt_customer_passbook_dialog_to_date"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/btn_calendar" />
+
+                <Button
+                    android:background="@drawable/background_btn"
+                    android:id="@+id/bt_customer_passbook_dialog_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/view"
+                    android:textColor="@android:color/white" />
+
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:layout_margin="5dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_customer_passbook_dialog_title_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/date"
+                style="@style/TV_Billing_Screen"/>
+
+            <TextView
+                android:id="@+id/tv_customer_passbook_dialog_title_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/description"
+                style="@style/TV_Billing_Screen" />
+
+            <TextView
+                android:id="@+id/tv_customer_passbook_dialog_title_debit_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/debit_amount"
+                style="@style/TV_Billing_Screen_right_alignment" />
+
+            <TextView
+                android:id="@+id/tv_customer_passbook_dialog_title_credit_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/credit_amount"
+                style="@style/TV_Billing_Screen_right_alignment" />
+
+            <TextView
+                android:id="@+id/tv_customer_passbook_dialog_title_total_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/available_balance"
+                style="@style/TV_Billing_Screen_right_alignment" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_customer_passbook_dialog_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.2"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+</LinearLayout>

@@ -240,6 +240,26 @@
                                 android:layout_height="wrap_content">
 
                                 <TextView
+                                    android:id="@+id/tvCustomerOpeningBal"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Opening Balance"
+                                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                                <EditText
+                                    android:id="@+id/etCustomerOpeningBal"
+                                    android:layout_width="225dp"
+                                    android:layout_height="wrap_content"
+                                    android:ems="5"
+                                    android:inputType="numberDecimal"
+                                    android:text="0.00" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
                                     android:visibility="gone"
                                     android:id="@+id/tvCustomerDepositAmt"
                                     android:layout_width="150dp"
@@ -295,27 +315,31 @@
                                 android:id="@+id/tblCustomer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:collapseColumns="1,5,6,9,10">
+                                android:collapseColumns="1,5,6,10,11,12">
 
                                 <TableRow
                                     android:id="@+id/rowCaption"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:orientation="horizontal"
                                     android:background="@color/colorPrimaryLight">
 
                                     <TextView
                                         android:id="@+id/tvCaptionSno"
-                                        android:layout_width="35dp"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
+                                        android:layout_width="0dp"
+                                        android:layout_weight=".5"
                                         android:text="SNo"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
                                         android:textColor="@color/txtColorAccent"
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
+                                        android:gravity="center"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
                                         android:id="@+id/tvCaptionSerialNumber"
-                                        android:layout_width="100dp"
                                         android:layout_height="wrap_content"
                                         android:text="#"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -323,8 +347,10 @@
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
+                                        android:gravity="center"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
                                         android:id="@+id/tvCaptionCustomerName"
-                                        android:layout_width="170dp"
                                         android:layout_height="wrap_content"
                                         android:text="Name"
                                         android:layout_marginStart="@dimen/_10dp_720dp_7dp_600dp"
@@ -334,28 +360,32 @@
 
 
                                     <TextView
+                                        android:gravity="center"
                                         android:id="@+id/tvCaptionLastTransaction"
-                                        android:layout_width="200dp"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
                                         android:layout_height="wrap_content"
-
                                         android:text="Last Petty Transn."
                                         android:textAppearance="?android:attr/textAppearanceSmall"
                                         android:textColor="@color/txtColorAccent"
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
+                                        android:gravity="center"
                                         android:id="@+id/tvCaptionTotalTransaction"
-                                        android:layout_width="200dp"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
                                         android:layout_height="wrap_content"
-
                                         android:text="Total Transn."
                                         android:textAppearance="?android:attr/textAppearanceSmall"
                                         android:textColor="@color/txtColorAccent"
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
+                                        android:gravity="center"
                                         android:id="@+id/tvCaptionCustomerPhone"
-                                        android:layout_width="120dp"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
                                         android:layout_height="wrap_content"
                                         android:text="Phone"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -363,8 +393,10 @@
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
+                                        android:gravity="center"
                                         android:id="@+id/tvCaptionCustomerAddress"
-                                        android:layout_width="150dp"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
                                         android:layout_height="wrap_content"
                                         android:text="Address"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -372,20 +404,62 @@
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
+                                        android:gravity="center"
                                         android:id="@+id/tvCaptionCreditAmount"
-                                        android:layout_width="200dp"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
                                         android:layout_height="wrap_content"
-
                                         android:text="Credit Amt"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
                                         android:textColor="@color/txtColorAccent"
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
+                                        android:gravity="center"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:text="Passbook"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+                                    <TextView
+                                        android:gravity="center"
                                         android:id="@+id/tvColDelete"
                                         android:layout_width="@dimen/counter_sale_60dp_720dp_55dp_600dp"
                                         android:layout_height="wrap_content"
                                         android:text="Delete"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+                                    <TextView
+                                        android:gravity="center"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:text="GSTIN"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+                                    <TextView
+                                        android:gravity="center"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:text="Credit Limit"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+                                    <TextView
+                                        android:gravity="center"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:text="Opening Balance"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
                                         android:textColor="@color/txtColorAccent"
                                         android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />

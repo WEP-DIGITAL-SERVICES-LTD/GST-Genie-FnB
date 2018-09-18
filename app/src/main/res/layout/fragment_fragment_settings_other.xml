@@ -30,8 +30,8 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginTop="35dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
                         android:layout_weight="1.2">
 
                         <LinearLayout
@@ -253,8 +253,8 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="35dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="16dp"
                         android:layout_weight="0.8">
 
                         <LinearLayout
@@ -445,6 +445,32 @@
 
                                 <RadioButton
                                     android:id="@+id/rbPrintServiceDisable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Disable" />
+                            </RadioGroup>
+
+                            <TextView
+                                android:id="@+id/tv_others_sales_man_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Sales Man ID Display" />
+
+                            <RadioGroup
+                                android:id="@+id/rg_others_sales_man_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rb_others_sales_man_id_enable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Enable" />
+
+                                <RadioButton
+                                    android:id="@+id/rb_others_sales_man_id_disable"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Disable" />
