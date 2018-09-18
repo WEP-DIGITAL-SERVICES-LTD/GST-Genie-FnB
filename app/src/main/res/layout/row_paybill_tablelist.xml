@@ -14,7 +14,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/color_black"/>
+            android:background="@color/black"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -38,7 +38,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/color_black"/>
+            android:background="@color/black"/>
     </LinearLayout>
 
     <EditText

@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="tab_color_monochromatic">#0097A7</color>
-    <color name="widget_color">#0097A7</color>
-    <!--<color name="disable_button">#9E9D24</color>-->
-    <color name="disable_button">#00BCD4</color>
-
-    <color name="play_Store_green">#007E00</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name ="test">#B3C833</color>
-    <color name="grey">#A9A9A9</color>
-    <color name="gray_200">#EEEEEE</color>
-    <color name="gray_300">#E0E0E0</color>
-    <color name="gray_400">#BDBDBD</color>
-    <color name="white">#FFFFFF</color>
-    <color name="color_black">#000000</color>
-    <color name="red">#D50000</color>
-    <color name="green">#4CAF50</color>
-    <color name="textDisable">#424242</color>
-    <color name="orange">#EF6C00</color>
-    <color name="app_color_background">#eeeeee</color>
-    <color name="table_header_gst">#acf6f8</color>
-    <color name="holo_blue">#31d3f0</color>
-    <color name="blue_test">#3399ff</color>
 
     <!--<color name="parrot_green">#4BAA50</color>-->
     <color name="parrot_green">#00ACC1</color>
+    <color name="app_color_background">#eeeeee</color>
 
-    <color name="keyNormal">#ECEFF1</color>
-    <color name="keyPressed">#D1D6D9</color>
+    <color name="colorPrimary">#ba3133</color>
+    <color name="colorPrimaryDark">#942728</color>
+    <color name="colorPrimaryLight">#d58384</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="background">#ECFAFF</color>
+    <color name="colorFontLogin">#FFFFFF</color>
+    <color name="colorAccent2">#2980b9</color>
+    <color name="colorCard">#80FFFFFF</color>
+
+    <color name="txtColorAccent">#FFFFFF</color>
+
+    <color name ="grey">#C0C0C0</color>
+    <color name="peachplup">#FFDAB9</color>
+    <color name="khadiyelow">#F0E68C</color>
+    <color name ="black">#000000</color>
+    <color name ="white">#ffffff</color>
+    <color name="orange">#FFA500</color>
+    <color name="green">#ADFF2F</color>
+    <color name="greenyellow">#9ACD32</color>
+    <color name="pinkpurple">#eeaeee</color>
+    <color name="purple1">#db7093</color>
+    <color name="purple">#DA70D6</color>
+    <color name="darpurple">#C71585</color>
+    <color name="lightcoral">#F08080</color>
+    <color name="red">#e50000</color>
+    <color name ="darkgreen">#00b100</color>
+    <color name="blue">#7fdfff</color>
 </resources>
