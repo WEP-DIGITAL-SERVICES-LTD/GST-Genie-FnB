@@ -35,7 +35,7 @@ public class FragmentSettingsMachine extends Fragment {
     MessageDialog MsgBox;
     private static final String DB_PATH = Environment.getExternalStorageDirectory().getPath() + "/WeP_FnB/";
     private static final String DB_NAME = "WeP_FnB_Database.db";
-    Button btn_RestoreDefault,btn_DbBackup,btn_FactoryReset,btnCloseDatabaseBackup;
+    Button btn_RestoreDefault,btn_DbBackup,btn_FactoryReset,btnCloseDatabaseBackup,btn_RestoreDefaultBillData;
 
     public FragmentSettingsMachine() {
     }
@@ -61,6 +61,13 @@ public class FragmentSettingsMachine extends Fragment {
             @Override
             public void onClick(View v) {
                 RestoreDefault();
+            }
+        });
+        btn_RestoreDefaultBillData  = (Button) view.findViewById(R.id.btn_RestoreDefaultBillData);
+        btn_RestoreDefaultBillData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RestoreDefaultBillData();
             }
         });
         btn_DbBackup = (Button) view.findViewById(R.id.btn_DbBackup);
@@ -211,6 +218,53 @@ public class FragmentSettingsMachine extends Fragment {
                                 Toast.makeText(myContext, "Settings Restored Successfully", Toast.LENGTH_LONG).show();
                             } else {
                                 MsgBox.Show("Warning", "Could not proceed due to in suffiecient access privilage");
+                            }
+                        } else {
+                            MsgBox.Show("Warning", "Could not proceed due to wrong user id or password");
+                        }
+                    }
+                })
+                .show();
+    }
+
+    public void RestoreDefaultBillData() {
+        AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
+
+        LayoutInflater UserAuthorization = (LayoutInflater) myContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
+
+        final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
+        final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
+
+        AuthorizationDialog
+                .setTitle("Authorization")
+                .setIcon(R.drawable.ic_launcher)
+                .setView(vwAuthorization)
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                        Cursor User = dbBackup.getUser(txtUserId.getText().toString(), txtPassword.getText().toString());
+                        if ((User != null) && (User.moveToFirst())) {
+                            String roleName = User.getString(User.getColumnIndex("RoleId"));
+                            ArrayList<String> list = dbBackup.getPermissionsNamesForRole(roleName);
+                            String str = "1";
+
+                            if (str.equalsIgnoreCase(roleName)) {
+                                if (dbBackup.RestoreBillData() > 0) {
+                                    Log.d("RestoreDefault()", "Bill data Restored");
+                                    dbBackup.UpdateBillNoResetInvoiceNo(0);
+//                                    dbBackup.UpdateBillNoResetTrainingModeInvoiceNo(0);
+                                    Toast.makeText(myContext, "Bill Data Deleted Successfully", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Log.d("RestoreDefault()", "Error occurred in deleting data.");
+                                    Toast.makeText(myContext, "No data to delete.", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                MsgBox.Show("Warning", "Could not proceed due to in sufficient access privilege");
                             }
                         } else {
                             MsgBox.Show("Warning", "Could not proceed due to wrong user id or password");

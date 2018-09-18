@@ -8341,6 +8341,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         result1 = dbFNB.insert(TBL_PaymentModeConfiguration, null, cvDbValues);
     }
 
+    public long RestoreBillData() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long status = -1;
+        status = db.delete(TBL_OUTWARD_SUPPLY_LEDGER, null, null);
+        status = db.delete(TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, null, null);
+        return status;
+    }
+
+   /* public int UpdateBillNoResetTrainingModeInvoiceNo(int invno) {
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_BillNoReset_TrainingModeInvoiceNo, (-1*invno));
+
+        return dbRetail.update("BillNoConfiguration", cvDbValues, null, null);
+    }*/
+
     public int getUsersIdByName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         int id = -1;

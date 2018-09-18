@@ -48,6 +48,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15dp_720dp_10dp_600dp"
+                    android:text="Restore Default (only bill data)"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/btn_RestoreDefaultBillData"
+                    android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                    android:layout_height="@dimen/_50dp_720dp_45dp_600dp"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                    android:textSize="@dimen/button_20sp_720dp_18sp_600dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/background_btn"
+                    android:onClick="RestoreDefault"
+                    android:text="Restore Default"
+                    android:theme="@style/WepButtonWithMarigin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15dp_720dp_10dp_600dp"
                     android:text="Back Up"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
