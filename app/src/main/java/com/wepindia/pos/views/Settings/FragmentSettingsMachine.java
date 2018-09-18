@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
@@ -36,6 +39,7 @@ public class FragmentSettingsMachine extends Fragment {
     private static final String DB_PATH = Environment.getExternalStorageDirectory().getPath() + "/WeP_FnB/";
     private static final String DB_NAME = "WeP_FnB_Database.db";
     Button btn_RestoreDefault,btn_DbBackup,btn_FactoryReset,btnCloseDatabaseBackup,btn_RestoreDefaultBillData;
+    TextView tvSoftwareVersion;
 
     public FragmentSettingsMachine() {
     }
@@ -56,6 +60,7 @@ public class FragmentSettingsMachine extends Fragment {
         dbBackup = new DatabaseHandler(getActivity());
         myContext = getActivity();
         MsgBox = new MessageDialog(myContext);
+        tvSoftwareVersion = (TextView) view.findViewById(R.id.software_version);
         btn_RestoreDefault = (Button) view.findViewById(R.id.btn_RestoreDefault);
         btn_RestoreDefault.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +100,17 @@ public class FragmentSettingsMachine extends Fragment {
             dbBackup.CloseDatabase();
             dbBackup.CreateDatabase();
             dbBackup.OpenDatabase();
+
+            String version ="0.0";
+            try {
+                PackageInfo pInfo = myContext.getPackageManager().getPackageInfo(myContext.getPackageName(), 0);
+                version = pInfo.versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+                version ="0.0";
+            }
+
+            tvSoftwareVersion.setText("Software Version: V" + version);
 
         } catch (Exception exp) {
             Toast.makeText(myContext, "OnCreate: " + exp.getMessage(), Toast.LENGTH_LONG).show();
