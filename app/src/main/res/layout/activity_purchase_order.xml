@@ -41,15 +41,21 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5" />
+
                 <com.wep.common.app.views.WepButton
+                    android:visibility="gone"
                     android:id="@+id/btnAddSupplier"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
                     android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                     android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
-                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="AddSupplier"
                     android:text="Add Supplier"
@@ -61,7 +67,7 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnGeneratePO"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
@@ -78,7 +84,7 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnEditPO"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
@@ -95,7 +101,7 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnClearItem"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
@@ -112,7 +118,7 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnCloseItem"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
@@ -127,6 +133,12 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5" />
+
             </LinearLayout>
         </RelativeLayout>
 
