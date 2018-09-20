@@ -17,14 +17,11 @@
             android:layout_height="match_parent"
             tools:ignore="HardcodedText,UselessParent">
 
-
-
             <TableRow
                 android:id="@+id/rowReportNameSelection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                >
+                android:layout_marginStart="10dp">
 
                 <Spinner
                     android:id="@+id/spnrReportNameSelection"
@@ -134,9 +131,9 @@
 
             <TableRow
                 android:id="@+id/rowReportButtons"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/rowReportDateSelection"
+                android:gravity="right"
                 android:layout_below="@+id/rowReportDateSelection"
                 android:layout_marginTop="20dp">
 
@@ -161,6 +158,16 @@
                     android:theme="@style/WepButtonWithMarigin"
                     android:onClick="ExportReport"
                     android:text="Export" />
+
+                <com.wep.common.app.views.WepButton
+                    android:id="@+id/btn_ShareExport"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/background_btn"
+                    android:textColor="@android:color/white"
+                    android:theme="@style/WepButtonWithMarigin"
+                    android:text="Share" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btn_ReportView"

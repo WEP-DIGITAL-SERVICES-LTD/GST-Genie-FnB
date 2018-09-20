@@ -12,9 +12,12 @@ import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.nfc.FormatException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.text.format.DateFormat;
@@ -26,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
@@ -44,10 +48,13 @@ import com.wep.common.app.gst.Model_reconcile;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.Constants;
+import com.wepindia.pos.GSTSupport.HTTPAsyncTask_Frag;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.GenericClasses.ReportHelper;
 import com.wepindia.pos.R;
+import com.wepindia.pos.utils.SendBillInfoToCustUtility;
+import com.wepindia.pos.utils.Validations;
 import com.wepindia.pos.views.Reports.TabbedReportActivity;
 import com.wepindia.printers.BixolonPrinterBaseAcivity;
 import com.wepindia.printers.EPSONPrinterBaseActivity;
@@ -64,7 +71,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class ReportFragment extends Fragment implements View.OnClickListener, PrinterConnectionError {
+public class ReportFragment extends Fragment implements View.OnClickListener, PrinterConnectionError, HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener{
 
     Context myContext;
     DatabaseHandler dbReport ;
@@ -90,9 +97,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private String ownerEmail;
 
     public static Button btn_ReportPrint;
-    private Button btn_ReportDateFrom,btn_ReportDateTo,
+    private Button btn_ReportDateFrom,btn_ReportDateTo, btn_ShareExport,
             btn_ReportExport,btn_ReportView,btn_ReportClose;
 
     private TextView lblName;
@@ -120,6 +128,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
         btn_ReportPrint.setOnClickListener(this);
         btn_ReportExport = (Button) view.findViewById(R.id.btn_ReportExport);
         btn_ReportExport.setOnClickListener(this);
+        btn_ShareExport = (Button) view.findViewById(R.id.btn_ShareExport);
+        btn_ShareExport.setOnClickListener(this);
         btn_ReportView = (Button) view.findViewById(R.id.btn_ReportView);
         btn_ReportView.setOnClickListener(this);
         btn_ReportClose = (Button) view.findViewById(R.id.btn_ReportClose);
@@ -180,6 +190,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
             Date d = new Date();
             CharSequence currentdate = DateFormat.format("yyyy-MM-dd", d.getTime());
             objDate = new DateTime(currentdate.toString());
+
+            Cursor crsrSettings = dbReport.getOwnerDetail();
+            if (crsrSettings != null && crsrSettings.moveToFirst()) {
+                ownerEmail = crsrSettings.getString(crsrSettings.getColumnIndex("Email"));
+            } else {
+                ownerEmail = "";
+            }
 
             loadSpinnerData(ReportType);
             spnrReportType.setOnItemSelectedListener(ReportSelect);
@@ -12396,6 +12413,19 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
         {
             ExportReport();
         }
+        else if(id == R.id.btn_ShareExport)
+        {
+            if(!txtReportDateStart.getText().toString().isEmpty() && !txtReportDateEnd.getText().toString().isEmpty()) {
+                if (tblReport.getChildCount() >= 2) {
+                    ExportReport();
+                    sendReport();
+                } else {
+                    MsgBox.Show("Warning","Please View report for required date range to Share.");
+                }
+            } else {
+                MsgBox.Show("Warning","Please View report for required date range to Share.");
+            }
+        }
         else if(id == R.id.btn_ReportView)
         {
             ViewReport();
@@ -12404,6 +12434,96 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
         {
             Close();
         }
+    }
+
+    private boolean isWifiConnected() {
+        boolean isWifiConnected = false;
+        try {
+            ConnectivityManager connManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (mWifi.isConnected()) {
+                isWifiConnected = true;
+            }
+
+        } catch (Exception e) {
+            isWifiConnected = false;
+            Log.e("Report Fragment", e.toString());
+        } finally {
+            return isWifiConnected;
+        }
+    }
+
+    void sendReport(){
+        if (!isWifiConnected()) {
+            Toast.makeText(getContext(), "Kindly connect to internet to share the bill.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.customer_detail_missing_alert, null);
+        final EditText etCustPhone = alertLayout.findViewById(R.id.et_phone);
+        final EditText etCustEmail = alertLayout.findViewById(R.id.et_email);
+        final TextView tvMobile = alertLayout.findViewById(R.id.mobile_title);
+        final TextView tvEmail = alertLayout.findViewById(R.id.email_title);
+        final Button btnCancel = alertLayout.findViewById(R.id.btn_cancel);
+        final Button btnSend = alertLayout.findViewById(R.id.btn_send);
+        final CheckBox customerMobileCheckBox = (CheckBox) alertLayout.findViewById(R.id.customer_mobile);
+        final CheckBox customerEmailCheckBox = (CheckBox) alertLayout.findViewById(R.id.customer_email);
+        etCustPhone.setVisibility(View.GONE);
+        customerMobileCheckBox.setVisibility(View.GONE);
+        customerEmailCheckBox.setVisibility(View.GONE);
+        tvMobile.setVisibility(View.GONE);
+
+        etCustEmail.setEnabled(true);
+        etCustEmail.setText(ownerEmail);
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("Share Report");
+
+        alert.setIcon(R.drawable.ic_launcher);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        final AlertDialog alertDialog = alert.create();
+        alertDialog.show();
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (etCustEmail.isEnabled() && etCustEmail.getText().toString().isEmpty()) {
+                    etCustEmail.setError("Please fill this field.");
+                } else if (etCustEmail.isEnabled() && etCustEmail != null
+                        && !etCustEmail.getText().toString().isEmpty()
+                        && !Validations.isValidEmailAddress(etCustEmail.getText().toString())) {
+                    etCustEmail.setError("Please Enter Valid Email id.");
+                } else {
+                    send(etCustEmail.getText().toString());
+                    Toast.makeText(getContext(), "Sending....", Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
+                }
+            }
+        });
+
+    }
+
+    private void send(String ownerEmail) {
+        String emailContent = "Please find the report as attachment of the mail.";
+        String firmName = "";
+
+        String  strReportFileName = strReportName +"{"+ txtReportDateStart.getText().toString()
+                + " To " + txtReportDateEnd.getText().toString() +"}" +".csv";
+
+        String attachment = Environment.getExternalStorageDirectory().getPath() + "/WeP_FnB_Reports/"
+                + strReportFileName;
+
+        SendBillInfoToCustUtility smsUtility = new SendBillInfoToCustUtility(myContext, "Report", emailContent, "", "", false, true, false,
+                this, ownerEmail, attachment, strReportFileName, firmName);
+        smsUtility.sendBillInfo();
+        Toast.makeText(getContext(), "Sharing Report...", Toast.LENGTH_SHORT).show();
     }
 
     private String getFormatedCharacterForPrint_init(String txt, int limit,int type) {
@@ -12632,4 +12752,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
         }
     }
 
+    @Override
+    public void onHttpRequestComplete(int requestCode, String filePath) {
+
+    }
 }
