@@ -4,6 +4,9 @@
     <string name="gstinValidation">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
     <string name="passwordValidation">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.#@</string>
 
+    <string name="org_name">Supplier\'s Firm Name*</string>
+    <string name="org_name_title">Supplier\'s Firm Name</string>
+
     <string name="app_name">GST Genie F</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>

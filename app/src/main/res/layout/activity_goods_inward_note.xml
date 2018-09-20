@@ -535,8 +535,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="bottom"
-                            android:text="Supplier Name "
+                            android:gravity="left|center_vertical"
+                            android:text="@string/org_name"
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
@@ -571,8 +571,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="bottom"
-                            android:text="Supplier Phone "
+                            android:gravity="left|center_vertical"
+                            android:text="Supplier Phone"
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
@@ -596,8 +596,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="bottom"
-                            android:text="Supplier Address "
+                            android:gravity="left|center_vertical"
+                            android:text="Supplier Address"
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
@@ -634,8 +634,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="bottom"
-                            android:text="Purchase Order "
+                            android:gravity="left|center_vertical"
+                            android:text="Purchase Order"
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
@@ -661,7 +661,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="bottom"
+                            android:gravity="left|center_vertical"
                             android:text="Invoice No."
                             android:textSize="15dp"
                             android:textStyle="bold" />
@@ -698,8 +698,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="bottom"
-                                android:text="Invoice Date "
+                                android:gravity="left|center_vertical"
+                                android:text="Invoice Date"
                                 android:textSize="15dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -745,7 +745,6 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -755,9 +754,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="bottom"
+                            android:gravity="left|center_vertical"
                             android:paddingBottom="@dimen/activity_horizontal_margin1"
-                            android:text="Supplier GSTIN "
+                            android:text="Supplier GSTIN"
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
@@ -784,7 +783,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:checked="false"
-                            android:gravity="bottom"
+                            android:gravity="left|center_vertical"
                             android:paddingBottom="@dimen/activity_horizontal_margin1"
                             android:text="Supplier StateCode"
                             android:textSize="15dp" />
@@ -823,7 +822,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="bottom"
+                            android:gravity="center"
                             android:paddingBottom="@dimen/activity_horizontal_margin1"
                             android:text="Item Name "
                             android:textSize="15dp"

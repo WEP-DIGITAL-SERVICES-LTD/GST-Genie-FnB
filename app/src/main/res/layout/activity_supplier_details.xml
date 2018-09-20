@@ -17,8 +17,7 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
         android:background="#FFFFFF"
         android:layout_above="@+id/ll_btns"
         android:orientation="vertical"
-        android:weightSum="2"
-        >
+        android:weightSum="2">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -29,9 +28,6 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                 android:id="@+id/rowCaption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
                 android:background="@color/colorPrimaryLight">
 
                 <TextView
@@ -48,7 +44,7 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                     android:id="@+id/tvCaptionplierName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="      Supplier Name"
+                    android:text="   @string/org_name_title"
                     android:layout_weight="0.8"
                     android:paddingStart="@dimen/activity_horizontal_margin1"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -99,9 +95,6 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                 android:layout_height="match_parent"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorGreyBackground"/>
 
@@ -183,7 +176,7 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                             android:layout_gravity="center"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="Supplier Name*"
+                            android:text="@string/org_name"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <AutoCompleteTextView

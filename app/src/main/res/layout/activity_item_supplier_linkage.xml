@@ -16,8 +16,7 @@
         android:background="#FFFFFF"
         android:orientation="vertical"
         android:weightSum="2"
-        android:layout_below="@+id/toolbar"
-        >
+        android:layout_below="@+id/toolbar">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -47,7 +46,7 @@
                     android:id="@+id/tvCaptionplierName"
                     android:layout_width="310dp"
                     android:layout_height="wrap_content"
-                    android:text="Supplier Name"
+                    android:text="@string/org_name_title"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/txtColorAccent"
                     android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
@@ -183,7 +182,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Supplier Name*"
+                            android:text="@string/org_name"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <AutoCompleteTextView
