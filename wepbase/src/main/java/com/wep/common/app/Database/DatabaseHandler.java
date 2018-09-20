@@ -708,6 +708,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_HSNCode = "HSNCode";
     public static final String KEY_SUPPLIERNAME = "SupplierName";
     public static final String KEY_SupplierPhone = "SupplierPhone";
+    public static final String KEY_SupplierEmail = "SupplierEmail";
     public static final String KEY_SupplierCount = "SupplierCount";
     public static final String KEY_Count = "Count";
     public static final String KEY_AverageRate = "AverageRate";
@@ -761,6 +762,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_OriginalInvoiceDate = "OriginalInvoiceDate";
     public static final String KEY_BusinessType = "BusinessType";
     public static final String KEY_ReverseCharge = "ReverseCharge";
+    public static final String KEY_isActive = "isActive";
+    public static final String KEY_isDelete = "isDelete";
 
     public static final String KEY_Environment = "Environment";
     public static final String KEY_UTGSTEnabled = "UTGSTEnabled";
@@ -1087,8 +1090,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_MONTH_ITC_IGSTAMT + " TEXT, " + KEY_MONTH_ITC_CGSTAMT + " TEXT, " + KEY_MONTH_ITC_SGSTAMT + " TEXT ) ";
 
     String QUERY_CREATE_TABLE_Supplier = " CREATE TABLE " + TBL_Supplier + " ( " +
-            KEY_SupplierCode + " INTEGER PRIMARY KEY, " + KEY_GSTIN + " TEXT," + KEY_SUPPLIERNAME + " TEXT, " +
-            KEY_SupplierType + " TEXT, " + KEY_SupplierPhone + "  TEXT, " + KEY_SupplierAddress + " TEXT)";
+            KEY_SupplierCode + " INTEGER PRIMARY KEY, " +
+            KEY_GSTIN + " TEXT," +
+            KEY_SUPPLIERNAME + " TEXT, " +
+            KEY_SupplierType + " TEXT, " +
+            KEY_SupplierPhone + "  TEXT, " +
+            KEY_SupplierEmail + "  TEXT, " +
+            KEY_SupplierAddress + " TEXT," +
+            KEY_isActive + " INTEGER," +
+            KEY_isDelete + " INTEGER,  UNIQUE ( " + KEY_SupplierCode + "))";
 
 
     String QUERY_CREATE_TABLE_GSTR2_AMMEND = " CREATE TABLE " + TBL_GSTR2_AMEND + " ( " +
@@ -1719,6 +1729,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         }
                     } else { // Table doesn't exist
                         db.execSQL(QUERY_CREATE_TABLE_Preview_Outward_Supply_Ledger);
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
+                } finally {
+                    if (cursorUpgrade != null) {
+                        cursorUpgrade.close();
+                    }
+                }
+
+                cursorUpgrade = null;
+                try {
+                    cursorUpgrade = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TBL_Supplier + "'", null);
+                    if (cursorUpgrade.moveToFirst()) {
+                        if (!existsColumnInTable(db, TBL_Supplier, KEY_SupplierEmail)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_Supplier + " ADD COLUMN " + KEY_SupplierEmail + " TEXT");
+                        }
+                        if (!existsColumnInTable(db, TBL_Supplier, KEY_isActive)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_Supplier + " ADD COLUMN " + KEY_isActive + " NUMERIC DEFAULT 0 ");
+                        }
+                        if (!existsColumnInTable(db, TBL_Supplier, KEY_isDelete)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_Supplier + " ADD COLUMN " + KEY_isDelete + " NUMERIC DEFAULT 0 ");
+                        }
+                    } else { // Table doesn't exist
+                        db.execSQL(QUERY_CREATE_TABLE_Supplier);
                     }
                 } catch (Exception ex) {
                     Log.i(TAG, "Error on alter table bill settings on status field jurisdictions." + ex.getMessage());
@@ -6898,29 +6932,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public long saveSupplierDetails(String supplierType_str, String suppliergstin_str, String suppliername_str,
-                                    String supplierphn_str, String supplieraddress_str) {
+    public long saveSupplierDetails(Supplier_Model model) {
         long l = 0;
         ContentValues cvdbValues = new ContentValues();
-        cvdbValues.put(KEY_SupplierType, supplierType_str);
-        cvdbValues.put(KEY_GSTIN, suppliergstin_str);
-        cvdbValues.put(KEY_SUPPLIERNAME, suppliername_str);
-        cvdbValues.put(KEY_SupplierPhone, supplierphn_str);
-        cvdbValues.put(KEY_SupplierAddress, supplieraddress_str);
+        cvdbValues.put(KEY_SupplierType, model.getSupplierType());
+        cvdbValues.put(KEY_GSTIN, model.getSupplierGSTIN());
+        cvdbValues.put(KEY_SUPPLIERNAME, model.getSupplierName());
+        cvdbValues.put(KEY_SupplierPhone, model.getSupplierPhone());
+        cvdbValues.put(KEY_SupplierAddress, model.getSupplierAddress());
+        cvdbValues.put(KEY_SupplierEmail, model.getSupplierEmail());
         l = dbFNB.insert(TBL_Supplier, null, cvdbValues);
         return l;
     }
-    public long updateSupplierDetails(String supplierType_str, String suppliergstin_str, String suppliername_str,
-                                      String supplierphn_str, String supplieraddress_str, int suppliercode) {
+
+
+    public long updateSupplierDetails(Supplier_Model model) {
         long l = 0;
-        String whereclause = KEY_SupplierCode+"="+suppliercode;
         ContentValues cvdbValues = new ContentValues();
-        cvdbValues.put(KEY_SupplierType, supplierType_str);
-        cvdbValues.put(KEY_GSTIN, suppliergstin_str);
-        cvdbValues.put(KEY_SUPPLIERNAME, suppliername_str);
-        cvdbValues.put(KEY_SupplierPhone, supplierphn_str);
-        cvdbValues.put(KEY_SupplierAddress, supplieraddress_str);
-        l = dbFNB.update(TBL_Supplier,cvdbValues,KEY_SupplierCode+"="+suppliercode,null );
+        cvdbValues.put(KEY_SupplierType, model.getSupplierType());
+        cvdbValues.put(KEY_GSTIN, model.getSupplierGSTIN());
+        cvdbValues.put(KEY_SUPPLIERNAME, model.getSupplierName());
+        cvdbValues.put(KEY_SupplierPhone, model.getSupplierPhone());
+        cvdbValues.put(KEY_SupplierAddress, model.getSupplierAddress());
+        cvdbValues.put(KEY_SupplierEmail, model.getSupplierEmail());
+        l = dbFNB.update(TBL_Supplier,cvdbValues,KEY_SupplierCode+"="+model.getSupplierCode(),null );
         return l;
     }
 

@@ -237,8 +237,18 @@ public class FragmentSupplierDetails extends Fragment {
             MsgBox.setMessage("Please fill all details of Supplier")
                     .show();
         } else {
-            l = dbSupplierDetails.updateSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
-                    supplierphn_str, supplieraddress_str, Integer.parseInt(tv_suppliercode.getText().toString()));
+
+            Supplier_Model supplier_model = new Supplier_Model();
+
+            supplier_model.setSupplierType(supplierType_str);
+            supplier_model.setSupplierGSTIN(suppliergstin_str);
+            supplier_model.setSupplierName(suppliername_str);
+            supplier_model.setSupplierPhone(supplierphn_str);
+            supplier_model.setSupplierAddress(supplieraddress_str);
+            supplier_model.setSupplierEmail("");
+            supplier_model.setSupplierCode(Integer.parseInt(tv_suppliercode.getText().toString()));
+
+            l = dbSupplierDetails.updateSupplierDetails(supplier_model);
             if (l > 0) {
                 Log.d("Inward_Supplier Detail", " Supplier details updated at " + l);
                 Toast.makeText(myContext, "Supplier details saved at " + l, Toast.LENGTH_SHORT).show();
@@ -297,8 +307,17 @@ public class FragmentSupplierDetails extends Fragment {
             MsgBox.setMessage("Please fill all details of Supplier")
                     .show();
         } else {
-            l = dbSupplierDetails.saveSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
-                    supplierphn_str, supplieraddress_str);
+
+            Supplier_Model supplier_model = new Supplier_Model();
+
+            supplier_model.setSupplierType(supplierType_str);
+            supplier_model.setSupplierGSTIN(suppliergstin_str);
+            supplier_model.setSupplierName(suppliername_str);
+            supplier_model.setSupplierPhone(supplierphn_str);
+            supplier_model.setSupplierAddress(supplieraddress_str);
+            supplier_model.setSupplierEmail("");
+
+            l = dbSupplierDetails.saveSupplierDetails(supplier_model);
             if (l > 0) {
                 Log.d("Inward_Item_Entry", " Supplier details saved at " + l);
                 Toast.makeText(myContext, "Supplier details saved at " + l, Toast.LENGTH_SHORT).show();

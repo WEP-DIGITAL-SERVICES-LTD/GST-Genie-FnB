@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Item;
+import com.wep.common.app.Database.Supplier_Model;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.FilePickerActivity;
@@ -1845,7 +1846,17 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
         }
         else
         {
-            l = dbInwardItem.saveSupplierDetails(supplierType_str, "",suppliername_str, supplierphn_str, supplieraddress_str);
+
+            Supplier_Model supplier_model = new Supplier_Model();
+
+            supplier_model.setSupplierType(supplierType_str);
+            supplier_model.setSupplierGSTIN("");
+            supplier_model.setSupplierName(suppliername_str);
+            supplier_model.setSupplierPhone(supplierphn_str);
+            supplier_model.setSupplierAddress(supplieraddress_str);
+            supplier_model.setSupplierEmail("");
+
+            l = dbInwardItem.saveSupplierDetails(supplier_model);
             if (l>0)
             {
                 Log.d("Inward_Item_Entry"," Supplier details saved at "+l);

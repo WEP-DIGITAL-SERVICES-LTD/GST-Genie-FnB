@@ -26,6 +26,7 @@ import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
+import com.wepindia.pos.utils.Validations;
 import com.wepindia.pos.views.InwardManagement.Adapters.SupplierAdapter;
 import com.wepindia.pos.views.InwardManagement.Adapters.SupplierSuggestionAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
@@ -42,7 +43,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     MessageDialog MsgBox;
     Toolbar toolbar;
     ListView lstSupplierDetails;
-    EditText edt_supplierGSTIN,et_inw_supplierAddress,autocompletetv_supplierPhn;
+    EditText edt_supplierGSTIN,et_inw_supplierAddress,autocompletetv_supplierPhn, et_inw_supplierEmail;
     TextView tv_suppliercode;
     AutoCompleteTextView  autocompletetv_suppliername;
     WepButton btnAddSupplier,btnUpdateSupplier, btnClear,btnClose;
@@ -51,6 +52,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     //    ArrayList<String> labelsSupplierName;
     ArrayList<String> labelsSupplierPhone;
     ArrayList<HashMap<String, String>> autoCompleteDetails;
+    private Supplier_Model supplier_model = null;
 
     String suppliername_clicked , suppliergstin_clicked, supplierphone_clicked;
     private final int CHECK_INTEGER_VALUE = 0;
@@ -109,8 +111,9 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     private void InitialiseViewVariables()
     {
         lstSupplierDetails = (ListView) findViewById(R.id.lstSupplierDetails);
-        tv_suppliercode = (TextView) findViewById(R.id.tv_suppliercode);;
-        edt_supplierGSTIN = (EditText) findViewById(R.id.edt_supplierGSTIN);;
+        tv_suppliercode = (TextView) findViewById(R.id.tv_suppliercode);
+        edt_supplierGSTIN = (EditText) findViewById(R.id.edt_supplierGSTIN);
+        et_inw_supplierEmail = (EditText) findViewById(R.id.et_inw_supplierEmail);
         et_inw_supplierAddress = (EditText) findViewById(R.id.et_inw_supplierAddress);
         autocompletetv_supplierPhn = (EditText) findViewById(R.id.autocompletetv_supplierPhn);
         autocompletetv_suppliername = (AutoCompleteTextView) findViewById(R.id.autocompletetv_suppliername);
@@ -190,8 +193,10 @@ public class SupplierDetailsActivity extends WepBaseActivity {
                     SupplierPhone = supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone"));
                     SupplierAddress = supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierAddress"));
                     String supp_gstin  = supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("GSTIN"));
+                    String supp_email  = supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex(DatabaseHandler.KEY_SupplierEmail));
                     autocompletetv_supplierPhn.setText(SupplierPhone);
                     et_inw_supplierAddress.setText(SupplierAddress);
+                    et_inw_supplierEmail.setText(supp_email);
                     if(supp_gstin!=null )
                         edt_supplierGSTIN.setText(supp_gstin);
                     else
@@ -225,6 +230,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         autocompletetv_supplierPhn.setText(supplier.getSupplierPhone());
         edt_supplierGSTIN.setText(supplier.getSupplierGSTIN());
         et_inw_supplierAddress.setText(supplier.getSupplierAddress());
+        et_inw_supplierEmail.setText(supplier.getSupplierEmail());
 
         suppliername_clicked = supplier.getSupplierName();
         supplierphone_clicked = supplier.getSupplierPhone();
@@ -255,6 +261,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
         String supplierphn_str = autocompletetv_supplierPhn.getText().toString();
         String supplieraddress_str = et_inw_supplierAddress.getText().toString();
+        String supplierEmail = et_inw_supplierEmail.getText().toString().trim();
         String suppliergstin_str = edt_supplierGSTIN.getText().toString().trim().toUpperCase();
         if (suppliergstin_str != null && !suppliergstin_str.equals(""))
             supplierType_str = "Registered";
@@ -265,16 +272,6 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             MsgBox.Show("Warning", "Supplier with gstin already present in list");
             return false;
         }
-
-//        for (String supplier : labelsSupplierName) {
-//            if (suppliername_str.equalsIgnoreCase(supplier) && !suppliername_str.equalsIgnoreCase(suppliername_clicked)) { // TODO: changed here
-//                MsgBox.setTitle("Warning")
-//                        .setMessage("Supplier with name already present in list")
-//                        .setPositiveButton("OK", null)
-//                        .show();
-//                return false;
-//            }
-//        }
 
         for (String phone : labelsSupplierPhone) {
             if (supplierphn_str.equalsIgnoreCase(phone) && !supplierphn_str.equalsIgnoreCase(supplierphone_clicked)) {
@@ -317,9 +314,22 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         }else if(supplierphn_str.length()!=10){
             MsgBox.Show("Invalid Information","Phone no. cannot be less than 10 digits");
             return false;
+        } else if(!Validations.isValidEmailAddress(supplierEmail)){
+            MsgBox.Show("Invalid Information","Please enter an valid email address.");
+            return false;
         } else{
-            l = dbSupplierDetails.updateSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
-                    supplierphn_str, supplieraddress_str, Integer.parseInt(tv_suppliercode.getText().toString()));
+
+            supplier_model = new Supplier_Model();
+
+            supplier_model.setSupplierType(supplierType_str);
+            supplier_model.setSupplierGSTIN(suppliergstin_str);
+            supplier_model.setSupplierName(suppliername_str);
+            supplier_model.setSupplierPhone(supplierphn_str);
+            supplier_model.setSupplierAddress(supplieraddress_str);
+            supplier_model.setSupplierEmail(supplierEmail);
+            supplier_model.setSupplierCode(Integer.parseInt(tv_suppliercode.getText().toString()));
+
+            l = dbSupplierDetails.updateSupplierDetails(supplier_model);
             if (l > 0) {
                 Log.d("Inward_Supplier Detail", " Supplier details updated at " + l);
                 Toast.makeText(myContext, "Supplier details saved at " + l, Toast.LENGTH_SHORT).show();
@@ -374,6 +384,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
         String supplierphn_str = autocompletetv_supplierPhn.getText().toString();
         String supplieraddress_str = et_inw_supplierAddress.getText().toString();
+        String supplierEmail = et_inw_supplierEmail.getText().toString().trim();
         String suppliergstin_str = edt_supplierGSTIN.getText().toString().trim().toUpperCase();
         if (suppliergstin_str != null && !suppliergstin_str.equals(""))
             supplierType_str = "Registered";
@@ -384,14 +395,6 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             MsgBox.Show("Warning","Supplier with gstin already present in list") ;
             return false;
         }
-
-//        for (String supplier : labelsSupplierName) {
-//            if (suppliername_str.equalsIgnoreCase(supplier)) {
-//                MsgBox.Show("Warning","Supplier with name already present in list"); // TODO: changed here
-//                return false;
-//            }
-//        }
-
 
         boolean mFlag = false;
         try
@@ -429,12 +432,24 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         {
             MsgBox.Show("Insufficient Information","Please fill valid gstin");
             return false;
-        }else if(supplierphn_str.length()!=10){
+        } else if(supplierphn_str.length()!=10){
             MsgBox.Show("Invalid Information","Phone no. cannot be less than 10 digits");
             return false;
-        }else {
-            l = dbSupplierDetails.saveSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
-                    supplierphn_str, supplieraddress_str);
+        }  else if(!Validations.isValidEmailAddress(supplierEmail)){
+            MsgBox.Show("Invalid Information","Please enter an valid email address.");
+            return false;
+        } else {
+
+            supplier_model = new Supplier_Model();
+
+            supplier_model.setSupplierType(supplierType_str);
+            supplier_model.setSupplierGSTIN(suppliergstin_str);
+            supplier_model.setSupplierName(suppliername_str);
+            supplier_model.setSupplierPhone(supplierphn_str);
+            supplier_model.setSupplierAddress(supplieraddress_str);
+            supplier_model.setSupplierEmail(supplierEmail);
+
+            l = dbSupplierDetails.saveSupplierDetails(supplier_model);
             if (l > 0) {
                 Log.d("Inward_Item_Entry", " Supplier details saved at " + l);
                 Toast.makeText(myContext, "Supplier details saved at " + l, Toast.LENGTH_SHORT).show();
@@ -487,7 +502,16 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             String suppliername = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierName"));
             String suppliernphone = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierPhone"));
             String supplieraddress = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierAddress"));
-            Supplier_Model supplier_model = new Supplier_Model(suppliercode, suppliergstin, suppliername, suppliernphone, supplieraddress);
+            String supplierEmail = supplierCursor.getString(supplierCursor.getColumnIndex(DatabaseHandler.KEY_SupplierEmail));
+            Supplier_Model supplier_model = new Supplier_Model();
+
+            supplier_model.setSupplierGSTIN(suppliergstin);
+            supplier_model.setSupplierName(suppliername);
+            supplier_model.setSupplierPhone(suppliernphone);
+            supplier_model.setSupplierAddress(supplieraddress);
+            supplier_model.setSupplierEmail(supplierEmail);
+            supplier_model.setSupplierCode(suppliercode);
+
             SupplierList.add(supplier_model);
         } // end of while
         if (SupplierList.size() >0)
@@ -511,6 +535,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         btnUpdateSupplier.setEnabled(false);
         tv_suppliercode.setText("-1");
         edt_supplierGSTIN.setText("");
+        et_inw_supplierEmail.setText("");
         autocompletetv_suppliername.setText("");
         autocompletetv_supplierPhn.setText("");
         et_inw_supplierAddress.setText("");

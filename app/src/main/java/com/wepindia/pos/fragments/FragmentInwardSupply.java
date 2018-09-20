@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Item;
+import com.wep.common.app.Database.Supplier_Model;
 import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.FilePickerActivity;
@@ -39,6 +40,7 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.UploadFilePickerActivity;
+import com.wepindia.pos.utils.Validations;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -2104,8 +2106,17 @@ public class FragmentInwardSupply extends Fragment {
         }
         else
         {
-            l = dbInwardItem.saveSupplierDetails(supplierType_str, suppliergstin_str,suppliername_str,
-                    supplierphn_str, supplieraddress_str);
+
+            Supplier_Model supplier_model = new Supplier_Model();
+
+            supplier_model.setSupplierType(supplierType_str);
+            supplier_model.setSupplierGSTIN(suppliergstin_str);
+            supplier_model.setSupplierName(suppliername_str);
+            supplier_model.setSupplierPhone(supplierphn_str);
+            supplier_model.setSupplierAddress(supplieraddress_str);
+            supplier_model.setSupplierEmail("");
+
+            l = dbInwardItem.saveSupplierDetails(supplier_model);
             if (l>0)
             {
                 Log.d("Inward_Item_Entry"," Supplier details saved at "+l);

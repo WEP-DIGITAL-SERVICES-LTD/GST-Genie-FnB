@@ -171,11 +171,13 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                             android:visibility="gone" />
 
                         <TextView
+                            style="@style/TV_Owner_Details"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="2"
-                            android:gravity="center"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginStart="20dp"
                             android:text="@string/org_name"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -200,11 +202,13 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                         android:orientation="horizontal">
 
                         <TextView
+                            style="@style/TV_Owner_Details"
                             android:id="@+id/textView11"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="center"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginStart="20dp"
                             android:text="Supplier GSTIN"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -229,10 +233,12 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                         android:orientation="horizontal">
 
                         <TextView
+                            style="@style/TV_Owner_Details"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="center"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginStart="20dp"
                             android:text="Supplier Phone*"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -254,15 +260,46 @@ tools:context="com.wepindia.pos.views.InwardManagement.SupplierDetailsActivity">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TV_Owner_Details"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginStart="20dp"
+                            android:text="Supplier Email"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <EditText
+                            android:id="@+id/et_inw_supplierEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.65"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="100"
+                            android:singleLine="true"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <TextView
+                            style="@style/TV_Owner_Details"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="center"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginStart="20dp"
                             android:text="Supplier Address* "
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 

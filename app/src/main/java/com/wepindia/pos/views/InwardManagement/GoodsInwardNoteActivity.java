@@ -1211,7 +1211,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         btnAddSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddSupplier(v);
+//                AddSupplier(v);
             }
         });
 
@@ -1962,7 +1962,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         }
     }
 
-    public void AddSupplier(View v)
+    /*public void AddSupplier(View v)
     {
         //String suppliercode = et_supplier_code.getText().toString();
         String suppliername = autocompletetv_suppliername.getText().toString().toUpperCase();
@@ -2060,7 +2060,8 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                         .show();
             }
         }
-    }
+    }*/
+
     private void InsertItem(int suppliercode, String suppliername, String itemName, String strbarCode, float ratef,
                             float quantity, String mou, String ImageUri, float SalesTax, float ServiceTax,String supplytype) {
 
