@@ -65,6 +65,7 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.GSTINValidation;
+import com.wepindia.pos.utils.Validations;
 import com.wepindia.pos.views.Billing.BillingCounterSalesActivity;
 import com.wepindia.pos.views.Customer.CustomerPassbook.CustomerPassbookDialogFragment;
 import com.wepindia.printers.BixolonPrinterBaseAcivity;
@@ -90,7 +91,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
     MessageDialog MsgBox;
     List<String> labelsItemName = null;
     // View handlers
-    EditText txtName, txtPhone, txtAddress, txtSearchPhone, txtCreditAmount ,txGSTIN, txtCustomerCreditLimit, etCreditDepositAmt, etCustomerOpeningBal;
+    EditText txtName, txtPhone, txtAddress, txtSearchPhone, txtCreditAmount ,txGSTIN, txtCustomerCreditLimit, etCreditDepositAmt, etCustomerOpeningBal, etCustomerEmail;
     TextView tvCustomerDepositAmt, tvCustomerOpeningBal;
     WepButton btnAdd, btnEdit,btnClearCustomer,btnCloseCustomer, btnEditPrint;
     TableLayout tblCustomer;
@@ -98,7 +99,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
     TextView tv_CustomerDetailMsg;
     String upon_rowClick_Phn = "";
     // Variables
-    String Id, Name, Phone, Address, LastTransaction, TotalTransaction, CreditAmount, DepositAmount, strUserName = "", strCustGSTIN ="";
+    String Id, Name, Phone, Address, Email, LastTransaction, TotalTransaction, CreditAmount, DepositAmount, strUserName = "", strCustGSTIN ="";
     private Toolbar toolbar;
 
     private float mHeadingTextSize;
@@ -207,6 +208,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
             txtPhone = (EditText) findViewById(R.id.etCustomerPhone);
             txtCreditAmount = (EditText) findViewById(R.id.etCreditAmount);
             txtCustomerCreditLimit = (EditText) findViewById(R.id.etCreditCreditLimit);
+            etCustomerEmail = (EditText) findViewById(R.id.etCustomerEmail);
             etCreditDepositAmt = (EditText) findViewById(R.id.etCreditDepositAmt);
             tvCustomerDepositAmt = (TextView) findViewById(R.id.tvCustomerDepositAmt);
             etCustomerOpeningBal = (EditText) findViewById(R.id.etCustomerOpeningBal);
@@ -1018,6 +1020,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         Name = txtName.getText().toString();
         Phone = txtPhone.getText().toString();
         Address = txtAddress.getText().toString();
+        Email = etCustomerEmail.getText().toString().trim();
         CreditAmount = txtCreditAmount.getText().toString();
         CreditAmount = txtCreditAmount.getText().toString();
         String GSTIN  = txGSTIN.getText().toString().trim().toUpperCase();
@@ -1028,6 +1031,8 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
             MsgBox.Show("Warning", "Please enter mobile no before adding customer");
         } else if(Phone.length() != 10) {
             MsgBox.Show("Warning", "Please enter correct mobile no before adding customer");
+        } else if(!Validations.isValidEmailAddress(Email) && !Email.isEmpty()) {
+            MsgBox.Show("Warning", "Please enter a valid email id before adding customer");
         } else {
             if (IsCustomerExists(Phone)) {
                 MsgBox.Show("Warning", "Customer already exists");
@@ -1056,13 +1061,35 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                         double dCreditLimit = txtCustomerCreditLimit.getText().toString().trim().equals("") ? 0.00 :
                                 Double.parseDouble(String.format("%.2f", Double.parseDouble(txtCustomerCreditLimit.getText().toString().trim())));
 
-                        InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount,
-                                GSTIN, dCreditLimit, dDepositamount, dOpeningBalance);
-                        Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
-                        ResetCustomer();
-                        ClearCustomerTable();
-                        DisplayCustomer();
-                        ((ArrayAdapter<String>) (txtSearchName.getAdapter())).add(Name);
+                        /*InsertCustomer(Address, Phone, Name, 0, 0, dCreditAmount,
+                                GSTIN, dCreditLimit, dDepositamount, dOpeningBalance);*/
+
+                        long lRowId;
+
+                        Customer customer = new Customer();
+
+                        customer.setStrCustAddress(Address);
+                        customer.setStrCustPhone(Phone);
+                        customer.setStrCustName(Name);
+                        customer.setdLastTransaction(0.00);
+                        customer.setdTotalTransaction(0.00);
+                        customer.setdCreditAmount(dCreditAmount + dOpeningBalance);
+                        customer.setStrEmailId(Email);
+                        customer.setStrCustGSTIN(GSTIN);
+                        customer.setdCreditLimit(dCreditLimit);
+                        customer.setOpeningBalance(dOpeningBalance);
+                        customer.setDblDepositAmt(dDepositamount);
+
+                        lRowId = dbCustomer.addCustomer(customer);
+
+                        if (lRowId > 0) {
+                            mStoreCustomerPassbookData(customer.getStrCustName(),customer.getStrCustPhone(),0);
+                            Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
+                            ResetCustomer();
+                            ClearCustomerTable();
+                            DisplayCustomer();
+                            ((ArrayAdapter<String>) (txtSearchName.getAdapter())).add(Name);
+                        }
                     }
                 }else
                 {
@@ -1077,6 +1104,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         Name = txtName.getText().toString();
         Phone = txtPhone.getText().toString();
         Address = txtAddress.getText().toString();
+        Email = etCustomerEmail.getText().toString().trim();
         CreditAmount = txtCreditAmount.getText().toString();
         DepositAmount = etCreditDepositAmt.getText().toString().trim();
         String GSTIN = txGSTIN.getText().toString().trim().toUpperCase();
@@ -1089,6 +1117,8 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         } else if(Phone.length() != 10) {
             MsgBox.Show("Warning", "Please enter correct mobile no before adding customer");
             return;
+        }  else if(!Validations.isValidEmailAddress(Email) && !Email.isEmpty()) {
+            MsgBox.Show("Warning", "Please enter a valid email id before adding customer");
         }
         if(!Phone.equalsIgnoreCase(upon_rowClick_Phn))
         {
@@ -1134,6 +1164,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                 customer.setdTotalTransaction(Double.parseDouble(TotalTransaction));
                 customer.setdCreditAmount(dCreditAmount + dDepositAmount);
                 customer.setStrCustGSTIN(GSTIN);
+                customer.setStrEmailId(Email);
                 customer.setdCreditLimit(dCreditLimit);
                 customer.setDblDepositAmt(dDepositAmount);
 

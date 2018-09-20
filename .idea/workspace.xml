@@ -14,42 +14,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3deeed4-2d97-4a29-a7f0-036bbdd1232f" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/libs/activation.jar" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/libs/additionnal.jar" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/libs/mail.jar" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/GMailSender.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/JSSEProvider.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/SendBillInfoToCustUtility.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-ldpi/help.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/help.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_photo_camera_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/customer_detail_missing_alert.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_image_blank.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_image_blank.png" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/android_serialport_api/SerialPort.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/android_serialport_api/SerialPortFinder.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Constants.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/HTTPAsyncTask_Frag.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/HTTPAsyncTask_Frag.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentUpgradeSoftware.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentUpgradeSoftware.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/FragmentGSTLink.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/FragmentGSTLink.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsOther.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsOther.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_other.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_other.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
-      <change beforePath="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/http/DownloadFileFromURL.java" afterPath="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/http/DownloadFileFromURL.java" />
-      <change beforePath="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/util/Config.java" afterPath="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/util/Config.java" />
-      <change beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
-      <change beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
-      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Customer/CustomerDetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Customer/CustomerDetailActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" />
       <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
-      <change beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/views/WepButton.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/views/WepButton.java" />
-      <change beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -71,7 +40,98 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="CustomerDetailActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Customer/CustomerDetailActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="1170" column="66" lean-forward="false" selection-start-line="1170" selection-start-column="66" selection-end-line="1170" selection-end-column="66" />
+              <folding>
+                <element signature="e#9433#9601#0" expanded="true" />
+                <element signature="e#9600#9601#0" expanded="true" />
+                <element signature="e#9643#9819#0" expanded="true" />
+                <element signature="e#9818#9819#0" expanded="true" />
+                <element signature="e#9866#10041#0" expanded="true" />
+                <element signature="e#10040#10041#0" expanded="true" />
+                <element signature="e#10092#10262#0" expanded="true" />
+                <element signature="e#10261#10262#0" expanded="true" />
+                <element signature="e#10313#10483#0" expanded="true" />
+                <element signature="e#10482#10483#0" expanded="true" />
+                <element signature="e#13523#15526#0" expanded="true" />
+                <element signature="e#15525#15526#0" expanded="true" />
+                <element signature="e#22683#25102#0" expanded="true" />
+                <element signature="e#25101#25102#0" expanded="true" />
+                <element signature="e#30231#32740#0" expanded="true" />
+                <element signature="e#32739#32740#0" expanded="true" />
+                <element signature="e#33144#33176#0" expanded="true" />
+                <element signature="e#39599#40389#0" expanded="true" />
+                <element signature="e#40388#40389#0" expanded="true" />
+                <element signature="e#42008#44589#0" expanded="true" />
+                <element signature="e#44588#44589#0" expanded="true" />
+                <element signature="e#45032#46748#0" expanded="true" />
+                <element signature="e#45404#46382#0" expanded="true" />
+                <element signature="e#46381#46382#0" expanded="true" />
+                <element signature="e#46423#46438#0" expanded="true" />
+                <element signature="e#46440#46654#0" expanded="true" />
+                <element signature="e#46653#46654#0" expanded="true" />
+                <element signature="e#46747#46748#0" expanded="true" />
+                <element signature="e#73541#73549#0" expanded="true" />
+                <element signature="e#74406#74807#0" expanded="true" />
+                <element signature="e#74806#74807#0" expanded="true" />
+                <element signature="e#76264#76857#0" expanded="true" />
+                <element signature="e#76856#76857#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BillingHomeDeliveryActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="657" column="44" lean-forward="false" selection-start-line="657" selection-start-column="44" selection-end-line="657" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_billing_home_delivery.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="169">
+              <caret line="96" column="12" lean-forward="false" selection-start-line="96" selection-start-column="12" selection-end-line="96" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="383">
+              <caret line="4567" column="47" lean-forward="false" selection-start-line="4567" selection-start-column="47" selection-end-line="4567" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_customerdetail.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="169">
+              <caret line="210" column="48" lean-forward="false" selection-start-line="210" selection-start-column="48" selection-end-line="210" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -92,12 +152,16 @@
       <find>SHAREBILL</find>
       <find>sharebill</find>
       <find>auto</find>
-      <find>customerBean</find>
       <find>customerbean</find>
       <find>crsrCust</find>
       <find>onProceedToPayComplete</find>
       <find>custEmail</find>
       <find>KEY_CUST_EMAIL</find>
+      <find>etCustomerOpeningBal</find>
+      <find>customerBean</find>
+      <find>customerBean = null</find>
+      <find>oncreate</find>
+      <find>edtCust</find>
     </findStrings>
     <replaceStrings>
       <replace>Log</replace>
@@ -6782,18 +6846,20 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Settings/FragmentSettingsOther.java" />
-        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/util/Config.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/JSSEProvider.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Constants.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/SendBillInfoToCustUtility.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Reports/FragmentGSTLink.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/HTTPAsyncTask_Frag.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/customer_detail_missing_alert.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/GMailSender.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Customer/CustomerDetailActivity.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
       </list>
     </option>
   </component>
@@ -6915,6 +6981,14 @@
               <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="Billing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GST-Genie-FnB" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pos" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="Customer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GST-Genie-FnB" type="1abcf292:AndroidViewProjectNode" />
@@ -7178,10 +7252,19 @@
       <option name="presentableId" value="Default" />
       <updated>1537426038857</updated>
     </task>
+    <task id="LOCAL-00001" summary="V2.0.1: Added Share bill in all billing screen.">
+      <created>1537443256606</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1537443256606</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -7198,7 +7281,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.49405771" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49405771" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -7250,6 +7333,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="V2.0.1: Added Share bill in all billing screen." />
+    <option name="LAST_COMMIT_MESSAGE" value="V2.0.1: Added Share bill in all billing screen." />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -7278,41 +7365,64 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
-          <line>9489</line>
+          <line>9507</line>
           <properties />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
-          <line>6943</line>
+          <line>6961</line>
           <properties />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
-          <line>7036</line>
+          <line>7054</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
-          <line>7806</line>
+          <line>7824</line>
           <properties />
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
-          <line>9896</line>
+          <line>9914</line>
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
+          <line>1301</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
+          <line>1297</line>
+          <properties />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java</url>
+          <line>1263</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>customerBean</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>dFinalBillValue</expression-string>
         <language-id>JAVA</language-id>
@@ -7518,41 +7628,12 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="701" column="45" lean-forward="false" selection-start-line="701" selection-start-column="31" selection-end-line="701" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTSupport/HTTPAsyncTask_Frag.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1974">
           <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="9366" column="9" lean-forward="false" selection-start-line="9340" selection-start-column="8" selection-end-line="9366" selection-end-column="9" />
-          <folding>
-            <element signature="e#313101#313261#0" expanded="false" />
-            <element signature="e#313260#313261#0" expanded="false" />
-            <element signature="e#318694#318854#0" expanded="false" />
-            <element signature="e#318853#318854#0" expanded="false" />
-            <element signature="e#506171#506526#0" expanded="false" />
-            <element signature="e#506525#506526#0" expanded="false" />
-            <element signature="e#506590#506945#0" expanded="false" />
-            <element signature="e#506944#506945#0" expanded="false" />
-            <element signature="e#507364#507542#0" expanded="false" />
-            <element signature="e#507541#507542#0" expanded="false" />
-            <element signature="e#507584#509335#0" expanded="false" />
-            <element signature="e#509334#509335#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -7706,6 +7787,86 @@
             <element signature="e#355208#355209#0" expanded="false" />
             <element signature="e#355258#355259#0" expanded="false" />
             <element signature="e#355505#355555#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="210" column="48" lean-forward="false" selection-start-line="210" selection-start-column="48" selection-end-line="210" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="4567" column="47" lean-forward="false" selection-start-line="4567" selection-start-column="47" selection-end-line="4567" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="96" column="12" lean-forward="false" selection-start-line="96" selection-start-column="12" selection-end-line="96" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="657" column="44" lean-forward="false" selection-start-line="657" selection-start-column="44" selection-end-line="657" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Customer/CustomerDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="1170" column="66" lean-forward="false" selection-start-line="1170" selection-start-column="66" selection-end-line="1170" selection-end-column="66" />
+          <folding>
+            <element signature="e#9433#9601#0" expanded="true" />
+            <element signature="e#9600#9601#0" expanded="true" />
+            <element signature="e#9643#9819#0" expanded="true" />
+            <element signature="e#9818#9819#0" expanded="true" />
+            <element signature="e#9866#10041#0" expanded="true" />
+            <element signature="e#10040#10041#0" expanded="true" />
+            <element signature="e#10092#10262#0" expanded="true" />
+            <element signature="e#10261#10262#0" expanded="true" />
+            <element signature="e#10313#10483#0" expanded="true" />
+            <element signature="e#10482#10483#0" expanded="true" />
+            <element signature="e#13523#15526#0" expanded="true" />
+            <element signature="e#15525#15526#0" expanded="true" />
+            <element signature="e#22683#25102#0" expanded="true" />
+            <element signature="e#25101#25102#0" expanded="true" />
+            <element signature="e#30231#32740#0" expanded="true" />
+            <element signature="e#32739#32740#0" expanded="true" />
+            <element signature="e#33144#33176#0" expanded="true" />
+            <element signature="e#39599#40389#0" expanded="true" />
+            <element signature="e#40388#40389#0" expanded="true" />
+            <element signature="e#42008#44589#0" expanded="true" />
+            <element signature="e#44588#44589#0" expanded="true" />
+            <element signature="e#45032#46748#0" expanded="true" />
+            <element signature="e#45404#46382#0" expanded="true" />
+            <element signature="e#46381#46382#0" expanded="true" />
+            <element signature="e#46423#46438#0" expanded="true" />
+            <element signature="e#46440#46654#0" expanded="true" />
+            <element signature="e#46653#46654#0" expanded="true" />
+            <element signature="e#46747#46748#0" expanded="true" />
+            <element signature="e#73541#73549#0" expanded="true" />
+            <element signature="e#74406#74807#0" expanded="true" />
+            <element signature="e#74806#74807#0" expanded="true" />
+            <element signature="e#76264#76857#0" expanded="true" />
+            <element signature="e#76856#76857#0" expanded="true" />
           </folding>
         </state>
       </provider>

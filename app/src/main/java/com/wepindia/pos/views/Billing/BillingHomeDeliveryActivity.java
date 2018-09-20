@@ -596,6 +596,22 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                     etCustGSTIN.setText("");
                                 else
                                     etCustGSTIN.setText(gstin);
+
+
+                                customerBean = null;
+                                customerBean = new Customer();
+                                customerBean.setStrCustName(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustName)));
+                                customerBean.setStrCustPhone(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustContactNumber)));
+                                customerBean.setStrEmailId(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CUST_EMAIL)));
+                                customerBean.setiCustId(crsrCust.getInt(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustId)));
+                                customerBean.set_id(crsrCust.getInt(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustId)));
+                                if (crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_GSTIN)) != null && !crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_GSTIN)).isEmpty()) {
+                                    customerBean.setStrCustGSTIN(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
+                                }
+                                if (crsrCust.getDouble(crsrCust.getColumnIndex(DatabaseHandler.KEY_CreditAmount)) > 0) {
+                                    customerBean.setdCreditAmount(crsrCust.getDouble(crsrCust.getColumnIndex(DatabaseHandler.KEY_CreditAmount)));
+                                }
+
                                 final Cursor cursor_KOT = dbBillScreen.getKOTItems(crsrCust.getInt(crsrCust.getColumnIndex("CustId")),String.valueOf(jBillingMode) );
                                 if(!CustomerDetailsFilled && cursor_KOT!=null  && cursor_KOT.moveToFirst())
                                 {
@@ -633,11 +649,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                 //ControlsSetDisabled();
                             }
                         } else if (edtCustPhoneNo.getText().toString().trim().equals("")){
+                            customerBean = null;
                             chk_interstate.setChecked(false);
                             chk_interstate.setEnabled(true);
                             spnr_pos.setEnabled(false);
                         }
                     } catch (Exception ex) {
+                        customerBean = null;
                         MsgBox.Show("Error", ex.getMessage());
                         ex.printStackTrace();
                     }

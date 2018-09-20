@@ -4415,6 +4415,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_OPENING_BALANCE, objCustomer.getOpeningBalance());
         cvDbValues.put("DepositAmount", objCustomer.getDblDepositAmt());
         cvDbValues.put(KEY_GSTIN, objCustomer.getStrCustGSTIN());
+        cvDbValues.put(KEY_CUST_EMAIL, objCustomer.getStrEmailId());
 
         return dbFNB.insert(TBL_CUSTOMER, null, cvDbValues);
     }
@@ -4564,6 +4565,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("CreditLimit", customer.getdCreditLimit());
         cvDbValues.put("DepositAmount", customer.getDblDepositAmt());
         cvDbValues.put(KEY_GSTIN, customer.getStrCustGSTIN());
+        cvDbValues.put(KEY_CUST_EMAIL, customer.getStrEmailId());
 
         return dbFNB.update(TBL_CUSTOMER, cvDbValues, "CustId =" + customer.getiCustId(), null);
     }
