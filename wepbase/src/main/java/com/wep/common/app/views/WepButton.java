@@ -2,10 +2,9 @@ package com.wep.common.app.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Build;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
-import android.widget.Button;
 
 import com.wep.common.app.R;
 
@@ -13,7 +12,7 @@ import com.wep.common.app.R;
  * Created by PriyabratP on 30-01-2017.
  */
 
-public class WepButton extends Button {
+public class WepButton extends AppCompatButton {
 
     private Context context;
     private boolean btnEnabled;

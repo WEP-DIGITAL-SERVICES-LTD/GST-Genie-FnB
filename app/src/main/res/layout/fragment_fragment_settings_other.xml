@@ -455,13 +455,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
-                                android:text="Sales Man ID Display" />
+                                android:text="Sales Man ID Display"
+                                android:visibility="gone"/>
 
                             <RadioGroup
                                 android:id="@+id/rg_others_sales_man_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <RadioButton
                                     android:id="@+id/rb_others_sales_man_id_enable"
@@ -471,6 +473,32 @@
 
                                 <RadioButton
                                     android:id="@+id/rb_others_sales_man_id_disable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Disable" />
+                            </RadioGroup>
+
+                            <TextView
+                                android:id="@+id/tv_others_settings_share_bill"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="@string/share_bill" />
+
+                            <RadioGroup
+                                android:id="@+id/rg_others_settings_share_bill"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rb_others_settings_share_bill_enable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Enable" />
+
+                                <RadioButton
+                                    android:id="@+id/rb_others_settings_share_bill_disable"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Disable" />

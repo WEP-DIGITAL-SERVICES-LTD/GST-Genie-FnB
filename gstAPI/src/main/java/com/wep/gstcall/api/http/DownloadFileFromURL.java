@@ -3,7 +3,6 @@ package com.wep.gstcall.api.http;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.wep.gstcall.api.util.Config;

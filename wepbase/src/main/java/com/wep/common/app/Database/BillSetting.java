@@ -38,6 +38,7 @@ public class BillSetting {
 	int PrintOwnerDetail, BoldHeader, PrintService;
 	int GSTIN, GSTIN_out, POS, POS_out, HSNCode, HSNCode_out, ReverseCharge, ReverseCharge_out;
     int UTGSTEnabled_out , Environment, HSNPrintenabled_out;
+	int shareBill;
 	// Default constructor
 	public BillSetting() {
 
@@ -46,6 +47,7 @@ public class BillSetting {
 		TakeAwayCaption="";
 		HomeDeliveryCaption="";
 		fastBillingMode=0;
+		this.shareBill = 0;
 		this.strBusinessDate = "";
 		this.strHeaderText = "";
 		this.strFooterText = "";
@@ -130,7 +132,8 @@ public class BillSetting {
 					   int ihomedelivery, int GSTEnable, int fastBillingMode, int iItemNoReset, int iPrintPreview,
 					   int cummulativeHeadingEnable, int iTableSpliting, int printOwnerDetail, int boldHeader,
 					   int printService, int GSTIN, int GSTIN_out, int POS, int POS_out, int HSNCode, int HSNCode_out,
-					   int reverseCharge, int reverseCharge_out, int UTGSTEnabled_out, int environment, int HSNPrintenabled_out, int iJurisdictionsPrintStatus) {
+					   int reverseCharge, int reverseCharge_out, int UTGSTEnabled_out, int environment, int HSNPrintenabled_out, int iJurisdictionsPrintStatus,
+					   int shareBill) {
 		this.strBusinessDate = strBusinessDate;
 		this.strHeaderText = strHeaderText;
 		this.strFooterText = strFooterText;
@@ -198,6 +201,15 @@ public class BillSetting {
 		Environment = environment;
 		this.HSNPrintenabled_out = HSNPrintenabled_out;
 		this.iJurisdictionsPrintStatus = iJurisdictionsPrintStatus;
+		this.shareBill = shareBill;
+	}
+
+	public int getShareBill() {
+		return shareBill;
+	}
+
+	public void setShareBill(int shareBill) {
+		this.shareBill = shareBill;
 	}
 
 	public int getiJurisdictionsPrintStatus() {

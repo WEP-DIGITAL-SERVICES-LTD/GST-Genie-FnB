@@ -77,7 +77,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener,
+public class FragmentGSTLink extends Fragment implements HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener,
         DownloadFileFromURL.OnFileDownloadCompletedListener,TokenAsync_Frag.OnTokenRequestCompletedListener{
 
 

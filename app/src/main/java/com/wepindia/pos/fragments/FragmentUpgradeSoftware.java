@@ -13,14 +13,14 @@ import android.widget.Button;
 import com.razorpay.PaymentResultListener;
 import com.wepindia.pos.R;
 
-import com.wep.moduleactivate.LocalCheckPoint;
+//import com.wep.moduleactivate.LocalCheckPoint;
 
 
 public class FragmentUpgradeSoftware extends Fragment implements View.OnClickListener, PaymentResultListener {
 
     private Button btnGST;
     private Button btnStorage;
-    private LocalCheckPoint checkPoint;
+//    private LocalCheckPoint checkPoint;
     Context myContext ;
     public Activity myActivity ;
 
@@ -41,8 +41,8 @@ public class FragmentUpgradeSoftware extends Fragment implements View.OnClickLis
         btnGST.setOnClickListener(this);
         btnStorage = (Button) view.findViewById(R.id.btnStorage);
         btnStorage.setOnClickListener(this);
-        checkPoint = new LocalCheckPoint(getActivity());
-        checkPoint.setActivate(btnGST.getTag().toString());
+//        checkPoint = new LocalCheckPoint(getActivity());
+//        checkPoint.setActivate(btnGST.getTag().toString());
         return  view;
     }
     @Override
@@ -50,22 +50,22 @@ public class FragmentUpgradeSoftware extends Fragment implements View.OnClickLis
         int id = view.getId();
         if(id == R.id.btnGST)
         {
-            checkPoint.check(btnGST.getTag().toString());
+//            checkPoint.check(btnGST.getTag().toString());
         }
         else if(id == R.id.btnStorage)
         {
-            checkPoint.check(btnStorage.getTag().toString());
+//            checkPoint.check(btnStorage.getTag().toString());
         }
     }
 
     @Override
     public void onPaymentSuccess(String msg) {
-        checkPoint.setPaymentSuccess(msg);
+//        checkPoint.setPaymentSuccess(msg);
     }
 
     @Override
     public void onPaymentError(int status,String msg) {
-        checkPoint.setPaymentFailed(status,msg);
+//        checkPoint.setPaymentFailed(status,msg);
     }
 
 }

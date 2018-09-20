@@ -69,6 +69,8 @@ public class Config {
     public static final String GET_GSTR2_RECONCILED_DEMO = "/GetReconciledCSV/Download";
     public static final String GET_GSTR3_DEMO = "/GetGSTR3CSV/Download";
 
+    public static final String url_sms_demo = "http://api.wepgspservices.com/api/POS/SMS?";
+
 
 
     /*public static final String GSTR1_SAVE_AZURE_API = "/asp/gstr1/save";

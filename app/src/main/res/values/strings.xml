@@ -21,6 +21,8 @@
     <string name="title_activity_tax_config_sub">TaxConfigSubActivity</string>
     <string name="apply">Apply</string>
     <string name="remove_logo">Remove Logo</string>
+    <string name="share">Share</string>
+    <string name="share_bill">Share Bill</string>
 
     <string name="InwardSupplyEntry"><u>Inward Supply Entry</u></string>
 

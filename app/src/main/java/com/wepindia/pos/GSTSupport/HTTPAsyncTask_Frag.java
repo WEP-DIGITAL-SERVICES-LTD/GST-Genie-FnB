@@ -1,5 +1,7 @@
 package com.wepindia.pos.GSTSupport;
 
+import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -20,7 +22,8 @@ public class HTTPAsyncTask_Frag extends AsyncTask<Void,Void,String> {
 
     private static final String TAG = HTTPAsyncTask.class.getSimpleName();
     private final String USER_AGENT = "Mozilla/5.0";
-    private FragmentGSTLink activity;
+    private Activity activity;
+    private Fragment fragment;
     private String strJson;
     private int requestCode;
     private String url;
@@ -29,15 +32,35 @@ public class HTTPAsyncTask_Frag extends AsyncTask<Void,Void,String> {
     public static int HTTP_POST = 2;
     private int method;
     private String Header;
-    public HTTPAsyncTask_Frag(FragmentGSTLink activity, int method, String strJson, int requestCode, String url, String Header)
+    public HTTPAsyncTask_Frag(Fragment fragment, int method, String strJson, int requestCode, String url, String Header)
     {
-        this.activity = activity;
+        this.fragment = fragment;
         this.strJson = strJson;
         this.requestCode = requestCode;
         this.url = url;
         this.method = method;
         httpRequestCompletedListener = (HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener) activity;
         this.Header = Header;
+    }
+
+    public HTTPAsyncTask_Frag(Fragment fragment, int method, int requestCode, String url)
+    {
+        this.fragment = fragment;
+        this.requestCode = requestCode;
+        this.url = url;
+        this.method = method;
+        httpRequestCompletedListener = (HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener) fragment;
+
+    }
+
+    public HTTPAsyncTask_Frag(Activity activity, int method, int requestCode, String url)
+    {
+        this.activity = activity;
+        this.requestCode = requestCode;
+        this.url = url;
+        this.method = method;
+        httpRequestCompletedListener = (HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener) activity;
+
     }
 
     @Override

@@ -88,6 +88,7 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.Constants;
+import com.wepindia.pos.GSTSupport.HTTPAsyncTask_Frag;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
@@ -95,6 +96,8 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.OnWalletPaymentResponseListener;
 import com.wepindia.pos.R;
 import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
+import com.wepindia.pos.utils.SendBillInfoToCustUtility;
+import com.wepindia.pos.utils.Validations;
 import com.wepindia.pos.views.Billing.Listeners.OnProceedToPayCompleteListener;
 import com.wepindia.pos.views.Billing.PdfInvoice.CreatePdfInvoice;
 import com.wepindia.pos.views.Billing.PdfInvoice.PdfInvoiceBean;
@@ -132,7 +135,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class BillingDineInActivity extends WepPrinterBaseActivity implements TextWatcher , TestItemsAdapter.OnItemsImageClickListener, PrinterConnectionError,
-        OnProceedToPayCompleteListener, PaymentResultListener, FragmentLogin.OnLoginCompletedListener{
+        OnProceedToPayCompleteListener, PaymentResultListener, FragmentLogin.OnLoginCompletedListener, HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener {
 
     String linefeed = "";
     String tx ="";
@@ -258,6 +261,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     //MSwipe
     public final int REQUEST_CODE_CARD_PAYMENT = 12;
     TVSPrinterBaseActivity tvsPrinterBaseActivity;
+    private Customer customerBean;
     private String PDF_INVOICES_GENERATE_PATH = Environment.getExternalStorageDirectory().getPath() + "/"+ Constants.PDF_INVOICE_DIRECTORY+"/";
 
     public void onConfigurationRequired() {
@@ -359,6 +363,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 tableSplit = crsrSettings.getInt(crsrSettings.getColumnIndex("TableSpliting"));
 
                 JURISDICTIONS_PRINT_STATUS = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS_STATUS));
+                SHAREBILL = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_ShareBill));
 
                 if (crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS)) != null)
                     strJurisdictionsPrint = crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS));
@@ -901,16 +906,33 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                                 etCustGSTIN.setText(gstin);
                             Toast.makeText(myContext, "Customer Fetched Successfully", Toast.LENGTH_LONG).show();
                             checkForInterStateTax();
+
+                            customerBean = null;
+                            customerBean = new Customer();
+                            customerBean.setStrCustName(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustName)));
+                            customerBean.setStrCustPhone(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustContactNumber)));
+                            customerBean.setStrEmailId(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CUST_EMAIL)));
+                            customerBean.setiCustId(crsrCust.getInt(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustId)));
+                            customerBean.set_id(crsrCust.getInt(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustId)));
+                            if (crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_GSTIN)) != null && !crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_GSTIN)).isEmpty()) {
+                                customerBean.setStrCustGSTIN(crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
+                            }
+                            if (crsrCust.getDouble(crsrCust.getColumnIndex(DatabaseHandler.KEY_CreditAmount)) > 0) {
+                                customerBean.setdCreditAmount(crsrCust.getDouble(crsrCust.getColumnIndex(DatabaseHandler.KEY_CreditAmount)));
+                            }
                             //}
                         } else {
+                            customerBean = null;
                             MsgBox.Show("Note", "Customer is not Found, Please Add Customer before Order");
                         }
                     } else if (edtCustDineInPhoneNo.getText().toString().trim().equals("")) {
+                        customerBean = null;
                         chk_interstate.setChecked(false);
                         chk_interstate.setEnabled(true);
                         spnr_pos.setEnabled(false);
                     }
                 } catch (Exception ex) {
+                    customerBean = null;
                     MsgBox.Show("Error", ex.getMessage());
                     ex.printStackTrace();
                 }
@@ -3262,6 +3284,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         isReprint = false;
         //txtSearchItemBarcode.setText("");
         tx = "";
+        customerBean = null;
         autoCompleteTextViewSearchItemBarcode.setText("");
         reprintBillingMode=0;
         tvWaiterNumber.setText("0");
@@ -6825,6 +6848,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         if (tblOrderItems.getChildCount() > 0) {
             mSaveBillData(1);
             generateInvoicePdf();
+            if (SHAREBILL == 1) {
+                String billNo = "";
+                if (trainingMode)
+                    billNo = "TM" + tvBillNumber.getText().toString().trim();
+                else
+                    billNo = tvBillNumber.getText().toString().trim();
+                sendInvoice(customerBean, String.format("%.2f", Double.parseDouble(tvBillAmount.getText().toString().trim())), billNo);
+            }
             if (jBillingMode == 1) {
                 int iResult = dbBillScreen.deleteKOTItems(Integer.parseInt(tvTableNumber.getText().toString()),
                         Integer.parseInt(tvSubUdfValue.getText().toString()), Integer.parseInt(tvTableSplitNo.getText().toString()));
@@ -7730,6 +7761,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     PrintBillPayment =0;
                     mSaveBillData(2);
                     generateInvoicePdf();
+                    if (SHAREBILL == 1) {
+                        String billNo = "";
+                        if (trainingMode)
+                            billNo = "TM" + tvBillNumber.getText().toString().trim();
+                        else
+                            billNo = tvBillNumber.getText().toString().trim();
+                        sendInvoice(customerBean, String.format("%.2f", Double.parseDouble(tvBillAmount.getText().toString().trim())), billNo);
+                    }
 //                    dbBillScreen.updateKOTNo(iKOTNo-1);
                     Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
                     updateOutwardStock();
@@ -8671,6 +8710,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
                 mSaveBillData(2);
                 generateInvoicePdf();
+                if (SHAREBILL == 1) {
+                    String billNo = "";
+                    if (trainingMode)
+                        billNo = "TM" + tvBillNumber.getText().toString().trim();
+                    else
+                        billNo = tvBillNumber.getText().toString().trim();
+                    sendInvoice(customerBean, String.format("%.2f", Double.parseDouble(tvBillAmount.getText().toString().trim())), billNo);
+                }
                 updateOutwardStock();
                 PrintNewBill(BUSINESS_DATE, 1);
                 //dbBillScreen.updateKOTNo(iKOTNo-1);
@@ -10935,7 +10982,23 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                 etCustGSTIN.setText(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
                 checkForInterstateTransaction(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)).substring(0, 2));
             }
+
+            customerBean = null;
+            customerBean = new Customer();
+            customerBean.setStrCustName(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_CustName)));
+            customerBean.setStrCustPhone(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_CustContactNumber)));
+            customerBean.setStrEmailId(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_CUST_EMAIL)));
+            customerBean.setiCustId(cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_CustId)));
+            customerBean.set_id(cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_CustId)));
+            if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)) != null && !cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)).isEmpty()) {
+                customerBean.setStrCustGSTIN(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
+            }
+            if (cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CreditAmount)) > 0) {
+                customerBean.setdCreditAmount(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CreditAmount)));
+            }
+
         } else {
+            customerBean = null;
             customerId = "0";
         }
 
@@ -11054,15 +11117,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         PrintBillPayment = 0;
         mSaveBillData(2);
         generateInvoicePdf();
-//        generateInvoicePdf();
-      /*  if (SHAREBILL == 1) {
+        if (SHAREBILL == 1) {
             String billNo = "";
             if (trainingMode)
-                billNo = "TM" + edtBillNumber.getText().toString().trim();
+                billNo = "TM" + tvBillNumber.getText().toString().trim();
             else
-                billNo = edtBillNumber.getText().toString().trim();
+                billNo = tvBillNumber.getText().toString().trim();
             sendInvoice(customerBean, String.format("%.2f", dFinalBillValue), billNo);
-        }*/
+        }
         //updateOutwardStock();
         Toast.makeText(this, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
         if (isPrintBill == true) {
@@ -11073,20 +11135,125 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         proceedToPayBillingFragment = null;
     }
 
+    private void sendInvoice(Customer customer, final String billAmount, final String billNo) {
+
+        if (!isWifiConnected()) {
+            Toast.makeText(BillingDineInActivity.this, "Kindly connect to internet to share the bill.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (customer != null) {
+            send("", customer.getStrCustPhone(), customer.getStrEmailId(), billAmount, billNo);
+        } else {
+            LayoutInflater inflater = getLayoutInflater();
+            View alertLayout = inflater.inflate(R.layout.customer_detail_missing_alert, null);
+//            final EditText etCustName = alertLayout.findViewById(R.id.et_name);
+            final EditText etCustPhone = alertLayout.findViewById(R.id.et_phone);
+            final EditText etCustEmail = alertLayout.findViewById(R.id.et_email);
+            final Button btnCancel = alertLayout.findViewById(R.id.btn_cancel);
+            final Button btnSend = alertLayout.findViewById(R.id.btn_send);
+            final CheckBox customerMobileCheckBox = (CheckBox) alertLayout.findViewById(R.id.customer_mobile);
+            final CheckBox customerEmailCheckBox = (CheckBox) alertLayout.findViewById(R.id.customer_email);
+//            etCustName.setText("");
+            etCustPhone.setText("");
+            etCustEmail.setText("");
+            customerMobileCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b)
+                        etCustPhone.setEnabled(true);
+                    else
+                        etCustPhone.setEnabled(false);
+
+                }
+            });
+            customerEmailCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b)
+                        etCustEmail.setEnabled(true);
+                    else
+                        etCustEmail.setEnabled(false);
+
+                }
+            });
+
+            final AlertDialog.Builder alert = new AlertDialog.Builder(BillingDineInActivity.this);
+            alert.setTitle("Share Invoice");
+
+            alert.setIcon(R.drawable.ic_launcher);
+            alert.setView(alertLayout);
+            alert.setCancelable(false);
+            final AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+            btnSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (etCustPhone.isEnabled() && etCustPhone.getText().toString().isEmpty()) {
+                        etCustPhone.setError("Please fill this field.");
+                    } else if (etCustPhone != null && etCustPhone.isEnabled()
+                            && !etCustPhone.getText().toString().isEmpty()
+                            && etCustPhone.getText().length() != 10) {
+                        etCustPhone.setError("Phone no cannot be less than 10 digits.");
+                    } else if (etCustEmail.isEnabled() && etCustEmail.getText().toString().isEmpty()) {
+                        etCustEmail.setError("Please fill this field.");
+                    } else if (etCustEmail.isEnabled() && etCustEmail != null
+                            && !etCustEmail.getText().toString().isEmpty()
+                            && !Validations.isValidEmailAddress(etCustEmail.getText().toString())) {
+                        etCustEmail.setError("Please Enter Valid Email id.");
+                    } else if (etCustPhone.isEnabled() || etCustEmail.isEnabled()) {
+                        send("", etCustPhone.getText().toString().trim(), etCustEmail.getText().toString().trim(), billAmount, billNo);
+                        Toast.makeText(BillingDineInActivity.this, "Sending....", Toast.LENGTH_SHORT).show();
+                        alertDialog.dismiss();
+                    } else {
+                        Toast.makeText(BillingDineInActivity.this, "Please select either SMS or email or both to share invoice details with the customer.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+    }
+
+    private void send(String custName, String custPhoneNo, String custEmail, String billAmount, String billNo) {
+        String messageContent = "";
+        String firmName = "";
+        String invoiceNo = "";
+        Cursor crsrOwnerDetails = db.getOwnerDetail();
+        if (crsrOwnerDetails != null && crsrOwnerDetails.moveToFirst())
+            firmName = crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex(DatabaseHandler.KEY_FIRM_NAME));
+        if (!firmName.equalsIgnoreCase(""))
+            messageContent = "Dear " + "Customer" + ", you have made a transaction of Rs. " + billAmount + " with " + firmName + ". Thank you for shopping with us.";
+        else
+            messageContent = "Dear " + "Customer" + ", you have made a transaction of Rs. " + billAmount + ". Thank you for shopping with us.";
+
+        if (trainingMode)
+            invoiceNo = billNo;
+        else
+            invoiceNo = "" + (Integer.parseInt(billNo));
+
+        String filename = "Invoice_" + invoiceNo + "_" + tvDate.getText().toString() + ".pdf";
+
+        String attachment = Environment.getExternalStorageDirectory().getPath() + "/"+Constants.PDF_INVOICE_DIRECTORY+"/"
+                + filename;
+
+        SendBillInfoToCustUtility smsUtility = new SendBillInfoToCustUtility(BillingDineInActivity.this, "Invoice", Constants.message_email + firmName,messageContent, custPhoneNo, true, true, false,
+                BillingDineInActivity.this, custEmail, attachment, filename, firmName);
+        smsUtility.sendBillInfo();
+        Toast.makeText(BillingDineInActivity.this, "Sharing Invoice...", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onDismiss() {
         proceedToPayBillingFragment = null;
     }
+
+    @Override
+    public void onHttpRequestComplete(int requestCode, String filePath) {
+
+    }
 }
-
-
-/*************************************************************************************************************************************
- * End Of File
- * <p>
- * <p>
- * /************************************************************
- * End Of File
- * <p>
- * <p>
- * /
- *************************************************************************************************************************************/

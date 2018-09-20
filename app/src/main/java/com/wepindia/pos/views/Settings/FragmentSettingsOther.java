@@ -39,6 +39,7 @@ public class FragmentSettingsOther extends Fragment {
     RadioButton rbJurisdictionsEnable, rbJurisdictionsDisable;
     RadioButton rbCummulativeHeadingEnable, rbCummulativeHeadingDisable; // richa_2012
     RadioButton rbTableSplitingEnable, rbTableSplitingDisable;
+    RadioButton rb_others_settings_share_bill_enable, rb_others_settings_share_bill_disable;
     BillSetting objBillSettings = new BillSetting();
     Button btnApplyOtherSettings,btnCloseOtherSettings;
     Button btnApply, btnClose;
@@ -150,6 +151,9 @@ public class FragmentSettingsOther extends Fragment {
 
         rbJurisdictionsEnable = (RadioButton) view.findViewById(R.id.rbJurisdictionsEnable);
         rbJurisdictionsDisable = (RadioButton) view.findViewById(R.id.rbJurisdictionsDisable);
+
+        rb_others_settings_share_bill_enable = (RadioButton) view.findViewById(R.id.rb_others_settings_share_bill_enable);
+        rb_others_settings_share_bill_disable = (RadioButton) view.findViewById(R.id.rb_others_settings_share_bill_disable);
 
         rbEnvironment_Production = (RadioButton) view.findViewById(R.id.rbEnvironment_Production);
         rbEnvironment_Demo = (RadioButton) view.findViewById(R.id.rbEnvironment_Demo);
@@ -269,6 +273,13 @@ public class FragmentSettingsOther extends Fragment {
                 rbJurisdictionsDisable.setChecked(true);
             }
 
+            // Share Bill Enable
+            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex(DatabaseHandler.KEY_ShareBill)) == 1) {
+                rb_others_settings_share_bill_enable.setChecked(true);
+            } else {
+                rb_others_settings_share_bill_disable.setChecked(true);
+            }
+
             // Fast Billing Mode
             if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("Environment")) == 1) {
                 rbEnvironment_Production.setChecked(true);
@@ -321,7 +332,7 @@ public class FragmentSettingsOther extends Fragment {
         int iKOT = 0, iToken = 0, iKitchen = 0;
         int iOtherChargesItemwise = 0, iOtherChargesBillwise = 0, iRestoreDefault = 0;
         int fastBillingMode = 0, iItemNoReset = 0, iPrintPreview = 0, iTableSpliting = 0;
-        int CummulativeHeadingEnable = 0, Jurisdiction = 0; //richa_2012
+        int CummulativeHeadingEnable = 0, Jurisdiction = 0, shareBill = 0; //richa_2012
         int environment =1;
         int printOwnerDetail = 0, boldHeader = 0, printService = 0, billAmountRounfOff = 0;
 
@@ -413,6 +424,13 @@ public class FragmentSettingsOther extends Fragment {
             Jurisdiction = 0;
         }
 
+        // Jurisdictions Enable
+        if (rb_others_settings_share_bill_enable.isChecked() == true) {
+            shareBill = 1;
+        } else {
+            shareBill = 0;
+        }
+
         // Fast Billing Mode
         if (rbEnvironment_Production.isChecked() == true) {
             environment = 1;
@@ -472,6 +490,7 @@ public class FragmentSettingsOther extends Fragment {
         objBillSettings.setTableSpliting(iTableSpliting);
         objBillSettings.setCummulativeHeadingEnable(CummulativeHeadingEnable); // richa_2012
         objBillSettings.setiJurisdictionsPrintStatus(Jurisdiction);
+        objBillSettings.setShareBill(shareBill);
         objBillSettings.setEnvironment(environment);
 
         objBillSettings.setPrintOwnerDetail(printOwnerDetail);

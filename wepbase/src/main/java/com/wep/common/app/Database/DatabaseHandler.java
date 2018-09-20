@@ -222,6 +222,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_HeaderText5 = "HeaderText5";
     public static final String KEY_JURISDICTIONS = "jurisdictions";
     public static final String KEY_JURISDICTIONS_STATUS = "jurisdictions_status";
+    public static final String KEY_ShareBill = "ShareBill";
     public static final String KEY_SALES_MAN_ID = "sales_man_id";
     private static final String KEY_KOTType = "KOTType";
     private static final String KEY_MaximumTables = "MaximumTables";
@@ -283,7 +284,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //private static final String KEY_CustName = "CustName";
     private static final String KEY_LastTransaction = "LastTransaction";
     private static final String KEY_TotalTransaction = "TotalTransaction";
-    private static final String KEY_CreditAmount = "CreditAmount";
+    public static final String KEY_CreditAmount = "CreditAmount";
     private static final String KEY_CreditLimit = "CreditLimit";
     public static final String KEY_CUST_DEPOSIT_AMOUNT = "DepositAmount";
     public static final String KEY_OpeningBalance = "OpeningBalance";
@@ -698,6 +699,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_GSTIN = "GSTIN";
     public static final String KEY_GSTIN_Ori = "GSTIN_Ori";
     public static final String KEY_CustName = "CustName";
+    public static final String KEY_CUST_EMAIL = "email_id";
     public static final String KEY_InvoiceNo = "InvoiceNo";
     public static final String KEY_CustStateCode = "CustStateCode";
     public static final String KEY_UID = "UID";
@@ -1223,6 +1225,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_PrintOwnerDetail +" NUMERIC, "
             + KEY_HeaderBold +" NUMERIC, "
             + KEY_PrintService +" NUMERIC, "
+            + KEY_ShareBill +" NUMERIC, "
             + KEY_BillAmountRoundOff +" NUMERIC, "
             + KEY_TableSpliting + " NUMERIC )";
 
@@ -1243,6 +1246,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_CustContactNumber + " NUMERIC, " +
             KEY_CustId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             KEY_CustName + " TEXT, " +
+            KEY_CUST_EMAIL + " TEXT," +
             KEY_LastTransaction + " REAL, " +
             KEY_TotalTransaction + " REAL, " +
             KEY_CreditAmount + " REAL, "+
@@ -1632,6 +1636,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         if (!existsColumnInTable(db, TBL_BILLSETTING, KEY_SALES_MAN_ID)) { // Column doesn't exist
                             db.execSQL("ALTER TABLE " + TBL_BILLSETTING + " ADD COLUMN " + KEY_SALES_MAN_ID + " NUMERIC DEFAULT 0 ");
                         }
+                        if (!existsColumnInTable(db, TBL_BILLSETTING, KEY_ShareBill)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_BILLSETTING + " ADD COLUMN " + KEY_ShareBill + " NUMERIC DEFAULT 0 ");
+                        }
                     } else { // Table doesn't exist
                         db.execSQL(QUERY_CREATE_TABLE_BILLSETTING);
                     }
@@ -1652,6 +1659,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         }
                         if (!existsColumnInTable(db, TBL_CUSTOMER, KEY_OPENING_BALANCE)) { // Column doesn't exist
                             db.execSQL("ALTER TABLE " + TBL_CUSTOMER + " ADD COLUMN " + KEY_OPENING_BALANCE + " REAL default 0");
+                        }
+                        if (!existsColumnInTable(db, TBL_CUSTOMER, KEY_CUST_EMAIL)) { // Column doesn't exist
+                            db.execSQL("ALTER TABLE " + TBL_CUSTOMER + " ADD COLUMN " + KEY_CUST_EMAIL + " TEXT");
                         }
                     } else { // Table doesn't exist
                         db.execSQL(QUERY_CREATE_TABLE_BILLSETTING);
@@ -3405,7 +3415,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_PrintService, objBillSetting.getPrintService());
         cvDbValues.put(KEY_BillAmountRoundOff, objBillSetting.getBillAmountRounfOff());
         cvDbValues.put(KEY_JURISDICTIONS_STATUS, objBillSetting.getiJurisdictionsPrintStatus());
-        cvDbValues.put(KEY_SALES_MAN_ID, objBillSetting.getiSalesManId());
+        cvDbValues.put(KEY_ShareBill, objBillSetting.getShareBill());
+//        cvDbValues.put(KEY_SALES_MAN_ID, objBillSetting.getiSalesManId());
 
         return dbFNB.update(TBL_BILLSETTING, cvDbValues, null, null);
     }
@@ -8079,7 +8090,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put("Email", user.getUserEmail());
         contentValues.put("Address", user.getUserAddress());
         contentValues.put("FileLocation", user.getUserFileLoc());
-        contentValues.put(KEY_SALES_MAN_ID, user.getStrSalesManId());
+//        contentValues.put(KEY_SALES_MAN_ID, user.getStrSalesManId());
         try {
             status = dbFNB.insert(TBL_USERS, null, contentValues);
 
@@ -8104,7 +8115,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put("Email", user.getUserEmail());
         contentValues.put("Address", user.getUserAddress());
         contentValues.put("FileLocation", user.getUserFileLoc());
-        contentValues.put(KEY_SALES_MAN_ID, user.getStrSalesManId());
+//        contentValues.put(KEY_SALES_MAN_ID, user.getStrSalesManId());
         try {
             status = dbFNB.update(TBL_USERS, contentValues, KEY_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
 
@@ -8135,7 +8146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 user.setUserAdhar(cursor.getString(cursor.getColumnIndex("AadhaarNo")));
                 user.setUserEmail(cursor.getString(cursor.getColumnIndex("Email")));
                 user.setUserAddress(cursor.getString(cursor.getColumnIndex("Address")));
-                user.setStrSalesManId(cursor.getString(cursor.getColumnIndex(KEY_SALES_MAN_ID)));
+//                user.setStrSalesManId(cursor.getString(cursor.getColumnIndex(KEY_SALES_MAN_ID)));
                 list.add(user);
             }
         }
@@ -9691,7 +9702,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
             cvDbValues.put(KEY_BillStatus, objBillItem.getBillStatus());
             cvDbValues.put(KEY_ONLINE_ORDER_NO,objBillItem.getStrOnlineOrderNo());
-            cvDbValues.put(KEY_SALES_MAN_ID, objBillItem.getStrSalesManId());
+//            cvDbValues.put(KEY_SALES_MAN_ID, objBillItem.getStrSalesManId());
 
             return db.insert(TBL_BILLITEM, null, cvDbValues);
         }catch (Exception e){
@@ -9753,7 +9764,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_cessAmount, objBillDetail.getCessAmount());
             cvDbValues.put(KEY_SubTotal, objBillDetail.getSubTotal());
             cvDbValues.put(KEY_ONLINE_ORDER_NO, objBillDetail.getStrOnlineOrderNo());
-            cvDbValues.put(KEY_SALES_MAN_ID, objBillDetail.getStrSalesManId());
+//            cvDbValues.put(KEY_SALES_MAN_ID, objBillDetail.getStrSalesManId());
 
             rData = db.insert(TBL_BILLDETAIL, null, cvDbValues);
         }catch (Exception e){

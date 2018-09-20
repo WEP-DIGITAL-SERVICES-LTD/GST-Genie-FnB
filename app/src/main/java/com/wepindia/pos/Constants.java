@@ -12,6 +12,12 @@ public interface Constants {
     public static final String DEPOSIT = "Deposit";
     public static final String BILL_NO = "BillNo";
 
+    // SMS Sending
+    public static int HTTP_GET = 1;
+    public static int HTTP_POST = 2;
+    public static int SMS_SENDING = 1200;
+    String message_email = "Dear Customer, \nThank you for shopping with us.\nKindly find the attached invoice.\nRegards,\n";
+
     // PDF Invoice
     String PDF_INVOICE_DIRECTORY = "WeP_FnB_Invoices";
 
