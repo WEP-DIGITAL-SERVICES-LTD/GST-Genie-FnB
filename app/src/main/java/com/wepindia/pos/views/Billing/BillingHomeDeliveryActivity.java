@@ -94,7 +94,7 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.OnWalletPaymentResponseListener;
 import com.wepindia.pos.R;
-import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
+import com.wepindia.pos.views.Billing.Adapters.TestItemsAdapter;
 import com.wepindia.pos.utils.SendBillInfoToCustUtility;
 import com.wepindia.pos.utils.Validations;
 import com.wepindia.pos.views.Billing.Listeners.OnProceedToPayCompleteListener;

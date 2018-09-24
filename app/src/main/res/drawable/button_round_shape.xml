@@ -1,0 +1,16 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size android:width="60dp"
+                android:height="60dp"/>
+            <solid android:color="@color/colorPrimary"/>
+        </shape>
+    </item>
+<!--    <item>
+        <shape android:shape="oval">
+            <size android:width="60dp"
+                android:height="60dp"/>
+            <solid android:color="@color/widget_color"/>
+        </shape>
+    </item>-->
+</selector>

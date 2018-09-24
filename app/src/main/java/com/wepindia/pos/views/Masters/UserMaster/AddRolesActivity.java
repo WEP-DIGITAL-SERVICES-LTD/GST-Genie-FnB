@@ -29,8 +29,8 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
-import com.wepindia.pos.RecyclerDirectory.AddRoleClickListener;
-import com.wepindia.pos.RecyclerDirectory.UserRolesAdapter;
+import com.wepindia.pos.views.Masters.UserMaster.Listeners.AddRoleClickListener;
+import com.wepindia.pos.views.Masters.UserMaster.Adapters.UserRolesAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;

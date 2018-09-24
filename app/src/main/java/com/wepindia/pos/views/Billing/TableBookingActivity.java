@@ -31,8 +31,8 @@ import com.wep.common.app.Database.TableBooking;
 import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
-import com.wepindia.pos.RecyclerDirectory.TableBookingAdapter;
-import com.wepindia.pos.RecyclerDirectory.TableBookingResponse;
+import com.wepindia.pos.views.Billing.Adapters.TableBookingAdapter;
+import com.wepindia.pos.views.Billing.Listeners.TableBookingResponse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

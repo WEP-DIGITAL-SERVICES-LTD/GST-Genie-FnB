@@ -113,7 +113,7 @@ public class StockOutwardMaintain {
                     // new entry
                     ItemStock item = new ItemStock();
                     item.setMenuCode(itemCursor.getInt(itemCursor.getColumnIndex("MenuCode")));
-                    item.setItemName(itemCursor.getString(itemCursor.getColumnIndex("ItemName")));
+                    item.setItemName(itemCursor.getString(itemCursor.getColumnIndex(DatabaseHandler.KEY_ItemShortName)));
                     item.setOpeningStock(itemCursor.getDouble(itemCursor.getColumnIndex("Quantity")));
                     item.setClosingStock(itemCursor.getDouble(itemCursor.getColumnIndex("Quantity")));
                     double rate = 0;

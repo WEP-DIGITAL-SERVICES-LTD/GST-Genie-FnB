@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_wep" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_itemMaster"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".05" />
+
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete_item_master_list_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:completionThreshold="1"
+                android:selectAllOnFocus="true"
+                android:maxLines="1"
+                android:drawableRight="@android:drawable/ic_search_category_default"
+                android:hint="@string/search_items_name_barcode_short_code"
+                android:textColor="@android:color/black" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".05" />
+
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete_item_search_brand_cat_dept"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:completionThreshold="1"
+                android:selectAllOnFocus="true"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:visibility="invisible"
+                android:drawableRight="@android:drawable/ic_search_category_default"
+                android:hint="@string/search_brand_categ_dept"
+                android:textColor="@android:color/black" />
+
+            <CheckBox
+                android:id="@+id/cb_item_master_list_short_code_status"
+                android:layout_width="0dp"
+                android:visibility="invisible"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp"
+                android:layout_weight=".2"
+                android:gravity="left|center"
+                android:text="@string/short_code"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/bt_item_master_list_count"
+                style="@style/Button_Add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight=".1"
+                android:padding="5dp"
+                android:text="@string/zero"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/bt_item_master_list_add"
+                style="@style/Button_Add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight=".1"
+                android:text="@string/billing_add" />
+            <ImageView
+                android:id="@+id/iv_item_master_list_refresh"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight=".1"
+                android:src="@mipmap/ic_refresh"/>
+
+            <ImageView
+                android:id="@+id/iv_item_master_list_delete"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_margin="3dp"
+                android:layout_weight=".1"
+                android:src="@mipmap/ic_trash"/>
+
+            <!--<View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1" />-->
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_weight=".001"
+            android:background="@android:color/black" />
+
+        <RadioGroup
+            android:id="@+id/rg_item_master_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
+            android:checkedButton="@+id/rb_item_master_list_all"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_item_master_list_all"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/all" />
+
+            <RadioButton
+                android:id="@+id/rb_item_master_list_brand"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/kitchen" />
+
+
+            <RadioButton
+                android:id="@+id/rb_item_master_list_department"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/department" />
+
+            <RadioButton
+                android:id="@+id/rb_item_master_list_category"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/category" />
+
+            <RadioButton
+                android:id="@+id/rb_item_master_list_active"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/active" />
+
+            <RadioButton
+                android:id="@+id/rb_item_master_list_inactive"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/in_active" />
+
+            <RadioButton
+                android:id="@+id/rb_item_master_list_min_stock"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/min_stock" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_name"
+                style="@style/TV_Billing_Screen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/name" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_qty"
+                style="@style/TV_Billing_Screen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:gravity="center"
+                android:text="@string/quantity" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_uom"
+                style="@style/TV_Billing_Screen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:gravity="center"
+                android:text="@string/uom_item" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_retail"
+                style="@style/TV_Billing_Screen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:gravity="center"
+                android:text="@string/retail_price" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_disc"
+                style="@style/TV_Billing_Screen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:text="GST Tax" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_mode"
+                style="@style/TV_Billing_Screen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:text="@string/mode" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_amount"
+                style="@style/TV_Billing_Screen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/amount"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".6"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_item_master_list_items"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.2"
+            android:background="@drawable/bottom_shape_draw"
+            android:scrollbars="vertical" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_weight=".001"
+            android:background="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight=".2"
+            android:layout_margin="10dp"
+            android:gravity="center">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".2" />
+
+            <Button
+                android:id="@+id/bt_item_master_list_import_csv"
+                android:background="@drawable/background_btn"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:text="@string/export_csv" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".2" />
+
+            <Button
+                android:id="@+id/bt_item_master_list_clear"
+                android:background="@drawable/background_btn"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:text="@string/clear" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".2" />
+
+            <Button
+                android:id="@+id/bt_item_master_list_generate_csv"
+                android:background="@drawable/background_btn"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:text="@string/sample_csv" />
+
+
+            <TextView
+                android:id="@+id/tv_item_master_list_title_file_path"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:gravity="right|center"
+                android:visibility="gone"
+                android:text="@string/file_path" />
+
+            <TextView
+                android:id="@+id/tv_item_master_list_file_path"
+                style="@style/ET_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:hint="@string/select_file"
+                android:inputType="text"
+                android:gravity="end"
+                android:layout_marginEnd="3dp"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/bt_item_master_list_browse_file"
+                android:background="@drawable/background_btn"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:text="@string/browse_file" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".2" />
+
+            <Button
+                android:id="@+id/bt_item_master_list_upload_file"
+                android:background="@drawable/background_btn"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:text="@string/upload_file" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".6" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="200dp"
+        android:indeterminate="true"
+        android:progress="5000" />
+</LinearLayout>

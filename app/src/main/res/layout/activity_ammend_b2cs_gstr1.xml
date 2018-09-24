@@ -89,7 +89,7 @@
                          android:layout_height="match_parent"
                          android:layout_weight="1"
                          android:id="@+id/spnr_supplytype_ori"
-                         android:entries="@array/g_s">
+                         android:entries="@array/supply_type_array">
                      </Spinner>
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:id="@+id/spnr_supplytype_rev"
-                        android:entries="@array/g_s">
+                        android:entries="@array/supply_type_array">
                     </Spinner>
                     <AutoCompleteTextView
                         android:layout_width="match_parent"

@@ -147,18 +147,18 @@ public class FragmentCategory extends Fragment {
 
                 tvCategCode = new TextView(myContext);
                 tvCategCode.setTextSize(18);
-                tvCategCode.setText(crsrCategory.getString(crsrCategory.getColumnIndex("CategCode")));
+                tvCategCode.setText(crsrCategory.getString(crsrCategory.getColumnIndex("CategoryCode")));
                 rowCateg.addView(tvCategCode);
 
                 tvCategName = new TextView(myContext);
                 tvCategName.setTextSize(18);
                 tvCategName.setPadding(5,0,0,0);
-                tvCategName.setText(crsrCategory.getString(crsrCategory.getColumnIndex("CategName")));
+                tvCategName.setText(crsrCategory.getString(crsrCategory.getColumnIndex("CategoryName")));
                 rowCateg.addView(tvCategName);
 
                 tvDeptCode = new TextView(myContext);
                 tvDeptCode.setTextSize(18);
-                tvDeptCode.setText(crsrCategory.getString(crsrCategory.getColumnIndex("DeptName")));
+                tvDeptCode.setText(crsrCategory.getString(crsrCategory.getColumnIndex("DepartmentName")));
                 rowCateg.addView(tvDeptCode);
 
                 // Delete

@@ -337,7 +337,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:id="@+id/spnr_g_s"
-                        android:entries="@array/g_s"></Spinner>
+                        android:entries="@array/supply_type_array"></Spinner>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

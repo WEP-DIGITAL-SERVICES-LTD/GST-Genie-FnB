@@ -6,6 +6,38 @@
 
     <string name="org_name">Supplier\'s Firm Name*</string>
     <string name="org_name_title">Supplier\'s Firm Name</string>
+    <string name="serial_no">S.No</string>
+    <string name="item_name_title">Item Name</string>
+    <string name="mrp">MRP</string>
+    <string name="select_all">Select All</string>
+
+    <string name="short_code_empty">Short Code can not be empty for Item Name  </string>
+    <string name="short_code_invalid">Please Enter Short Code as integer for Item Name  </string>
+    <string name="insufficient_information_csv">Please enter all the required data  </string>
+    <string name="item_short_name_empty">Item Name can not be empty for Short Code  </string>
+    <string name="item_short_name_invalid">Please Enter Item Name as character for Short Code  </string>
+    <string name="item_short_code_invalid">Menu Code can only be in integers.  </string>
+    <string name="item_long_name_invalid">Please Enter Item Name as character for Short Code  </string>
+    <string name="supply_type_empty">Supply Type can not be empty for Item Name  </string>
+    <string name="supply_type_invalid">Please Enter Supply Type as character for Item Name  </string>
+    <string name="rate_empty">Rate can not be empty for Item Name  </string>
+    <string name="rate_invalid">Please Enter Rate as decimal for Item Name  </string>
+    <string name="retail_price_empty">Retail Price can not be empty for Item Name  </string>
+    <string name="retail_price_invalid">Please Enter Retail Price as decimal for Item Name  </string>
+    <string name="mrp_empty">MRP can not be empty for Item Name  </string>
+    <string name="mrp_invalid">Please Enter MRP as decimal for Item Name  </string>
+    <string name="whole_sale_price_empty">Whole Sale Price can not be empty for Item Name  </string>
+    <string name="whole_sale_price_invalid">Please Enter Whole Sale Price as decimal for Item Name  </string>
+    <string name="hsn_invalid">Please Enter HSN as numeric for Item Name  </string>
+    <string name="min_stock_invalid">Please Enter Minimum Stock as decimal for Item Name  </string>
+    <string name="cess_amount_invalid">Please Enter cess amount as decimal for Item Name  </string>
+    <string name="add_cess_amount_invalid">Please Enter additional cess amount as decimal for Item Name  </string>
+    <string name="purchase_rate_invalid">Please Enter Purchase Rate as decimal for Item Name  </string>
+    <string name="favorite_invalid">Please Enter Favorite as 0 or 1 for Item Name  </string>
+    <string name="active_invalid">Please Enter active/inactive as 0 or 1 for Item Name  </string>
+    <string name="image_invalid">Please valid image URL for Item Name  </string>
+    <string name="same_item_same_mrp">Duplicate Item: Same item short name, barcode and UOM cannot exist with same MRP  </string>
+    <string name="same_item_different_uom">Same items cannot exist with different UOM  </string>
 
     <string name="app_name">GST Genie F</string>
     <string name="hello_world">Hello world!</string>
@@ -20,9 +52,125 @@
     <string name="title_activity_upload_file_picker">UploadFilePickerActivity</string>
     <string name="title_activity_tax_config_sub">TaxConfigSubActivity</string>
     <string name="apply">Apply</string>
-    <string name="remove_logo">Remove Logo</string>
     <string name="share">Share</string>
     <string name="share_bill">Share Bill</string>
+
+    <string name="item_info">Item Information</string>
+    <string name="tax_info">GST Tax Rates</string>
+    <string name="image_and_status">Image &amp; Status</string>
+    <string name="retail_price_greater_than_mrp">Retail price cannot be greater than MRP for item  </string>
+    <string name="wholesale_price_greater_than_retail_price">Wholesale price cannot be greater than retail price for item  </string>
+    <string name="either_cess_rate_or_amount">Please enter either cess Rate or cess Amount  </string>
+    <string name="add_cess_amount">Additional cess Amount</string>
+
+    <string name="cgst_rate">CGST Rate</string>
+    <string name="cess_rate">cess Rate</string>
+    <string name="sgst_rate">SGST Rate</string>
+    <string name="igst_rate">IGST Rate</string>
+    <string name="cgst_amount">CGST Amount</string>
+    <string name="cess_amount">cess Amount</string>
+    <string name="discount_amount">Discount Amount</string>
+    <string name="discount_percent">Discount%</string>
+    <string name="wholesale_price">Rate 3</string>
+    <string name="purchase_rate">Purchase Rate</string>
+    <string name="department">Department</string>
+    <string name="category">Category</string>
+    <string name="add_new_item">Add New Item</string>
+    <string name="fav">Fav</string>
+
+    // Item Masters
+    <string name="itemNameMessage">Kindly enter item short name </string>
+    <string name="itemUOMMessage">Kindly select item UOM </string>
+    <string name="itemRetailPriceMessage">Kindly enter item retail price </string>
+    <string name="retailPriceGreaterThanMRPError">Retail Price cannot be greater than MRP</string>
+    <string name="wholePriceGeaterThanRetailError">Wholesale Price cannot be greater than retail price</string>
+    <string name="cessRateAndcessAmountBothError">Please enter either cess Rate or cess Amount</string>
+    <string name="search_items_name_barcode_short_code">Barcode,ItemName or ShortCode</string>
+    <string name="search_brand_categ_dept">Brand,Department and Category</string>
+    <string name="short_code">Short Code</string>
+    <string name="zero">0</string>
+    <string name="billing_add">+</string>
+    <string name="generate_csv">Generate CSV</string>
+    <string name="browse_file">Browse File</string>
+    <string name="upload_file">Upload File</string>
+    <string name="file_path">File Path:</string>
+    <string name="select_file">Select File</string>
+    <string name="in_active">Inactive</string>
+    <string name="all">All</string>
+    <string name="name">Name</string>
+    <string name="mode">Mode</string>
+    <string name="uom_item">UOM</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="sample_csv">Sample CSV</string>
+
+    <string-array name="UOM_List">
+        <item>Select</item>
+        <item>BAGS (BAG)</item>
+        <item>BALE (BAL)</item>
+        <item>BUNDLES (BDL)</item>
+        <item>BUCKLES (BKL)</item>
+        <item>BILLIONS OF UNITS (BOU)</item>
+        <item>BOX (BOX)</item>
+        <item>BOTTLES (BTL)</item>
+        <item>BUNCHES (BUN)</item>
+        <item>CANS (CAN)</item>
+        <item>CUBIC METER (CBM)</item>
+        <item>CUBIC CENTIMETER (CCM)</item>
+        <item>CENTIMETER (CMS)</item>
+        <item>CARTONS (CTN)</item>
+        <item>DOZEN (DOZ)</item>
+        <item>DRUM (DRM)</item>
+        <item>GREAT GROSS (GGR)</item>
+        <item>GRAMS (GMS)</item>
+        <item>GROSS (GRS)</item>
+        <item>GROSS YARDS (GYD)</item>
+        <item>KILOGRAMS (KGS)</item>
+        <item>KILOLITER (KLR)</item>
+        <item>KILOMETRE (KME)</item>
+        <item>LITRE (LTR)</item>
+        <item>MILLILITRE (MLT)</item>
+        <item>METERS (MTR)</item>
+        <item>NUMBERS (NOS)</item>
+        <item>PACKS (PAC)</item>
+        <item>PIECES (PCS)</item>
+        <item>PAIRS (PRS)</item>
+        <item>QUINTAL (QTL)</item>
+        <item>ROLLS (ROL)</item>
+        <item>SETS (SET)</item>
+        <item>SQUARE FEET (SQF)</item>
+        <item>SQUARE METERS (SQM)</item>
+        <item>SQUARE YARDS (SQY)</item>
+        <item>TABLETS (TBS)</item>
+        <item>TEN GROSS (TGM)</item>
+        <item>THOUSANDS (THD)</item>
+        <item>TONNES (TON)</item>
+        <item>TUBES (TUB)</item>
+        <item>US GALLONS (UGS)</item>
+        <item>UNITS (UNT)</item>
+        <item>YARDS (YDS)</item>
+        <item>OTHERS (OTH)</item>
+    </string-array>
+
+    <string name="kitchen">Kitchen</string>
+    <string name="brand">Brand</string>
+    <string name="barcode_item">Barcode</string>
+    <string name="item_long_name">Item Long Name</string>
+    <string name="short_code_item">Short Code</string>
+    <string name="short_name">Item Short Name*</string>
+    <string name="mrp_item">Rate 2</string>
+    <string name="retail_price">Rate 1</string>
+    <string name="purchase_price">Purchase Price</string>
+    <string name="min_stock">Minimum Stock</string>
+    <string name="pack_size">Pack Size</string>
+    <string name="hsn_code">HSNCode</string>
+    <string name="expire_date">Expire Date</string>
+    <string name="browse_image">Browse Image</string>
+    <string name="browse_image_company_logo">Browse Image For Logo</string>
+    <string name="remove_logo">Remove Logo</string>
+    <string name="active">Active</string>
+    <string name="delete_item">Delete Item(s)</string>
+    <string name="incentive_amount">Incentive Amount</string>
+    <string name="total_incentive_amount">Total Incentive Amount</string>
 
     <string name="InwardSupplyEntry"><u>Inward Supply Entry</u></string>
 
@@ -57,7 +205,7 @@
         <item>GSTR2</item>
     </string-array>
 
-    <string-array name="g_s">
+    <string-array name="supply_type_array">
         <item>G</item>
         <item>S</item>
     </string-array>
@@ -245,10 +393,6 @@
     <string name="menu_code_invalid">Please Enter Menu Code as integer for Item Name  </string>
     <string name="item_name_empty">Item Name can not be empty for Menu Code  </string>
     <string name="item_name_invalid">Please Enter Item Name as character for Menu Code  </string>
-    <string name="supply_type_empty">Supply Type can not be empty for Item Name  </string>
-    <string name="supply_type_invalid">Please Enter Supply Type as character for Item Name  </string>
-    <string name="rate_empty">Rate can not be empty for Item Name  </string>
-    <string name="rate_invalid">Please Enter Rate as decimal for Item Name  </string>
     <string name="rate_1_empty">Rate 1 can not be empty for Item Name  </string>
     <string name="rate_1_invalid">Please Enter Rate 1 as decimal for Item Name  </string>
     <string name="rate_2_empty">Rate 2 can not be empty for Item Name  </string>
@@ -281,6 +425,10 @@
 
     <string name="database_department_null">Kindly configure department in the database </string>
     <string name="department_not_match">This department code is not present in the database for Item Name</string>
+
+    <string name="database_kitchen_null">Kindly configure kitchen in the database </string>
+    <string name="kitchen_not_match">This kitchen code is not present in the database for Item Name</string>
+    <string name="kitchen_code_invalid">Please Enter Kitchen Code as integer for Item Name  </string>
 
     <string name="category_code_empty">Category Code can not be empty for Item Name  </string>
     <string name="category_code_invalid">Please Enter Category Code as integer for Item Name  </string>

@@ -67,7 +67,7 @@ public class ExportDatabaseTableAsCSVTask extends AsyncTask<String, Void, Boolea
         CSVWriter csvWrite = null;
         String csvHeading = "";
         if (iMode == 0) {
-            csvHeading = "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE,DISCOUNT PERCENT,DEPARTMENT CODE,CATEGORY CODE,HSN,BAR CODE";
+            csvHeading = "MENU CODE,ITEM SHORT NAME,ITEM LONG NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE,CESS AMOUNT,ADDITIONAL CESS AMOUNT,DISCOUNT PERCENT,DEPARTMENT CODE,CATEGORY CODE,KITCHEN CODE,HSN,BAR CODE,MINIMUM STOCK,ACTIVE";
             FILENAME = "ExportOutwardItemsFromDatabase.csv";
         } else {
             csvHeading = "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE";
@@ -92,8 +92,9 @@ public class ExportDatabaseTableAsCSVTask extends AsyncTask<String, Void, Boolea
                do {
 
                    if (iMode == 0) {
-                       String arrStr[] = {curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_ItemId)),
-                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_ItemName)),
+                       String arrStr[] = {curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_MenuCode)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_ItemShortName)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_ItemLongName)),
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_SupplyType)),
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_DineInPrice1)),
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_DineInPrice2)),
@@ -104,11 +105,16 @@ public class ExportDatabaseTableAsCSVTask extends AsyncTask<String, Void, Boolea
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_SGSTRate)),
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_IGSTRate)),
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_cessRate)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_cessAmount)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount)),
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_DiscountPercent)),
-                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_DeptCode)).equals("0")?"":curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_DeptCode)),
-                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_CategCode)).equals("0")?"":curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_CategCode)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_DepartmentCode)).equals("0")?"":curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_DepartmentCode)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_CategoryCode)).equals("0")?"":curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_CategoryCode)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_KitchenCode)).equals("0")?"":curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_KitchenCode)),
                                curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_HSNCode)),
-                               curCSV.getString(curCSV.getColumnIndex("ItemBarcode"))};
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_ItemBarcode)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_MinimumStock)),
+                               curCSV.getString(curCSV.getColumnIndex(DatabaseHandler.KEY_isActive))};
 
                        csvWrite.writeNext(arrStr);
                    } else {

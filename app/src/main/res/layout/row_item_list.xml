@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item_master_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/row_background"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_item_master_list_title_name"
+            style="@style/TV_Billing_Screen_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/name" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tv_item_master_list_title_qty"
+            style="@style/TV_Billing_Screen_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".8"
+            android:gravity="center"
+            android:text="@string/quantity" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tv_item_master_list_title_uom"
+            style="@style/TV_Billing_Screen_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".8"
+            android:gravity="center"
+            android:text="@string/uom_item" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tv_item_master_list_title_retail"
+            style="@style/TV_Billing_Screen_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".8"
+            android:gravity="center"
+            android:text="Rate 2" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tv_item_master_list_title_disc"
+            style="@style/TV_Billing_Screen_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:gravity="center" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tv_item_master_list_title_active"
+            style="@style/TV_Billing_Screen_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+</LinearLayout>

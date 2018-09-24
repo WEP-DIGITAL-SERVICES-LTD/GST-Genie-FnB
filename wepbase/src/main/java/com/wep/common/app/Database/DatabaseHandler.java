@@ -18,7 +18,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 import android.util.SparseBooleanArray;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wep.common.app.gst.GSTR1_CDN_Details;
@@ -32,6 +31,7 @@ import com.wep.common.app.gst.get.GetGSTR2B2BItem;
 import com.wep.common.app.models.CustomerPassbookBean;
 import com.wep.common.app.models.GSTR2_B2B_Amend;
 import com.wep.common.app.models.ItemInward;
+import com.wep.common.app.models.ItemModel;
 import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.models.Items;
@@ -117,26 +117,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_TaxType = "TaxType";
     public static final String KEY_DiscountType = "DiscountType";
     private static final String KEY_FastBillingMode = "FastBillingMode";
-    public static final String KEY_CategCode = "CategCode";
-    public static final String KEY_DeptCode = "DeptCode";
+    public static final String KEY_CategoryCode = "CategoryCode";
+    public static final String KEY_DepartmentCode = "DepartmentCode";
     public static final String KEY_CustId = "CustId";
     private static final String KEY_EmployeeId = "EmployeeId";
     private static final String KEY_SubUdfNumber = "SubUdfNumber";
     private static final String KEY_TableNumber = "TableNumber";
     private static final String KEY_DiscId = "DiscId";
-    private static final String KEY_KitchenCode = "KitchenCode";
+    public static final String KEY_KitchenCode = "KitchenCode";
     private static final String KEY_ModifierAmount = "ModifierAmount";
     public static final String KEY_Reason = "Reason";
     public static final String KEY_PAYMENT_RECEIPT_NO = "PaymentReceiptNo";
     public static final String KEY_Amount = "Amount";
     private static final String KEY_ServiceTaxAmount = "ServiceTaxAmount";
-    private static final String KEY_DiscountAmount = "DiscountAmount";
+    public static final String KEY_DiscountAmount = "DiscountAmount";
     public static final String KEY_DiscountPercent = "DiscountPercent";
     public static final String KEY_ItemName = "ItemName";
     private static final String KEY_SalesTax = "SalesTax";
     private static final String KEY_OtherTax = "OtherTax";
     private static final String KEY_ItemNumber = "ItemNumber";
     public static final String KEY_Quantity = "Quantity";
+    public static final String KEY_MinimumStock = "MinimumStock";
     public static final String KEY_Rate = "Rate";
     private static final String KEY_Time = "Time";
     private static final String KEY_TokenNumber = "TokenNumber";
@@ -263,14 +264,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_BillNoReset_PeriodDate = " PeriodDate";
 
     // Category
-    private static final String KEY_CategName = "CategName";
+    private static final String KEY_CategoryName = "CategoryName";
 
     // Complimentary Bill Detail
     private static final String KEY_Complimentary_Reason = "ComplimentaryReason";
     private static final String KEY_Paid_Amount = "PaidAmount";
 
     // Department
-    public static final String KEY_DeptName = "DeptName";
+    public static final String KEY_DepartmentName = "DepartmentName";
 
     // Coupon
     public static final String KEY_CouponAmount = "CouponAmount";
@@ -312,9 +313,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_DineInPrice2 = "DineInPrice2";
     public static final String KEY_DineInPrice3 = "DineInPrice3";
     private static final String KEY_DiscountEnable = "DiscountEnable";
-    public static final String KEY_ItemBarcode = " ItemBarcode";
-    private static final String KEY_LongName = " ItemName";
-    public static final String KEY_MenuCode = " MenuCode";
+    public static final String KEY_ItemBarcode = "ItemBarcode";
+    public static final String KEY_PurchaseRate = "PurchaseRate";
+    public static final String KEY_cessAmountPerUnit = "cessAmountPerUnit";
+    public static final String KEY_additionalCessAmount = "additionalCessAmount";
+    public static final String KEY_TotalAdditionalCessAmount = "TotalAdditionalCessAmount";
+    public static final String KEY_ItemShortName = "ItemShortName";
+    public static final String KEY_ItemLongName = "ItemLongName";
+    public static final String KEY_MenuCode = "MenuCode";
+    public static final String KEY_DeleteOption = "DeleteOption";
     private static final String KEY_OptionalTaxId1 = "OptionalTaxId1";
     private static final String KEY_OptionalTaxId2 = "OptionalTaxId2";
     private static final String KEY_PickUpPrice = "PickUpPrice";
@@ -764,6 +771,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_ReverseCharge = "ReverseCharge";
     public static final String KEY_isActive = "isActive";
     public static final String KEY_isDelete = "isDelete";
+    public static final String KEY_isFavrouite = "isFavourite";
+    public static final String KEY_AveragePurchaseRate = "AveragePurchaseRate";
+    public static final String KEY_INCENTIVE_AMOUNT = "incentive_amount";
 
     public static final String KEY_Environment = "Environment";
     public static final String KEY_UTGSTEnabled = "UTGSTEnabled";
@@ -833,43 +843,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_Count+" INTEGER, "+ KEY_AverageRate+" REAL, "+KEY_TaxType + " NUMERIC )";
 
     String QUERY_CREATE_TABLE_ITEM_Outward = "CREATE TABLE " + TBL_ITEM_Outward + "( "
-            + KEY_TaxType + " NUMERIC, "
-            + KEY_SupplyType + " TEXT, "
-            + KEY_TaxationType + " TEXT, "
-            + KEY_HSNCode + " TEXT, "
-            + KEY_ItemName + " TEXT, "
-            + KEY_Quantity + " REAL, "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_MenuCode + " INTEGER,"
+            + KEY_ItemShortName + " TEXT,"
+            + KEY_ItemLongName + " TEXT,"
+            + KEY_ItemBarcode + " TEXT,"
+            + KEY_SupplyType + " TEXT,"
             + KEY_UOM + " TEXT,"
-            + KEY_Rate + " REAL, "
-            + KEY_IGSTRate + " REAL, "
+            + KEY_KitchenCode + " INTEGER,"
+            + KEY_DepartmentCode + " INTEGER,"
+            + KEY_CategoryCode + " INTEGER,"
+            + KEY_DineInPrice1 + " REAL,"
+            + KEY_DineInPrice2 + " REAL,"
+            + KEY_DineInPrice3 + " REAL,"
+            + KEY_Quantity + " REAL,"
+            + KEY_HSNCode + " TEXT,"
+            + KEY_DiscountPercent + " REAL,"
+            + KEY_DiscountAmount + " REAL,"
             + KEY_CGSTRate + " REAL,"
-            + KEY_SGSTRate + " REAL, "
-            + KEY_cessRate + " REAL, "
-            + KEY_ImageUri + " TEXT, "
-            + KEY_AdditionalTaxId + " NUMERIC, "
-            + KEY_BillWithStock + " NUMERIC,"
-            + KEY_CategCode + " NUMERIC, "
-            + KEY_DeliveryPrice + " REAL, "
-            + KEY_DeptCode + " NUMERIC, "
-            + KEY_DineInPrice1 + " REAL, "
-            + KEY_DineInPrice2 + " REAL, "
-            + KEY_DineInPrice3 + " REAL, "
-            + KEY_DiscId + " NUMERIC, "
-            + KEY_DiscountEnable + " NUMERIC, "
-            + KEY_DiscountPercent + " REAL, "
-            + KEY_ItemBarcode + " TEXT, "
-            + KEY_KitchenCode + " NUMERIC, "
-            + KEY_MenuCode + " INTEGER, "
-            + KEY_OptionalTaxId1 + " NUMERIC, "
-            + KEY_OptionalTaxId2 + " NUMERIC, "
-            + KEY_PickUpPrice + " REAL, "
-            + KEY_PriceChange + " NUMERIC, "
-            + KEY_SalesTaxId + " NUMERIC, "
-            + KEY_TakeAwayPrice + " REAL, "
-            + KEY_SalesTaxPercent + " REAL, "
-            + KEY_SerTaxPercent + " REAL, "
-            + KEY_ItemId + " INTEGER PRIMARY KEY" +
-            ")";
+            + KEY_SGSTRate + " REAL,"
+            + KEY_IGSTRate + " REAL,"
+            + KEY_cessRate + " REAL,"
+            + KEY_cessAmount + " REAL,"
+            + KEY_additionalCessAmount + " REAL,"
+            + KEY_AveragePurchaseRate + " REAL,"
+            + KEY_ImageUri + " TEXT,"
+            + KEY_MinimumStock + " REAL, "
+            + KEY_isFavrouite + " INTEGER,"
+            + KEY_isActive + " INTEGER,"
+            + KEY_isDelete + " INTEGER, "
+            + KEY_INCENTIVE_AMOUNT + " REAL DEFAULT 0.00"
+            + ")";
 
     String QUERY_CREATE_TABLE_READ_2A = " CREATE TABLE  " + TBL_READ_FROM_2A + "(  " +
             KEY_GSTIN + " TEXT, " +
@@ -971,7 +975,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," + KEY_SALES_MAN_ID + " TEXT," +
             KEY_SubTotal + " REAl, " + KEY_BillingMode + " TEXT, " + KEY_ServiceTaxAmount + " REAL, " +
             KEY_ServiceTaxPercent + " REAL," + KEY_ModifierAmount + " REAL, " + KEY_TaxType + " NUMERIC, " +
-            KEY_KitchenCode + " NUMERIC, " + KEY_CategCode + " NUMERIC, " + KEY_DeptCode + " NUMERIC, " +
+            KEY_KitchenCode + " NUMERIC, " + KEY_CategoryCode + " NUMERIC, " + KEY_DepartmentCode + " NUMERIC, " +
             KEY_DiscountPercent + " REAL, " + KEY_DiscountAmount + " REAL, " + KEY_TaxAmount + " REAL, " + KEY_BillStatus+" INTEGER, "+
             KEY_TaxPercent + " REAL,"+ KEY_ONLINE_ORDER_NO + " TEXT)";
 
@@ -986,7 +990,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," +
             KEY_SubTotal + " REAl, " + KEY_BillingMode + " TEXT, " + KEY_ServiceTaxAmount + " REAL, " +
             KEY_ServiceTaxPercent + " REAL," + KEY_ModifierAmount + " REAL, " + KEY_TaxType + " NUMERIC, " +
-            KEY_KitchenCode + " NUMERIC, " + KEY_CategCode + " NUMERIC, " + KEY_DeptCode + " NUMERIC, " +
+            KEY_KitchenCode + " NUMERIC, " + KEY_CategoryCode + " NUMERIC, " + KEY_DepartmentCode + " NUMERIC, " +
             KEY_DiscountPercent + " REAL, " + KEY_DiscountAmount + " REAL, " + KEY_TaxAmount + " REAL, " + KEY_BillStatus+" INTEGER, "+
             KEY_TaxPercent + " REAL)";
 
@@ -1085,7 +1089,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_NoteDate + " TEXT, " + KEY_InvoiceNo + " TEXT , " + KEY_InvoiceDate + " TEXT , " +
             KEY_AttractsReverseCharge + " TEXT, " + KEY_Reason+" TEXT, "+
             KEY_DifferentialValue + " TEXT, " + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL," + KEY_SGSTRate + " REAL, " +
-            KEY_SGSTAmount + " REAL, " + KEY_IGSTRate + " REAL, " + KEY_IGSTAmount + " REAL " + KEY_ITC_Eligible + " TEXT, " +
+            KEY_SGSTAmount + " REAL, " + KEY_IGSTRate + " REAL, " + KEY_IGSTAmount + " REAL, " + KEY_ITC_Eligible + " TEXT, " +
             KEY_Total_ITC_IGST + " TEXT, " + KEY_Total_ITC_CGST + " TEXT, " + KEY_Total_ITC_SGST + " TEXT, " +
             KEY_MONTH_ITC_IGSTAMT + " TEXT, " + KEY_MONTH_ITC_CGSTAMT + " TEXT, " + KEY_MONTH_ITC_SGSTAMT + " TEXT ) ";
 
@@ -1160,8 +1164,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_IngredientCode + " INTEGER, " + KEY_IngredientName + " TEXT, " + KEY_IngredientQuantity + " REAL, " +
             KEY_IngredientUOM + " STRING, " + KEY_Status + " TEXT )";
 
-    String QUERY_CREATE_TABLE_SUPPLIERITEMLINKAGE = " CREATE TABLE " + TBL_SupplierItemLinkage + " ( " +
-            KEY_MenuCode + " INTEGER, " + KEY_SupplierCode + " INTEGER ) ";
+   /* String QUERY_CREATE_TABLE_SUPPLIERITEMLINKAGE = " CREATE TABLE " + TBL_SupplierItemLinkage + " ( " +
+            KEY_MenuCode + " INTEGER, " + KEY_SupplierCode + " INTEGER ) ";*/
+
+    String QUERY_CREATE_TABLE_SUPPLIERITEMLINKAGE = " CREATE TABLE IF NOT EXISTS " + TBL_SupplierItemLinkage + " ( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_SupplierCode + " INTEGER,"
+            + KEY_GSTIN + " TEXT,"
+            + KEY_SUPPLIERNAME + " TEXT,"
+            + KEY_SupplierType + " TEXT,"
+            + KEY_SupplierPhone + "  TEXT,"
+            + KEY_SupplierAddress + " TEXT,"
+            + KEY_ItemId + " INTEGER,"
+            + KEY_ItemName + " TEXT,"
+            + KEY_ItemBarcode + " TEXT,"
+            + KEY_PurchaseRate + " REAL,"
+            + KEY_DineInPrice1 + " REAL,"
+            + KEY_DineInPrice2 + " REAL,"
+            + KEY_DineInPrice3 + " REAL,"
+            + KEY_SupplyType + " TEXT,"
+            + KEY_HSNCode + " TEXT,"
+            + KEY_UOM + " TEXT,"
+            + KEY_CGSTRate + " REAL,"
+            + KEY_SGSTRate + " REAL,"
+            + KEY_IGSTRate + " REAL,"
+            + KEY_cessAmountPerUnit + " REAL,"
+            + KEY_additionalCessAmount + " REAL,"
+            + KEY_cessRate + " REAL);";
 
 
     String QUERY_CREATE_TABLE_BILLSETTING = "CREATE TABLE " + TBL_BILLSETTING + " ( "
@@ -1239,11 +1268,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_BillAmountRoundOff +" NUMERIC, "
             + KEY_TableSpliting + " NUMERIC )";
 
-    String QUERY_CREATE_TABLE_BILLNO_RESET = "CREATE TABLE " + TBL_BILLNORESETCONFIG + "( " + KEY_BillNoReset_InvoiceNo +
+    String QUERY_CREATE_TABLE_BILLNO_RESET = "CREATE TABLE " + TBL_BILLNORESETCONFIG + "( "
+            + KEY_BillNoReset_InvoiceNo +
             " NUMERIC, " + KEY_BillNoReset_Period + " TEXT," + KEY_BillNoReset_PeriodDate + " TEXT, KOTNo NUMERIC)";
 
-    String QUERY_CREATE_TABLE_CATEGORY = "CREATE TABLE " + TBL_CATEGORY + "( " + KEY_CategCode +
-            " INTEGER, " + KEY_CategName + " TEXT," + KEY_DeptCode + " INTEGER)";
+    String QUERY_CREATE_TABLE_CATEGORY = "CREATE TABLE " + TBL_CATEGORY + "( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_CategoryCode +
+            " INTEGER, " + KEY_CategoryName + " TEXT," + KEY_DepartmentCode + " INTEGER, UNIQUE ( "
+            + KEY_CategoryCode + "))";
 
     String QUERY_CREATE_TABLE_COMPLIMENTARY_BILL_DETAIL = "CREATE TABLE " + TBL_COMPLIMENTARYBILLDETAIL + "( " + KEY_InvoiceNo +
             " NUMERIC, " + KEY_Complimentary_Reason + " TEXT," + KEY_Paid_Amount + " REAL)";
@@ -1286,8 +1319,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_EmployeeId + " NUMERIC," + KEY_SubUdfNumber + " NUMERIC," + KEY_TableNumber + " NUMERIC," +
             KEY_Time + " TEXT, " + KEY_TokenNumber + " NUMERIC, " + KEY_Table_Split_No + " NUMERIC)";
 
-    String QUERY_CREATE_TABLE_DEPARTMENT = "CREATE TABLE " + TBL_DEPARTMENT + "( " + KEY_DeptCode +
-            " INTEGER PRIMARY KEY," + KEY_DeptName + " TEXT)";
+    String QUERY_CREATE_TABLE_DEPARTMENT = "CREATE TABLE " + TBL_DEPARTMENT + "( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_DepartmentCode +
+            " INTEGER ," + KEY_DepartmentName + " TEXT, UNIQUE ( "
+            + KEY_DepartmentCode + "))";
 
     String QUERY_CREATE_TABLE_DECRIPTION = "CREATE TABLE " + TBL_DESCRIPTION + " ( " + KEY_DescriptionId +
             " INTEGER PRIMARY KEY, " + KEY_DescriptionText + " TEXT)";
@@ -1304,8 +1340,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             " NUMERIC, " + KEY_ModifierAmount + " REAL, " + KEY_ModifierDescription + " TEXT, " + KEY_ModifierId +
             " INTEGER PRIMARY KEY, " + KEY_ModifierModes + " TEXT)";
 
-    String QUERY_CREATE_TABLE_KITCHEN = "CREATE TABLE " + TBL_KITCHEN + "(" + KEY_KitchenCode +
-            " INTEGER PRIMARY KEY," + KEY_KitchenName + " TEXT)";
+    String QUERY_CREATE_TABLE_KITCHEN = "CREATE TABLE " + TBL_KITCHEN + "("
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_KitchenCode +
+            " INTEGER ," + KEY_KitchenName + " TEXT, UNIQUE ( "
+            + KEY_KitchenCode + "))";
 
     String QUERY_CREATE_TABLE_MACHINESETTING = "CREATE TABLE " + TBL_MACHINESETTING + " ( " + KEY_BaudRate +
             " NUMERIC, " + KEY_DataBits + " NUMERIC, " + KEY_Parity + " NUMERIC, " + KEY_PortName + " TEXT, " +
@@ -1335,9 +1374,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_ModifierAmount + " REAL, "
             + KEY_TaxType + " NUMERIC, "
             + KEY_Amount + " REAL, " +
-            KEY_CategCode + " NUMERIC, "
+            KEY_CategoryCode + " NUMERIC, "
             + KEY_CustId + " NUMERIC,"
-            + KEY_DeptCode + " NUMERIC, "
+            + KEY_DepartmentCode + " NUMERIC, "
             + KEY_DiscountAmount + " REAL,"
             + KEY_DiscountPercent + " REAL, "
             + KEY_EmployeeId + " NUMERIC," +
@@ -2561,13 +2600,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     public Cursor getitems_outward_details_withDept(String Startdate, String Enddate) {
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " , "+TBL_DEPARTMENT+"  WHERE " +KEY_BillStatus+" = 1 AND "+
-                KEY_InvoiceDate + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' AND "+TBL_OUTWARD_SUPPLY_LEDGER+"."+KEY_DeptCode+" = "+TBL_DEPARTMENT+"."+KEY_DeptCode;
+                KEY_InvoiceDate + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' AND "+TBL_OUTWARD_SUPPLY_LEDGER+"."+ KEY_DepartmentCode +" = "+TBL_DEPARTMENT+"."+ KEY_DepartmentCode;
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
     public Cursor getitems_outward_details_withCateg(String Startdate, String Enddate) {
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " , "+TBL_CATEGORY+"  WHERE " +KEY_BillStatus+" = 1 AND "+
-                KEY_InvoiceDate + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' AND "+TBL_OUTWARD_SUPPLY_LEDGER+"."+KEY_CategCode+" = "+TBL_CATEGORY+"."+KEY_CategCode;
+                KEY_InvoiceDate + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' AND "+TBL_OUTWARD_SUPPLY_LEDGER+"."+ KEY_CategoryCode +" = "+TBL_CATEGORY+"."+ KEY_CategoryCode;
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -2649,6 +2688,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 KEY_AttractsReverseCharge + " LIKE 'no')";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
+    }
+
+    public long deleteSupplierItemLinkage() {
+        long status = -1;
+        status = dbFNB.delete(TBL_SupplierItemLinkage, null, null);
+        return status;
     }
 
     public Cursor getInwardtaxed_2A(String StartDate, String EndDate) {
@@ -3582,28 +3627,89 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public long addDepartment(Department objDept) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put("DeptCode", objDept.getDeptCode());
-        cvDbValues.put("DeptName", objDept.getDeptName());
+        cvDbValues.put(KEY_DepartmentCode, objDept.getDeptCode());
+        cvDbValues.put(KEY_DepartmentName, objDept.getDeptName());
 
         return dbFNB.insert(TBL_DEPARTMENT, null, cvDbValues);
     }
 
     // -----Retrieve all Departments-----
     public Cursor getAllDepartments() {
-        return dbFNB.query(TBL_DEPARTMENT, new String[]{"DeptCode", "DeptName"}, null, null, null, null, null);
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(TBL_DEPARTMENT, new String[]{"*"}, null, null, null, null, null);
+    }
+
+    public HashMap<Integer, String> getDepartmentList() {
+        HashMap<Integer, String> map = new HashMap<>();
+        Cursor cursor = null;
+        try {
+            String SelectQuery = "Select * from " + TBL_DEPARTMENT;
+            cursor = dbFNB.rawQuery(SelectQuery, null);
+            while (cursor != null && cursor.moveToNext()) {
+                map.put(cursor.getInt(cursor.getColumnIndex(KEY_DepartmentCode)), cursor.getString(cursor.getColumnIndex(KEY_DepartmentName)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            map = new HashMap<>();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            return map;
+        }
+
+    }
+
+    public HashMap<Integer, String> getCategoryList() {
+        HashMap<Integer, String> map = new HashMap<>();
+        Cursor cursor = null;
+        try {
+            String SelectQuery = "Select * from " + TBL_CATEGORY;
+            cursor = dbFNB.rawQuery(SelectQuery, null);
+            while (cursor != null && cursor.moveToNext()) {
+                map.put(cursor.getInt(cursor.getColumnIndex(KEY_CategoryCode)), cursor.getString(cursor.getColumnIndex(KEY_CategoryName)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            map = new HashMap<>();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            return map;
+        }
+
+    }
+
+    public HashMap<Integer, String> getKitchenList() {
+        HashMap<Integer, String> map = new HashMap<>();
+        Cursor cursor = null;
+        try {
+            String SelectQuery = "Select * from " + TBL_KITCHEN;
+            cursor = dbFNB.rawQuery(SelectQuery, null);
+            while (cursor != null && cursor.moveToNext()) {
+                map.put(cursor.getInt(cursor.getColumnIndex(KEY_KitchenCode)), cursor.getString(cursor.getColumnIndex(KEY_KitchenName)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            map = new HashMap<>();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            return map;
+        }
+
     }
 
     public Cursor getDepartments() {
-        return dbFNB.rawQuery("Select DeptCode as _id, DeptName from Department", null);
+        return dbFNB.rawQuery("Select DepartmentCode as _id, DeptName from Department", null);
     }
 
     public int getDepartmentIdByName(String name) {
         int id = -1;
         try {
-            Cursor cursor = dbFNB.query(TBL_DEPARTMENT, null, KEY_DeptName + "=?", new String[]{String.valueOf(name)}, null, null, null, null);
+            Cursor cursor = dbFNB.query(TBL_DEPARTMENT, null, KEY_DepartmentName + "=?", new String[]{String.valueOf(name)}, null, null, null, null);
             //if (cursor != null)
             if (cursor.moveToFirst()) {
-                id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_DeptCode)));
+                id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_DepartmentCode)));
             } else {
                 id = 0;
             }
@@ -3618,7 +3724,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Retrieve single Department-----
     public Cursor getDepartment(int DeptCode) {
         try {
-            return dbFNB.query(TBL_DEPARTMENT, new String[]{"DeptCode", "DeptName"}, "DeptCode=" + DeptCode, null, null, null, null);
+            return dbFNB.query(TBL_DEPARTMENT, new String[]{"DepartmentCode", "DepartmentName"}, "DepartmentCode=" + DeptCode, null, null, null, null);
         } catch (Exception e) {
             Log.d(TAG, e.toString());
             return null;
@@ -3627,14 +3733,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Retrieve single Department-----
     public Cursor getDepartment(String DeptName) {
-        return dbFNB.query(TBL_DEPARTMENT, new String[]{"DeptCode", "DeptName"}, "DeptName=" + DeptName, null, null,
+        return dbFNB.query(TBL_DEPARTMENT, new String[]{"DepartmentCode", "DepartmentName"}, "DepartmentName=" + DeptName, null, null,
                 null, null);
     }
 
     // -----Retrieve highest DeptCode from table-----
     public int getDeptCode() {
         Cursor result;
-        result = dbFNB.rawQuery("SELECT MAX(DeptCode) FROM " + TBL_DEPARTMENT, null);
+        result = dbFNB.rawQuery("SELECT MAX(DepartmentCode) FROM " + TBL_DEPARTMENT, null);
 
         if (result.moveToFirst()) {
             return result.getInt(0);
@@ -3647,19 +3753,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int updateDepartment(String strDeptCode, String strDeptName) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put("DeptName", strDeptName);
+        cvDbValues.put("DepartmentName", strDeptName);
 
-        return dbFNB.update(TBL_DEPARTMENT, cvDbValues, "DeptCode=" + strDeptCode, null);
+        return dbFNB.update(TBL_DEPARTMENT, cvDbValues, "DepartmentCode=" + strDeptCode, null);
     }
     public Cursor getDepartmentNameByName(String strDeptName) {
-        String query = "Select * from "+TBL_DEPARTMENT+" WHERE DeptName LIKE '"+strDeptName+"'";
+        String query = "Select * from "+TBL_DEPARTMENT+" WHERE DepartmentName LIKE '"+strDeptName+"'";
         return dbFNB.rawQuery(query,null);
     }
 
     // -----Delete Department from Dept Table-----
     public int DeleteDept(String DeptCode) {
 
-        return dbFNB.delete(TBL_DEPARTMENT, "DeptCode=" + DeptCode, null);
+        return dbFNB.delete(TBL_DEPARTMENT, "DepartmentCode=" + DeptCode, null);
     }
 
     /************************************************************************************************************************************/
@@ -3671,40 +3777,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public long addCategory(Category objCateg) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put("CategCode", objCateg.getCategCode());
-        cvDbValues.put("CategName", objCateg.getCategName());
-        cvDbValues.put("DeptCode", objCateg.getDeptCode());
+        cvDbValues.put(KEY_CategoryCode, objCateg.getCategCode());
+        cvDbValues.put(KEY_CategoryName, objCateg.getCategName());
+        cvDbValues.put(KEY_DepartmentCode, objCateg.getDeptCode());
 
         return dbFNB.insert(TBL_CATEGORY, null, cvDbValues);
     }
 
     // -----Retrieve all Category-----
     public Cursor getAllCategory() {
-        return dbFNB.query(TBL_CATEGORY, new String[]{"CategCode", "CategName", "DeptCode"}, null, null, null, null,
+        return dbFNB.query(TBL_CATEGORY, new String[]{KEY_CategoryCode, KEY_CategoryName, KEY_DepartmentCode}, null, null, null, null,
                 null);
+    }
+
+    public Cursor getCategoriesForDeptId(int deptCode) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "Select * FROM " + TBL_CATEGORY + " WHERE " + KEY_DepartmentCode + " = " + deptCode;
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
     }
 
     // -----Retrieve all Category-----
     public Cursor getAllCategorywithDeptName() {
         return dbFNB.rawQuery("Select * from " + TBL_CATEGORY + ", " + TBL_DEPARTMENT + " where " + TBL_DEPARTMENT
-                + ".DeptCode = " + TBL_CATEGORY + ".DeptCode", null);
+                + ".DepartmentCode = " + TBL_CATEGORY + ".DepartmentCode", null);
     }
 
     public Cursor getCategories() {
-        return dbFNB.rawQuery("Select CategCode as _id, CategName, DeptCode from Category", null);
+        return dbFNB.rawQuery("Select CategoryCode as _id, CategoryName, DeptCode from Category", null);
     }
 
     public Cursor getCategoryByDept(int deptcode) {
-        return dbFNB.rawQuery("Select CategCode, CategName, DeptCode from Category where DeptCode=" + deptcode, null);
+        return dbFNB.rawQuery("Select CategoryCode, CategoryName, DepartmentCode from Category where DepartmentCode=" + deptcode, null);
     }
 
     public int getCategoryIdByName(String name) {
         int id = -1;
         try {
-            Cursor cursor = dbFNB.query(TBL_CATEGORY, null, "CategName=?", new String[]{String.valueOf(name)}, null, null, null, null);
+            Cursor cursor = dbFNB.query(TBL_CATEGORY, null, "CategoryName=?", new String[]{String.valueOf(name)}, null, null, null, null);
             //if (cursor != null)
             if (cursor.moveToFirst()) {
-                id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("CategCode")));
+                id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("CategoryCode")));
             } else {
                 id = 0;
             }
@@ -3719,11 +3832,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String categname = "";
         ArrayList<String> list = new ArrayList<String>();
         try {
-            Cursor cursor = dbFNB.query(TBL_CATEGORY, null, "DeptCode=?", new String[]{String.valueOf(name)}, null, null, null, null);
+            Cursor cursor = dbFNB.query(TBL_CATEGORY, null, "DepartmentCode=?", new String[]{String.valueOf(name)}, null, null, null, null);
             //if (cursor != null)
             list.add("Select department first");
             while (cursor != null && cursor.moveToNext()) {
-                list.add(cursor.getString(cursor.getColumnIndex("CategName")));
+                list.add(cursor.getString(cursor.getColumnIndex("CategoryName")));
             }
         } catch (Exception e) {
             Log.d(TAG, e.toString());
@@ -3735,7 +3848,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String> getAllCategforDept() {
         List<String> list = new ArrayList<String>();
 
-        Cursor cursor = dbFNB.rawQuery("SELECT  CategCode as _id, CategName, DeptCode FROM Category", null);// selectQuery,selectedArguments
+        Cursor cursor = dbFNB.rawQuery("SELECT  CategoryCode as _id, CategoryName, DepartmentCode FROM Category", null);// selectQuery,selectedArguments
 
         list.add("Select");
         // looping through all rows and adding to list
@@ -3752,14 +3865,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Retrieve single Category-----
     public Cursor getCategory(int CategCode) {
-        return dbFNB.query(TBL_CATEGORY, new String[]{"CategCode", "CategName"}, "CategCode=" + CategCode, null,
+        return dbFNB.query(TBL_CATEGORY, new String[]{"CategoryCode", "CategoryName"}, "CategoryCode=" + CategCode, null,
                 null, null, null);
     }
 
     // -----Retrieve highest CategCode from table-----
     public int getCategCode() {
         Cursor result;
-        result = dbFNB.rawQuery("SELECT MAX(CategCode) FROM " + TBL_CATEGORY, null);
+        result = dbFNB.rawQuery("SELECT MAX(CategoryCode) FROM " + TBL_CATEGORY, null);
 
         if (result.moveToFirst()) {
             return result.getInt(0);
@@ -3772,16 +3885,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int updateCategory(String strCategCode, String strCategName, int iDeptCode) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put("CategName", strCategName);
-        cvDbValues.put("DeptCode", iDeptCode);
+        cvDbValues.put(KEY_CategoryName, strCategName);
+        cvDbValues.put(KEY_DepartmentCode, iDeptCode);
 
-        return dbFNB.update(TBL_CATEGORY, cvDbValues, "CategCode=" + strCategCode, null);
+        return dbFNB.update(TBL_CATEGORY, cvDbValues, KEY_CategoryCode + "=" + strCategCode, null);
     }
 
     public List<String> getAllDeptforCateg() {
         List<String> list = new ArrayList<String>();
 
-        Cursor cursor = dbFNB.rawQuery("SELECT  DeptCode as _id, Deptname FROM Department Order By Deptname ASC", null);// selectQuery,selectedArguments
+        Cursor cursor = dbFNB.rawQuery("SELECT  DepartmentCode as _id, Departmentname FROM Department Order By Departmentname ASC", null);// selectQuery,selectedArguments
 
         list.add("Select");
         // looping through all rows and adding to list
@@ -3799,13 +3912,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Delete Category
     public int DeleteCateg(String CategCode) {
 
-        return dbFNB.delete(TBL_CATEGORY, "CategCode=" + CategCode, null);
+        return dbFNB.delete(TBL_CATEGORY, "CategoryCode=" + CategCode, null);
     }
 
     // -----Delete Category by Dept Code
     public int DeleteCategByDeptCode(String DeptCode) {
 
-        return dbFNB.delete(TBL_CATEGORY, "DeptCode=" + DeptCode, null);
+        return dbFNB.delete(TBL_CATEGORY, "DepartmentCode=" + DeptCode, null);
     }
 
     /************************************************************************************************************************************/
@@ -3825,7 +3938,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Retrieve all Kitchen-----
     public Cursor getAllKitchen() {
-        return dbFNB.query(TBL_KITCHEN, new String[]{"KitchenCode", "KitchenName"}, null, null, null, null, null);
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(TBL_KITCHEN, new String[]{"*"}, null, null, null, null, null);
     }
 
     // -----Retrieve single Kitchen-----
@@ -4689,87 +4803,86 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.update(TBL_EMPLOYEE, cvDbValues, "EmployeeId=" + iEmployeeId, null);
     }
 
+    public Cursor getActiveItemssbyBarCode(String Barcode) {
+
+        Cursor cursor = null;
+        try {
+            String selectQuery = KEY_ItemBarcode + " LIKE '" + Barcode + "' AND " + KEY_isActive + " = 1 AND " + KEY_isDelete + "=0";
+            cursor = dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, selectQuery, null, null, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+        } finally {
+
+            //db.close();
+        }
+        return cursor;
+    }
+
+    public int clearItemdatabase() {
+        return dbFNB.delete(TBL_ITEM_Outward, null, null);
+    }
+
     /************************************************************************************************************************************/
     /*********************************************************
      * Table - Item
      *************************************************************/
     /************************************************************************************************************************************/
     // -----Insert Items-----
-    public long addItem(ItemOutward objItem) {
-        cvDbValues = new ContentValues();
-
-        cvDbValues.put("MenuCode", objItem.getMenuCode());
-        cvDbValues.put(KEY_ItemName, objItem.getItemName());
-        cvDbValues.put("ItemBarcode", objItem.getBarCode());
-        cvDbValues.put("DeptCode", objItem.getDeptCode());
-        cvDbValues.put("CategCode", objItem.getCategCode());
-        cvDbValues.put("KitchenCode", objItem.getKitchenCode());
-        cvDbValues.put("DineInPrice1", objItem.getDineIn1());
-        cvDbValues.put("DineInPrice2", objItem.getDineIn2());
-        cvDbValues.put("DineInPrice3", objItem.getDineIn3());
-        cvDbValues.put("PickUpPrice", 0);
-        cvDbValues.put("TakeAwayPrice",0);
-        cvDbValues.put("DeliveryPrice", 0);
-        cvDbValues.put("Quantity", objItem.getStock());
-        cvDbValues.put("ImageUri", objItem.getImageUri());
-        cvDbValues.put("TaxType", 0);
-        cvDbValues.put(KEY_DiscountPercent, objItem.getItemDiscount());
-        cvDbValues.put(KEY_HSNCode, objItem.getHSN());
-        cvDbValues.put(KEY_IGSTRate, objItem.getIGSTRate());
-        cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
-        cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
-        cvDbValues.put(KEY_cessRate, objItem.getCessRate());
-        cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
-        cvDbValues.put(KEY_UOM, objItem.getUOM());
-        cvDbValues.put(KEY_TaxationType, objItem.getTaxationType());
-        cvDbValues.put(KEY_Rate, objItem.getDineIn1());
-        return dbFNB.insert(TBL_ITEM_Outward, null, cvDbValues);
+    public long insertItem(ItemModel itemObject) {
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_MenuCode, itemObject.getMenuCode());
+        cv.put(KEY_ItemShortName, itemObject.getShortName());
+        cv.put(KEY_ItemLongName, itemObject.getLongName());
+        cv.put(KEY_ItemBarcode, itemObject.getBarCode());
+        cv.put(KEY_SupplyType, itemObject.getSupplyType());
+        cv.put(KEY_UOM, itemObject.getUOM());
+        cv.put(KEY_KitchenCode, itemObject.getKitchenCode());
+        cv.put(KEY_DepartmentCode, itemObject.getDeptCode());
+        cv.put(KEY_CategoryCode, itemObject.getCategCode());
+        cv.put(KEY_DineInPrice1, itemObject.getRetaiPrice());
+        cv.put(KEY_DineInPrice2, itemObject.getMrp());
+        cv.put(KEY_DineInPrice3, itemObject.getWholeSalePrice());
+        cv.put(KEY_MinimumStock, itemObject.getMinimumStock());
+        cv.put(KEY_Quantity, itemObject.getQuantity());
+        cv.put(KEY_HSNCode, itemObject.getHsn());
+        cv.put(KEY_CGSTRate, itemObject.getCgstRate());
+        cv.put(KEY_SGSTRate, itemObject.getSgstRate());
+        cv.put(KEY_IGSTRate, itemObject.getIgstRate());
+        cv.put(KEY_cessRate, itemObject.getCessRate());
+        cv.put(KEY_cessAmount, itemObject.getCessAmount());
+        cv.put(KEY_additionalCessAmount, itemObject.getAdditionalCessAmount());
+        cv.put(KEY_ImageUri, itemObject.getImageURL());
+        cv.put(KEY_isFavrouite, itemObject.getFav());
+        cv.put(KEY_isActive, itemObject.getActive());
+        cv.put(KEY_isDelete, itemObject.getDelete());
+        cv.put(KEY_DiscountPercent, itemObject.getDiscountPercent());
+        cv.put(KEY_DiscountAmount, itemObject.getDiscountAmount());
+        cv.put(KEY_AveragePurchaseRate, itemObject.getPurchaseRate());
+        cv.put(KEY_INCENTIVE_AMOUNT, itemObject.getIncentive_amount());
+        long insertStatus = dbFNB.insert(TBL_ITEM_Outward, null, cv);
+        return insertStatus;
     }
 
-    public long addItem(Item objItem) {
-        cvDbValues = new ContentValues();
+    public Cursor mGetAllItemSearchData(CharSequence str) {
+        Cursor cursor = null;
+        try {
+            String select = "( " + KEY_ItemShortName + " LIKE ? OR "
+                    + KEY_ItemBarcode + " LIKE ? OR " + KEY_MenuCode + " LIKE ? ) AND " + KEY_isDelete + "=?";
+            String[] selectArgs = {str + "%", str + "%", str + "%", "0"};
+            String[] contactsProjection = new String[]{
+                    "*"};
+            cursor = dbFNB.query(TBL_ITEM_Outward, contactsProjection, select, selectArgs, null, null, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from item master table." + str + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
 
-        cvDbValues.put("MenuCode", objItem.getMenuCode());
-        cvDbValues.put(KEY_ItemName, objItem.getItemname());
-//        cvDbValues.put("ShortName", objItem.getShortName());
-        cvDbValues.put("ItemBarcode", objItem.getItemBarcode());
-        cvDbValues.put("DeptCode", objItem.getDeptCode());
-        cvDbValues.put("CategCode", objItem.getCategCode());
-        cvDbValues.put("KitchenCode", objItem.getKitchenCode());
-        cvDbValues.put("DineInPrice1", objItem.getDineInPrice1());
-        cvDbValues.put("DineInPrice2", objItem.getDineInPrice2());
-        cvDbValues.put("DineInPrice3", objItem.getDineInPrice3());
-        cvDbValues.put("PickUpPrice", objItem.getPickUpPrice());
-        cvDbValues.put("TakeAwayPrice", objItem.getTakeAwayPrice());
-        cvDbValues.put("DeliveryPrice", objItem.getDeliveryPrice());
-        cvDbValues.put("SalesTaxId", objItem.getSalesTaxId());
-        cvDbValues.put("AdditionalTaxId", objItem.getAdditionalTaxId());
-        cvDbValues.put("OptionalTaxId1", objItem.getOptionalTaxId1());
-        cvDbValues.put("OptionalTaxId2", objItem.getOptionalTaxId2());
-        cvDbValues.put("DiscId", objItem.getDiscId());
-        cvDbValues.put("Quantity", objItem.getQuantity());
-        cvDbValues.put("PriceChange", objItem.getPriceChange());
-        cvDbValues.put("DiscountEnable", objItem.getDiscountEnable());
-        cvDbValues.put("BillWithStock", objItem.getBillWithStock());
-        cvDbValues.put("ImageUri", objItem.getImageUri());
-        cvDbValues.put("TaxType", objItem.getTaxType());
-
-        cvDbValues.put(KEY_HSNCode, objItem.getHSNCode());
-        cvDbValues.put(KEY_IGSTRate, objItem.getIGSTRate());
-        cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
-        cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
-        //cvDbValues.put(KEY_IGSTAmount, objItem.getIGSTAmount());
-        //cvDbValues.put(KEY_CGSTAmount, objItem.getCGSTAmount());
-        //cvDbValues.put(KEY_SGSTAmount, objItem.getSGSTAmount());
-        cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
-        cvDbValues.put(KEY_UOM, objItem.getMOU());
-        cvDbValues.put(KEY_TaxationType, objItem.getTaxationType());
-        cvDbValues.put(KEY_Rate, objItem.getRate());
-
-        cvDbValues.put(KEY_SalesTaxPercent, objItem.getSalesTaxPercent());
-        cvDbValues.put(KEY_SerTaxPercent, objItem.getServiceTaxPercent());
-
-        return dbFNB.insert(TBL_ITEM_Outward, null, cvDbValues);
+    public long deleteItem(int itemId) {
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_isDelete, 1);
+        return dbFNB.update(TBL_ITEM_Outward, cv, KEY_id + "=" + itemId, null);
     }
 
     public long addItem_Inw(Item objItem) {
@@ -4778,7 +4891,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_ItemName, objItem.getItemname());
 //        cvDbValues.put("ShortName", objItem.getShortName());
         cvDbValues.put("ItemBarcode", objItem.getItemBarcode());
-        /*cvDbValues.put("DeptCode", objItem.getDeptCode());
+        /*cvDbValues.put("DepartmentCode", objItem.getDeptCode());
         cvDbValues.put("CategCode", objItem.getCategCode());
         cvDbValues.put("KitchenCode", objItem.getKitchenCode());
         cvDbValues.put("DineInPrice1", objItem.getDineInPrice1());
@@ -4860,19 +4973,187 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Retrieve All Items without Dept and Categ-----
     public Cursor getAllItemsWithoutDeptCateg() {
 
-        return dbFNB.rawQuery("Select * from Item_Outward where DeptCode not in (Select DeptCode from Department) and CategCode not in (Select CategCode from Category)", null);
+        return dbFNB.rawQuery("Select * from Item_Outward where DepartmentCode not in (Select DepartmentCode from Department) and CategoryCode not in (Select CategoryCode from Category)", null);
     }
 
     // -----Retrieve All Items-----
     public Cursor getAllItems() {
-
-        return dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, null, null, null, null, " MenuCode ASC");
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 order by " + KEY_isActive + " desc ";
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
     }
 
+    public Cursor getAllItems_Departmentwise() {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + "  WHERE isDelete=0 AND " + KEY_DepartmentCode + " > 0 ORDER BY " + KEY_DepartmentCode;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
 
+    public Cursor getAllItems_Kitchenwise() {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + "  WHERE isDelete=0 AND " + KEY_KitchenCode + " > 0 ORDER BY " + KEY_KitchenCode;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
 
+    public Cursor getAllItemByDepartment(int deptCode) {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + "  WHERE isDelete=0 AND " + KEY_DepartmentCode + " = " + deptCode;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
 
+    public Cursor getAllItems_Categorywise() {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + "  WHERE isDelete=0 AND " + KEY_CategoryCode + " > 0 ORDER BY " + KEY_CategoryCode;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
 
+    public Cursor getAllItemByCategory(int categCode) {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + "  WHERE isDelete=0 AND " + KEY_CategoryCode + " = " + categCode;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getAllItems_ActiveItems() {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 AND " + KEY_isActive + " =1";
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getAllItems_InactiveItems() {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 AND " + KEY_isActive + " =0";
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getAllItems_MinStockItems() {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 AND " + KEY_MinimumStock + " >= " + KEY_Quantity + " ORDER BY " + KEY_isActive + " DESC";
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor mGetItemSearchData(CharSequence str) {
+        Cursor cursor = null;
+        try {
+            String select = "( " + KEY_ItemName + " LIKE ? OR "
+                    + KEY_ItemBarcode + " LIKE ? OR " + KEY_MenuCode + " LIKE ? ) AND " + KEY_isActive + " = ? AND " + KEY_isDelete + " = ?";
+            String[] selectArgs = {str + "%", str + "%", str + "%", "1", "0"};
+            String[] contactsProjection = new String[]{
+                    "*"};
+            cursor = dbFNB.query(TBL_ITEM_Outward, contactsProjection, select, selectArgs, null, null, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from item master table." + str + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public Cursor mGetItemSearchDataByDepartment(int departmentCode) {
+        Cursor cursor = null;
+        try {
+            String select = KEY_DepartmentCode + " = ? AND " + KEY_isDelete + " = ?";
+            String[] selectArgs = {"" + departmentCode, "0"};
+            String[] contactsProjection = new String[]{
+                    "*"};
+            cursor = dbFNB.query(TBL_ITEM_Outward, contactsProjection, select, selectArgs, null, null, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from item master table." + departmentCode + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public Cursor mGetItemSearchDataByKitchen(int kitchenCode) {
+        Cursor cursor = null;
+        try {
+            String select = KEY_KitchenCode + " = ? AND " + KEY_isDelete + " = ?";
+            String[] selectArgs = {"" + kitchenCode, "0"};
+            String[] contactsProjection = new String[]{
+                    "*"};
+
+            cursor = dbFNB.query(TBL_ITEM_Outward, contactsProjection, select, selectArgs, null, null, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from item master table." + kitchenCode + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public int getKitchenIdByName(String name) {
+        int id = -1;
+
+        Cursor cursor = null;
+        try {
+            cursor = dbFNB.query(TBL_KITCHEN, null, KEY_KitchenName + "=?", new String[]{String.valueOf(name)}, null, null, null, null);
+            //if (cursor != null)
+            if (cursor.moveToFirst()) {
+                id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_KitchenCode)));
+            } else {
+                id = 0;
+            }
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return id;
+    }
+
+    public Cursor getItemByID(int id) {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE " + KEY_Id + " = " + id;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor mGetItemSearchDataByCategory(int categoryCode) {
+        Cursor cursor = null;
+        try {
+            String select = KEY_CategoryCode + " = ? AND " + KEY_isDelete + " = ?";
+            String[] selectArgs = {"" + categoryCode, "0"};
+            String[] contactsProjection = new String[]{
+                    "*"};
+            cursor = dbFNB.query(TBL_ITEM_Outward, contactsProjection, select, selectArgs, null, null, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from item master table." + categoryCode + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public Cursor getAllItems_details(int shortCode, String shortName, String barcode, int iMode) {
+        String query = null;
+        query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 AND " + KEY_MenuCode + " =" + shortCode + " AND " + KEY_ItemShortName + " LIKE '" + shortName + "' AND " + KEY_ItemBarcode + " LIKE '" + barcode + "'";
+        switch (iMode) {
+            case 4:
+                query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 AND (" + KEY_MenuCode + " =" + shortCode + " AND " + KEY_ItemShortName + " LIKE '" + shortName + "' AND "
+                        + KEY_ItemBarcode + " LIKE '" + barcode + "') and " + KEY_isActive + "=1";
+                break;
+            case 5:
+                query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 AND (" + KEY_MenuCode + " =" + shortCode + " AND " + KEY_ItemShortName + " LIKE '" + shortName + "' AND "
+                        + KEY_ItemBarcode + " LIKE '" + barcode + "') and " + KEY_isActive + "=0";
+                break;
+            default:
+                query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 AND " + KEY_MenuCode + " =" + shortCode + " AND " + KEY_ItemShortName + " LIKE '" + shortName + "' AND " + KEY_ItemBarcode + " LIKE '" + barcode + "'";
+                break;
+
+        }
+        Cursor cursor = null;
+        if (query != null && !query.isEmpty()) {
+            cursor = dbFNB.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public ArrayList<String> getAllItems_for_autocomplete() {
+        ArrayList<String> list = new ArrayList<>();
+        String query = "SELECT _id, MenuCode, ItemShortName , ItemBarcode FROM " + TBL_ITEM_Outward + " Where isDelete=0";
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        while (cursor != null && cursor.moveToNext()) {
+            String data = cursor.getInt(cursor.getColumnIndex(KEY_MenuCode)) + " " + "- "
+                    + cursor.getString(cursor.getColumnIndex(KEY_ItemShortName)) + " " + "- "
+                    + cursor.getString(cursor.getColumnIndex(KEY_ItemBarcode));
+//            if(!list.contains(data))
+            list.add(data);
+        }
+        return list;
+    }
 
    /* public Cursor getAllItemswithDeptCategName() {
         return dbFNB.rawQuery("Select * from " + TBL_ITEM_Outward + ", " + TBL_DEPARTMENT + ", " + TBL_CATEGORY, null);
@@ -4883,41 +5164,41 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Retrieve Items based on DeptCode-----
     public Cursor getItems(int DeptCode) {
         return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "Quantity", "ImageUri"},
-                "DeptCode=" + DeptCode, null, null, null, null);
+                "DepartmentCode=" + DeptCode, null, null, null, null);
     }
 
     public Cursor getItemsForAllDepartments() {
         return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "Quantity", "ImageUri"},
-                "DeptCode > 0", null, null, null, null);
+                "DepartmentCode > 0", null, null, null, null);
     }
 
     // -----Retrieve Items based on CategCode-----
     public Cursor getCatItems(int DeptCode) {
-        return dbFNB.query(TBL_CATEGORY, new String[]{"CategCode", "CategName"}, "DeptCode=" + DeptCode, null, null,
+        return dbFNB.query(TBL_CATEGORY, new String[]{"CategoryCode", "CategoryName"}, "DepartmentCode=" + DeptCode, null, null,
                 null, null);
     }
 
     // -----Retrieve Items based on CategCode-----
     public Cursor getCategoryItems(int DeptCode) {
-        return dbFNB.rawQuery("Select CategCode as _id, CategName, DeptCode from Category where DeptCode=" + DeptCode, null);
+        return dbFNB.rawQuery("Select CategoryCode as _id, CategoryName, DepartmentCode from Category where DepartmentCode=" + DeptCode, null);
     }
     public Cursor getAllCategories() {
-        return dbFNB.rawQuery("Select CategCode as _id, CategName, DeptCode from Category ", null);
+        return dbFNB.rawQuery("Select CategoryCode as _id, CategoryName, DepartmentCode from Category ", null);
     }
 
     public Cursor getCategorybyDept() {
-        return dbFNB.rawQuery("Select CategCode as _id, CategName, DeptCode from Category where DeptCode not in (Select DeptCode from Department)", null);
+        return dbFNB.rawQuery("Select CategoryCode as _id, CategoryName, DepartmentCode from Category where DepartmentCode not in (Select DepartmentCode from Department)", null);
     }
 
     // -----Retrieve Items based on CategCode-----
     public Cursor getCatbyItems(int CategCode) {
-        return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"}, "CategCode=" + CategCode, null, null, null, null);
+        return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"}, "CategoryCode=" + CategCode, null, null, null, null);
     }
 
     // -----Retrieve Items based on CategCode and DeptCode-----
     public Cursor getDeptCatbyItems(int CategCode, int DeptCode) {
         return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"},
-                "CategCode=" + CategCode + " AND DeptCode=" + DeptCode, null, null, null, null);
+                "CategoryCode=" + CategCode + " AND DepartmentCode=" + DeptCode, null, null, null, null);
     }
 
     // -----Retrieve Single Item based on ItemBarcode-----
@@ -4992,59 +5273,86 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    // -----Update Item table-----
-    public int updateItem(int MenuCode, String ItemName, String ShortName, String ItemBarCode, int DeptCode,
-                          int CategCode, int KitchenCode, double DineInPrice1, double DineInPrice2, double DineInprice3,
-                          double TakeAwayPrice, double PickUpPrice, double DeliveryPrice, int SalesTaxId, int AdditionalTaxId,
-                          int OptionalTaxId1, int OptionalTaxId2, int DiscId, double Stock, int PriceChange, int DiscountEnable,
-                          int BillWithStock, String ImageUri, int TaxType, double frate, String hsnCode,
-                          String g_s, String MOU_str, String taxationtype_str, double IGSTRate, double CGSTRate, double SGSTRate,double cessRate,
-                          float fSalesTax, float fServiceTax, int ItemId , double itemDiscount) {
-
-        cvDbValues = new ContentValues();
-
-        cvDbValues.put("MenuCode", MenuCode);
-        cvDbValues.put("ItemName", ItemName);
-        //cvDbValues.put("ShortName", ShortName);
-        cvDbValues.put("ItemBarcode", ItemBarCode);
-        cvDbValues.put("DeptCode", DeptCode);
-        cvDbValues.put("CategCode", CategCode);
-        cvDbValues.put("KitchenCode", KitchenCode);
-        cvDbValues.put("DineInPrice1", DineInPrice1);
-        cvDbValues.put("DineInPrice2", DineInPrice2);
-        cvDbValues.put("DineInPrice3", DineInprice3);
-        cvDbValues.put("TakeAwayPrice", TakeAwayPrice);
-        cvDbValues.put("PickUpPrice", PickUpPrice);
-        cvDbValues.put("DeliveryPrice", DeliveryPrice);
-        cvDbValues.put("SalesTaxId", SalesTaxId);
-        cvDbValues.put("AdditionalTaxId", AdditionalTaxId);
-        cvDbValues.put("OptionalTaxId1", OptionalTaxId1);
-        cvDbValues.put("OptionalTaxId2", OptionalTaxId2);
-        cvDbValues.put("DiscId", DiscId);
-        cvDbValues.put("Quantity", Stock);
-        cvDbValues.put("PriceChange", PriceChange);
-        cvDbValues.put("DiscountEnable", DiscountEnable);
-        cvDbValues.put("BillWithStock", BillWithStock);
-        cvDbValues.put("ImageUri", ImageUri);
-        cvDbValues.put("TaxType", TaxType);
-
-        cvDbValues.put(KEY_DiscountPercent, itemDiscount);
-        cvDbValues.put(KEY_Rate, frate);
-        cvDbValues.put(KEY_HSNCode, hsnCode);
-        cvDbValues.put(KEY_IGSTRate, IGSTRate);
-        cvDbValues.put(KEY_CGSTRate, CGSTRate);
-        cvDbValues.put(KEY_SGSTRate, SGSTRate);
-        cvDbValues.put(KEY_cessRate, cessRate);
-        cvDbValues.put(KEY_SupplyType, g_s);
-        cvDbValues.put(KEY_UOM, MOU_str);
-        cvDbValues.put(KEY_TaxationType, taxationtype_str);
-
-        cvDbValues.put(KEY_SalesTaxPercent, fSalesTax);
-        cvDbValues.put(KEY_SerTaxPercent, fServiceTax);
-
-        return dbFNB.update(TBL_ITEM_Outward, cvDbValues, "ItemId=" + ItemId, null);
+    public Cursor checkDuplicateItem(String shortName, String barCode, String uom) {
+        Cursor cursor = null;
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE " + KEY_isDelete + "=0 AND " + KEY_ItemShortName + " LIKE '"
+                + shortName + "' AND " + KEY_ItemBarcode + " LIKE '" + barCode + "'";
+        cursor = dbFNB.rawQuery(query, null);
+        // return contact
+        return cursor;
     }
 
+    // -----Update Item table-----
+
+    public long updateItem(ItemModel itemObject) {
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_MenuCode, itemObject.getMenuCode());
+        cv.put(KEY_ItemShortName, itemObject.getShortName());
+        cv.put(KEY_ItemLongName, itemObject.getLongName());
+        cv.put(KEY_ItemBarcode, itemObject.getBarCode());
+        cv.put(KEY_SupplyType, itemObject.getSupplyType());
+        cv.put(KEY_UOM, itemObject.getUOM());
+        cv.put(KEY_KitchenCode, itemObject.getKitchenCode());
+        cv.put(KEY_DepartmentCode, itemObject.getDeptCode());
+        cv.put(KEY_CategoryCode, itemObject.getCategCode());
+        cv.put(KEY_DineInPrice1, itemObject.getRetaiPrice());
+        cv.put(KEY_DineInPrice2, itemObject.getMrp());
+        cv.put(KEY_DineInPrice3, itemObject.getWholeSalePrice());
+        cv.put(KEY_MinimumStock, itemObject.getMinimumStock());
+        cv.put(KEY_Quantity, itemObject.getQuantity());
+        cv.put(KEY_HSNCode, itemObject.getHsn());
+        cv.put(KEY_CGSTRate, itemObject.getCgstRate());
+        cv.put(KEY_SGSTRate, itemObject.getSgstRate());
+        cv.put(KEY_IGSTRate, itemObject.getIgstRate());
+        cv.put(KEY_cessRate, itemObject.getCessRate());
+        cv.put(KEY_cessAmount, itemObject.getCessAmount());
+        cv.put(KEY_additionalCessAmount, itemObject.getAdditionalCessAmount());
+        cv.put(KEY_ImageUri, itemObject.getImageURL());
+        cv.put(KEY_isFavrouite, itemObject.getFav());
+        cv.put(KEY_isActive, itemObject.getActive());
+        cv.put(KEY_isDelete, itemObject.getDelete());
+        cv.put(KEY_DiscountPercent, itemObject.getDiscountPercent());
+        cv.put(KEY_DiscountAmount, itemObject.getDiscountAmount());
+        cv.put(KEY_AveragePurchaseRate, itemObject.getPurchaseRate());
+        cv.put(KEY_INCENTIVE_AMOUNT, itemObject.getIncentive_amount());
+        String whereClause = KEY_id + " = " + itemObject.get_id();
+
+        long insertStatus = dbFNB.update(TBL_ITEM_Outward, cv, whereClause, null);
+        return insertStatus;
+    }
+
+    public long updateBillItem(ItemModel itemObject) {
+        ContentValues cv = new ContentValues();
+//        cv.put(KEY_BrandCode, itemObject.getKitchenCode());
+        cv.put(KEY_DepartmentCode, itemObject.getDeptCode());
+        cv.put(KEY_CategoryCode, itemObject.getCategCode());
+
+        String whereClause = KEY_ItemNumber + " = " + itemObject.get_id();
+
+        long insertStatus = dbFNB.update(TBL_BILLITEM, cv, whereClause, null);
+        return insertStatus;
+    }
+
+    public long updateItemInSupplierItemLinkage(ContentValues cvItems, String supplierId, int itemId) {
+        String whereClause = KEY_SupplierCode + " LIKE '" + supplierId + "' AND " + KEY_MenuCode + " = " + itemId;
+
+        long insertStatus = dbFNB.update(TBL_SupplierItemLinkage, cvItems, whereClause, null);
+        return insertStatus;
+    }
+
+    public long updateItemInSupplierItemLinkage(ContentValues cvItems, int itemId) {
+        String whereClause = KEY_ItemId + " = " + itemId;
+
+        long insertStatus = dbFNB.update(TBL_SupplierItemLinkage, cvItems, whereClause, null);
+        return insertStatus;
+    }
+
+    public long updateItemPurchaseRateInItemTable(ContentValues cvItems, int itemId) {
+        String whereClause = KEY_id + " = " + itemId;
+
+        long insertStatus = dbFNB.update(TBL_ITEM_Outward, cvItems, whereClause, null);
+        return insertStatus;
+    }
 
     public int updateItem_Inw(Item objItem) {
 
@@ -5142,13 +5450,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Delete Items from Item Table by Dept Code-----
     public int DeleteItemByDeptCode(String DeptCode) {
 
-        return dbFNB.delete(TBL_ITEM_Outward, "DeptCode=" + DeptCode, null);
+        return dbFNB.delete(TBL_ITEM_Outward, "DepartmentCode=" + DeptCode, null);
     }
 
     // -----Delete Items from Item Table by Categ Code-----
     public int DeleteItemByCategCode(String CategCode) {
 
-        return dbFNB.delete(TBL_ITEM_Outward, "CategCode=" + CategCode, null);
+        return dbFNB.delete(TBL_ITEM_Outward, "CategoryCode=" + CategCode, null);
     }
 
     /************************************************************************************************************************************/
@@ -5193,8 +5501,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ServiceTaxPercent", objPendingKOT.getServiceTaxPercent());
         cvDbValues.put("ServiceTaxAmount", objPendingKOT.getServiceTaxAmount());
         cvDbValues.put("TaxType", objPendingKOT.getTaxType());
-        cvDbValues.put("DeptCode", objPendingKOT.getDeptCode());
-        cvDbValues.put("CategCode", objPendingKOT.getCategCode());
+        cvDbValues.put("DepartmentCode", objPendingKOT.getDeptCode());
+        cvDbValues.put("CategoryCode", objPendingKOT.getCategCode());
         cvDbValues.put("KitchenCode", objPendingKOT.getKitchenCode());
         cvDbValues.put("OrderMode", objPendingKOT.getOrderMode());
         cvDbValues.put("IsCheckedOut", objPendingKOT.getIsCheckedOut());
@@ -5239,8 +5547,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put("ServiceTaxPercent", objPendingKOT.getServiceTaxPercent());
             cvDbValues.put("ServiceTaxAmount", objPendingKOT.getServiceTaxAmount());
             cvDbValues.put("TaxType", objPendingKOT.getTaxType());
-            cvDbValues.put("DeptCode", objPendingKOT.getDeptCode());
-            cvDbValues.put("CategCode", objPendingKOT.getCategCode());
+            cvDbValues.put("DepartmentCode", objPendingKOT.getDeptCode());
+            cvDbValues.put("CategoryCode", objPendingKOT.getCategCode());
             cvDbValues.put("KitchenCode", objPendingKOT.getKitchenCode());
             cvDbValues.put("OrderMode", objPendingKOT.getOrderMode());
             cvDbValues.put("IsCheckedOut", objPendingKOT.getIsCheckedOut());
@@ -5864,6 +6172,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.query("BillNoConfiguration", new String[]{"*"}, null, null, null, null, null);
     }
 
+    public ArrayList<String> getAllKitchen_for_autocomplete() {
+        ArrayList<String> list = new ArrayList<>();
+        String query = "SELECT KitchenName FROM " + TBL_KITCHEN;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        while (cursor != null && cursor.moveToNext()) {
+            String data = cursor.getString(cursor.getColumnIndex(KEY_KitchenName));
+            list.add(data);
+        }
+        return list;
+    }
+
+    public ArrayList<String> getAllDepartment_for_autocomplete() {
+        ArrayList<String> list = new ArrayList<>();
+        String query = "SELECT DepartmentName FROM " + TBL_DEPARTMENT;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        while (cursor != null && cursor.moveToNext()) {
+            String data = cursor.getString(cursor.getColumnIndex(KEY_DepartmentName));
+            list.add(data);
+        }
+        return list;
+    }
+
+    public ArrayList<String> getAllCategory_for_autocomplete() {
+        ArrayList<String> list = new ArrayList<>();
+        String query = "SELECT CategoryName FROM " + TBL_CATEGORY;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        while (cursor != null && cursor.moveToNext()) {
+            String data = cursor.getString(cursor.getColumnIndex(KEY_CategoryName));
+            list.add(data);
+        }
+        return list;
+    }
+
     public int UpdateBillNoResetInvoiceNo(int invno) {
         cvDbValues = new ContentValues();
         cvDbValues.put("InvoiceNo", invno);
@@ -6245,8 +6586,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ServiceTaxPercent", objBillItem.getServiceTaxPercent());
         cvDbValues.put("TaxAmount", objBillItem.getTaxAmount());
         cvDbValues.put("TaxPercent", objBillItem.getTaxPercent());
-        cvDbValues.put("DeptCode", objBillItem.getDeptCode());
-        cvDbValues.put("CategCode", objBillItem.getCategCode());
+        cvDbValues.put("DepartmentCode", objBillItem.getDeptCode());
+        cvDbValues.put("CategoryCode", objBillItem.getCategCode());
         cvDbValues.put("KitchenCode", objBillItem.getKitchenCode());
         cvDbValues.put("TaxType", objBillItem.getTaxType());
         //cvDbValues.put("CustId", objBillItem.getCustId());
@@ -6299,8 +6640,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ServiceTaxPercent", objBillItem.getServiceTaxPercent());
         cvDbValues.put("TaxAmount", objBillItem.getTaxAmount());
         cvDbValues.put("TaxPercent", objBillItem.getTaxPercent());
-        cvDbValues.put("DeptCode", objBillItem.getDeptCode());
-        cvDbValues.put("CategCode", objBillItem.getCategCode());
+        cvDbValues.put("DepartmentCode", objBillItem.getDeptCode());
+        cvDbValues.put("CategoryCode", objBillItem.getCategCode());
         cvDbValues.put("KitchenCode", objBillItem.getKitchenCode());
         cvDbValues.put("TaxType", objBillItem.getTaxType());
         //cvDbValues.put("CustId", objBillItem.getCustId());
@@ -6728,7 +7069,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + StartDate + "' AND '" + EndDate + "'", null);*/
         // richa
         return dbFNB.rawQuery("SELECT * FROM " + TBL_BILLITEM + " , " + TBL_BILLDETAIL + " , Department WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
-                + TBL_BILLITEM + ".DeptCode=Department.DeptCode AND " + TBL_BILLITEM + ".InvoiceNo= " + TBL_BILLDETAIL + ".InvoiceNo AND " +
+                + TBL_BILLITEM + ".DepartmentCode=Department.DepartmentCode AND " + TBL_BILLITEM + ".InvoiceNo= " + TBL_BILLDETAIL + ".InvoiceNo AND " +
                 TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null);
     }
 
@@ -6739,7 +7080,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + StartDate + "' AND '" + EndDate + "'", null);*/
         // richa
         return dbFNB.rawQuery("SELECT * FROM " + TBL_BILLITEM + " , " + TBL_BILLDETAIL + " , Category WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
-                + TBL_BILLITEM + ".CategCode=Category.CategCode AND " + TBL_BILLITEM + ".InvoiceNo= " + TBL_BILLDETAIL + ".InvoiceNo AND " +
+                + TBL_BILLITEM + ".CategoryCode=Category.CategoryCode AND " + TBL_BILLITEM + ".InvoiceNo= " + TBL_BILLDETAIL + ".InvoiceNo AND " +
                 TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null);
     }
 
@@ -7192,8 +7533,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //cvDbValues.put("MenuCode", MenuCode);
         cvDbValues.put("ItemName", ItemName);
         cvDbValues.put("ItemBarcode", ItemBarCode);
-        cvDbValues.put("DeptCode", DeptCode);
-        cvDbValues.put("CategCode", CategCode);
+        cvDbValues.put("DepartmentCode", DeptCode);
+        cvDbValues.put("CategoryCode", CategCode);
         cvDbValues.put("KitchenCode", KitchenCode);
         cvDbValues.put("AdditionalTaxId", AdditionalTaxId);
         cvDbValues.put("DiscId", DiscId);
@@ -7378,6 +7719,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //String WhereClause = KEY_MenuCode + " = " + menucode + " AND " + KEY_Status + " LIKE '" + status + "'";
         String WhereClause = KEY_MenuCode + " = " + menucode ;
         return dbFNB.delete(TBL_INGREDIENTS, WhereClause, null);
+    }
+
+    public long deleteSupplierItemLinkageByItemId(int itemId) {
+        return dbFNB.delete(TBL_SupplierItemLinkage, KEY_ItemId + "=" + itemId, null);
     }
 
     public long saveIngredient(ItemIngredients ingredient) {
@@ -9183,7 +9528,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.rawQuery("Select DeptCode as _id, DeptName from Department", null);
+            cursor = db.rawQuery("Select DepartmentCode as _id, DepartmentName from Department", null);
         }catch (Exception e){
             e.printStackTrace();
             cursor = null;
@@ -9226,7 +9571,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<Items> list = null;
         try{
-            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"}, "CategCode=" + CategCode, null, null, null, null);
+            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"}, "CategoryCode=" + CategCode, null, null, null, null);
             if(cursor!=null)
             {
                 list = new ArrayList<Items>();
@@ -9254,7 +9599,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         ArrayList<Items> list = null;
         try{
             Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"},
-                    KEY_DeptCode+"=" + deptCode, null, null, null, null);
+                    KEY_DepartmentCode +"=" + deptCode, null, null, null, null);
             if(cursor!=null)
             {
                 list = new ArrayList<Items>();
@@ -9282,13 +9627,13 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<Department> list = null;
         try{
-            Cursor cursor = db.query(TBL_DEPARTMENT, new String[]{"DeptCode", "DeptName"}, null, null, null, null, null);
+            Cursor cursor = db.query(TBL_DEPARTMENT, new String[]{"DepartmentCode", "DepartmentName"}, null, null, null, null, null);
             if(cursor!=null)
             {
                 list = new ArrayList<Department>();
                 while (cursor.moveToNext())
                 {
-                    Department items = new Department(cursor.getString(cursor.getColumnIndex("DeptName")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    Department items = new Department(cursor.getString(cursor.getColumnIndex("DepartmentName")), cursor.getInt(cursor.getColumnIndex("DepartmentCode")));
                     list.add(items);
                 }
             }
@@ -9311,7 +9656,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
                 list = new ArrayList<Category>();
                 while (cursor.moveToNext())
                 {
-                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("CategCode")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategoryName")), cursor.getInt(cursor.getColumnIndex("CategoryCode")), cursor.getInt(cursor.getColumnIndex("DepartmentCode")));
                     list.add(items);
                 }
             }
@@ -9328,13 +9673,13 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<Category> list = null;
         try{
-            Cursor cursor = db.rawQuery("Select CategCode as _id, CategName, DeptCode from Category where DeptCode=" + DeptCode, null);
+            Cursor cursor = db.rawQuery("Select CategoryCode as _id, CategoryName, DepartmentCode from Category where DepartmentCode=" + DeptCode, null);
             if(cursor!=null)
             {
                 list = new ArrayList<Category>();
                 while (cursor.moveToNext())
                 {
-                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("_id")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategoryName")), cursor.getInt(cursor.getColumnIndex("_id")), cursor.getInt(cursor.getColumnIndex("DepartmentCode")));
                     list.add(items);
                 }
             }
@@ -9716,8 +10061,8 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put("ServiceTaxPercent", objBillItem.getServiceTaxPercent());
             cvDbValues.put("TaxAmount", objBillItem.getTaxAmount());
             cvDbValues.put("TaxPercent", objBillItem.getTaxPercent());
-            cvDbValues.put("DeptCode", objBillItem.getDeptCode());
-            cvDbValues.put("CategCode", objBillItem.getCategCode());
+            cvDbValues.put("DepartmentCode", objBillItem.getDeptCode());
+            cvDbValues.put("CategoryCode", objBillItem.getCategCode());
             cvDbValues.put("KitchenCode", objBillItem.getKitchenCode());
             cvDbValues.put("TaxType", objBillItem.getTaxType());
             cvDbValues.put(KEY_InvoiceDate, objBillItem.getInvoiceDate());
@@ -9916,7 +10261,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery("SELECT * FROM " + strTableName, null);
+            cursor = db.rawQuery("SELECT * FROM " + strTableName + " where isDelete = 0", null);
         } catch (Exception e) {
             Log.i(TAG, "Unable to run the query method: " + strTableName + " " + e.getMessage());
         }
@@ -10090,8 +10435,8 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
                 item.setDineIn2(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice2")));
                 item.setDineIn3(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice3")));
                 item.setStock(cursorItem.getFloat(cursorItem.getColumnIndex("Quantity")));
-                item.setDeptCode(cursorItem.getInt(cursorItem.getColumnIndex("DeptCode")));
-                item.setCategCode(cursorItem.getInt(cursorItem.getColumnIndex("CategCode")));
+                item.setDeptCode(cursorItem.getInt(cursorItem.getColumnIndex("DepartmentCode")));
+                item.setCategCode(cursorItem.getInt(cursorItem.getColumnIndex("CategoryCode")));
                 item.setKitchenCode(cursorItem.getInt(cursorItem.getColumnIndex("KitchenCode")));
                 item.setBarCode(cursorItem.getString(cursorItem.getColumnIndex("ItemBarcode")));
                 item.setImageUri(cursorItem.getString(cursorItem.getColumnIndex("ImageUri")));

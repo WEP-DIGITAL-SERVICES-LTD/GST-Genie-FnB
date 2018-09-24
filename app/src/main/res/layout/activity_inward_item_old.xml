@@ -212,7 +212,7 @@ tools:context="com.wepindia.pos.views.InwardManagement.InwardItemActivity">
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             style="@android:style/Widget.Holo.Light.Spinner"
-                            android:entries="@array/g_s">
+                            android:entries="@array/supply_type_array">
 
                         </Spinner>
                     </LinearLayout>

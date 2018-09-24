@@ -12,6 +12,24 @@ public interface Constants {
     public static final String DEPOSIT = "Deposit";
     public static final String BILL_NO = "BillNo";
 
+    // Progress Dialog Title
+    public static final String waiting = "Waiting";
+    public static final String processing = "Processing";
+    public static final String waring = "Warning";
+    public static final String success = "Success";
+    public static final String loading = "Loading";
+
+    public static final int MODE = 0;
+    public static final int KITCHEN_MODE = 1;
+    public static final int DEPARTMENT_MODE = 2;
+    public static final int CATEGORY_MODE = 3;
+    public static final int ACTIVE_MODE = 4;
+    public static final int INACTIVE_MODE = 5;
+    public static final int MINSTOCK_MODE = 6;
+
+    //FilePicker
+    public String FRAGMENTNAME = "FragmentName";
+
     // SMS Sending
     public static int HTTP_GET = 1;
     public static int HTTP_POST = 2;

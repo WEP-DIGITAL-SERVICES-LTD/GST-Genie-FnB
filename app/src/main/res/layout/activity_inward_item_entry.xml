@@ -426,7 +426,7 @@
                                     android:id="@+id/spnr_supplytype"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:entries="@array/g_s">
+                                    android:entries="@array/supply_type_array">
 
                                 </Spinner>
                             </LinearLayout>

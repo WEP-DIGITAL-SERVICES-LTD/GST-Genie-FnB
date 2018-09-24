@@ -47,7 +47,7 @@ import com.wep.common.app.models.Items;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
-import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
+import com.wepindia.pos.views.Billing.Adapters.TestItemsAdapter;
 import com.wepindia.pos.views.Configurations.Category.Adapters.CategoryAdapter;
 import com.wepindia.pos.views.Configurations.Department.Adapters.DepartmentAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;

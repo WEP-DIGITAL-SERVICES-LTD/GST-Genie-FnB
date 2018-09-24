@@ -203,7 +203,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1.3"
-                            android:entries="@array/g_s"></Spinner>
+                            android:entries="@array/supply_type_array"></Spinner>
                     </LinearLayout>
 
                     <LinearLayout

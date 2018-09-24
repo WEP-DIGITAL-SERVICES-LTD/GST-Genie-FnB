@@ -1050,7 +1050,7 @@ public class InwardInvoiceEntry_Activity extends Activity  {
 
 
         Spinner spn_supplytype = new Spinner(myContext);
-        ArrayAdapter<CharSequence> ad1 = ArrayAdapter.createFromResource(this, R.array.g_s, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> ad1 = ArrayAdapter.createFromResource(this, R.array.supply_type_array, android.R.layout.simple_spinner_item);
         spn_supplytype.setAdapter(ad1);
 
 
