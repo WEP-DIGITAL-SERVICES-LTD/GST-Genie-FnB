@@ -13,7 +13,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e75517a0-caa2-45d4-ab77-a7abfe2491a4" name="Default" comment="">
+    <list default="true" id="e75517a0-caa2-45d4-ab77-a7abfe2491a4" name="Default" comment="V2.0.1: Bug 1804 - In payment mode due amount color field should be changed to other color.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/Adapters/UserRolesAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Masters/UserMaster/Adapters/UserRolesAdapter.java" />
@@ -35,12 +35,9 @@
       <file leaf-file-name="BillingHomeDeliveryActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="131" column="40" lean-forward="false" selection-start-line="131" selection-start-column="13" selection-end-line="131" selection-end-column="40" />
-              <folding>
-                <element signature="e#65866#67267#0" expanded="true" />
-                <element signature="e#67266#67267#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="91">
+              <caret line="7156" column="73" lean-forward="false" selection-start-line="7156" selection-start-column="73" selection-end-line="7156" selection-end-column="73" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -48,9 +45,12 @@
       <file leaf-file-name="CustomerOrdersActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="401" column="55" lean-forward="false" selection-start-line="401" selection-start-column="55" selection-end-line="401" selection-end-column="55" />
-              <folding />
+            <state relative-caret-position="237">
+              <caret line="519" column="48" lean-forward="false" selection-start-line="519" selection-start-column="48" selection-end-line="519" selection-end-column="48" />
+              <folding>
+                <element signature="e#10583#12746#0" expanded="true" />
+                <element signature="e#12745#12746#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -58,8 +58,8 @@
       <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="5893" column="98" lean-forward="false" selection-start-line="5893" selection-start-column="89" selection-end-line="5893" selection-end-column="98" />
+            <state relative-caret-position="187">
+              <caret line="6504" column="18" lean-forward="false" selection-start-line="6504" selection-start-column="18" selection-end-line="6504" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -71,8 +71,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="603" column="44" lean-forward="false" selection-start-line="603" selection-start-column="37" selection-end-line="603" selection-end-column="44" />
+            <state relative-caret-position="169">
+              <caret line="388" column="24" lean-forward="false" selection-start-line="388" selection-start-column="24" selection-end-line="388" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -82,11 +82,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>tvcessValue</find>
-      <find>dcessAmt</find>
-      <find>InsertBillDetail</find>
-      <find>save</find>
-      <find>Float.parseFloat</find>
       <find>if (RowKOTItem.getChildAt(29) != null)</find>
       <find>addItemto</find>
       <find>QTY</find>
@@ -107,11 +102,16 @@
       <find>mSave</find>
       <find>addItem</find>
       <find>TextView tvCessAmt = new TextView(this);</find>
-      <find>onActivity</find>
       <find>btnDeliveryStatus</find>
       <find>TenderType</find>
-      <find>PayBill</find>
       <find>on</find>
+      <find>onProce</find>
+      <find>PayBill</find>
+      <find>onActivity</find>
+      <find>onproce</find>
+      <find>oncreate</find>
+      <find>lstCustomerPendingOrders</find>
+      <find>txtPaidStatus.setText</find>
     </findStrings>
     <replaceStrings>
       <replace>Double.parseDouble</replace>
@@ -6789,6 +6789,7 @@
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingCounterSalesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingDineInActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/PayBillFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java" />
       </list>
     </option>
@@ -7059,7 +7060,21 @@
       <option name="project" value="LOCAL" />
       <updated>1537870525305</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="V2.0.1: Bug 1803 - Take away: In Pick up status Customer details status is displaying as unpaid after paying the whole amount of customer">
+      <created>1537871704426</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1537871704426</updated>
+    </task>
+    <task id="LOCAL-00003" summary="V2.0.1: Bug 1804 - In payment mode due amount color field should be changed to other color.">
+      <created>1537872116763</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1537872116763</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -7135,7 +7150,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="V2.0.1: Added cess amount and additional cess amount in billing screen." />
-    <option name="LAST_COMMIT_MESSAGE" value="V2.0.1: Added cess amount and additional cess amount in billing screen." />
+    <MESSAGE value="V2.0.1: Bug 1803 - Take away: In Pick up status Customer details status is displaying as unpaid after paying the whole amount of customer" />
+    <MESSAGE value="V2.0.1: Bug 1804 - In payment mode due amount color field should be changed to other color." />
+    <option name="LAST_COMMIT_MESSAGE" value="V2.0.1: Bug 1804 - In payment mode due amount color field should be changed to other color." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7254,11 +7271,35 @@
           <properties />
           <option name="timeStamp" value="27" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java</url>
+          <line>559</line>
+          <properties />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java</url>
+          <line>438</line>
+          <properties />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java</url>
+          <line>551</line>
+          <properties />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java</url>
+          <line>523</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="28" />
+      <option name="time" value="33" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -7718,41 +7759,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="29" column="28" lean-forward="false" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/PayBillFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="96" column="28" lean-forward="true" selection-start-line="96" selection-start-column="28" selection-end-line="96" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="603" column="44" lean-forward="false" selection-start-line="603" selection-start-column="37" selection-end-line="603" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="5893" column="98" lean-forward="false" selection-start-line="5893" selection-start-column="89" selection-end-line="5893" selection-end-column="98" />
+        <state relative-caret-position="169">
+          <caret line="388" column="24" lean-forward="false" selection-start-line="388" selection-start-column="24" selection-end-line="388" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/CustomerOrdersActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="401" column="55" lean-forward="false" selection-start-line="401" selection-start-column="55" selection-end-line="401" selection-end-column="55" />
+        <state relative-caret-position="237">
+          <caret line="519" column="48" lean-forward="false" selection-start-line="519" selection-start-column="48" selection-end-line="519" selection-end-column="48" />
+          <folding>
+            <element signature="e#10583#12746#0" expanded="true" />
+            <element signature="e#12745#12746#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="6504" column="18" lean-forward="false" selection-start-line="6504" selection-start-column="18" selection-end-line="6504" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/views/Billing/BillingHomeDeliveryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="131" column="40" lean-forward="false" selection-start-line="131" selection-start-column="13" selection-end-line="131" selection-end-column="40" />
-          <folding>
-            <element signature="e#65866#67267#0" expanded="true" />
-            <element signature="e#67266#67267#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="91">
+          <caret line="7156" column="73" lean-forward="false" selection-start-line="7156" selection-start-column="73" selection-end-line="7156" selection-end-column="73" />
+          <folding />
         </state>
       </provider>
     </entry>

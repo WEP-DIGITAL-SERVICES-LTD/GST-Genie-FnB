@@ -9637,6 +9637,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }
         //updateOutwardStock();
         Toast.makeText(this, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
+        updateOutwardStock();
         if (isPrintBill == true) {
             strPaymentStatus = "Paid";
             PrintNewBill(businessDate, obj.getNoOfPrint());
