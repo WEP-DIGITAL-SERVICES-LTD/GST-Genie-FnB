@@ -9612,6 +9612,18 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }
         tvBillAmount.setText(String.format("%.2f", dFinalBillValue));
 
+        if(strOrderDelivered == true && jBillingMode==3)
+        {
+            int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
+            Log.d("HomeDeliveryBillingAct:", "Items deleted from pending KOT:" + iResult);
+            fTotalDiscount =0;
+            strOrderDelivered = false;
+        }else
+        {
+            int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
+            SaveKOT();
+        }
+
         PrintBillPayment = 0;
         mSaveBillData(2);
         generateInvoicePdf();
