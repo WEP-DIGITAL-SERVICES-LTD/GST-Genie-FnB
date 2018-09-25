@@ -410,7 +410,7 @@ public class PayBillFragment extends DialogFragment implements PayBillViewHolder
 //            tvDifferenceAmount.setText(String.format("%.2f",totalBillAmount-paidAmount));
             tvReturnAmount.setText("+" + String.format("%.2f",totalBillAmount-paidAmount));
             tvPaidTotalAmount.setTextColor(getResources().getColor(R.color.red));
-            tvReturnAmount.setTextColor(getResources().getColor(R.color.green));
+            tvReturnAmount.setTextColor(getResources().getColor(R.color.greenyellow));
             return;
         }
         for(int i =0; i<paidAmountList.size();i++)
@@ -426,11 +426,11 @@ public class PayBillFragment extends DialogFragment implements PayBillViewHolder
 //            tvReturnAmount.setText("0.00");
             tvReturnAmount.setText("+" + String.format("%.2f",dueAmount));
             tvPaidTotalAmount.setTextColor(getResources().getColor(R.color.red));
-            tvReturnAmount.setTextColor(getResources().getColor(R.color.green));
+            tvReturnAmount.setTextColor(getResources().getColor(R.color.greenyellow));
         }else
         {
             tvPaidTotalAmount.setText(String.format("%.2f",paidAmount));
-            tvPaidTotalAmount.setTextColor(getResources().getColor(R.color.green));
+            tvPaidTotalAmount.setTextColor(getResources().getColor(R.color.greenyellow));
             if (String.format("%.2f",Math.abs(dueAmount)).equals("0.00"))
                 tvReturnAmount.setText(String.format("%.2f",Math.abs(dueAmount)));
             else
