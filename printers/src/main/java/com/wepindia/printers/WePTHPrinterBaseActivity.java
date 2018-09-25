@@ -857,10 +857,14 @@ public class WePTHPrinterBaseActivity extends WepBaseActivity {
             while (it21.hasNext()) {
 
                 BillServiceTaxItem billKotItem = (BillServiceTaxItem) it21.next();
-                if (billKotItem.getServicePercent() > 0){
+                if (billKotItem.getServicePercent() > 0 || billKotItem.getPricePerUnit() > 0){
 
                     String TxName = getPostAddedSpaceFormat("", String.valueOf(billKotItem.getServiceTxName()), 23, 1);
-                    String TxPercent = getPostAddedSpaceFormat("", "@ " + String.format("%.2f", billKotItem.getServicePercent()) + " %", 15, 1);
+                    String TxPercent = "";
+                    if (billKotItem.getServicePercent() > 0)
+                        TxPercent = getPostAddedSpaceFormat("", "@ " + String.format("%.2f", billKotItem.getServicePercent()) + "% ", 15, 1);
+                    else
+                        TxPercent = getPostAddedSpaceFormat("", "@ Rs." + String.format("%.2f", billKotItem.getPricePerUnit()) + " ", 15, 1);
                     String TxValue = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billKotItem.getServicePrice()), 10, 1), 8, 1);
                     dtotalcessAmt += billKotItem.getServicePrice();
                     String pre = TxName + TxPercent + TxValue;

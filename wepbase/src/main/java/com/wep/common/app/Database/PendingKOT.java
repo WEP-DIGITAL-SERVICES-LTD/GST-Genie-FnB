@@ -22,10 +22,10 @@ public class PendingKOT {
     String strItemName, strTime , HSNCode , POS , SupplyType,UOM;
     int iTokenNumber, iItemNumber, iTableNumber, iSubUdfNumber, iDeptCode, iTableSplitNo, iPrintKOTStatus,
             iCategCode, iKitchenCode, iEmployeeId, iCustId, iTaxType, iOrderMode, iIsCheckedOut;
-    float fQuantity,  fTaxPercent,
-            fDiscountPercent, fDiscountAmount, fModifierAmount, fServiceTaxPercent;
-    float cessRate, IGSTRate;
-    double  originalrate,fRate, fAmount,taxableValue, fServiceTaxAmount, fTaxAmount, cessAmount,IGSTAmount;
+    double dQuantity, dTaxPercent, dblTotalAdditionalCessAmount, dblAdditionalCessAmount, dblCessAmountPerUnit,
+            dDiscountPercent, dDiscountAmount, dModifierAmount, dServiceTaxPercent;
+    double cessRate, IGSTRate;
+    double  originalrate, dRate, dAmount,taxableValue, fServiceTaxAmount, fTaxAmount, cessAmount,IGSTAmount;
 
     // Default constructor
     public PendingKOT() {
@@ -42,18 +42,18 @@ public class PendingKOT {
         this.iSubUdfNumber = 0;
         this.iTableNumber = 0;
         this.iTokenNumber = 0;
-        this.fAmount = 0;
-        this.fDiscountAmount = 0;
-        this.fDiscountPercent = 0;
-        this.fQuantity = 0;
-        this.fRate = 0;
+        this.dAmount = 0;
+        this.dDiscountAmount = 0;
+        this.dDiscountPercent = 0;
+        this.dQuantity = 0;
+        this.dRate = 0;
         this.fTaxAmount = 0;
         this.taxableValue = 0;
-        this.fTaxPercent = 0;
+        this.dTaxPercent = 0;
         this.iTaxType = 0;
-        this.fModifierAmount = 0;
+        this.dModifierAmount = 0;
         this.fServiceTaxAmount = 0;
-        this.fServiceTaxPercent = 0;
+        this.dServiceTaxPercent = 0;
         this.iOrderMode = 0;
         this.iIsCheckedOut = 0;
         this.iTableSplitNo = 0;
@@ -69,9 +69,9 @@ public class PendingKOT {
 
     // Parameterized constructor
     public PendingKOT(String ItemName, String Time, int CategCode, int CustId, int DeptCode, int EmployeeId,
-                      int ItemNumber, int KitchenCode, int SubUdfNumber, int TableNumber, int TokenNumber, float Amount,
-                      float DiscountAmount, float DiscountPercent, float Quantity, float Rate, double TaxAmount, float TaxPercent,
-                      int TaxType, float ModifierAmount, double ServiceTaxAmount, float ServiceTaxPercent, int OrderMode,
+                      int ItemNumber, int KitchenCode, int SubUdfNumber, int TableNumber, int TokenNumber, double Amount,
+                      double DiscountAmount, double DiscountPercent, double Quantity, double Rate, double TaxAmount, double TaxPercent,
+                      int TaxType, double ModifierAmount, double ServiceTaxAmount, double ServiceTaxPercent, int OrderMode,
                       int IsCheckedOut, int TableSplitNo, String hsn,String pos, int PrintKOTStatus) {
         this.strItemName = ItemName;
         this.strTime = Time;
@@ -84,23 +84,47 @@ public class PendingKOT {
         this.iSubUdfNumber = SubUdfNumber;
         this.iTableNumber = TableNumber;
         this.iTokenNumber = TokenNumber;
-        this.fAmount = Amount;
-        this.fDiscountAmount = DiscountAmount;
-        this.fDiscountPercent = DiscountPercent;
-        this.fQuantity = Quantity;
-        this.fRate = Rate;
+        this.dAmount = Amount;
+        this.dDiscountAmount = DiscountAmount;
+        this.dDiscountPercent = DiscountPercent;
+        this.dQuantity = Quantity;
+        this.dRate = Rate;
         this.fTaxAmount = TaxAmount;
-        this.fTaxPercent = TaxPercent;
+        this.dTaxPercent = TaxPercent;
         this.iTaxType = TaxType;
-        this.fModifierAmount = ModifierAmount;
+        this.dModifierAmount = ModifierAmount;
         this.fServiceTaxAmount = ServiceTaxAmount;
-        this.fServiceTaxPercent = ServiceTaxPercent;
+        this.dServiceTaxPercent = ServiceTaxPercent;
         this.iOrderMode = OrderMode;
         this.iIsCheckedOut = IsCheckedOut;
         this.iTableSplitNo = TableSplitNo;
         this.HSNCode = hsn;
         this.POS=pos;
         this.iPrintKOTStatus = PrintKOTStatus;
+    }
+
+    public double getDblCessAmountPerUnit() {
+        return dblCessAmountPerUnit;
+    }
+
+    public void setDblCessAmountPerUnit(double dblCessAmountPerUnit) {
+        this.dblCessAmountPerUnit = dblCessAmountPerUnit;
+    }
+
+    public double getDblTotalAdditionalCessAmount() {
+        return dblTotalAdditionalCessAmount;
+    }
+
+    public void setDblTotalAdditionalCessAmount(double dblTotalAdditionalCessAmount) {
+        this.dblTotalAdditionalCessAmount = dblTotalAdditionalCessAmount;
+    }
+
+    public double getDblAdditionalCessAmount() {
+        return dblAdditionalCessAmount;
+    }
+
+    public void setDblAdditionalCessAmount(double dblAdditionalCessAmount) {
+        this.dblAdditionalCessAmount = dblAdditionalCessAmount;
     }
 
     public double getTaxableValue() {
@@ -127,11 +151,11 @@ public class PendingKOT {
         this.UOM = UOM;
     }
 
-    public float getCessRate() {
+    public double getCessRate() {
         return cessRate;
     }
 
-    public void setCessRate(float cessRate) {
+    public void setCessRate(double cessRate) {
         this.cessRate = cessRate;
     }
 
@@ -143,11 +167,11 @@ public class PendingKOT {
         this.cessAmount = cessAmount;
     }
 
-    public float getIGSTRate() {
+    public double getIGSTRate() {
         return IGSTRate;
     }
 
-    public void setIGSTRate(float IGSTRate) {
+    public void setIGSTRate(double IGSTRate) {
         this.IGSTRate = IGSTRate;
     }
 
@@ -248,27 +272,27 @@ public class PendingKOT {
 
     // getting Rate
     public double getRate() {
-        return this.fRate;
+        return this.dRate;
     }
 
     // getting Amount
     public double getAmount() {
-        return this.fAmount;
+        return this.dAmount;
     }
 
     // getting DiscountAmount
-    public float getDiscountAmount() {
-        return this.fDiscountAmount;
+    public double getDiscountAmount() {
+        return this.dDiscountAmount;
     }
 
     // getting DiscountPercent
-    public float getDiscountPercent() {
-        return this.fDiscountPercent;
+    public double getDiscountPercent() {
+        return this.dDiscountPercent;
     }
 
     // getting Quantity
-    public float getQuantity() {
-        return this.fQuantity;
+    public double getQuantity() {
+        return this.dQuantity;
     }
 
     // getting TaxAmount
@@ -277,8 +301,8 @@ public class PendingKOT {
     }
 
     // getting TaxPercent
-    public float getTaxPercent() {
-        return this.fTaxPercent;
+    public double getTaxPercent() {
+        return this.dTaxPercent;
     }
 
     // getting TaxType
@@ -287,8 +311,8 @@ public class PendingKOT {
     }
 
     // getting ModifierAmount
-    public float getModifierAmount() {
-        return this.fModifierAmount;
+    public double getModifierAmount() {
+        return this.dModifierAmount;
     }
 
     // getting ServiceTaxAmount
@@ -297,8 +321,8 @@ public class PendingKOT {
     }
 
     // getting TaxPercent
-    public float getServiceTaxPercent() {
-        return this.fServiceTaxPercent;
+    public double getServiceTaxPercent() {
+        return this.dServiceTaxPercent;
     }
 
     // getting OrderMode
@@ -373,27 +397,27 @@ public class PendingKOT {
 
     // setting Rate
     public void setRate(double Rate) {
-        this.fRate = Rate;
+        this.dRate = Rate;
     }
 
     // setting Amount
     public void setAmount(double Amount) {
-        this.fAmount = Amount;
+        this.dAmount = Amount;
     }
 
     // setting DiscountAmount
-    public void setDiscountAmount(float DiscountAmount) {
-        this.fDiscountAmount = DiscountAmount;
+    public void setDiscountAmount(double DiscountAmount) {
+        this.dDiscountAmount = DiscountAmount;
     }
 
     // setting DiscountPercent
-    public void setDiscountPercent(float DiscountPercent) {
-        this.fDiscountPercent = DiscountPercent;
+    public void setDiscountPercent(double DiscountPercent) {
+        this.dDiscountPercent = DiscountPercent;
     }
 
     // setting Quantity
-    public void setQuantity(float Quantity) {
-        this.fQuantity = Quantity;
+    public void setQuantity(double Quantity) {
+        this.dQuantity = Quantity;
     }
 
     // setting TaxAmount
@@ -402,8 +426,8 @@ public class PendingKOT {
     }
 
     // setting TaxPercent
-    public void setTaxPercent(float TaxPercent) {
-        this.fTaxPercent = TaxPercent;
+    public void setTaxPercent(double TaxPercent) {
+        this.dTaxPercent = TaxPercent;
     }
 
     // setting TaxType
@@ -412,8 +436,8 @@ public class PendingKOT {
     }
 
     // setting ModifierAmount
-    public void setModifierAmount(float ModifierAmount) {
-        this.fModifierAmount = ModifierAmount;
+    public void setModifierAmount(double ModifierAmount) {
+        this.dModifierAmount = ModifierAmount;
     }
 
     // setting TaxAmount
@@ -422,8 +446,8 @@ public class PendingKOT {
     }
 
     // setting TaxPercent
-    public void setServiceTaxPercent(float ServiceTaxPercent) {
-        this.fServiceTaxPercent = ServiceTaxPercent;
+    public void setServiceTaxPercent(double ServiceTaxPercent) {
+        this.dServiceTaxPercent = ServiceTaxPercent;
     }
 
     // setting OrderMode

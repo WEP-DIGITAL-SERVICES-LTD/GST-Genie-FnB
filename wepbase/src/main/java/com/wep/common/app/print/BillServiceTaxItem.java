@@ -15,10 +15,11 @@ public class BillServiceTaxItem implements Serializable {
     public BillServiceTaxItem() {
     }
 
-    public BillServiceTaxItem(String txName, double percent, double price) {
+    public BillServiceTaxItem(String txName, double percent, double price, double pricePerUnit) {
         this.txName = txName;
         this.percent = percent;
         this.price = price;
+        this.pricePerUnit = pricePerUnit;
     }
 
     public double getPricePerUnit() {

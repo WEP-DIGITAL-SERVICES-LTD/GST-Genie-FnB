@@ -964,20 +964,52 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     // richa_2012
-    String QUERY_CREATE_TABLE_Outward_Supply_Ledger = "CREATE TABLE " + TBL_OUTWARD_SUPPLY_LEDGER +
-            "( " + KEY_GSTIN + " TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode + " TEXT, " + KEY_InvoiceNo + " TEXT, " +
-            KEY_InvoiceDate + " TEXT, " + KEY_SupplyType + " TEXT, " +
-            KEY_BusinessType + " TEXT, " + KEY_TaxationType + " TEXT, " + KEY_HSNCode + " TEXT, "
-            + KEY_ItemNumber + " NUMERIC, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, "
-            +KEY_OriginalRate+" REAL, "+
-            KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_Amount + " REAL, " +KEY_IsReverseTaxEnabled + " TEXT, " + KEY_IGSTRate + " REAL," +
-            KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," +
-            KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," + KEY_SALES_MAN_ID + " TEXT," +
-            KEY_SubTotal + " REAl, " + KEY_BillingMode + " TEXT, " + KEY_ServiceTaxAmount + " REAL, " +
-            KEY_ServiceTaxPercent + " REAL," + KEY_ModifierAmount + " REAL, " + KEY_TaxType + " NUMERIC, " +
-            KEY_KitchenCode + " NUMERIC, " + KEY_CategoryCode + " NUMERIC, " + KEY_DepartmentCode + " NUMERIC, " +
-            KEY_DiscountPercent + " REAL, " + KEY_DiscountAmount + " REAL, " + KEY_TaxAmount + " REAL, " + KEY_BillStatus+" INTEGER, "+
-            KEY_TaxPercent + " REAL,"+ KEY_ONLINE_ORDER_NO + " TEXT)";
+    String QUERY_CREATE_TABLE_Outward_Supply_Ledger = "CREATE TABLE " + TBL_OUTWARD_SUPPLY_LEDGER + "( "
+            + KEY_GSTIN + " TEXT, "
+            + KEY_CustName + " TEXT, "
+            + KEY_CustStateCode + " TEXT, "
+            + KEY_InvoiceNo + " TEXT, "
+            + KEY_InvoiceDate + " TEXT, "
+            + KEY_SupplyType + " TEXT, "
+            + KEY_BusinessType + " TEXT, "
+            + KEY_TaxationType + " TEXT, "
+            + KEY_HSNCode + " TEXT, "
+            + KEY_ItemNumber + " NUMERIC, "
+            + KEY_ItemName + " TEXT, "
+            + KEY_Quantity + " REAL, "
+            + KEY_UOM + " TEXT, "
+            + KEY_OriginalRate+" REAL, "
+            + KEY_Value + " REAL, "
+            + KEY_TaxableValue + " REAL, "
+            + KEY_Amount + " REAL, "
+            + KEY_IsReverseTaxEnabled + " TEXT, "
+            + KEY_IGSTRate + " REAL,"
+            + KEY_IGSTAmount + " REAL,"
+            + KEY_CGSTRate + " REAL,"
+            + KEY_CGSTAmount + " REAL, "
+            + KEY_SGSTRate + " REAL,"
+            + KEY_SGSTAmount + " REAL,"
+            + KEY_cessRate + " REAL,"
+            + KEY_cessAmount + " REAL,"
+            + KEY_cessAmountPerUnit + " REAL,"
+            + KEY_additionalCessAmount + " REAL,"
+            + KEY_TotalAdditionalCessAmount + " REAL,"
+            + KEY_SALES_MAN_ID + " TEXT,"
+            + KEY_SubTotal + " REAl, "
+            + KEY_BillingMode + " TEXT, "
+            + KEY_ServiceTaxAmount + " REAL, "
+            + KEY_ServiceTaxPercent + " REAL,"
+            + KEY_ModifierAmount + " REAL, "
+            + KEY_TaxType + " NUMERIC, "
+            + KEY_KitchenCode + " NUMERIC, "
+            + KEY_CategoryCode + " NUMERIC, "
+            + KEY_DepartmentCode + " NUMERIC, "
+            + KEY_DiscountPercent + " REAL, "
+            + KEY_DiscountAmount + " REAL, "
+            + KEY_TaxAmount + " REAL, "
+            + KEY_BillStatus+" INTEGER, "
+            + KEY_TaxPercent + " REAL,"
+            + KEY_ONLINE_ORDER_NO + " TEXT)";
 
     String QUERY_CREATE_TABLE_Preview_Outward_Supply_Ledger = "CREATE TABLE " + TBL_PREVIEW_OUTWARD_SUPPLY_LEDGER +
             "( " + KEY_GSTIN + " TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode + " TEXT, " + KEY_InvoiceNo + " TEXT, " +
@@ -1370,7 +1402,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_IGSTRate + " REAL, "
             + KEY_IGSTAmount + " REAL, "
             + KEY_cessRate + " REAL, "
-            + KEY_cessAmount + " REAL, "
+            + KEY_cessAmount + " REAL,"
+            + KEY_cessAmountPerUnit + " REAL,"
+            + KEY_additionalCessAmount + " REAL,"
+            + KEY_TotalAdditionalCessAmount + " REAL,"
             + KEY_ModifierAmount + " REAL, "
             + KEY_TaxType + " NUMERIC, "
             + KEY_Amount + " REAL, " +
@@ -5516,6 +5551,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_IGSTAmount, objPendingKOT.getIGSTAmount());
         cvDbValues.put(KEY_cessRate, objPendingKOT.getCessRate());
         cvDbValues.put(KEY_cessAmount, objPendingKOT.getCessAmount());
+        cvDbValues.put(KEY_cessAmountPerUnit, objPendingKOT.getDblCessAmountPerUnit());
+        cvDbValues.put(KEY_additionalCessAmount, objPendingKOT.getDblAdditionalCessAmount());
+        cvDbValues.put(KEY_TotalAdditionalCessAmount, objPendingKOT.getDblTotalAdditionalCessAmount());
 
         return dbFNB.insert(TBL_PENDINGKOT, null, cvDbValues);
     }
@@ -5575,7 +5613,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public long updateKOTDineIn(int tblno, int tblsplitno,int ItemNo, float Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode
+    public long updateKOTDineIn(int tblno, int tblsplitno,int ItemNo, double Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode
             ,double IAmt, double cessAmt, double taxableValue, double discountAmt) {
         cvDbValues = new ContentValues();
         cvDbValues.put("Quantity", Qty);
@@ -6602,6 +6640,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_SGSTAmount, objBillItem.getSGSTAmount());
         cvDbValues.put(KEY_cessRate, objBillItem.getCessRate());
         cvDbValues.put(KEY_cessAmount, objBillItem.getCessAmount());
+        cvDbValues.put(KEY_cessAmountPerUnit, objBillItem.getDblCessAmountPerUnit());
+        cvDbValues.put(KEY_additionalCessAmount, objBillItem.getDblAdditionalCessAmount());
+        cvDbValues.put(KEY_TotalAdditionalCessAmount, objBillItem.getDblTotalAdditionalCessAmount());
         cvDbValues.put(KEY_SupplyType, objBillItem.getSupplyType());
         cvDbValues.put(KEY_SubTotal, objBillItem.getSubTotal());
         cvDbValues.put(KEY_CustName, objBillItem.getCustName());
@@ -7230,12 +7271,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String> getAllItemsName() {
         List<String> list = new ArrayList<String>();
         // Select All Query
-        String selectQuery = "SELECT  ItemName FROM " + TBL_ITEM_Outward;
+        String selectQuery = "SELECT ItemShortName FROM " + TBL_ITEM_Outward;
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                list.add(cursor.getString(cursor.getColumnIndex(KEY_ItemName)));// adding
+                list.add(cursor.getString(cursor.getColumnIndex(KEY_ItemShortName)));// adding
                 // 2nd
                 // column
                 // data
@@ -9550,9 +9591,9 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
                 while (cursor.moveToNext())
                 {
                     Items items = new Items(
-                            cursor.getString(cursor.getColumnIndex("ItemName")),
+                            cursor.getString(cursor.getColumnIndex("ItemShortName")),
                             cursor.getString(cursor.getColumnIndex("ImageUri")),
-                            cursor.getInt(cursor.getColumnIndex("MenuCode"))
+                            cursor.getInt(cursor.getColumnIndex("_id"))
                     );
                     list.add(items);
                 }
@@ -9944,12 +9985,42 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.rawQuery("Select SUM(cessAmount) as cessAmount, cessRate from " + TBL_BILLITEM +
-                    " where InvoiceNo = '" + InvoiceNo + "' AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"' GROUP BY cessRate", null);
+            cursor = db.rawQuery("Select SUM(cessAmount) as cessAmount, cessRate from " + TBL_OUTWARD_SUPPLY_LEDGER +
+                    " where cessAmountPerUnit = 0 AND InvoiceNo = '" + InvoiceNo + "' AND " + KEY_InvoiceDate + " LIKE '" + InvoiceDate + "' GROUP BY cessRate", null);
         }catch (Exception e){
             e.printStackTrace();
             cursor = null;
         }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    public Cursor getItemsForCessTaxAmountPrints(int InvoiceNo, String InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("Select SUM(cessAmount) as cessAmount, cessAmountPerUnit from " + TBL_OUTWARD_SUPPLY_LEDGER +
+                    " where cessRate = 0 AND InvoiceNo = '" + InvoiceNo + "' AND " + KEY_InvoiceDate + " LIKE '" + InvoiceDate + "' GROUP BY cessAmountPerUnit", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+        } finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    public Cursor getItemsForCessTaxAdditionalAmountPrints(int InvoiceNo, String InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("Select SUM(TotalAdditionalCessAmount) as "+KEY_TotalAdditionalCessAmount+", "+KEY_additionalCessAmount+" from " + TBL_OUTWARD_SUPPLY_LEDGER +
+                    " where InvoiceNo = '" + InvoiceNo + "' AND " + KEY_InvoiceDate + " LIKE '" + InvoiceDate + "' GROUP BY additionalCessAmount", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+        } finally {
             //db.close();
         }
         return cursor;
@@ -10084,6 +10155,9 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
             cvDbValues.put(KEY_BillStatus, objBillItem.getBillStatus());
             cvDbValues.put(KEY_ONLINE_ORDER_NO,objBillItem.getStrOnlineOrderNo());
+            cvDbValues.put(KEY_cessAmountPerUnit,objBillItem.getDblCessAmountPerUnit());
+            cvDbValues.put(KEY_additionalCessAmount,objBillItem.getDblAdditionalCessAmount());
+            cvDbValues.put(KEY_TotalAdditionalCessAmount,objBillItem.getDblTotalAdditionalCessAmount());
 //            cvDbValues.put(KEY_SALES_MAN_ID, objBillItem.getStrSalesManId());
 
             return db.insert(TBL_BILLITEM, null, cvDbValues);
@@ -10273,12 +10347,12 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         List<String> list = new ArrayList<String>();
         try{
             // Select All Query
-            String selectQuery = "SELECT  ItemName FROM " + TBL_ITEM_Outward;
+            String selectQuery = "SELECT ItemShortName FROM " + TBL_ITEM_Outward;
             Cursor cursor = db.rawQuery(selectQuery, null);// selectQuery,selectedArguments
             // looping through all rows and adding to list
             if (cursor.moveToFirst()) {
                 do {
-                    list.add(cursor.getString(cursor.getColumnIndex(KEY_ItemName)));// adding
+                    list.add(cursor.getString(cursor.getColumnIndex(KEY_ItemShortName)));// adding
                     // 2nd
                     // column
                     // data
