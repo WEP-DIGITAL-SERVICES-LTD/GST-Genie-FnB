@@ -4253,8 +4253,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         }
 
                         // cessTax Amount
-                        if (RowBillItem.getChildAt(26) != null) {
-                            TextView cessTaxAmount = (TextView) RowBillItem.getChildAt(26);
+                        if (RowBillItem.getChildAt(30) != null) {
+                            TextView cessTaxAmount = (TextView) RowBillItem.getChildAt(30);
                             double cessAmt = (Double.parseDouble(cessTaxAmount.getText().toString()));
                             pdfItemBean.setCessAmount(Double.parseDouble(String.format("%.2f",cessAmt)));
                         }

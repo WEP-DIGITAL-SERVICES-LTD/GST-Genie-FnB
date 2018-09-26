@@ -9150,8 +9150,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                         }
 
                         // cessTax Amount
-                        if (RowBillItem.getChildAt(26) != null) {
-                            TextView cessTaxAmount = (TextView) RowBillItem.getChildAt(26);
+                        if (RowBillItem.getChildAt(31) != null) {
+                            TextView cessTaxAmount = (TextView) RowBillItem.getChildAt(31);
                             double cessAmt = (Double.parseDouble(cessTaxAmount.getText().toString()));
                             pdfItemBean.setCessAmount(Double.parseDouble(String.format("%.2f",cessAmt)));
                         }
