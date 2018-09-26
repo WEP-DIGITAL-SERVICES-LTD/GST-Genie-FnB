@@ -19,9 +19,9 @@ package com.wep.common.app.Database;
 public class BillDetail {
 
 	// Private variables
-	String Custname, CustStateCode, POS,strDate, strTime, strUserId,BusinessType, Amount, GSTIN;
+	String Custname, CustStateCode, CustPhone, CustAddress, POS,strDate, strTime, strUserId,BusinessType, Amount, GSTIN;
 	int iBillNumber, iBillStatus, iCustId, iEmployeeId, iReprintCount, iTotalItems, iUserId;
-	String BillingMode, TableNo, TableSplitNo; // richa_2012
+	String BillingMode, TableNo, TableSplitNo, custPhone, custEmail;; // richa_2012
 	double   dblDeliveryCharge, dblTotalDiscountPercentage,dblTotalDiscountAmount;
 	double dblPettyCashPayment,dblCardPayment, dblCashPayment, dblCouponPayment, fChangePayment, dblWalletAmount, IGSTAmount, dblBillAmount;
 	double dBillAmount, CGSTAmount, SGSTAmount, cessAmount,  dblTotalTaxAmount, dblTotalServiceTaxAmount;
@@ -85,9 +85,6 @@ public class BillDetail {
 		this.strOnlineOrderNo = "";
 
 	}
-
-
-
 	// Parameterized Constructor
 
 
@@ -144,6 +141,38 @@ public class BillDetail {
 		this.dblRoundOff = dblRoundOff;
 		this.dPettyCashPayment = dPettyCashPayment;
 		SubTotal = subTotal;
+	}
+
+	public String getCustPhone() {
+		return CustPhone;
+	}
+
+	public void setCustPhone(String custPhone) {
+		CustPhone = custPhone;
+	}
+
+	public String getCustEmail() {
+		return custEmail;
+	}
+
+	public void setCustEmail(String custEmail) {
+		this.custEmail = custEmail;
+	}
+
+	public String getCustAddress() {
+		return CustAddress;
+	}
+
+	public void setCustAddress(String custAddress) {
+		CustAddress = custAddress;
+	}
+
+	public int getiCustId() {
+		return iCustId;
+	}
+
+	public void setiCustId(int iCustId) {
+		this.iCustId = iCustId;
 	}
 
 	public double getDblWalletAmount() {

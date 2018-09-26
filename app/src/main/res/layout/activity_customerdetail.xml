@@ -213,7 +213,7 @@
                                     android:layout_height="wrap_content"
                                     android:ems="5"
                                     android:singleLine="true"
-                                    android:hint="Address"
+                                    android:hint="abc@xyz.com"
                                     android:inputType="textEmailAddress"
                                     android:maxLength="100" />
                             </TableRow>

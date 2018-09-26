@@ -529,6 +529,15 @@
     <string name="clear">Clear</string>
     <string name="delete_bill">Delete Bill</string>
     <string name="reprint_bill">Reprint Bill</string>
+    <string name="view_bill">View Bill</string>
+    <string name="title_fragment_view_bill">View Bill</string>
+    <string name="total_taxable_value">Total Taxable Value</string>
+    <string name="sgst_amount">SGST Amount</string>
+    <string name="igst_amount">IGST Amount</string>
+    <string name="hsn">HSN</string>
+    <string name="email_id">Email Id</string>
+    <string name="customer_gstin">Customer GSTIN</string>
+    <string name="cust_phone_no">Phone No</string>
     //take away
     <string name="save_kot">Save KOT</string>
     <string name="print_save_kot">Print &amp; Save KOT</string>

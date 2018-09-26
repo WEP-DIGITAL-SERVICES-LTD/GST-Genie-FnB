@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/background_light"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <!-- <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:background="@drawable/side_nav_bar"
+        android:gravity="center"
+        android:orientation="horizontal" />-->
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:srcCompat="@mipmap/ic_view_bill" />
+
+        <TextView
+            android:id="@+id/tv_ViewBillTitle"
+            style="@style/TV_Title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:text="@string/title_fragment_view_bill"
+            android:textColor="@android:color/background_light"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="Enter Bill Number"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <EditText
+            style="@style/ET_Owner_Details"
+            android:id="@+id/etViewBillNumber"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:maxLength="6"
+            android:hint="Bill Number"
+            android:inputType="number" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:gravity="center"
+            android:text="Enter Bill Date"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <TextView
+            android:id="@+id/tvViewBillInvoiceDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:hint="dd-MM-yyyy"/>
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin1"
+            android:gravity="center"
+            android:id="@+id/btnCalenderViewBill"
+            android:background="@drawable/btn_calendar" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <Button
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/view"
+            android:id="@+id/btnViewBillView" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="@string/cust_name_title"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc"
+            android:background="@drawable/bottom_shape_draw" >
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_customer_name"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:enabled="false" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="@string/cust_phone_no"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc"
+            android:background="@drawable/bottom_shape_draw" >
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_customer_mobile"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:enabled="false" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="@string/customer_gstin"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc"
+            android:background="@drawable/bottom_shape_draw" >
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_customer_gstin"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:enabled="false" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05"
+            android:visibility="gone"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="@string/email_id"
+            android:visibility="gone"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc"
+            android:background="@drawable/bottom_shape_draw" >
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_customer_email"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:enabled="false" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_billing_sil_title_name"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="@string/name" />
+
+        <TextView
+            android:id="@+id/tv_billing_sil_title_hsn"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/hsn" />
+
+        <TextView
+            android:id="@+id/tv_billing_sil_title_mrp"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:text="@string/mrp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_billing_sil_title_rate"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:text="@string/rate" />
+
+        <TextView
+            android:id="@+id/tv_billing_sil_title_qty"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:text="@string/quantity" />
+
+        <TextView
+            android:id="@+id/tv_billing_sil_title_discount"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:text="@string/discount" />
+
+        <TextView
+            android:id="@+id/tv_billing_sil_title_amount"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/amount" />
+
+        <!--<TextView
+            android:id="@+id/tv_billing_sil_title_amount"
+            style="@style/TV_Billing_Screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/taxable_value" />-->
+
+      <!--  <ImageView
+            android:id="@+id/iv_billing_sil_title_remove_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:padding="5dp"
+            android:src="@mipmap/ic_remove" />-->
+
+    </TableRow>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_view_bill_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="7.5"
+        android:padding="6dp"
+        android:scrollbars="vertical" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_weight=".001"
+        android:background="@android:color/black" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+   <!-- <ListView
+        android:id="@+id/lsItemsData"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="9"
+        android:padding="6dp"
+        android:cacheColorHint="#ffffff">
+    </ListView>-->
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1.3">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:hint="@string/igst_amount"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_total_igst"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:hint="@string/cgst_amount"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_total_cgst"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_sgstAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:hint="@string/sgst_amount"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_total_sgst"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:hint="@string/cess_amount"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_total_cess"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:hint="@string/round_off"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_roundoff"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1.3">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:hint="@string/discount"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_total_discount"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:hint="@string/other_charges"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_other_charges"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:hint="@string/total_taxable_value"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_total_taxable_value"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:hint="@string/total_amount"
+            app:hintTextAppearance="@style/Text_Hint_Size_Inc">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_view_bill_total_bill_amount"
+                style="@style/ET_Customized"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:editable="false"
+                android:enabled="false"
+                android:text="0.00" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".05" />
+
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_weight=".001"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1.5">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:layout_margin="5dp"
+            android:text="@string/share"
+            android:id="@+id/btnViewBillShare" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:layout_margin="5dp"
+            android:text="@string/reprint_bill"
+            android:id="@+id/btnViewBilRePrintBill" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:layout_margin="5dp"
+            android:text="@string/clear"
+            android:id="@+id/btnViewBillClear" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:layout_margin="5dp"
+            android:text="@string/cancel"
+            android:id="@+id/btnViewBillClose" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+    </LinearLayout>
+
+</LinearLayout>

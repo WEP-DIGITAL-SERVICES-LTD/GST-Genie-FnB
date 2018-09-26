@@ -135,7 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_ItemName = "ItemName";
     private static final String KEY_SalesTax = "SalesTax";
     private static final String KEY_OtherTax = "OtherTax";
-    private static final String KEY_ItemNumber = "ItemNumber";
+    public static final String KEY_ItemId = "ItemNumber";
     public static final String KEY_Quantity = "Quantity";
     public static final String KEY_MinimumStock = "MinimumStock";
     public static final String KEY_Rate = "Rate";
@@ -143,8 +143,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TokenNumber = "TokenNumber";
     private static final String KEY_TokenNumber_SubNo = "TokenNumber_SubNo";
     private static final String KEY_Table_Split_No = "TableSplitNo";
-    private static final String KEY_DeliveryCharge = "DeliveryCharge";
-    private static final String KEY_BillAmount = "BillAmount";
+    public static final String KEY_DeliveryCharge = "DeliveryCharge";
+    public static final String KEY_BillAmount = "BillAmount";
     // private static final String KEY_InvoiceNo = "InvoiceNo";
     private static final String KEY_TotalItems = "TotalItems";
     private static final String KEY_UserId = "UserId";
@@ -175,13 +175,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // BillDetail
     private static final String KEY_TotalServiceTaxAmount = "TotalServiceTaxAmount";
-    private static final String KEY_BillStatus = "BillStatus";
+    public static final String KEY_BillStatus = "BillStatus";
     public static final String KEY_CardPayment = "CardPayment";
     public static final String KEY_CashPayment = "CashPayment";
     public static final String KEY_CouponPayment = "CouponPayment";
     public static final String KEY_WalletPayment = "WalletPayment";
     private static final String KEY_ReprintCount = "ReprintCount";
-    private static final String KEY_TotalDiscountAmount = "TotalDiscountAmount";
+    public static final String KEY_TotalDiscountAmount = "TotalDiscountAmount";
     private static final String KEY_TotalTaxAmount = "TotalTaxAmount";
     public static final String KEY_RewardPointsAmount = "RewardPointsAmount";
     public static final String KEY_AEPSAmount = "AEPSAmount";
@@ -329,7 +329,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_TakeAwayPrice = "TakeAwayPrice";
     private static final String KEY_SalesTaxPercent = "SalesTaxPercent";
     private static final String KEY_SerTaxPercent = "ServiceTaxPercent";
-    public static final String KEY_ItemId = "ItemId";
 
     // KOTModifier
     private static final String KEY_IsChargeable = "IsChargeable";
@@ -974,7 +973,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_BusinessType + " TEXT, "
             + KEY_TaxationType + " TEXT, "
             + KEY_HSNCode + " TEXT, "
-            + KEY_ItemNumber + " NUMERIC, "
+            + KEY_ItemId + " NUMERIC, "
             + KEY_ItemName + " TEXT, "
             + KEY_Quantity + " REAL, "
             + KEY_UOM + " TEXT, "
@@ -1015,7 +1014,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "( " + KEY_GSTIN + " TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode + " TEXT, " + KEY_InvoiceNo + " TEXT, " +
             KEY_InvoiceDate + " TEXT, " + KEY_SupplyType + " TEXT, " +
             KEY_BusinessType + " TEXT, " + KEY_TaxationType + " TEXT, " + KEY_HSNCode + " TEXT, "
-            + KEY_ItemNumber + " NUMERIC, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, "
+            + KEY_ItemId + " NUMERIC, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, "
             +KEY_OriginalRate+" REAL, "+  KEY_SALES_MAN_ID + " TEXT, " +
             KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_Amount + " REAL, " +KEY_IsReverseTaxEnabled + " TEXT, " + KEY_IGSTRate + " REAL," +
             KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," +
@@ -1061,6 +1060,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_MSWIPE_Amount + " REAL, "
             + KEY_PAYTM_WALLET + " REAL, "
             + KEY_CustId + " NUMERIC, "
+            + KEY_CustContactNumber + " TEXT, "
+            + KEY_CUST_EMAIL + " TEXT, "
             + KEY_DeliveryCharge + " REAL, "
             + KEY_TotalServiceTaxAmount + " REAL, "
             + KEY_EmployeeId + " NUMERIC,"
@@ -1417,7 +1418,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_EmployeeId + " NUMERIC," +
             KEY_ItemName + " TEXT,"
             + KEY_HSNCode + " TEXT, "
-            + KEY_ItemNumber + " NUMERIC,"
+            + KEY_ItemId + " NUMERIC,"
             + KEY_KitchenCode + " NUMERIC," +
             KEY_Quantity + " REAL, "
             + KEY_Rate + " REAL, "
@@ -5362,7 +5363,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(KEY_DepartmentCode, itemObject.getDeptCode());
         cv.put(KEY_CategoryCode, itemObject.getCategCode());
 
-        String whereClause = KEY_ItemNumber + " = " + itemObject.get_id();
+        String whereClause = KEY_ItemId + " = " + itemObject.get_id();
 
         long insertStatus = dbFNB.update(TBL_BILLITEM, cv, whereClause, null);
         return insertStatus;
@@ -6314,7 +6315,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public Cursor getBillDetail(int InvoiceNumber, String InvoiceDate) {
-        return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber+
+        SQLiteDatabase db = getWritableDatabase();
+        return db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber+
                 " AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null, null, null, null);
     }
     public Cursor getBillDetail_counter(int InvoiceNumber, String InvoiceDate) {
@@ -10209,7 +10211,10 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_RoundOff, objBillDetail.getfRoundOff());
             cvDbValues.put("PaidTotalPayment", objBillDetail.getPaidTotalPayment());
             cvDbValues.put("ChangePayment", objBillDetail.getChangePayment());
+            cvDbValues.put(KEY_GSTIN, objBillDetail.getGSTIN());
             cvDbValues.put(KEY_CustName, objBillDetail.getCustname());
+            cvDbValues.put(KEY_CustContactNumber, objBillDetail.getCustPhone());
+            cvDbValues.put(KEY_CUST_EMAIL, objBillDetail.getCustEmail());
             cvDbValues.put(KEY_CustStateCode, objBillDetail.getCustStateCode());
             cvDbValues.put(KEY_POS, objBillDetail.getPOS());
             cvDbValues.put(KEY_BusinessType, objBillDetail.getBusinessType());
@@ -10456,28 +10461,36 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
     }
 
     // -----update Reprint Count for duplicate bill print-----
-    public int updateBillRepintCounts(int InvoiceNo) {
+    public int updateBillRepintCounts(int InvoiceNo , String InvoiceDate) {
         SQLiteDatabase db = getWritableDatabase();
-        try{
-            Cursor result = getBillDetails(InvoiceNo);
+        Cursor result = null;
+        int status = -1;
+        try {
+            result = getBillDetail(InvoiceNo, InvoiceDate);
             if (result.moveToFirst()) {
                 cvDbValues = new ContentValues();
                 int iReprintCount = 0;
                 iReprintCount = result.getInt(result.getColumnIndex("ReprintCount"));
-                cvDbValues.put("ReprintCount", iReprintCount + 1);
-                return db.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+                cvDbValues.put(KEY_ReprintCount, iReprintCount + 1);
+                String whereClause = KEY_InvoiceNo + "=" + InvoiceNo + " AND " + KEY_InvoiceDate + " LIKE '" + InvoiceDate + "'";
+                status = db.update(TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, cvDbValues, whereClause, null);
 
             } else {
                 Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
-                return -1;
+                status = -1;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return -1;
+            status = -1;
 
-        }finally {
+        } finally {
             //db.close();
+            if (result != null) {
+                result.close();
+            }
         }
+
+        return status;
     }
 
     // -----Delete Items from Item Table-----

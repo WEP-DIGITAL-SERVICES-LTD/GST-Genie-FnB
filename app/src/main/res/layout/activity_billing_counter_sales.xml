@@ -939,23 +939,7 @@
                 android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
-                android:id="@+id/btn_DeleteBill"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/btn_marigin"
-                android:layout_marginRight="@dimen/btn_marigin"
-                android:layout_weight="1"
-                android:background="@drawable/background_btn"
-                android:gravity="center"
-                android:onClick="DeleteBill"
-                android:text="@string/delete_bill"
-                android:textAllCaps="false"
-                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
-                android:theme="@style/WepButtonWithMarigin" />
-
-
-            <com.wep.common.app.views.WepButton
+                android:visibility="gone"
                 android:id="@+id/btn_Reprint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -967,6 +951,38 @@
                 android:gravity="center"
                 android:onClick="ReprintBill"
                 android:text="@string/reprint_bill"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_ViewBill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/btn_marigin"
+                android:layout_marginRight="@dimen/btn_marigin"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="ReprintBill"
+                android:text="@string/view_bill"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_DeleteBill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/btn_marigin"
+                android:layout_marginRight="@dimen/btn_marigin"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="DeleteBill"
+                android:text="@string/delete_bill"
                 android:textAllCaps="false"
                 android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:theme="@style/WepButtonWithMarigin" />
