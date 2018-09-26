@@ -1285,6 +1285,7 @@
 
 
                 <com.wep.common.app.views.WepButton
+                    android:visibility="gone"
                     android:id="@+id/btn_Reprint"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -1296,6 +1297,21 @@
                     android:gravity="center"
                     android:onClick="ReprintBill"
                     android:text="Reprint Bill"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
+
+                <com.wep.common.app.views.WepButton
+                    android:id="@+id/btn_ViewBill"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/btn_marigin"
+                    android:layout_marginRight="@dimen/btn_marigin"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_btn"
+                    android:gravity="center"
+                    android:text="View Bill"
                     android:textAllCaps="false"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
