@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginRight="300dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_config_loyalty_title_loyalty_conv"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/amount_eligible_to_reward_pt" />
+
+            <EditText
+                android:id="@+id/et_config_loyalty_conversion"
+                style="@style/ET_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:hint="@string/please_enter_in_amount"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_config_loyalty_title_points"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/reward_points" />
+
+            <EditText
+                android:id="@+id/et_config_loyalty_points"
+                style="@style/ET_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:maxLength="6"
+                android:inputType="number"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_config_loyalty_amt_equivalent_title"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/amt_equivalent_to_one_reward_pts" />
+
+            <EditText
+                android:id="@+id/et_config_loyalty_amt_equivalent"
+                style="@style/ET_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_config_loyalty_min_to_redeem_title"
+                style="@style/TV_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/min_reward_pts_to_redeem" />
+
+            <EditText
+                android:id="@+id/et_config_loyalty_min_to_redeem"
+                style="@style/ET_Owner_Details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:layout_weight="1"
+                android:maxLength="6"
+                android:inputType="number"
+                android:singleLine="true" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight=".005"
+        android:background="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            />
+
+        <!--<Button
+            android:id="@+id/bt_config_loyalty_add"
+            style="@style/Button_Login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:text="@string/add" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:visibility="gone"/>-->
+
+        <Button
+            android:background="@drawable/background_btn"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:id="@+id/bt_config_loyalty_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/update" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:background="@drawable/background_btn"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:id="@+id/bt_config_loyalty_clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/clear" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5" />
+
+    </LinearLayout>
+</LinearLayout>

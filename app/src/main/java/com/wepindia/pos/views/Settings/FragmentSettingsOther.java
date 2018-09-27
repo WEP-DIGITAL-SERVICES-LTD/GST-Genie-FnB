@@ -40,6 +40,7 @@ public class FragmentSettingsOther extends Fragment {
     RadioButton rbCummulativeHeadingEnable, rbCummulativeHeadingDisable; // richa_2012
     RadioButton rbTableSplitingEnable, rbTableSplitingDisable;
     RadioButton rb_others_settings_share_bill_enable, rb_others_settings_share_bill_disable;
+    RadioButton rbRewardPointsEnable, rbRewardPointsDisable;
     BillSetting objBillSettings = new BillSetting();
     Button btnApplyOtherSettings,btnCloseOtherSettings;
     Button btnApply, btnClose;
@@ -154,6 +155,9 @@ public class FragmentSettingsOther extends Fragment {
 
         rb_others_settings_share_bill_enable = (RadioButton) view.findViewById(R.id.rb_others_settings_share_bill_enable);
         rb_others_settings_share_bill_disable = (RadioButton) view.findViewById(R.id.rb_others_settings_share_bill_disable);
+
+        rbRewardPointsEnable = (RadioButton) view.findViewById(R.id.rbRewardPointsEnable);
+        rbRewardPointsDisable = (RadioButton) view.findViewById(R.id.rbRewardPointsDisable);
 
         rbEnvironment_Production = (RadioButton) view.findViewById(R.id.rbEnvironment_Production);
         rbEnvironment_Demo = (RadioButton) view.findViewById(R.id.rbEnvironment_Demo);
@@ -317,7 +321,12 @@ public class FragmentSettingsOther extends Fragment {
                 rbBillAmountRoundOffDisable.setChecked(true);
             }
 
-
+            // Reward Points
+            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex(DatabaseHandler.KEY_RewardPoints)) == 1) {
+                rbRewardPointsEnable.setChecked(true);
+            } else {
+                rbRewardPointsDisable.setChecked(true);
+            }
 
         } else {
             Log.d("OtherSettings", "No data in BillSettings table");
@@ -334,7 +343,7 @@ public class FragmentSettingsOther extends Fragment {
         int fastBillingMode = 0, iItemNoReset = 0, iPrintPreview = 0, iTableSpliting = 0;
         int CummulativeHeadingEnable = 0, Jurisdiction = 0, shareBill = 0; //richa_2012
         int environment =1;
-        int printOwnerDetail = 0, boldHeader = 0, printService = 0, billAmountRounfOff = 0;
+        int printOwnerDetail = 0, boldHeader = 0, printService = 0, billAmountRounfOff = 0, rewardPoints = 0;
 
         // Date And Time
         if (rbDateTimeAuto.isChecked() == true) {
@@ -468,6 +477,13 @@ public class FragmentSettingsOther extends Fragment {
             billAmountRounfOff = 0;
         }
 
+        // Reward Points
+        if (rbRewardPointsEnable.isChecked() == true) {
+            rewardPoints = 1;
+        } else {
+            rewardPoints = 0;
+        }
+
         // Initialize all the settings variable
         objBillSettings.setLoginWith(0);
         objBillSettings.setDateAndTime(iDateAndTime);
@@ -492,6 +508,7 @@ public class FragmentSettingsOther extends Fragment {
         objBillSettings.setiJurisdictionsPrintStatus(Jurisdiction);
         objBillSettings.setShareBill(shareBill);
         objBillSettings.setEnvironment(environment);
+        objBillSettings.setRewardPoints(rewardPoints);
 
         objBillSettings.setPrintOwnerDetail(printOwnerDetail);
         objBillSettings.setBoldHeader(boldHeader);

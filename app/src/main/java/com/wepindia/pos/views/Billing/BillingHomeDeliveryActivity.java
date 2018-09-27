@@ -139,8 +139,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     DecimalFormat df_2, df_3;
     Pattern p = Pattern.compile("^(-?[0-9]+[\\.\\,][0-9]{1,2})?[0-9]*$");
     int CUSTOMER_FOUND =0;
-    int PRINTOWNERDETAIL = 0, BOLDHEADER = 0, PRINTSERVICE = 0, BILLAMOUNTROUNDOFF = 0,isForwardTaxEnabled = 1;
+    int PRINTOWNERDETAIL = 0, BOLDHEADER = 0, PRINTSERVICE = 0, BILLAMOUNTROUNDOFF = 0,isForwardTaxEnabled = 1, REWARD_POINTS = 0;
     int AMOUNTPRINTINNEXTLINE = 0;
+    double RewardPtToAmt = 0, amountToRewardPoints = 0, RewardPoints = 0;
 
 
     private TextView tvServiceTax_text;
@@ -362,6 +363,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             IntializeViewVariables();
             getScreenResolutionWidthType(checkScreenResolutionWidthType(this));
             ClearAll();
+            mGetRewardDetails();
             crsrSettings = db.getBillSettings();
             if (crsrSettings.moveToFirst()) {
                 BUSINESS_DATE = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
@@ -373,6 +375,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
                 JURISDICTIONS_PRINT_STATUS = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS_STATUS));
                 SHAREBILL = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_ShareBill));
+                REWARD_POINTS = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_RewardPoints));
 
                 if (crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS)) != null)
                     strJurisdictionsPrint = crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS));
@@ -728,6 +731,24 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         {
             e.printStackTrace();
         }
+    }
+
+    private void mGetRewardDetails() {
+        Cursor cursor = null;
+        try {
+
+            cursor = db.getRewardPointsConfiguration();
+            if (cursor != null && cursor.moveToNext()) {
+                RewardPtToAmt = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPointsToAmt));
+                amountToRewardPoints = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_AmtToPt));
+                RewardPoints = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPoints));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e + "");
+        } finally {
+            cursor.close();
+        }
+
     }
 
     private static int checkScreenResolutionWidthType(Context context) {
@@ -5350,20 +5371,46 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
-        if (edtCustId.getText().toString().equalsIgnoreCase("") || edtCustId.getText().toString().equalsIgnoreCase("0")) {
-        } else if (dblPettyCashPayment >0)
-        {
-            iCustId = Integer.valueOf(edtCustId.getText().toString());
-            double fTotalTransaction = db.getCustomerTotalTransaction(iCustId);
-            double fCreditAmount = db.getCustomerCreditAmount(iCustId);
-            fCreditAmount = fCreditAmount - dblPettyCashPayment;
-            fTotalTransaction += Double.parseDouble(tvBillAmount.getText().toString());
+        if (lResult > 0) {
 
-            long lResult1 = db.updateCustomerTransaction(iCustId,
-                    dblPettyCashPayment, fTotalTransaction, fCreditAmount);
+            if (!String.valueOf(iCustId).equalsIgnoreCase("") || !String.valueOf(iCustId).equalsIgnoreCase("0")) {
 
-            if (lResult1 > -1 && dblPettyCashPayment > 0) {
-                mStoreCustomerPassbookData(iCustId, dblPettyCashPayment, tvBillNumber.getText().toString());
+                iCustId = Integer.valueOf(edtCustId.getText().toString());
+
+                Cursor cursor = db.getCustomer(iCustId);
+                try {
+                    double totalBillAmount = Double.parseDouble(tvBillAmount.getText().toString());
+                    if (cursor != null && cursor.moveToFirst()) {
+                        double fTotalTransaction = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_TotalTransaction));
+                        double fCreditAmount = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CreditAmount));
+                        double dblLatTransaction = 0;
+                        if (dblPettyCashPayment > 0)
+                            dblLatTransaction = dblPettyCashPayment;
+                        else
+                            dblLatTransaction = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_LastTransaction));
+                        fCreditAmount = fCreditAmount - dblPettyCashPayment;
+                        fTotalTransaction += dblPettyCashPayment;
+                        int rewardPointsAccumulated = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPointsAccumulated));
+                        if (REWARD_POINTS == 1) {
+                            if (dblRewardPointsAmount <= 0) {
+                                rewardPointsAccumulated += Math.abs((RewardPoints / amountToRewardPoints) * totalBillAmount);
+                            } else {
+                                rewardPointsAccumulated -= dblRewardPointsAmount / RewardPtToAmt;
+                            }
+                        }
+                        long lResult1 = db.updateCustomerTransaction(iCustId,  Double.parseDouble(String.format("%.2f", dblLatTransaction)), Double.parseDouble(String.format("%.2f", fTotalTransaction)),
+                                fCreditAmount, rewardPointsAccumulated);
+                        if (lResult1 > -1 && dblPettyCashPayment > 0) {
+                            mStoreCustomerPassbookData(iCustId, dblPettyCashPayment, tvBillNumber.getText().toString());
+                        }
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on updating the customer data." + ex.getMessage());
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                }
             }
         }
 

@@ -25,14 +25,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
 
                     <FrameLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_weight="1.2">
+                        android:layout_margin="16dp"
+                        android:layout_weight="1">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -251,11 +250,10 @@
                     </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_weight="0.8">
+                        android:layout_margin="16dp"
+                        android:layout_weight="1">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -267,7 +265,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
-
                                 android:text="Tax " />
 
                             <RadioGroup
@@ -594,6 +591,46 @@
                             </RadioGroup>
 
                         </LinearLayout>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="16dp"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Reward Points" />
+
+                            <RadioGroup
+                                android:id="@+id/rgRewardPoints"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rbRewardPointsEnable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Enable" />
+
+                                <RadioButton
+                                    android:id="@+id/rbRewardPointsDisable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Disable" />
+                            </RadioGroup>
+
+                        </LinearLayout>
+
                     </FrameLayout>
 
                 </LinearLayout>

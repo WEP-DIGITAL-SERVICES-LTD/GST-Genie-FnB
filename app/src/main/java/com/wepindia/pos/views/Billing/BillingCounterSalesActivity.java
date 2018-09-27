@@ -134,7 +134,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     String tx ="", strJurisdictionsPrint = "";
     int CUSTOMER_FOUND =0;
     int PRINTOWNERDETAIL = 0, BOLDHEADER = 0, PRINTSERVICE = 0, BILLAMOUNTROUNDOFF = 0, isForwardTaxEnabled = 1, JURISDICTIONS_PRINT_STATUS = 0;
-    int AMOUNTPRINTINNEXTLINE = 0;
+    int AMOUNTPRINTINNEXTLINE = 0, REWARD_POINTS = 0;
     boolean REVERSETAX = false;
     boolean ROUNDOFFAMOUNT = false;
     DecimalFormat df_2, df_3;
@@ -225,6 +225,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             dblChangePayment = 0, dblRoundOfValue = 0, dblOtherCharges = 0,
             dblRewardPointsAmount = 0, dblAEPSAmount = 0, dblMSwipeAmount = 0, dblPaytmAmount = 0;
     int  PRINT_DISCOUNT = 0, SHAREBILL = 0;
+    double RewardPtToAmt = 0, amountToRewardPoints = 0, RewardPoints = 0;
     boolean trainingMode = false;
     String custPhone = "", OWNERPOS = "", BUSINESS_DATE = "";
     TVSPrinterBaseActivity tvsPrinterBaseActivity;
@@ -253,6 +254,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         onClickEvents();
         init();
         mGetOwnerPos();
+        mGetRewardDetails();
 
         sharedPreferences = Preferences.getSharedPreferencesForPrint(BillingCounterSalesActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -1110,6 +1112,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 isForwardTaxEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("Tax"));
 
                 JURISDICTIONS_PRINT_STATUS = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_JURISDICTIONS_STATUS));
+                REWARD_POINTS = crsrSettings.getInt(crsrSettings.getColumnIndex(DatabaseHandler.KEY_RewardPoints));
 
                 if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
                     REVERSETAX = true;
@@ -3558,7 +3561,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
      *
      * @param TenderType : Type of tender, 1 - Pay cash, 2 - PayBill Screen payment
      *************************************************************************************************************************************/
-    private void InsertBillDetail(int TenderType) {
+    private void  InsertBillDetail(int TenderType) {
 
         // Inserted Row Id in database table
         long lResult = 0;
@@ -3869,7 +3872,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
-        if (String.valueOf(customerId).equalsIgnoreCase("") || String.valueOf(customerId).equalsIgnoreCase("0"))
+      /*  if (String.valueOf(customerId).equalsIgnoreCase("") || String.valueOf(customerId).equalsIgnoreCase("0"))
         {
             // No customer Details, do nothing
         }else if (dblPettyCashPayment >0)
@@ -3886,10 +3889,68 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if (lResult1 > -1 && dblPettyCashPayment > 0) {
                 mStoreCustomerPassbookData(iCustId, dblPettyCashPayment, tvBillNumber.getText().toString());
             }
+        }*/
+
+        if (lResult > 0) {
+
+            if (!String.valueOf(customerId).equalsIgnoreCase("") || !String.valueOf(customerId).equalsIgnoreCase("0")) {
+                Cursor cursor = db.getCustomer(Integer.parseInt(customerId));
+                try {
+                    double totalBillAmount = Double.parseDouble(tvBillAmount.getText().toString());
+                    if (cursor != null && cursor.moveToFirst()) {
+                        double fTotalTransaction = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_TotalTransaction));
+                        double fCreditAmount = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CreditAmount));
+                        double dblLatTransaction = 0;
+                        if (dblPettyCashPayment > 0)
+                            dblLatTransaction = dblPettyCashPayment;
+                        else
+                            dblLatTransaction = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_LastTransaction));
+                        fCreditAmount = fCreditAmount - dblPettyCashPayment;
+                        fTotalTransaction += dblPettyCashPayment;
+                        int rewardPointsAccumulated = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPointsAccumulated));
+                        if (REWARD_POINTS == 1) {
+                            if (dblRewardPointsAmount <= 0) {
+                                rewardPointsAccumulated += Math.abs((RewardPoints / amountToRewardPoints) * totalBillAmount);
+                            } else {
+                                rewardPointsAccumulated -= dblRewardPointsAmount / RewardPtToAmt;
+                            }
+                        }
+                        long lResult1 = db.updateCustomerTransaction(Integer.parseInt(customerId),  Double.parseDouble(String.format("%.2f", dblLatTransaction)), Double.parseDouble(String.format("%.2f", fTotalTransaction)),
+                                fCreditAmount, rewardPointsAccumulated);
+                        if (lResult1 > -1 && dblPettyCashPayment > 0) {
+                            mStoreCustomerPassbookData(Integer.parseInt(customerId), dblPettyCashPayment, tvBillNumber.getText().toString());
+                        }
+                    }
+                } catch (Exception ex) {
+                    Log.i(TAG, "Error on updating the customer data." + ex.getMessage());
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                }
+            }
         }
 
         // Bill No Reset Configuration
         long Result2 = db.UpdateBillNoResetInvoiceNos(Integer.parseInt(tvBillNumber.getText().toString()));
+    }
+
+    private void mGetRewardDetails() {
+        Cursor cursor = null;
+        try {
+
+            cursor = db.getRewardPointsConfiguration();
+            if (cursor != null && cursor.moveToNext()) {
+                RewardPtToAmt = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPointsToAmt));
+                amountToRewardPoints = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_AmtToPt));
+                RewardPoints = cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPoints));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e + "");
+        } finally {
+            cursor.close();
+        }
+
     }
 
     //Customer passbook transaction implementation

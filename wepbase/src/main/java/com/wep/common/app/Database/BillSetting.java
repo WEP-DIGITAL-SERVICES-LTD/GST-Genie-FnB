@@ -23,7 +23,7 @@ public class BillSetting {
 			strDineIn3Caption;
 	int iDineIn1From, iDineIn1To, iDineIn2From, iDineIn2To, iDineIn3From, iDineIn3To;
 	int iKOTType, iPrintKOT, iMaxTables, iMaxWaiter, iPOSNumber, iServiceTaxType, iWeighScale;
-	int billAmountRounfOff;
+	int billAmountRounfOff, rewardPoints;
 	float fServiceTaxpercent;
 
 	String DineInCaption, CounterSalesCaption, TakeAwayCaption, HomeDeliveryCaption;
@@ -202,6 +202,14 @@ public class BillSetting {
 		this.HSNPrintenabled_out = HSNPrintenabled_out;
 		this.iJurisdictionsPrintStatus = iJurisdictionsPrintStatus;
 		this.shareBill = shareBill;
+	}
+
+	public int getRewardPoints() {
+		return rewardPoints;
+	}
+
+	public void setRewardPoints(int rewardPoints) {
+		this.rewardPoints = rewardPoints;
 	}
 
 	public int getShareBill() {

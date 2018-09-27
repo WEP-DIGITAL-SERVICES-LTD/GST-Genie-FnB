@@ -216,7 +216,7 @@ public class PayBillFragment extends DialogFragment implements PayBillViewHolder
         msgBox = new MessageDialog(myContext);
         try{
             setSettingsParam();
-//            getRewardPointConfiguration();
+            getRewardPointConfiguration();
             mpopulateRecievedData();
             paidAmountList = new ArrayList<>();
             CalculateDueAmount();
@@ -373,7 +373,7 @@ public class PayBillFragment extends DialogFragment implements PayBillViewHolder
             FORWARDTAX = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_Tax)); //1->forward, 0->reverse
 //            ROUNDOFF = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_RoundOff));
             ITEMWISEDISCOUNT = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_DiscountType)); // 1->itemwise , 0 ->billwise
-//            REWARDPOINTSENABLED = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPoints));
+            REWARDPOINTSENABLED = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_RewardPoints));
         }
     }
 
@@ -571,7 +571,7 @@ public class PayBillFragment extends DialogFragment implements PayBillViewHolder
                     payByDiscount();
                     break;
                 case  Constants.REWARDSPOINTS:
-                    //payByRewardPoints();
+                    payByRewardPoints();
                     break;
                 case  Constants.AEPS_UPI:
                     if (mWifi.isConnected())
@@ -959,6 +959,168 @@ public class PayBillFragment extends DialogFragment implements PayBillViewHolder
             }
         }
 
+    }
+
+    void getRewardPointConfiguration()
+    {
+        if(REWARDPOINTSENABLED ==1)
+        {
+            Cursor cursorReward = dbHandler.getRewardPointsConfiguration();
+            if(cursorReward!=null && cursorReward.moveToFirst())
+            {
+                REWARDPOINTS_LIMIT = cursorReward.getInt(cursorReward.getColumnIndex(DatabaseHandler.KEY_RewardPointsLimit));
+                REWARDPOINTINAMOUNT = cursorReward.getDouble(cursorReward.getColumnIndex(DatabaseHandler.KEY_RewardPointsToAmt));
+            }
+        }
+    }
+
+    public void payByRewardPoints()
+    {
+
+        if(REWARDPOINTSENABLED != 1)
+        {
+            msgBox.Show(getString(R.string.invalid_attempt), getString(R.string.reward_points_disabled_message));
+            return;
+        }
+        final double billamount = Double.parseDouble(tvBillAmount.getText().toString());
+        final double totalPaidAmount = Double.parseDouble(tvPaidTotalAmount.getText().toString());
+
+        if((billamount-totalPaidAmount) <=0 )
+        {
+            msgBox.Show(getString(R.string.note),getString(R.string.no_due_amount_message));
+            return;
+        }
+
+        LayoutInflater li = LayoutInflater.from(myContext);
+        View promptsView = li.inflate(R.layout.row_payment_reward_point_dialog, null);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(myContext);
+        alertDialogBuilder.setView(promptsView);
+
+        final AlertDialog dialog = alertDialogBuilder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+
+        final RelativeLayout rel6 = (RelativeLayout) promptsView.findViewById(R.id.rel6);
+        final EditText editTextMobile = (EditText) promptsView.findViewById(R.id.editTextMobile);
+        final EditText editTextName = (EditText) promptsView.findViewById(R.id.editTextName);
+        final EditText edtRewardPointAccumulated = (EditText) promptsView.findViewById(R.id.edt_reward_point_accumulated);
+        final EditText edtRewardPointLimit = (EditText) promptsView.findViewById(R.id.edt_reward_point_limit);
+        final EditText edtRewardPointsToRedeem = (EditText) promptsView.findViewById(R.id.edt_reward_point_to_redeem);
+        //final EditText editTextAmountAllowed = (EditText) promptsView.findViewById(R.id.editTextAmountAllowed);
+
+        final TextView textViewBalanceUpdate = (TextView) promptsView.findViewById(R.id.textViewBalanceUpdate);
+        final TextView textViewMessage = (TextView) promptsView.findViewById(R.id.textViewMessage);
+        edtRewardPointLimit.setText(""+REWARDPOINTS_LIMIT);
+        ImageView imgClose = (ImageView) promptsView.findViewById(R.id.iv_close);
+        Button btnRedeem = (Button) dialog.findViewById(R.id.btnOk) ;
+        imgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if(dialog.is)
+                dialog.dismiss();
+            }
+        });
+        editTextMobile.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                try {
+                    if (editTextMobile.getText().toString().length() == 10)
+                    {
+                        Cursor crsrCust = dbHandler.getCustomerbyPhone(editTextMobile.getText().toString());
+                        if (crsrCust.moveToFirst())
+                        {
+                            try{
+
+                               /* if(crsrCust.getInt(crsrCust.getColumnIndex(DatabaseHandler.KEY_isActive)) !=1)
+                                {
+                                    // inactive customer
+                                    msgBox.Show(getString(R.string.invalid_attempt), getString(R.string.inactive_customer_message));
+                                    return;
+                                }*/
+                                String custId = crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustId));
+                                String custName = crsrCust.getString(crsrCust.getColumnIndex(DatabaseHandler.KEY_CustName));
+                                int rewardpointAccumulated  = crsrCust.getInt(crsrCust.getColumnIndex(DatabaseHandler.KEY_RewardPointsAccumulated));
+
+                                if(rewardpointAccumulated ==0)
+                                {
+                                    msgBox.Show(getString(R.string.note), getString(R.string.no_reward_points_to_redeem));
+                                    return;
+                                }
+                                if(rewardpointAccumulated < REWARDPOINTS_LIMIT)
+                                {
+                                    msgBox.Show(getString(R.string.note), getString(R.string.accumulated_reward_points_less_than_limit));
+                                    textViewBalanceUpdate.setText("Accumulated reward points = "+rewardpointAccumulated);
+                                    return;
+                                }
+
+                                //int rewardpointsAvailableToRedeem = rewardpointAccumulated - REWARDPOINTS_LIMIT;
+                                int rewardpointsAvailableToRedeem = rewardpointAccumulated;
+                                int pointsRequiredforTotalBill = (int)((billamount-totalPaidAmount)/REWARDPOINTINAMOUNT);
+
+                                int effectiveAvailableRewardPointsToRedeem  = 0;
+                                if(rewardpointsAvailableToRedeem >= pointsRequiredforTotalBill)
+                                    effectiveAvailableRewardPointsToRedeem = pointsRequiredforTotalBill;
+                                else
+                                    effectiveAvailableRewardPointsToRedeem = rewardpointsAvailableToRedeem;
+
+                                editTextName.setText(custName);
+                                edtRewardPointAccumulated.setText(""+rewardpointAccumulated);
+                                //edtRewardPointLimit.setText(String.format("%.2f",REWARDPOINTS_LIMIT));
+                                edtRewardPointsToRedeem.setText(""+effectiveAvailableRewardPointsToRedeem);
+
+                            }catch (Exception e){
+                                Log.e(TAG, ""+e);
+                                //   msgBox.Show("", e+"");
+                            }
+                        }
+                        else
+                        {
+                            msgBox.Show("Error", "Customer is not Found, Please Add Customer");
+                        }
+                    }
+                    else
+                    {
+                        editTextName.setText("");
+                        edtRewardPointAccumulated.setText("0");
+                        //edtRewardPointLimit.setText("0.00");
+                        edtRewardPointsToRedeem.setText("0");
+                        textViewBalanceUpdate.setText("");
+                    }
+                } catch (Exception ex) {
+                    editTextName.setText("");
+                    edtRewardPointAccumulated.setText("0");
+                    //edtRewardPointLimit.setText("0.00");
+                    edtRewardPointsToRedeem.setText("0");
+                    textViewBalanceUpdate.setText("");
+                    msgBox.Show("Error", ex.getMessage());
+                    Log.e(TAG,""+ex);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {   }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {  }
+        });
+        if(!phoneReceived.equals(""))
+        {
+            editTextMobile.setText(phoneReceived);
+            editTextMobile.setEnabled(false);
+        }
+        btnRedeem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int effectiveRewardPointsToRedeem = Integer.parseInt(edtRewardPointsToRedeem.getText().toString());
+                if(effectiveRewardPointsToRedeem == 0)
+                {
+                    msgBox.Show(getString(R.string.note),getString(R.string.no_reward_points_to_redeem));
+                    return;
+                }
+
+                double rewardpointsToAmount  = effectiveRewardPointsToRedeem * REWARDPOINTINAMOUNT;
+                PayBillPaidAmountBean paidObj = new PayBillPaidAmountBean(Constants.REWARDSPOINTS,rewardpointsToAmount);
+                updatePaidList(paidObj);
+                phoneReceived = editTextMobile.getText().toString().trim();
+                dialog.dismiss();
+            }
+        });
     }
 
     public void payByPettyCash()

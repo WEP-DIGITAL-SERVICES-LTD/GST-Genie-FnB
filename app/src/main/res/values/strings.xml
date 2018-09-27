@@ -11,6 +11,13 @@
     <string name="mrp">MRP</string>
     <string name="select_all">Select All</string>
 
+    <!-- Configuration loyalty screen strings -->
+    <string name="amount_eligible_to_reward_pt">Amount Eligible for Reward Points</string>
+    <string name="amt_equivalent_to_reward_pts">Amount Equivalent to Reward Points</string>
+    <string name="amt_equivalent_to_one_reward_pts">Amount Equivalent to 1 Reward Point</string>
+    <string name="min_reward_pts_to_redeem">Minimum Reward Points to Redeem</string>
+    <string name="please_enter_in_amount">Please enter in amount.</string>
+
     <string name="short_code_empty">Short Code can not be empty for Item Name  </string>
     <string name="short_code_invalid">Please Enter Short Code as integer for Item Name  </string>
     <string name="insufficient_information_csv">Please enter all the required data  </string>

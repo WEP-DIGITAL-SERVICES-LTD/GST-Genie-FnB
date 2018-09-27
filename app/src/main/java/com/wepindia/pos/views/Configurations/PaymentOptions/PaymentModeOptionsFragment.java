@@ -156,8 +156,8 @@ public class PaymentModeOptionsFragment extends Fragment implements OnPaymentOpt
                 R.color.app_color_background, R.mipmap.ic_coupon_payment,false));
         paymentOptionsBeanList.add(new PaymentOptionsBean(DatabaseHandler.OTHER_CARDS_PAYMENT_OPTION_CONFIG,
                 R.color.app_color_background, R.mipmap.ic_other_cards,false));
-      /*  paymentOptionsBeanList.add(new PaymentOptionsBean(DatabaseHandler.REWARD_POINTS_PAYMENT_OPTION_CONFIG,
-                R.color.app_color_background, R.mipmap.ic_reward_points,false));*/
+        paymentOptionsBeanList.add(new PaymentOptionsBean(DatabaseHandler.REWARD_POINTS_PAYMENT_OPTION_CONFIG,
+                R.color.app_color_background, R.mipmap.ic_reward_points,false));
        /* paymentOptionsBeanList.add(new PaymentOptionsBean(DatabaseHandler.AEPS_UPI_PAYMENT_OPTION_CONFIG,
                 R.color.app_color_background, R.mipmap.ic_aeps,false));*/
         paymentOptionsBeanList.add(new PaymentOptionsBean(DatabaseHandler.PAYTM_WALLET,

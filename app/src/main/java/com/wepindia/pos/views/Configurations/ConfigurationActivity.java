@@ -44,6 +44,7 @@ import com.wepindia.pos.views.Configurations.OtherCharges.FragmentOtherTaxes;
 import com.wepindia.pos.views.Configurations.PaymentOptions.PaymentModeOptionsFragment;
 import com.wepindia.pos.views.Configurations.PaymentReceipt.FragmentPayment;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.views.Configurations.RewardPoints.RewardPointsFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -139,8 +140,14 @@ public class ConfigurationActivity extends WepBaseActivity{
         reportFragment6.setArguments(bundle8);
         adapter.addFragment(reportFragment8, "Other Charges");
 
+        Bundle bundle10=new Bundle();
+        bundle10.putString("REPORT_TYPE", "8");
+        RewardPointsFragment reportFragment10 = new RewardPointsFragment();
+        reportFragment10.setArguments(bundle10);
+        adapter.addFragment(reportFragment10, "Reward Points");
+
         Bundle bundle9=new Bundle();
-        bundle9.putString("REPORT_TYPE", "8");
+        bundle9.putString("REPORT_TYPE", "9");
         PaymentModeOptionsFragment reportFragment9 = new PaymentModeOptionsFragment();
         reportFragment9.setArguments(bundle9);
         adapter.addFragment(reportFragment9, "Payment Options");
