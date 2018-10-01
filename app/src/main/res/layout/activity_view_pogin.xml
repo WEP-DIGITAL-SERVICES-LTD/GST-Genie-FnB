@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/background_light"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_wep" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="4">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp">
+                <EditText
+                    android:id="@+id/et_ViewPOGIN_supplier_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_selector"
+                    android:hint="@string/org_name_title">
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp">
+                <EditText
+                    android:id="@+id/et_ViewPOGIN_supplier_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_selector"
+                    android:hint="@string/supplier_phone">
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp">
+                <EditText
+                    android:id="@+id/et_ViewPOGIN_supplier_gstin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_selector"
+                    android:hint="@string/supplier_gstin">
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp">
+                <EditText
+                    android:id="@+id/et_ViewPOGIN_supplier_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_selector"
+                    android:hint="@string/supplier_address_title">
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <EditText
+                android:id="@+id/et_goods_inward_PurchaseOrderId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <CheckBox
+                android:id="@+id/cb_ViewPOGIN_state_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_gravity="center"
+                android:enabled="false"
+                android:text="@string/supplier_state_code"/>
+
+            <Spinner
+                android:id="@+id/sp_ViewPOGIN_state_code"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_gravity="center"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp">
+                <EditText
+                    android:id="@+id/et_ViewPOGIN_po"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NA"
+                    android:textColor="@drawable/edit_text_selector"
+                    android:hint="@string/purchase_order">
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp">
+                <EditText
+                    android:id="@+id/et_ViewPOGIN_invoice_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_selector"
+                    android:hint="@string/invoice_no">
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp">
+                <EditText
+                    android:id="@+id/et_ViewPOGIN_invoice_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_selector"
+                    android:hint="@string/invoice_date">
+                </EditText>
+            </android.support.design.widget.TextInputLayout>
+
+
+        </TableRow>
+
+    </TableLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:text="@string/serial_no"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:text="@string/hsn_code"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="@string/item_name"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:text="@string/pur_rate"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quantity"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/uom_item"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/taxable_value"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/igst"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cgst"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/utgst_sgst"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cess"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".01"
+            android:background="@android:color/black" />
+
+        <TextView
+            style="@style/TV_Owner_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/amount"
+            android:gravity="center"
+            android:textColor="@android:color/background_light" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/rv_view_po_gin_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="7.5"
+        android:scrollbars="vertical" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_weight=".001"
+        android:background="@android:color/black" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:background="@drawable/round_shape_draw"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_ViewPOGIN_additional_charge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:layout_gravity="center"
+            android:enabled="false"
+            android:text="@string/additional_charge"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
+            <EditText
+                android:id="@+id/et_ViewPOGIN_additional_charge_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:textColor="@drawable/edit_text_selector"
+                android:hint="@string/additional_charge_name">
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
+            <EditText
+                android:id="@+id/et_ViewPOGIN_additional_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:textColor="@drawable/edit_text_selector"
+                android:hint="@string/additional_amount">
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
+            <EditText
+                android:id="@+id/et_ViewPOGIN_sub_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:textColor="@drawable/edit_text_selector"
+                android:hint="@string/sub_total">
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
+            <EditText
+                android:id="@+id/et_ViewPOGIN_grand_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:enabled="false"
+                android:textColor="@drawable/edit_text_selector"
+                android:hint="@string/grand_total">
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_weight=".001"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1.5">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:background="@drawable/background_btn"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:text="@string/print"
+            android:id="@+id/btnViewPOGINRePrint" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:background="@drawable/background_btn"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:text="@string/share"
+            android:id="@+id/btnViewPOGINShare" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:background="@drawable/background_btn"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".6"
+            android:text="@string/close"
+            android:id="@+id/btnViewPOGINClose" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="@drawable/row_background">
+
+    <TextView
+        android:id="@+id/tv_po_gin_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".8"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/date" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_po_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/po_no" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_invoice_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/invoice_no" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_invoice_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".8"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/invoice_date" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_supplier"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/firm_name_title" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_supplier_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".9"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/phone_no" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_gstin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/gstin" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_total"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/grand_total" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_weight=".01"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_po_gin_gin_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        style="@style/TV_Billing_Item_List"
+        android:text="@string/gin_status" />
+
+</LinearLayout>

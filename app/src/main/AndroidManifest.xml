@@ -117,7 +117,7 @@
             android:name=".FilePickerActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".views.Masters.PriceAndStock.StockActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -220,14 +220,13 @@
             android:name=".views.Billing.PayBillActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            android:theme="@android:style/Theme.Holo.Dialog" />
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".TaxConfigSubActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
         <activity android:name=".GST.GSTHomeActivity" />
         <activity android:name=".GST.GSTR1_Activity" />
         <activity android:name=".GST.GSTR1_b2b_Activity" />
@@ -318,7 +317,7 @@
             android:name="com.wepindia.printers.sohamsa.DeviceListActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name="com.wepindia.printers.heydey.PrinterFragment"
             android:screenOrientation="sensorLandscape"
@@ -398,7 +397,8 @@
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".views.InwardManagement.InwardStockActivity"></activity>
+        <activity android:name=".views.InwardManagement.InwardStockActivity" />
+        <activity android:name=".views.InwardManagement.ListPOGinNote"></activity>
     </application>
 
 </manifest>

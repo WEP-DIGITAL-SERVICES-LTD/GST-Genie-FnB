@@ -2496,6 +2496,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getSupplierEmailById(int supplierId) {
+        String selectquery = "Select SupplierEmail FROM " + TBL_Supplier + " WHERE " + KEY_id + "=" + supplierId + " AND " + KEY_isDelete + "=0";
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getPurchaseOrderByDates(int supplierId, String StartDate, String EndDate, int poStatus) {
+        if (supplierId != 0)
+            return dbFNB.query(TBL_PURCHASEORDER, new String[]{"*"},
+                    " SupplierId = " + supplierId + " AND isGoodinward="+poStatus+" AND PurchaseOrderDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null, null);
+        else
+            return dbFNB.query(TBL_PURCHASEORDER, new String[]{"*"},
+                    " isGoodinward="+poStatus+" AND PurchaseOrderDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null, null);
+    }
+
+    public Cursor getPurchaseOrderByDates(int supplierId, String StartDate, String EndDate) {
+        if (supplierId != 0)
+            return dbFNB.query(TBL_PURCHASEORDER, new String[]{"*"},
+                    " SupplierId = " + supplierId +" AND PurchaseOrderDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null, null);
+        else
+            return dbFNB.query(TBL_PURCHASEORDER, new String[]{"*"},
+                    " PurchaseOrderDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null, null);
+    }
+
     public long deleteSupplierItemLinkage() {
         long status = -1;
         status = dbFNB.delete(TBL_SupplierItemLinkage, null, null);
@@ -7966,6 +7990,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
         } catch (Exception ex) {
             Log.i(TAG, "Unable to get the data from purchase order no table." + _id + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public Cursor mGetPurchaseOrderData(String strPurchaseOrderNo, String supplierId, String invoiceNo, String invoiceDate) {
+        Cursor cursor = null;
+        String queryString = "";
+        try {
+            if (invoiceNo == null) {
+                queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_PurchaseOrderNo + "="+strPurchaseOrderNo+" AND " + KEY_InvoiceNo + " is "+invoiceNo+" AND "
+                        + KEY_PurchaseOrderDate + " LIKE '"+invoiceDate+"' AND " + KEY_SupplierCode + "=" +supplierId;
+            } else {
+                queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_PurchaseOrderNo + "="+strPurchaseOrderNo+" AND " + KEY_InvoiceNo + " LIKE '"+invoiceNo+"' AND "
+                        + KEY_PurchaseOrderDate + " LIKE '"+invoiceDate+"' AND " + KEY_SupplierCode + "=" +supplierId;
+            }
+
+            cursor = dbFNB.rawQuery(queryString, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from purchase order no table." + strPurchaseOrderNo + " error : " + ex.getMessage());
         }
         return cursor;
     }

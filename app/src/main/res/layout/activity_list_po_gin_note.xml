@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_wep" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".01" />
+
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete_po_gin_list_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:completionThreshold="1"
+                android:selectAllOnFocus="true"
+                android:drawableRight="@android:drawable/ic_search_category_default"
+                android:hint="@string/org_name_title"
+                android:textColor="@android:color/black" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".01" />
+
+            <Button
+                android:id="@+id/btn_po_gin_DateFrom"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/btn_calendar"
+                android:onClick="From" />
+
+            <EditText
+                android:id="@+id/etPOGINDateStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint="From Date"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".02" />
+
+            <EditText
+                android:id="@+id/etPOGINDateEnd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint="To Date"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_po_gin_DateTo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/btn_calendar"
+                android:onClick="To" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".01" />
+
+            <Button
+                android:background="@drawable/background_btn"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin"
+                android:id="@+id/btn_po_gin_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:text="View" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".01" />
+
+            <ImageView
+                android:id="@+id/iv_po_gin_list_refresh"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight=".1"
+                android:src="@mipmap/ic_refresh"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".01" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_weight=".001"
+            android:background="@android:color/black" />
+
+        <RadioGroup
+            android:id="@+id/rg_po_gin_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
+            android:checkedButton="@+id/rb_po_gin_list_all"
+            android:gravity="left"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_po_gin_list_all"
+                style="@style/TV_Owner_Details"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/all" />
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_po_gin_list_po"
+                style="@style/TV_Owner_Details"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/purchase_order" />
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_po_gin_list_gin"
+                style="@style/TV_Owner_Details"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/goods_inward_note" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/rowCaption"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/date" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_po_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/po_no" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_invoice_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/invoice_no" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_invoice_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/invoice_date" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_supplier"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/firm_name_title" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_supplier_phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".9"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/phone_no" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_gstin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/gstin" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/grand_total" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".01"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tv_po_gin_title_gin_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                style="@style/TV_Billing_Screen"
+                android:text="@string/gin_status" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/rv_po_gin_list_items"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.2"
+            android:background="@drawable/bottom_shape_draw"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+</LinearLayout>

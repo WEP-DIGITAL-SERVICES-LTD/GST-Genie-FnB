@@ -9,6 +9,9 @@
     <string name="serial_no">S.No</string>
     <string name="item_name_title">Item Name</string>
     <string name="mrp">MRP</string>
+    <string name="po_no">PO No.</string>
+    <string name="firm_name_title">Firm Name</string>
+    <string name="gin_status">GIN Status</string>
     <string name="select_all">Select All</string>
     <string name="supplier_gstin">Supplier GSTIN</string>
     <string name="supplier_address_title">Supplier Address</string>

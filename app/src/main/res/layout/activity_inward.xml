@@ -111,6 +111,35 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_25dp_720dp_20dp_600dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/imgPriceStock"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradient_button"
+                    android:contentDescription="InwardPriceStock"
+                    android:onClick="LaunchActivity"
+                    android:padding="3dp"
+                    android:src="@drawable/inwardstock"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/tvInwardPriceStock"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgPriceStock"
+                    android:gravity="center"
+                    android:text="Inward Price and Stock"
+                    android:textSize="@dimen/menu_box_font_size"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/rl_inward_invoice_entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,35 +197,6 @@
                 android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/imgPriceStock"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/gradient_button"
-                    android:contentDescription="InwardPriceStock"
-                    android:onClick="LaunchActivity"
-                    android:padding="3dp"
-                    android:src="@drawable/inwardstock"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
-
-                <TextView
-                    android:id="@+id/tvInwardPriceStock"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgPriceStock"
-                    android:gravity="center"
-                    android:text="Inward Price and Stock"
-                    android:textSize="@dimen/menu_box_font_size"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_25dp_720dp_20dp_600dp"
-                android:layout_weight="1">
-
-                <ImageButton
                     android:id="@+id/imgPurchaseOrder"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
@@ -242,6 +242,35 @@
                     android:layout_below="@+id/imgGoodInwardNote"
                     android:gravity="center"
                     android:text="Goods Inward Note"
+                    android:textSize="@dimen/menu_box_font_size"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_25dp_720dp_20dp_600dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/imgViewPOGIN"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradient_button"
+                    android:contentDescription="ListPOGIN"
+                    android:onClick="LaunchActivity"
+                    android:padding="3dp"
+                    android:src="@mipmap/view_po"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/tvViewPOGIN"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgViewPOGIN"
+                    android:gravity="center"
+                    android:text="View PO &amp; GIN"
                     android:textSize="@dimen/menu_box_font_size"
                     android:textStyle="bold" />
             </RelativeLayout>

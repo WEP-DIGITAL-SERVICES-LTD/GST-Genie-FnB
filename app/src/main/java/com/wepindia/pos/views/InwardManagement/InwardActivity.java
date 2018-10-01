@@ -101,6 +101,12 @@ public class InwardActivity extends WepBaseActivity {
             intentGoodsInwardNote.putExtra("USER_NAME", strUserName);
             intentGoodsInwardNote.putExtra("USER_ID", strUserId);
             startActivity(intentGoodsInwardNote);
+        }  else if(v.getContentDescription().toString().equalsIgnoreCase("ListPOGIN")){
+            // Launch stock activity
+            Intent intentListPOGIN = new Intent(myContext,ListPOGinNote.class);
+            intentListPOGIN.putExtra("USER_NAME", strUserName);
+            intentListPOGIN.putExtra("USER_ID", strUserId);
+            startActivity(intentListPOGIN);
         } else if (v.getContentDescription().toString().equalsIgnoreCase("Ingredients")) {
 
             Intent intentDelivery = new Intent(myContext, IngredientManagementActivity.class);
