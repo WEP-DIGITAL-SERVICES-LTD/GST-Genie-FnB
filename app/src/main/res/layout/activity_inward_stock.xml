@@ -142,7 +142,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
                 android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
-                android:text="*Please note, new stock will be added to existing stock\n**Only rate and quantity are configurable here."
+                android:text="*Please note, new stock will be added to existing stock\n**Only purchaseRate and quantity are configurable here."
                 android:textColor="@color/red" />
         </RelativeLayout>
 

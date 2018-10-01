@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="left|center_vertical"
+    android:background="@drawable/row_background">
+
+    <CheckBox
+        android:id="@+id/checkBoxItem"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center" />
+
+    <TextView
+        style="@style/TV_Billing_Item_List"
+        android:id="@+id/row_supplier_item_linkage_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="@string/item_name"/>
+
+    <TextView
+        style="@style/TV_Billing_Item_List"
+        android:id="@+id/dash_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="-"/>
+
+    <TextView
+        style="@style/TV_Billing_Item_List"
+        android:id="@+id/row_supplier_item_linkage_item_barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="@string/barcode"/>
+
+    <TextView
+        style="@style/TV_Billing_Item_List"
+        android:id="@+id/dash_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="-"/>
+
+    <TextView
+        style="@style/TV_Billing_Item_List"
+        android:id="@+id/row_supplier_item_linkage_item_mrp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="@string/mrp"/>
+
+</LinearLayout>

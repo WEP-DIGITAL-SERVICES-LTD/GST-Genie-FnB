@@ -1746,7 +1746,7 @@ public class FragmentInwardSupply extends Fragment {
                 objItem.setsupplierName(suppliername);
                 objItem.setItemname(itemname);
                 objItem.setItemBarcode(strBarcode);
-                objItem.setRate(rate);
+                objItem.setPurchaseRate(rate);
                 objItem.setQuantity(quantity);
                 objItem.setUOM(mou);
                 objItem.setImageId(ImageUri);

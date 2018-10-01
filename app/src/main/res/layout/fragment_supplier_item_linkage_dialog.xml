@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:srcCompat="@mipmap/ic_add_new_item" />
+
+        <TextView
+            android:id="@+id/tv_SupplierItemLinkageTitle"
+            style="@style/TV_Title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:text="@string/link_item"
+            android:textColor="@android:color/background_light"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".4"
+                    android:gravity="center"
+                    android:text="@string/supplier_name"
+                    style="@style/TV_supplier_item_linkage" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/av_supplier_item_linkage_supplier_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:completionThreshold="1"
+                    android:dropDownWidth="600dp"
+                    android:maxLength="50"
+                    android:selectAllOnFocus="true"
+                    android:hint="@string/supplier_name_report"
+                    android:textColor="@android:color/black"
+                    android:drawableRight="@mipmap/searchicon_img"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center"
+                    android:text="@string/gstin"
+                    style="@style/TV_supplier_item_linkage" />
+
+                <EditText
+                    android:id="@+id/et_supplier_item_linkage_gstin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxLength="15"
+                    android:textAllCaps="true"
+                    android:enabled="false"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center"
+                    android:text="@string/phone_no"
+                    style="@style/TV_supplier_item_linkage" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/av_supplier_item_linkage_supplier_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:completionThreshold="1"
+                    android:dropDownWidth="600dp"
+                    android:maxLength="50"
+                    android:selectAllOnFocus="true"
+                    android:hint="@string/supplier_phone"
+                    android:textColor="@android:color/black"
+                    android:drawableRight="@mipmap/searchicon_img"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center"
+                    android:text="@string/supplier_address"
+                    style="@style/TV_supplier_item_linkage" />
+
+                <EditText
+                    android:id="@+id/et_supplier_item_linkage_address"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/et_supplier_item_linkage_supplier_id"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:visibility="gone"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_weight=".001"
+            android:background="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/av_supplier_item_linkage_item_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".7"
+                android:completionThreshold="1"
+                android:dropDownWidth="600dp"
+                android:hint="@string/item_name"
+                android:selectAllOnFocus="true"
+                android:textColor="@android:color/black"
+                android:drawableRight="@mipmap/searchicon_img"
+                android:imeOptions="actionNext"
+                android:maxLines="1" />
+
+            <RadioGroup
+                android:visibility="invisible"
+                android:id="@+id/rg_supplier_item_linkage_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checkedButton="@+id/rb_supplier_item_linkage_list_all"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:id="@+id/rb_supplier_item_linkage_list_all"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/all" />
+
+                <RadioButton
+                    android:visibility="gone"
+                    android:id="@+id/rb_supplier_item_linkage_list_barnd"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/brand" />
+
+                <RadioButton
+                    android:visibility="gone"
+                    android:id="@+id/rb_supplier_item_linkage_list_dept"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/department" />
+
+                <RadioButton
+                    android:visibility="gone"
+                    android:id="@+id/rb_supplier_item_linkage_list_categ"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/category" />
+
+                <RadioButton
+                    android:id="@+id/rb_supplier_item_linkage_list_active_i"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/active_item" />
+
+                <RadioButton
+                    android:id="@+id/rb_supplier_item_linkage_list_inactive_i"
+                    style="@style/TV_Owner_Details"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/inactive_item" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_weight=".001"
+            android:background="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:orientation="horizontal"
+            android:layout_marginRight="300dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_supplier_item_linkage_radio_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="vertical"
+                android:scrollbarFadeDuration="0"
+                android:layout_gravity="center_horizontal"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_supplier_item_linkage_item_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="vertical"
+                android:scrollbarFadeDuration="0"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_weight=".001"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight=".3">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_gravity="center"
+            android:id="@+id/bt_supplier_item_linkage_update_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/update" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_gravity="center"
+            android:id="@+id/bt_supplier_item_linkage_clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/clear" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+        <Button
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin"
+            android:background="@drawable/background_btn"
+            android:layout_gravity="center"
+            android:id="@+id/bt_supplier_item_linkage_close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/close" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5" />
+
+    </LinearLayout>
+
+</LinearLayout>

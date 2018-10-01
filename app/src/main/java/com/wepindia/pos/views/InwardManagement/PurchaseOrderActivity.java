@@ -1,96 +1,167 @@
 package com.wepindia.pos.views.InwardManagement;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.FilterQueryProvider;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
-import com.wep.common.app.Database.Item;
-import com.wep.common.app.Database.PurchaseOrder;
+import com.wep.common.app.Database.Supplier_Model;
 import com.wep.common.app.WepBaseActivity;
-import com.wepindia.pos.GenericClasses.DateTime;
+import com.wep.common.app.models.PurchaseOrderBean;
+import com.wep.common.app.models.SupplierItemLinkageBean;
+import com.wepindia.pos.Constants;
+import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
+import com.wepindia.pos.utils.EMOJI_FILTER;
+import com.wepindia.pos.utils.InstantAutoComplete;
+import com.wepindia.pos.utils.SendBillInfoToCustUtility;
+import com.wepindia.pos.utils.Validations;
 import com.wepindia.pos.views.InwardManagement.Adapters.PurchaseOrderAdapter;
 import com.wepindia.pos.views.InwardManagement.Adapters.SupplierSuggestionAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.views.InwardManagement.Listeners.OnPurchaseOrderItemListListener;
+import com.wepindia.pos.views.InwardManagement.PdfPurchaseOrder.CreatePdfPO;
+import com.wepindia.pos.views.InwardManagement.PdfPurchaseOrder.PdfPOBean;
+import com.wepindia.pos.views.InwardManagement.PdfPurchaseOrder.PdfPOItemBean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
-public class PurchaseOrderActivity extends WepBaseActivity {
+public class PurchaseOrderActivity extends WepBaseActivity implements OnPurchaseOrderItemListListener {
 
-    private final int CHECK_INTEGER_VALUE = 0;
-    private final int CHECK_DOUBLE_VALUE = 1;
-    private final int CHECK_STRING_VALUE = 2;
-
-    Boolean HSNEnabled = true;
-    Context myContext;
-    // DatabaseHandler_gst object
-    DatabaseHandler dbPurchaseOrder;
-    LinearLayout ll_POS;
-    ArrayList<PurchaseOrder> dataList;
-    //Message dialog object
-    public MessageDialog MsgBox;
-    long edit = 0;
-    Spinner spnr_inwalrd_item_list;
-    EditText et_inward_item_quantity,et_supplier_GSTIN, et_inward_sub_total,tx_inward_supply_invoice_number,et_inward_grand_total, et_inward_additionalchargename,
-            et_inward_additionalchargeamount,et_supplier_address,et_supplier_phone,et_supplier_code;
-
-    TextView tx_inward_invoice_date;
-
-    //ImageButton btnimage_new_item ;
-    AutoCompleteTextView autocompletetv_suppliername, autocompletetv_invoiceno,autocompletetv_itemlist, autocompletetv_purchase_order;
-    ListView lv_inward_item_details;
-    CheckBox chk_inward_additional_charge;
-    com.wep.common.app.views.WepButton btnEditPO,btnGeneratePO,btnAddSupplier, btnClearItem, btnCloseItem, btn_add_new_item;
-    PurchaseOrderAdapter purchaseOrderAdapter = null;
-
-    ArrayList<String> labelsSupplierName;
-    int count =0;
-    long lRowId = 0;
-    String Item_name , Item_rate, Item_quantity , Item_supplytype , Item_uom, Item_saletax, Item_servicetax ;
-    String strDate= "";
-    String strUserName="", strUserId ="";
-    Date d;
-    CheckBox chk_interState;
-    Spinner spnrSupplierStateCode;
-
-    Cursor purchase_crsr;
+    private Context myContext;
+    private DatabaseHandler dbPurchaseOrder;
     private Toolbar toolbar;
-    ArrayList<HashMap<String, String>> autoCompleteDetails = new ArrayList<HashMap<String, String>>();
+    private MessageDialog MsgBox;
+    private String strUserName, strUserId;
+
+    private static final String TAG = PurchaseOrderActivity.class.getName();
+    private final int ADD = 0;
+    private final int UPDATE = 1;
+
+    @BindView(R.id.bt_purchase_order_generate)
+    Button btnGenerate;
+    @BindView(R.id.bt_purchase_order_update)
+    Button btnUpdate;
+    @BindView(R.id.bt_purchase_order_clear)
+    Button btnClear;
+    @BindView(R.id.bt_purchase_order_add_item)
+    Button btnAddItem;
+    @BindView(R.id.bt_purchase_order_supplier_add)
+    Button btnSupplierAdd;
+
+    @BindView(R.id.av_purchase_order_supplier_name)
+    AutoCompleteTextView avSupplierName;
+    @BindView(R.id.av_purchase_order_supplier_po)
+    InstantAutoComplete avPurchaseOrder;
+    @BindView(R.id.av_purchase_order_item_name)
+    AutoCompleteTextView avItemName;
+
+    @BindView(R.id.et_PurchaseOrder_SupplierId)
+    EditText edtSupplierId;
+    @BindView(R.id.et_PurchaseOrderId)
+    EditText edtPurchaseOrderId;
+
+    @BindView(R.id.et_purchase_order_supplier_phone)
+    EditText edtPhone;
+    @BindView(R.id.et_purchase_order_supplier_address)
+    EditText edtAddress;
+    @BindView(R.id.et_purchase_order_supplier_gstin)
+    EditText edtGSTIN;
+    @BindView(R.id.et_purchase_order_Qty)
+    EditText edtQty;
+    @BindView(R.id.et_purchase_order_supplier_mrp)
+    EditText edtMrp;
+    @BindView(R.id.et_purchase_order_additional_charge_name)
+    EditText edtAdditionalChargeName;
+    @BindView(R.id.et_purchase_order_additional_amount)
+    EditText edtAdditionalAmt;
+    @BindView(R.id.et_purchase_order_sub_total)
+    EditText edtSubTotal;
+    @BindView(R.id.et_purchase_order_grand_total)
+    EditText edtGrandTotal;
+    @BindView(R.id.et_purchase_order_supplier_purchase_rate)
+    EditText edtPurchaseRate;
+
+    @BindView(R.id.et_purchase_order_invoice_no)
+    EditText edtInvoiceNo;
+
+    @BindView(R.id.et_purchase_order_invoice_date)
+    EditText edtInvoiceDate;
+
+    @BindView(R.id.sp_purchase_order_state_code)
+    Spinner spStateCode;
+
+    @BindView(R.id.cb_purchase_order_state_code)
+    CheckBox cbStateCode;
+    @BindView(R.id.cb_purchase_order_additional_charge)
+    CheckBox cbAdditionalChargeStatus;
+    @BindView(R.id.cb_purchase_order_all_items)
+    CheckBox cbSearchInAllItems;
+
+    @BindView(R.id.lv_purchase_order_list)
+    ListView lvPurchaseOrderList;
+
+    SimpleCursorAdapter mAdapterSupplierName, mAdapterItemData, mAdapterPurchaseOrderNoData;
+
+    Supplier_Model supplier_model;
+    String[] arrayPOS;
+    boolean searchInAllItems = false;
+    boolean updateItem = false;
+
+    PurchaseOrderBean purchaseOrderBean;
+    PurchaseOrderBean updatePurchaseOrderBean;
+
+    PurchaseOrderAdapter purchaseOrderAdapter = null;
+    List<PurchaseOrderBean> purchaseOrderBeanList = null;
+
+    private Boolean machine_changed_edittext = false;
+    ArrayList<HashMap<String, String>> listName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,538 +171,942 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         setContentView(R.layout.activity_purchase_order);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ButterKnife.bind(this);
+
         dbPurchaseOrder = new DatabaseHandler(PurchaseOrderActivity.this);
         myContext = this;
         MsgBox =  new MessageDialog(myContext);
-        purchase_crsr = null;
 
         try {
             strUserName = getIntent().getStringExtra("USER_NAME");
             strUserId = getIntent().getStringExtra("USER_ID");
 
-
-            //tvTitleUserName.setText(strUserName.toUpperCase());
-            d = new Date();
+            Date d = new Date();
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
             //tvTitleDate.setText("Date : " + s);
             com.wep.common.app.ActionBarUtils.setupToolbar(PurchaseOrderActivity.this,toolbar,getSupportActionBar()," Purchase Order ",strUserName," Date:"+s.toString());
 
-            InitializeViews();
             dbPurchaseOrder.CreateDatabase();
             dbPurchaseOrder.OpenDatabase();
-            reset_inward(0);
-            InitialDisplaySettings();
 
-            /*autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
+            purchaseOrderBeanList = new ArrayList<PurchaseOrderBean>();
+            cbStateCode.setChecked(false);
+            spStateCode.setEnabled(false);
+
+            cbAdditionalChargeStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public boolean onTouch(View v, MotionEvent event){
-                    autocompletetv_suppliername.showDropDown();
-                    return false;
-                }
-            });*/
-            autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    HashMap<String, String> data = autoCompleteDetails.get(position);
-                    String suppliername_str = data.get("name");
-                    String supplierphone_str = data.get("phone");
-
-                    autocompletetv_suppliername.setText(data.get("name"));
-
-                    int suppliercode = -1;
-//                    String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-//                    Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetailsByName(suppliername_str);
-                    Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetailsByPhone(supplierphone_str);
-
-                    if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if(!isChecked)
                     {
-                        et_supplier_phone.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone")));
-                        et_supplier_address.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierAddress")));
-                        suppliercode= supplierdetail_cursor.getInt(supplierdetail_cursor.getColumnIndex("SupplierCode"));
-                        String suppliergstin= supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("GSTIN"));
-                        if(suppliergstin!=null)
-                            et_supplier_GSTIN.setText(suppliergstin);
-                        et_supplier_code.setText(String.valueOf(suppliercode));
-                        loadAutoCompleteData_item(suppliercode);
-                        loadAutoCompleteData_purchaseOrder(suppliercode);
-                        autocompletetv_purchase_order.setText("");
-                        autocompletetv_itemlist.setText("");
-                        btnAddSupplier.setEnabled(false);
-                        if(dataList!=null ) {
-                            dataList.clear();
-                            if(purchaseOrderAdapter!=null)
-                                purchaseOrderAdapter.notifyDataSetChanged(dataList);
+                        edtAdditionalChargeName.setEnabled(false);
+                        edtAdditionalAmt.setEnabled(false);
+                        if(!edtAdditionalAmt.getText().toString().isEmpty()){
+                            edtAdditionalAmt.setText("");
+                            edtGrandTotal.setText(""+mCalculateGrandTotal(0));
                         }
-                        et_inward_sub_total.setText("00.00");
-                        et_inward_grand_total.setText("00.00");
+                        edtAdditionalChargeName.setText("");
+                    } else {
+                        edtAdditionalChargeName.setEnabled(true);
+                        edtAdditionalAmt.setEnabled(true);
                     }
                 }
             });
 
-            autocompletetv_purchase_order.setOnTouchListener(new View.OnTouchListener(){
+            cbStateCode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public boolean onTouch(View v, MotionEvent event){
-                    autocompletetv_purchase_order.showDropDown();
-                    return false;
-                }
-            });
-
-
-            autocompletetv_purchase_order.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    btnEditPO.setEnabled(true);
-                    btnGeneratePO.setEnabled(false);
-                    loadTableonPurchaseOrderSelected();
-                }
-            });
-
-
-            autocompletetv_itemlist.setOnTouchListener(new View.OnTouchListener(){
-                @Override
-                public boolean onTouch(View v, MotionEvent event){
-                    autocompletetv_itemlist.showDropDown();
-                    return false;
-                }
-            });
-            /*autocompletetv_itemlist.setOnTouchListener(new View.OnTouchListener(){
-                @Override
-                public boolean onTouch(View v, MotionEvent event){
-                    int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
-                    if(suppliercode == 0)
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(!isChecked)
                     {
-                        autocompletetv_itemlist.setInputType(InputType.TYPE_NULL);
-                        Toast.makeText(myContext, "Please Select the Supplier First", Toast.LENGTH_SHORT).show();
+                        spStateCode.setSelection(0);
+                        spStateCode.setEnabled(false);
+                        if(purchaseOrderAdapter== null || purchaseOrderBeanList == null || purchaseOrderBeanList.size()==0)
+                            return;
+                        for(PurchaseOrderBean po : purchaseOrderBeanList)
+                        {
+                            double sgstAmt =0, cgstAmt =0;
+                            double taxval = po.getDblTaxableValue();
+                            sgstAmt= taxval*po.getDblSGSTRate()/100;
+                            cgstAmt= taxval*po.getDblCGSTRate()/100;
+                            po.setDblIGSTAmount(0);
+                            po.setDblCGSTAmount(cgstAmt);
+                            po.setDblSGSTAmount(sgstAmt);
+                        }
+                        purchaseOrderAdapter.notifyDataSetChanged(purchaseOrderBeanList);
                     }
                     else
                     {
-
-                        autocompletetv_itemlist.showDropDown();
-                        autocompletetv_itemlist.setInputType(InputType.TYPE_CLASS_TEXT);
+                        spStateCode.setSelection(0);
+                        spStateCode.setEnabled(true);
+                        if(purchaseOrderAdapter== null || purchaseOrderBeanList == null || purchaseOrderBeanList.size()==0)
+                            return;
+                        for(PurchaseOrderBean po : purchaseOrderBeanList)
+                        {
+                            double sgst = po.getDblSGSTAmount();
+                            double cgst = po.getDblCGSTAmount();
+                            po.setDblIGSTAmount(sgst+cgst);
+                            po.setDblCGSTAmount(0);
+                            po.setDblSGSTAmount(0);
+                        }
+                        purchaseOrderAdapter.notifyDataSetChanged(purchaseOrderBeanList);
                     }
 
-                    return false;
-                }
-            });*/
-
-            autocompletetv_itemlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String itemname = autocompletetv_itemlist.getText().toString();
-                    if (itemname.equalsIgnoreCase("Not in list") || itemname.equalsIgnoreCase("Add new item") ) {
-                        et_inward_item_quantity.setBackgroundColor(getResources().getColor(R.color.grey));
-                        et_inward_item_quantity.setEnabled(false);
-                        // autocompletetv_itemlist.setText("");
-                        //input_window();
-                        MsgBox.Show("Warning","Kindly goto \"Supplier Item Linkage\" and add the desired item." +
-                                "\nPlease save your data , if any , before leaving this screen");
-
-                    }else if (itemname.equalsIgnoreCase("Select/Add Supplier"))
-                    {
-                        //MsgBox.Show("Insufficient Information", "Please Select/Add the Supplier");
-                        et_inward_item_quantity.setEnabled(false);
-                        et_inward_item_quantity.setBackgroundColor(getResources().getColor(R.color.grey));
-                    }
-                    else {
-                        et_inward_item_quantity.requestFocus();
-                        et_inward_item_quantity.setEnabled(true);
-                        et_inward_item_quantity.setBackgroundColor(getResources().getColor(R.color.white));
-                        // btnimage_new_item.setEnabled(true);
-                    }
                 }
             });
 
-
-            chk_inward_additional_charge.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if(chk_inward_additional_charge.isChecked() == false)
-                    {
-                        et_inward_additionalchargeamount.setText("");
-                        et_inward_additionalchargename.setText("");
-                        et_inward_additionalchargeamount.setEnabled(false);
-                        et_inward_additionalchargename.setEnabled(false);
-
-                    }
+            cbSearchInAllItems.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b)
+                        searchInAllItems = true;
                     else
-                    {
-                        et_inward_additionalchargeamount.setText("");
-                        et_inward_additionalchargename.setText("");
-                        et_inward_additionalchargeamount.setEnabled(true);
-                        et_inward_additionalchargename.setEnabled(true);
-                    }
+                        searchInAllItems = false;
                 }
             });
 
-            et_inward_additionalchargeamount.addTextChangedListener(new TextWatcher() {
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
+            edtAdditionalAmt.addTextChangedListener(new TextWatcher() {
 
                 public void afterTextChanged(Editable s) {
-                    calculateSubTotal();
-
                 }
-            });
 
-
-            btn_add_new_item.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    hideKeyboard();
-                    MsgBox = new MessageDialog(myContext);
-                    String item = autocompletetv_itemlist.getText().toString();
-                    int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
-                    if (suppliercode <1 || item.equalsIgnoreCase("Select/Add Supplier") || item.equals(""))
-                    {
-
-                        if(suppliercode <1)
-                        {
-                            MsgBox.setTitle("Insufficient Information")
-                                    .setIcon(R.drawable.ic_launcher)
-                                    .setMessage(" Please Select/Add Supplier ")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                        } else
-                        {
-                            MsgBox.setTitle("Insufficient Information")
-                                    .setMessage(" Please Select Item ")
-                                    .setIcon(R.drawable.ic_launcher)
-                                    .setPositiveButton("OK", null)
-                                    .show();
+                public void beforeTextChanged(CharSequence s, int start,
+                                              int count, int after) {
+                }
+                public void onTextChanged(CharSequence s, int start,
+                                          int before, int count) {
+                    if (! machine_changed_edittext) {
+                        machine_changed_edittext = true;
+                        if (!s.toString().equals("")) {
+                            if (s.toString().equals(".")) {
+                                edtAdditionalAmt.setText("0.");
+                                edtAdditionalAmt.setSelection(edtAdditionalAmt.getText().length());
+                            }
+                            else
+                                edtGrandTotal.setText(String.format("%.2f", mCalculateGrandTotal(Double.parseDouble(s.toString()))));
+                        } else {
+                            edtGrandTotal.setText(edtSubTotal.getText().toString());
                         }
-
-                    } else if (item.equalsIgnoreCase("Not in list") ||  item.equalsIgnoreCase("Add new item") )
-                    {
-                        /*MsgBox.setTitle("Error")
-                                .setMessage(" Please Select Item  ")
-                                .setPositiveButton("OK", null)
-                                .show();*/
-                        //input_window();
-                        MsgBox.Show("Warning","Kindly goto \"Supplier Item Linkage\" and add the desired item." +
-                                "\nPlease save your data , if any , before leaving this screen");
-                    }else   if (et_inward_item_quantity.getText().toString().equals(""))
-                    {
-                        et_inward_item_quantity.setBackgroundColor(Color.WHITE);
-                        et_inward_item_quantity.setEnabled(true);
-                        MsgBox.setTitle("Error")
-                                .setIcon(R.drawable.ic_launcher)
-                                .setMessage(" Please Enter the Quantity ")
-                                .setPositiveButton("OK", null)
-                                .show();
-                    }
-                    else {
-                        // check whether user has entered new item without going through inputwindow()
-                        Cursor itemdetails = dbPurchaseOrder.getItemDetail_inward(item);
-                        if (itemdetails!=null && itemdetails.moveToFirst()) {
-                            populate(2);
-                        }
-                        else
-                        {
-                            MsgBox.setTitle(" Insufficient Information")
-                                    .setIcon(R.drawable.ic_launcher)
-                                    .setMessage(" Item not found in database for this Supplier." +
-                                            "\nKindly goto \"Supplier Item Linkage\" and add the desired item" +
-                                            "\nPlease save your data , if any , before leaving this screen")
-                                    .setPositiveButton("Ok",null)
-                                    .show();
-                        }
+                        machine_changed_edittext = false;
                     }
                 }
             });
+
+            lvPurchaseOrderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    btnAddItem.setText("Update Item");
+                    updatePurchaseOrderBean = purchaseOrderBeanList.get(i);
+                    avItemName.setText(updatePurchaseOrderBean.getStrItemName());
+                    edtMrp.setText(""+updatePurchaseOrderBean.getDblRate());
+                    edtQty.setText(""+updatePurchaseOrderBean.getDblQuantity());
+                    edtPurchaseRate.setText(""+updatePurchaseOrderBean.getDblPurchaseRate());
+
+                    updateItem = true;
+                }
+            });
+
+            avItemName.addTextChangedListener(filterTextWatcher);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-            AlertDialog.Builder msg = new AlertDialog.Builder(myContext);
-            msg.setMessage(""+e.getMessage())
-                    .setPositiveButton("OK", null)
-                    .show();
         }
     }
 
-    void InitialDisplaySettings()
-    {
-        Cursor cursor_billsetting = dbPurchaseOrder.getBillSetting();
-        if(cursor_billsetting!=null && cursor_billsetting.moveToFirst())
+    @Override
+    public void onResume() {
+        super.onResume();
+        initAutoCompleteTextDataForSupplierName();
+        mPopulateStateCodeSpinnerData();
+        setFilters();
+        btnUpdate.setEnabled(false);
+        btnUpdate.setBackgroundResource(R.color.holo_blue);
+    }
+
+    @OnClick({R.id.bt_purchase_order_generate, R.id.bt_purchase_order_update, R.id.bt_purchase_order_clear,
+            R.id.bt_purchase_order_add_item, R.id.bt_purchase_order_supplier_add})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.bt_purchase_order_generate:
+                mGeneratePO();
+                break;
+            case R.id.bt_purchase_order_update:
+                mUpdatePO();
+                break;
+            case R.id.bt_purchase_order_clear:
+                mClear();
+                break;
+            case R.id.bt_purchase_order_add_item:
+                if (updateItem)
+                    mValidateAndUpdatingListAdapter(); // Updating item
+                else
+                    mValidateAndAddingListAdapter(); // Adding Item and updating quantity
+                break;
+            case R.id.bt_purchase_order_supplier_add:
+               /* Fragment fragment = new SupplierDetailsFragment();
+                if (fragment != null) {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_frame, fragment);
+                    ft.commit();
+                }*/
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void initAutoCompleteTextDataForSupplierName(){
+
+        Cursor cursor = null;
+        try {
+            cursor = dbPurchaseOrder.getAllSuppliersByMode(1);
+            listName = new ArrayList<HashMap<String, String>>();
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    HashMap<String, String> data = new HashMap<String, String>();
+                    data.put("name", cursor.getString(cursor.getColumnIndex("SupplierName")));
+                    data.put("phone", cursor.getString(cursor.getColumnIndex("SupplierPhone")));
+                    listName.add(data);
+                } while (cursor.moveToNext());
+            }
+            SupplierSuggestionAdapter dataAdapter = new SupplierSuggestionAdapter(this, R.layout.adapter_supplier_name, listName);
+            avSupplierName.setThreshold(1);
+            avSupplierName.setAdapter(dataAdapter);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            MsgBox.Show("Error",e.getMessage());
+        } finally {
+            if(cursor != null){
+                cursor.close();
+            }
+        }
+
+        avSupplierName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                HashMap<String, String> data = (HashMap<String, String>) parent.getAdapter().getItem(position);
+
+                String supplierphone_str = data.get("phone");
+                avSupplierName.setText(data.get("name"));
+                Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetailsByPhone(supplierphone_str); // TODO: changed here
+                if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
+                {
+                    supplier_model = new Supplier_Model();
+                    supplier_model.set_id(supplierdetail_cursor.getInt(supplierdetail_cursor.getColumnIndex("_id")));
+                    supplier_model.setSupplierName(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierName")));
+                    supplier_model.setSupplierPhone(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone")));
+                    supplier_model.setSupplierEmail(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierEmail")));
+                    supplier_model.setSupplierAddress(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierAddress")));
+                    supplier_model.setSupplierGSTIN(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("GSTIN")));
+                    if (!supplier_model.getSupplierGSTIN().isEmpty())
+                        supplier_model.setSupplierType("Registered");
+                    else
+                        supplier_model.setSupplierType("UnRegistered");
+                    supplier_model.setIsActive(supplierdetail_cursor.getInt(supplierdetail_cursor.getColumnIndex("isActive")));
+                }
+                // Update the parent class's TextView
+                if(supplier_model != null){
+                    edtSupplierId.setText(""+supplier_model.get_id());
+                    edtPhone.setText(supplier_model.getSupplierPhone());
+                    edtAddress.setText(supplier_model.getSupplierAddress());
+//                    if(!supplier_model.getSupplierGSTIN().isEmpty()){
+                    edtGSTIN.setText(supplier_model.getSupplierGSTIN());
+//                    }
+                    initAutoCompleteTextDataForItems(supplier_model.get_id());
+                    initAutoCompleteTextDataForPurchaseOrderNo(supplier_model.get_id());
+                }
+            }
+        });
+    }
+
+    private void mPopulateStateCodeSpinnerData(){
+        arrayPOS = getResources().getStringArray(R.array.poscode);
+        //Creating the ArrayAdapter instance having the POSCode list
+        ArrayAdapter adapterPOS = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayPOS);
+        adapterPOS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spStateCode.setAdapter(adapterPOS);
+    }
+
+    private void initAutoCompleteTextDataForItems(final int iSupplierCode){
+        mAdapterItemData = new SimpleCursorAdapter(this, R.layout.auto_complete_textview_two_strings, null,
+                new String[]{DatabaseHandler.KEY_ItemName, DatabaseHandler.KEY_ItemBarcode, DatabaseHandler.KEY_Rate},
+                new int[]{R.id.tv_auto_complete_textview_item_one, R.id.tv_auto_complete_textview_two,
+                        R.id.tv_auto_complete_textview_three},
+                0);
+        avItemName.setThreshold(1);
+        avItemName.setAdapter(mAdapterItemData);
+
+        mAdapterItemData.setFilterQueryProvider(new FilterQueryProvider() {
+            public Cursor runQuery(CharSequence str) {
+                Log.i(TAG, "Item name search data in Supplier's Firm item linkage table." +str);
+                if(str != null && !avSupplierName.getText().toString().isEmpty()) {
+                    if (!searchInAllItems)
+                        return dbPurchaseOrder.mGetPurchaseOrderItems(str,iSupplierCode);
+                    else
+                        return dbPurchaseOrder.mGetItemInwardSearchData(str);
+                }
+                return null;
+            } });
+
+        mAdapterItemData.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
+            public CharSequence convertToString(Cursor cur) {
+                int index = cur.getColumnIndex(DatabaseHandler.KEY_ItemName);
+                return cur.getString(index);
+            }});
+
+        avItemName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> listView, View view,
+                                    int position, long id) {
+                // Get the cursor, positioned to the corresponding row in the
+                // result set
+                Cursor cursor = (Cursor) listView.getItemAtPosition(position);
+                // Get the state's capital from this row in the database.
+                if(cursor != null) {
+                    purchaseOrderBean = new PurchaseOrderBean();
+                    if (!searchInAllItems) {
+                        purchaseOrderBean.setiItemId(cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_ItemId)));
+                        purchaseOrderBean.setStrSupplierId(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierCode)));
+                        purchaseOrderBean.setStrSupplierName(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SUPPLIERNAME)));
+                        purchaseOrderBean.setStrSupplierPhone(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierPhone)));
+                        purchaseOrderBean.setStrSupplierAddress(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierAddress)));
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)) != null) {
+                            purchaseOrderBean.setStrSupplierGSTIN(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
+                        } else {
+                            purchaseOrderBean.setStrSupplierGSTIN("");
+                        }
+                        if (!purchaseOrderBean.getStrSupplierGSTIN().isEmpty())
+                            purchaseOrderBean.setStrSupplierPOS(purchaseOrderBean.getStrSupplierGSTIN().substring(0, 2));
+                        else
+                            purchaseOrderBean.setStrSupplierPOS("");
+
+                        purchaseOrderBean.setStrBarcode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemBarcode)));
+                        purchaseOrderBean.setStrItemName(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemName)));
+
+                        purchaseOrderBean.setDblPurchaseRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_PurchaseRate)));
+                        purchaseOrderBean.setDblRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_Rate)));
+
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)) != null) {
+                            purchaseOrderBean.setStrSupplyType(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)));
+                        }
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierType)) != null) {
+                            purchaseOrderBean.setStrSupplierType(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierType)));
+                        }
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)) != null) {
+                            purchaseOrderBean.setStrHSNCode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)));
+                        }
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)) != null) {
+                            purchaseOrderBean.setStrUOM(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)));
+                        }
+
+                        purchaseOrderBean.setDblCGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CGSTRate)));
+                        purchaseOrderBean.setDblSGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_SGSTRate)));
+                        purchaseOrderBean.setDblIGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_IGSTRate)));
+                        purchaseOrderBean.setDblCessRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessRate)));
+                        purchaseOrderBean.setDblCessAmountPerUnit(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessAmountPerUnit)));
+                        purchaseOrderBean.setDblAdditionalCessAmount(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount)));
+                    } else {
+                        purchaseOrderBean.setiItemId(cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_id)));
+                        purchaseOrderBean.setStrSupplierId(""+supplier_model.get_id());
+                        purchaseOrderBean.setStrSupplierName(supplier_model.getSupplierName());
+                        purchaseOrderBean.setStrSupplierPhone(supplier_model.getSupplierPhone());
+                        purchaseOrderBean.setStrSupplierAddress(supplier_model.getSupplierAddress());
+                        if (supplier_model.getSupplierGSTIN() != null) {
+                            purchaseOrderBean.setStrSupplierGSTIN(supplier_model.getSupplierGSTIN());
+                        } else {
+                            purchaseOrderBean.setStrSupplierGSTIN("");
+                        }
+                        if (!purchaseOrderBean.getStrSupplierGSTIN().isEmpty())
+                            purchaseOrderBean.setStrSupplierPOS(purchaseOrderBean.getStrSupplierGSTIN().substring(0, 2));
+                        else
+                            purchaseOrderBean.setStrSupplierPOS("");
+
+                        if (supplier_model.getSupplierType() != null) {
+                            purchaseOrderBean.setStrSupplierType(supplier_model.getSupplierType());
+                        }
+
+                        purchaseOrderBean.setStrBarcode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemBarcode)));
+                        purchaseOrderBean.setStrItemName(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemShortName)));
+
+                        purchaseOrderBean.setDblPurchaseRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_AveragePurchaseRate)));
+                        purchaseOrderBean.setDblRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_Rate)));
+
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)) != null) {
+                            purchaseOrderBean.setStrSupplyType(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)));
+                        }
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)) != null) {
+                            purchaseOrderBean.setStrHSNCode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)));
+                        }
+                        if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)) != null) {
+                            purchaseOrderBean.setStrUOM(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)));
+                        }
+
+                        purchaseOrderBean.setDblCGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CGSTRate)));
+                        purchaseOrderBean.setDblSGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_SGSTRate)));
+                        purchaseOrderBean.setDblIGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_IGSTRate)));
+                        purchaseOrderBean.setDblCessRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessRate)));
+                        purchaseOrderBean.setDblCessAmountPerUnit(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessAmount)));
+                        purchaseOrderBean.setDblAdditionalCessAmount(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount)));
+                    }
+
+                    edtMrp.setText(""+purchaseOrderBean.getDblRate());
+                    edtPurchaseRate.setText("" + purchaseOrderBean.getDblPurchaseRate());
+                }
+            }
+        });
+    }
+
+    private void initAutoCompleteTextDataForPurchaseOrderNo(final int iSupplierId){
+        mAdapterPurchaseOrderNoData = new SimpleCursorAdapter(this, R.layout.auto_complete_textview_two_strings, null,
+                new String[] {DatabaseHandler.KEY_id, DatabaseHandler.KEY_SupplierCode},
+                new int[] {R.id.tv_auto_complete_textview_item_one},
+                0);
+
+        avPurchaseOrder.setThreshold(1);
+        avPurchaseOrder.setAdapter(mAdapterPurchaseOrderNoData);
+
+        mAdapterPurchaseOrderNoData.setFilterQueryProvider(new FilterQueryProvider() {
+            public Cursor runQuery(CharSequence str) {
+                Log.i(TAG, "Purchase order no search data in purchase order table." +str);
+                if(str != null && !avSupplierName.getText().toString().isEmpty()) {
+                    return dbPurchaseOrder.mGetPurchaseOrderNo(str,iSupplierId);
+                }
+                return null;
+            } });
+
+        mAdapterPurchaseOrderNoData.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
+            public CharSequence convertToString(Cursor cur) {
+                int index = cur.getColumnIndex(DatabaseHandler.KEY_id);
+                return cur.getString(index);
+            }});
+
+        avPurchaseOrder.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                if (!avSupplierName.getText().toString().isEmpty())
+                    avPurchaseOrder.showDropDown();
+                return false;
+            }
+        });
+
+        avPurchaseOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> listView, View view,
+                                    int position, long id) {
+                // Get the cursor, positioned to the corresponding row in the
+                // result set
+                Cursor cursor = (Cursor) listView.getItemAtPosition(position);
+                // Get the state's capital from this row in the database.
+                if(cursor != null){
+                    if (purchaseOrderBeanList.size() > 0)
+                        purchaseOrderBeanList.clear();
+                    mFetchDataOnPurchaseOrderNo(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_id)), cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierCode)));
+                    btnUpdate.setEnabled(true);
+                    btnUpdate.setBackgroundResource(R.drawable.button_blue_color);
+                    btnGenerate.setEnabled(false);
+                    btnGenerate.setBackgroundResource(R.color.holo_blue);
+                }
+            }
+        });
+    }
+
+    private void mValidateAndAddingListAdapter(){
+        if(avSupplierName.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Select/Add Supplier's Firm ");
+            return;
+        }
+        if(avItemName.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Select Item ");
+            return;
+        }
+
+        if(edtPhone.getText().toString().isEmpty() && edtAddress.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please select proper Supplier's Firm or add Supplier's Firm and select items.");
+            return;
+        }
+
+        if(purchaseOrderBean == null){
+            MsgBox.Show("Warning","Kindly goto \"Supplier's Firm Item Linkage\" and add the desired item." +
+                    "\nPlease save your data , if any , before leaving this screen");
+            return;
+        }
+        if(edtQty.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Enter the Quantity ");
+            return;
+        }
+        if(edtQty.getText().toString().equalsIgnoreCase(".")){
+            edtQty.setText("0.0");
+        }
+        if(edtPurchaseRate.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Enter the Purchase Rate. ");
+            return;
+        }
+        if (edtPurchaseRate.getText().toString().equalsIgnoreCase(".")) {
+            edtPurchaseRate.setText("0.0");
+        }
+        /*if(Double.parseDouble(edtPurchaseRate.getText().toString().trim()) < 0)
         {
-            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("HSNCode")) !=1)
-            {
-                HSNEnabled = false;
+            MsgBox.Show("Wrong Information", "Purchase rate should be greater than zero.");
+            return;
+        }*/
+        /*if(Double.parseDouble(edtPurchaseRate.getText().toString().trim()) > purchaseOrderBean.getDblRate())
+        {
+            MsgBox.Show("Invalid Information", "Purchase rate cannot be greater than MRP.");
+            return;
+        }*/
+        purchaseOrderBean.setDblPurchaseRate(Double.parseDouble(edtPurchaseRate.getText().toString().trim()));
+
+        Cursor duplicateLinkage = dbPurchaseOrder.getDuplicateSupplierItemLinkage(Integer.parseInt(edtSupplierId.getText().toString().trim()),
+                purchaseOrderBean.getiItemId(), purchaseOrderBean.getStrUOM());
+
+        if (duplicateLinkage!= null && duplicateLinkage.moveToFirst()){
+
+        } else {
+            LinkItem();
+        }
+
+        if (purchaseOrderBeanList != null && purchaseOrderBeanList.size() > 0) {
+            boolean bExistsStatus = true;
+            for (int i = 0; i < purchaseOrderBeanList.size(); i++) {
+                if (purchaseOrderBeanList.get(i).getiItemId() ==  purchaseOrderBean.getiItemId()
+                        && purchaseOrderBeanList.get(i).getDblPurchaseRate() == purchaseOrderBean.getDblPurchaseRate()) {
+                    mAmountCalculation(purchaseOrderBeanList.get(i),UPDATE);
+                    bExistsStatus = false;
+                    break;
+                } else if (purchaseOrderBeanList.get(i).getiItemId() ==  purchaseOrderBean.getiItemId()
+                        && purchaseOrderBeanList.get(i).getDblPurchaseRate() != purchaseOrderBean.getDblPurchaseRate()) {
+                    MsgBox.Show("Duplicate Information","Same item is already added.");
+                    bExistsStatus = false;
+                }
             }
-            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("GSTIN_In")) !=1)
-            {
-                et_supplier_GSTIN.setEnabled(false);
+            if(bExistsStatus){
+                mAmountCalculation(purchaseOrderBean,ADD);
             }
-            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("POS")) !=1)
-            {
-                //ll_POS.setEnabled(false);
-                for ( int i = 0; i < ll_POS.getChildCount();  i++ ){
-                    View view = ll_POS.getChildAt(i);
-                    view.setEnabled(false); // Or whatever you want to do with the view.
+        } else {
+            mAmountCalculation(purchaseOrderBean,ADD);
+        }
+    }
+
+    private void mValidateAndUpdatingListAdapter(){
+        if(avSupplierName.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Select/Add Supplier's Firm ");
+            return;
+        }
+        if(avItemName.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Select Item ");
+            return;
+        }
+
+        if(edtPhone.getText().toString().isEmpty() && edtAddress.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please select proper Supplier's Firm or add Supplier's Firm and select items.");
+            return;
+        }
+
+        if(updatePurchaseOrderBean == null){
+            MsgBox.Show("Warning","Kindly goto \"Supplier's Firm Item Linkage\" and add the desired item." +
+                    "\nPlease save your data , if any , before leaving this screen");
+            return;
+        }
+        if(edtQty.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Enter the Quantity ");
+            return;
+        }
+        if(edtQty.getText().toString().equalsIgnoreCase(".")){
+            edtQty.setText("0.0");
+        }
+        if(edtPurchaseRate.getText().toString().isEmpty()){
+            MsgBox.Show("Insufficient Information","Please Enter the Purchase Rate. ");
+            return;
+        }
+        if (edtPurchaseRate.getText().toString().equalsIgnoreCase(".")) {
+            edtPurchaseRate.setText("0.0");
+        }
+        if(Double.parseDouble(edtPurchaseRate.getText().toString().trim()) > updatePurchaseOrderBean.getDblRate())
+        {
+            MsgBox.Show("Invalid Information", "Purchase rate cannot be greater than MRP.");
+            return;
+        }
+        updatePurchaseOrderBean.setDblPurchaseRate(Double.parseDouble(edtPurchaseRate.getText().toString().trim()));
+
+        if (purchaseOrderBeanList != null && purchaseOrderBeanList.size() > 0) {
+            for (int i = 0; i < purchaseOrderBeanList.size(); i++) {
+                if (updateItem) {
+                    if (purchaseOrderBeanList.get(i).getiItemId() ==  updatePurchaseOrderBean.getiItemId()
+                            && purchaseOrderBeanList.get(i).getDblPurchaseRate() == updatePurchaseOrderBean.getDblPurchaseRate()) {
+                        mAmountCalculation(updatePurchaseOrderBean,UPDATE);
+                    }
                 }
             }
         }
     }
-    void loadTableonPurchaseOrderSelected()
-    {
-        int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
-        String purchaseOrder = autocompletetv_purchase_order.getText().toString();
-        try
-        {
-            if (purchaseOrder.equalsIgnoreCase("Select/Add Supplier")) {
-                // MsgBox.Show("Insufficient Information", "Please Select/Add the Supplier");
-            }/*else if (purchaseOrder.equalsIgnoreCase(""))
-            {
-                MsgBox.Show("Insufficient Information", "Please Select the Purchase Order");
+
+    private void LinkItem () {
+        SupplierItemLinkageBean supplierItemLinkageBean = new SupplierItemLinkageBean();
+        supplierItemLinkageBean.setiSupplierID(Integer.parseInt(edtSupplierId.getText().toString().trim()));
+        supplierItemLinkageBean.setStrSupplierName(avSupplierName.getText().toString());
+        supplierItemLinkageBean.setStrSupplierPhone(edtPhone.getText().toString());
+        supplierItemLinkageBean.setStrSupplierAddress(edtAddress.getText().toString());
+        if(!edtGSTIN.getText().toString().isEmpty()){
+            supplierItemLinkageBean.setStrGSTIN(edtGSTIN.getText().toString());
+            supplierItemLinkageBean.setStrSupplierType("Registered");
+        } else {
+            supplierItemLinkageBean.setStrGSTIN("");
+            supplierItemLinkageBean.setStrSupplierType("UnRegistered");
+        }
+        supplierItemLinkageBean.setiItemID(purchaseOrderBean.getiItemId());
+        supplierItemLinkageBean.setStrBarcode(purchaseOrderBean.getStrBarcode());
+        supplierItemLinkageBean.setStrItemName(purchaseOrderBean.getStrItemName());
+        if(purchaseOrderBean.getStrHSNCode() != null && !purchaseOrderBean.getStrHSNCode().equalsIgnoreCase("")) {
+            supplierItemLinkageBean.setStrHSNCode(purchaseOrderBean.getStrHSNCode());
+        }
+        if(purchaseOrderBean.getStrSupplyType() != null && !purchaseOrderBean.getStrSupplyType().equalsIgnoreCase("")) {
+            supplierItemLinkageBean.setStrSupplyType(purchaseOrderBean.getStrSupplyType());
+        }
+        if(purchaseOrderBean.getStrUOM() != null && !purchaseOrderBean.getStrUOM().equalsIgnoreCase("")) {
+            supplierItemLinkageBean.setStrUOM(purchaseOrderBean.getStrUOM());
+        }
+        supplierItemLinkageBean.setDblRate1(purchaseOrderBean.getDblRate());
+        supplierItemLinkageBean.setDblPurchaseRate(purchaseOrderBean.getDblPurchaseRate());
+        supplierItemLinkageBean.setDblCGSTPer(purchaseOrderBean.getDblCGSTRate());
+        supplierItemLinkageBean.setDblUTGST_SGSTPer(purchaseOrderBean.getDblSGSTRate());
+        supplierItemLinkageBean.setDblIGSTPer(purchaseOrderBean.getDblIGSTRate());
+        supplierItemLinkageBean.setDblCessPer(purchaseOrderBean.getDblCessRate());
+        supplierItemLinkageBean.setDblCessAmount(purchaseOrderBean.getDblCessAmount());
+        supplierItemLinkageBean.setDblAdditionalCessAmount(purchaseOrderBean.getDblAdditionalCessAmount());
+        supplierItemLinkageBean.setDblPurchaseRate(purchaseOrderBean.getDblPurchaseRate());
+
+        long lLinkItemStatus = -1;
+        lLinkItemStatus = dbPurchaseOrder.mLinkSupplierWithItem(supplierItemLinkageBean, Constants.INSERT);
+        if(lLinkItemStatus>0) {
+            Log.i(TAG, "New Item linked successfully...");
+        }
+    }
+
+    private void mFetchDataOnPurchaseOrderNo(String strPurchaseOrderNo, String supplierId){
+        Cursor cursorPO = dbPurchaseOrder.mGetPurchaseOrderData(strPurchaseOrderNo, supplierId);
+        try {
+            if (cursorPO != null){
+                cursorPO.moveToFirst();
+                do{
+                    purchaseOrderBean = new PurchaseOrderBean();
+                    purchaseOrderBean.set_id(cursorPO.getInt(cursorPO.getColumnIndex(DatabaseHandler.KEY_id)));
+                    purchaseOrderBean.setiItemId(cursorPO.getInt(cursorPO.getColumnIndex(DatabaseHandler.KEY_ItemId)));
+                    purchaseOrderBean.setStrSupplierId(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplierCode)));
+                    purchaseOrderBean.setStrSupplierName(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SUPPLIERNAME)));
+                    purchaseOrderBean.setStrSupplierPhone(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplierPhone)));
+                    purchaseOrderBean.setStrSupplierAddress(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplierAddress)));
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_GSTIN)) != null){
+                        purchaseOrderBean.setStrSupplierGSTIN(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
+                    } else {
+                        purchaseOrderBean.setStrSupplierGSTIN("");
+                    }
+                    purchaseOrderBean.setStrBarcode(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_ItemBarcode)));
+                    purchaseOrderBean.setStrItemName(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_ItemName)));
+                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_PurchaseRate)) > 0) {
+                        purchaseOrderBean.setDblPurchaseRate(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_PurchaseRate)));
+                    }
+                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_Rate)) > 0) {
+                        purchaseOrderBean.setDblRate(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_Rate)));
+                    }
+                   /* if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_RetailPrice)) > 0){
+                        purchaseOrderBean.setDblRetailPrice(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_RetailPrice)));
+                    }
+                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_WholeSalePrice)) > 0){
+                        purchaseOrderBean.setDblWholeSalePrice(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_WholeSalePrice)));
+                    }*/
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplyType)) != null){
+                        purchaseOrderBean.setStrSupplyType(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplyType)));
+                    } else {
+                        purchaseOrderBean.setStrSupplyType("");
+                    }
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplierType)) != null){
+                        purchaseOrderBean.setStrSupplierType(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplierType)));
+                    }else {
+                        purchaseOrderBean.setStrSupplierType("");
+                    }
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_HSNCode)) != null){
+                        purchaseOrderBean.setStrHSNCode(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_HSNCode)));
+                    } else {
+                        purchaseOrderBean.setStrHSNCode("");
+                    }
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_UOM)) != null){
+                        purchaseOrderBean.setStrUOM(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_UOM)));
+                    } else {
+                        purchaseOrderBean.setStrUOM("");
+                    }
+//                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_CGSTRate)) > 0){
+                    purchaseOrderBean.setDblCGSTRate(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_CGSTRate)));
+//                    }
+//                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_SGSTRate)) > 0){
+                    purchaseOrderBean.setDblSGSTRate(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_SGSTRate)));
+//                    }
+//                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_IGSTRate)) > 0){
+                    purchaseOrderBean.setDblIGSTRate(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_IGSTRate)));
+//                    }
+//                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_cessRate)) > 0){
+                    purchaseOrderBean.setDblCessRate(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_cessRate)));
+
+                    purchaseOrderBean.setDblCessAmountPerUnit(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_cessAmountPerUnit)));
+                    purchaseOrderBean.setDblAdditionalCessAmount(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount)));
+//                    }
+//                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_Quantity)) > 0){
+                    purchaseOrderBean.setDblQuantity(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_Quantity)));
+//                    }
+//                    if(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_AdditionalChargeAmount)) > 0){
+                    purchaseOrderBean.setDblAdditionalChargeAmount(cursorPO.getDouble(cursorPO.getColumnIndex(DatabaseHandler.KEY_AdditionalChargeAmount)));
+//                    }
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_AdditionalChargeName)) != null){
+                        purchaseOrderBean.setStrAdditionalCharge(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_AdditionalChargeName)));
+                    } else {
+                        purchaseOrderBean.setStrAdditionalCharge("");
+                    }
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_InvoiceNo)) != null){
+                        purchaseOrderBean.setStrInvoiceNo(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_InvoiceNo)));
+                    }else {
+                        purchaseOrderBean.setStrInvoiceNo("");
+                    }
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_InvoiceDate)) != null){
+                        purchaseOrderBean.setStrInvoiceDate(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_InvoiceDate)));
+                    } else {
+                        purchaseOrderBean.setStrInvoiceDate("");
+                    }
+                    if(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplierPOS)) != null){
+                        purchaseOrderBean.setStrSupplierPOS(cursorPO.getString(cursorPO.getColumnIndex(DatabaseHandler.KEY_SupplierPOS)));
+                    } else {
+                        purchaseOrderBean.setStrSupplierPOS("");
+                    }
+                    edtPurchaseOrderId.setText(""+purchaseOrderBean.get_id());
+                    if (purchaseOrderBean.getStrInvoiceNo() != null && edtInvoiceNo.getText().toString().isEmpty())
+                        edtInvoiceNo.setText(purchaseOrderBean.getStrInvoiceNo());
+                    if (purchaseOrderBean.getStrInvoiceDate() != null && edtInvoiceDate.getText().toString().isEmpty())
+                        edtInvoiceDate.setText(purchaseOrderBean.getStrInvoiceDate());
+                    mAmountCalculation(purchaseOrderBean,ADD);
+                }while(cursorPO.moveToNext());
+            }
+        }catch (Exception ex){
+            Log.i(TAG,"Unable to fetch data from purchase order table based on the purchase order no.");
+        } finally {
+            if(cursorPO != null){
+                cursorPO.close();
+            }
+        }
+    }
+
+    private void mAmountCalculation(PurchaseOrderBean purchaseOrderBeanTemp, int iMode) {
+        double dblQty = 0, dblPurchaseRate = 0, dblTaxableValue = 0, dblTotalCGSTAmt = 0, dblTotalSGSTAmt = 0, dblTotalIGSTAmt = 0, dblTotalCessAmt = 0, dblAmount = 0;
+        if (purchaseOrderBeanTemp != null && purchaseOrderBeanTemp.getDblQuantity() <= 0) {
+            try {
+                dblQty = Double.parseDouble(edtQty.getText().toString());
+                dblPurchaseRate = Double.parseDouble(edtPurchaseRate.getText().toString());
+                if (dblQty <= 0) {
+                    MsgBox.Show("Insufficient Information", "Please enter quantity more than zero.");
+                    return;
+                }
+                /*if (dblPurchaseRate <= 0) {
+                    MsgBox.Show("Insufficient Information", "Please enter purchase rate more than zero.");
+                    return;
+                }*/
+                purchaseOrderBeanTemp.setDblQuantity(dblQty);
+                purchaseOrderBeanTemp.setDblPurchaseRate(dblPurchaseRate);
+            } catch (Exception ex) {
+                Log.i(TAG, "Unable to process calculation on item selection for purchase order. Barcode : "
+                        + purchaseOrderBeanTemp.getStrBarcode() + ex.getMessage());
                 return;
-            }else if (purchaseOrder.equalsIgnoreCase("Make New Purchase Order")) {
-                Cursor crsr = dbPurchaseOrder.getMaxPurchaseOrderNo();
-                int Max =1;
-                if (crsr != null && crsr.moveToFirst())
-                {
-                    Max = crsr.getInt(0);
-                    Max++;
-                }
-                autocompletetv_purchase_order.setText(String.valueOf(Max));
-                loadAutoCompleteData_item(suppliercode);
-            }*/
-            else {
-                // valid Purchase Order No is selected
-                Cursor purchaseorder_crsr = dbPurchaseOrder.getPurchaseOrderDetails(suppliercode,Integer.parseInt(purchaseOrder));
-                int flag =0;
-                count =0;
-
-                while (purchaseorder_crsr != null &&  purchaseorder_crsr.moveToNext())
-                {
-                    if (flag ==0)
-                    {
-                        ClearTable();
-
-                        String additionalamount = purchaseorder_crsr.getString(purchaseorder_crsr.getColumnIndex("AdditionalChargeAmount"));
-                        if(additionalamount== null || additionalamount.equals("") || additionalamount.equals("0"))
-                        {
-                            chk_inward_additional_charge.setChecked(false);
-                            et_inward_additionalchargename.setText("");
-                            et_inward_additionalchargeamount.setText("");
-                        }
-                        else {
-                            // some value of additional charge
-                            chk_inward_additional_charge.setChecked(true);
-                            et_inward_additionalchargename.setText(purchaseorder_crsr.getString(purchaseorder_crsr.getColumnIndex("AdditionalChargeName")));
-                            et_inward_additionalchargeamount.setText(additionalamount);
-                        }
-                        flag = 1;
-                    }
-                    purchase_crsr = null;
-                    purchase_crsr = purchaseorder_crsr;
-                    populate(3);
-
-                }
-                calculateSubTotal();
             }
+        } else {
+            dblQty = 0;
+            if(!edtQty.getText().toString().isEmpty()) {
+                dblQty = Double.parseDouble(edtQty.getText().toString());
+            }
+            if (updateItem)
+                purchaseOrderBeanTemp.setDblQuantity(dblQty);
+            else
+                purchaseOrderBeanTemp.setDblQuantity(dblQty + purchaseOrderBeanTemp.getDblQuantity());
         }
-        catch (Exception e)
-        {
-            Log.e( "PurchaseOrder",""+e.getMessage());
-            Toast.makeText(myContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        try {
+            dblTaxableValue = purchaseOrderBeanTemp.getDblQuantity() * purchaseOrderBeanTemp.getDblPurchaseRate();
+            purchaseOrderBeanTemp.setDblTaxableValue(dblTaxableValue);
+            if(cbStateCode.isChecked())
+            {
+                dblTotalIGSTAmt = (purchaseOrderBeanTemp.getDblIGSTRate() * purchaseOrderBeanTemp.getDblTaxableValue())/100;
+                dblTotalCGSTAmt = 0;
+                dblTotalSGSTAmt = 0;
+            }
+            else
+            {
+                dblTotalCGSTAmt = (purchaseOrderBeanTemp.getDblCGSTRate()*purchaseOrderBeanTemp.getDblTaxableValue())/100;
+                dblTotalSGSTAmt = (purchaseOrderBeanTemp.getDblSGSTRate()*purchaseOrderBeanTemp.getDblTaxableValue())/100;
+                dblTotalIGSTAmt =0;
+            }
+            if (purchaseOrderBeanTemp.getDblCessRate() > 0)
+                dblTotalCessAmt = (purchaseOrderBeanTemp.getDblCessRate()*purchaseOrderBeanTemp.getDblTaxableValue())/100;
+            else
+                dblTotalCessAmt = purchaseOrderBeanTemp.getDblCessAmountPerUnit()*purchaseOrderBeanTemp.getDblQuantity();
+
+            dblTotalCessAmt += purchaseOrderBeanTemp.getDblAdditionalCessAmount()*purchaseOrderBeanTemp.getDblQuantity();
+
+            purchaseOrderBeanTemp.setDblCGSTAmount(dblTotalCGSTAmt);
+            purchaseOrderBeanTemp.setDblSGSTAmount(dblTotalSGSTAmt);
+            purchaseOrderBeanTemp.setDblIGSTAmount(dblTotalIGSTAmt);
+            purchaseOrderBeanTemp.setDblCessAmount(dblTotalCessAmt);
+            dblAmount = purchaseOrderBeanTemp.getDblTaxableValue() + purchaseOrderBeanTemp.getDblCGSTAmount()
+                    + purchaseOrderBeanTemp.getDblSGSTAmount() + purchaseOrderBeanTemp.getDblIGSTAmount()
+                    + purchaseOrderBeanTemp.getDblCessAmount();
+            purchaseOrderBeanTemp.setDblAmount(dblAmount);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to process calculation on item selection for purchase order. Barcode : "
+                    + purchaseOrderBeanTemp.getStrBarcode() + ex.getMessage());
+            return;
         }
-
-    }
-    void input_window()
-    {
-        AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-
-        LayoutInflater UserAuthorization = (LayoutInflater) myContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View vwAuthorization = UserAuthorization.inflate(R.layout.activity_new_item_window, null);
-
-
-        //final TextView tv_attracts_reverse_charge = (TextView) findViewById(R.id.tv_attracts_reverse_charge);
-        //final Spinner spnr_attracts_reverse_charge = (Spinner) findViewById(R.id.spnr_attracts_reverse_charge);
-
-        final Spinner spnr_input_supplytype = (Spinner)vwAuthorization.findViewById(R.id.spnr_input_supplytype);
-        final EditText et_input_name = (EditText) vwAuthorization.findViewById(R.id.et_input_item);
-        final EditText et_input_rate = (EditText) vwAuthorization.findViewById(R.id.et_input_rate);
-        final EditText et_input_quantity = (EditText) vwAuthorization.findViewById(R.id.et_input_quantity);
-        final Spinner spnr_input_uom = (Spinner) vwAuthorization.findViewById(R.id.spnr_input_uom);
-        final EditText et_input_salestax = (EditText) vwAuthorization.findViewById(R.id.et_input_salestax);
-        final EditText et_input_servicetax = (EditText) vwAuthorization.findViewById(R.id.et_input_servicetax);
-
-
-
-        AuthorizationDialog
-                .setTitle("New Item")
-                .setView(vwAuthorization)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        et_inward_item_quantity.setBackgroundColor(Color.WHITE);
-                        et_inward_item_quantity.setEnabled(true);
+        switch (iMode){
+            case ADD:
+                purchaseOrderBeanList.add(purchaseOrderBeanTemp);
+                break;
+            case UPDATE:
+                for (int i = 0; i < purchaseOrderBeanList.size(); i++) {
+                    if (purchaseOrderBeanList.get(i).getiItemId() == purchaseOrderBeanTemp.getiItemId()
+                            && purchaseOrderBeanList.get(i).getDblPurchaseRate() == purchaseOrderBeanTemp.getDblPurchaseRate()) {
+                        purchaseOrderBeanList.remove(i);
+                        purchaseOrderBeanList.add(purchaseOrderBeanTemp);
+                        break;
                     }
-                })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        Item_name = et_input_name.getText().toString().toUpperCase();
-                        Item_supplytype  = spnr_input_supplytype.getSelectedItem().toString();
-                        String rate = et_input_rate.getText().toString();
-                        String quantity = et_input_quantity.getText().toString();
-                        Item_uom = spnr_input_uom.getSelectedItem().toString();
-                        String saletax_str = et_input_salestax.getText().toString();
-                        String servicetax_str = et_input_servicetax.getText().toString();
-
-                        if (rate == null || rate.equals(""))
-                            Item_rate= "0.00";
-                        else
-                            Item_rate = String.format("%.2f",Float.parseFloat(et_input_rate.getText().toString()));
-                        if (quantity== null || quantity.equals(""))
-                            Item_quantity = "0.00";
-                        else
-                            Item_quantity = String.format("%.2f",Float.parseFloat(et_input_quantity.getText().toString()));
-                        if (saletax_str == null || saletax_str.equals(""))
-                            Item_saletax= "0.00";
-                        else {
-                            double saletax_d = Double.parseDouble(saletax_str);
-                            if(saletax_d <0 || saletax_d > 99.99)
-                            {
-                                MsgBox.Show("Warning", "Please enter sales tax % between 0 and 99.99");
-                                return;
-                            }
-                            Item_saletax = String.format("%.2f", saletax_d);
-                        }
-                        if (servicetax_str== null || servicetax_str.equals(""))
-                            Item_servicetax = "0.00";
-                        else{
-                            double servicetax_d = Double.parseDouble(servicetax_str);
-                            if(servicetax_d <0 || servicetax_d > 99.99)
-                            {
-                                MsgBox.Show("Warning", "Please enter service tax % between 0 and 99.99");
-                                return;
-                            }
-                            Item_servicetax = String.format("%.2f",servicetax_d);
-                        }
-
-                        if (Item_name.equals("") ||  quantity.equals("") || rate.equals(""))
-                        {
-                            AlertDialog.Builder MsgBox = new AlertDialog.Builder(myContext);
-                            MsgBox. setMessage("Item Name , value and Quantity cannot be  blank. Please all details")
-                                    .setPositiveButton("OK", null)
-                                    .setIcon(R.drawable.ic_launcher)
-                                    .setTitle("Note")
-                                    .show();
-                            set_list_spnr();
-                        }
-                        else if (Item_uom.equals("") ||  Item_uom.equalsIgnoreCase("Unit"))
-                        {
-                            AlertDialog.Builder MsgBox = new AlertDialog.Builder(myContext);
-                            MsgBox. setMessage("Please Select the UOM")
-                                    .setPositiveButton("OK", null)
-                                    .setIcon(R.drawable.ic_launcher)
-                                    .setTitle("Note")
-                                    .show();
-                            set_list_spnr();
-                        }
-                        else
-                        {
-                            String mou_temp = Item_uom;
-                            int length = mou_temp.length();
-                            String mou = mou_temp.substring(length-3, length-1);
-                            int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
-                            if (suppliercode>0)
-                            {
-                                Cursor item_crsr = dbPurchaseOrder.getItemdetailsforSupplier(suppliercode, Item_name);
-                                if (item_crsr != null && item_crsr.moveToNext()) {
-                                    //Toast.makeText(myContext, "Warning Item already present", Toast.LENGTH_SHORT).show();
-                                    MsgBox.Show("Warning", "Item already present");
-                                }
-                                else {
-                                    String suppliername = autocompletetv_suppliername.getText().toString();
-                                    lRowId = 0;
-
-                                    InsertItem( suppliercode,  suppliername, Item_name,  ""/*barcode*/, Float.parseFloat(Item_rate),
-                                            Float.parseFloat(Item_quantity), mou, ""/*ImageUri*/, Float.parseFloat(Item_saletax),
-                                            Float.parseFloat(Item_servicetax),Item_supplytype);
-                                    if(lRowId>0)
-                                    {
-                                        autocompletetv_itemlist.setText(Item_name);
-                                        et_inward_item_quantity.setEnabled(true);
-                                        et_inward_item_quantity.setBackgroundColor(Color.WHITE);
-                                        et_inward_item_quantity.setText(Item_quantity);
-                                        populate(2); // new entry
-                                        //autocompletetv_itemlist.setText("");
-                                        loadAutoCompleteData_item(suppliercode);
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(myContext, " Error in adding the item to database", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                })
-                .show();
+                }
+                break;
+            default:
+                break;
+        }
+        mPopulatingDataToAdapter();
     }
 
+    private void mPopulatingDataToAdapter(){
+        if(purchaseOrderBeanList.size() > 0){
+            if (purchaseOrderAdapter == null) {
+                purchaseOrderAdapter = new PurchaseOrderAdapter(this,this, purchaseOrderBeanList);
+                lvPurchaseOrderList.setAdapter(purchaseOrderAdapter);
+            } else {
+                purchaseOrderAdapter.notifyDataSetChanged(purchaseOrderBeanList);
+            }
 
+            edtSubTotal.setText(String.format("%.2f", mCalculateSubTotal()));
+            edtGrandTotal.setText(String.format("%.2f", mCalculateGrandTotal(0)));
+            if(purchaseOrderBeanList.get(0).getDblAdditionalChargeAmount() > 0){
+                cbAdditionalChargeStatus.setChecked(true);
+                if(!purchaseOrderBeanList.get(0).getStrAdditionalCharge().isEmpty()) {
+                    edtAdditionalChargeName.setText(purchaseOrderBeanList.get(0).getStrAdditionalCharge());
+                }
+                edtAdditionalAmt.setText(""+purchaseOrderBeanList.get(0).getDblAdditionalChargeAmount());
+            }
+            if(arrayPOS != null && arrayPOS.length > 0) {
+                if (!purchaseOrderBeanList.get(0).getStrSupplierPOS().isEmpty() && !isPosSame(purchaseOrderBeanList.get(0).getStrSupplierPOS())) {
+                    cbStateCode.setChecked(true);
+                    for (int i = 0; i <arrayPOS.length; i++) {
+                        String strStateCode = arrayPOS[i];
+                        int l = strStateCode.length();
+                        String strState_cd = strStateCode.substring(l-2,l);
+                        if(strState_cd.equals(purchaseOrderBeanList.get(0).getStrSupplierPOS())) {
+                            spStateCode.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            edtSubTotal.setText("");
+            edtGrandTotal.setText("");
+            edtAdditionalAmt.setText("");
+            edtAdditionalChargeName.setText("");
+        }
+        avItemName.setText("");
+        edtQty.setText("");
+        edtMrp.setText("");
+        edtPurchaseRate.setText("");
+        updateItem = false;
+        btnAddItem.setText("Add Item");
+    }
 
-    public  void GeneratePO(View v)
-    {
-        AlertDialog.Builder msg = new AlertDialog.Builder(myContext);
-        msg.setPositiveButton("OK", null);
+    private boolean isPosSame(String POS) {
+        boolean isSame = false;
 
+        String ownerPOS = dbPurchaseOrder.getOwnerPOS();
+        if (ownerPOS.equalsIgnoreCase(POS))
+            isSame = true;
 
-        String suppliername_str = autocompletetv_suppliername.getText().toString(),
-                supplieraddress_str= et_supplier_address.getText().toString(),
-                supplierphn = et_supplier_phone.getText().toString();
-        int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
+        return isSame;
+    }
 
-        if(suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn.equals("")){
-            MsgBox.Show(" Insufficient Information ","Please fill Supplier Details");
-        } else if (suppliercode< 0) { // details are filled but supplier not in database
-            MsgBox.Show("Error ", " Supplier is not in Database. Please add supplier");
-        } else if (purchaseOrderAdapter == null){
-            MsgBox.Show("Insufficient Information ", " Please add item");
-        }else if (chk_interState.isChecked() && spnrSupplierStateCode.getSelectedItem().toString().equals(""))
-        {
-            MsgBox.Show("Insufficient Information ", " Please select state for supplier");
-        }else
-        {
-            String purchaseorderno = autocompletetv_purchase_order.getText().toString();
+    private void mGeneratePO(){
+        if(purchaseOrderBeanList != null && purchaseOrderBeanList.size() > 0) {
+            if (avSupplierName.getText().toString().isEmpty() || edtAddress.getText().toString().isEmpty()
+                    || edtPhone.getText().toString().isEmpty()) {
+                MsgBox.Show(" Insufficient Information ", "Please fill Supplier's Firm Details");
+                return;
+            }
+            if (purchaseOrderAdapter == null) {
+                MsgBox.Show("Insufficient Information ", " Please add an item");
+                return;
+            }
+            if (cbStateCode.isChecked() && spStateCode.getSelectedItem().toString().equals("Select")) {
+                MsgBox.Show("Insufficient Information ", " Please select state for Supplier's Firm");
+                return;
+            }
+
+            if (cbAdditionalChargeStatus.isChecked()) {
+                if (edtAdditionalChargeName.getText().toString().isEmpty()){
+                    MsgBox.Show("Insufficient Information", "Please enter the additional charge name.");
+                    return;
+                }
+                if (edtAdditionalAmt.getText().toString().isEmpty()){
+                    MsgBox.Show("Insufficient Information", "Please enter the additional charge.");
+                    return;
+                }
+            }
+
+            String purchaseorderno = avPurchaseOrder.getText().toString();
+           /* if (!purchaseorderno.equals("")) {
+                Cursor isPurchaseOrderExist = dbPurchaseOrder.getPurchaseOrderById(supplier_model.get_id(),
+                        Integer.parseInt(edtPurchaseOrderId.getText().toString().trim()), Integer.parseInt(purchaseorderno));
+                if (isPurchaseOrderExist != null)
+            }*/
+            if (!purchaseorderno.equals("")) {
+                MsgBox.Show("Warning", "Purchase Order No. is auto generated, kindly clear Purchase Order No. field.");
+                return;
+            }
             if (purchaseorderno.equals("")) {
                 // generate purchase order no
                 Cursor crsr = dbPurchaseOrder.getMaxPurchaseOrderNo();
                 int Max =1;
                 if (crsr != null && crsr.moveToFirst())
                 {
-                    if(crsr.getInt(0) != -100)
+                    if(crsr.getInt(0) != -1)
                     {
                         Max = crsr.getInt(0)+1;
                     }
                 }
-                autocompletetv_purchase_order.setText(String.valueOf(Max));
+                avPurchaseOrder.setText(String.valueOf(Max));
 
                 long saved = savePurchaseOrder();
-                if (saved >0)// successfully added bill items
+                if (saved >-1)// successfully added bill items
                 {
-                    Toast.makeText(myContext, "Purchase Order Generated :"+Max, Toast.LENGTH_SHORT).show();
+                    generatePOPdf();
+                    sendPurchaseOrder(String.valueOf(Max), supplier_model.getSupplierEmail());
+                    Toast.makeText(this, "Purchase Order Generated :"+Max, Toast.LENGTH_SHORT).show();
                     Log.d(" PurchaseOrderActivty", " Purchase Order Generated : "+Max);
-                    reset_inward(0);
+                    mClear();
                 }
-            }else {
-                Cursor duplicacy_crsr = dbPurchaseOrder.checkduplicatePO(suppliercode, Integer.parseInt(purchaseorderno));
+            }
+           /* else {
+                Cursor duplicacy_crsr = dbPurchaseOrder.checkduplicatePO(Integer.parseInt(purchaseOrderBeanList.get(0).getStrSupplierId()), purchaseorderno);
                 if (duplicacy_crsr!= null && duplicacy_crsr.moveToFirst())
                 {
                     MsgBox.setTitle(" Duplicate ")
-                            .setIcon(R.drawable.ic_launcher)
-                            .setMessage(" Purchase Order No already present for Supplier. Do you want to overwrite")
+                            .setIcon(R.mipmap.ic_company_logo)
+                            .setMessage(" Purchase Order No already present for Supplier's Firm. Do you want to overwrite")
                             .setNegativeButton("No", null)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    edit = savePurchaseOrder();
-                                    reset_inward(0);
+                                    savePurchaseOrder();
+                                    mClear();
                                 }
                             })
                             .show();
@@ -639,12 +1114,112 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     long saved = savePurchaseOrder();
                     if (saved >0)// successfully added bill items
                     {
-                        Toast.makeText(myContext, "Purchase Order Generated ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Purchase Order Generated ", Toast.LENGTH_SHORT).show();
                         Log.d(" PurchaseOrderActivty", " Purchase Order Generated at "+saved);
-                        reset_inward(0);
+                        mClear();
                     }
                 }
+            }*/
+
+         /*   long saved = savePurchaseOrder();
+            if (saved >0)// successfully added bill items
+            {
+                Toast.makeText(this, "Purchase Order Generated ", Toast.LENGTH_SHORT).show();
+                Log.d(" PurchaseOrderActivty", " Purchase Order Generated at "+saved);
+                mClear();
+            }*/
+
+        } else {
+            MsgBox.Show(" Insufficient Information ", "Please fill all the necessary details");
+        }
+    }
+
+    private void sendPurchaseOrder(final String purchaseOrderNo, final String supplierEmail) {
+
+        if (!isWifiConnected()) {
+            Toast.makeText(this, "Kindly connect to internet to share the bill.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.customer_detail_missing_alert, null);
+        final EditText etCustPhone = alertLayout.findViewById(R.id.et_phone);
+        final EditText etCustEmail = alertLayout.findViewById(R.id.et_email);
+        final TextView tvMobile = alertLayout.findViewById(R.id.mobile_title);
+        final TextView tvEmail = alertLayout.findViewById(R.id.email_title);
+        final Button btnCancel = alertLayout.findViewById(R.id.btn_cancel);
+        final Button btnSend = alertLayout.findViewById(R.id.btn_send);
+        final CheckBox customerMobileCheckBox = (CheckBox) alertLayout.findViewById(R.id.customer_mobile);
+        final CheckBox customerEmailCheckBox = (CheckBox) alertLayout.findViewById(R.id.customer_email);
+        etCustPhone.setVisibility(View.GONE);
+        customerMobileCheckBox.setVisibility(View.GONE);
+        customerEmailCheckBox.setVisibility(View.GONE);
+        tvMobile.setVisibility(View.GONE);
+
+        etCustEmail.setEnabled(true);
+        etCustEmail.setText(supplierEmail);
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Share PurchaseOrder");
+
+        alert.setIcon(R.mipmap.ic_company_logo);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        final AlertDialog alertDialog = alert.create();
+        alertDialog.show();
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
             }
+        });
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (etCustEmail.isEnabled() && etCustEmail.getText().toString().isEmpty()) {
+                    etCustEmail.setError("Please fill this field.");
+                } else if (etCustEmail.isEnabled() && etCustEmail != null
+                        && !etCustEmail.getText().toString().isEmpty()
+                        && !Validations.isValidEmailAddress(etCustEmail.getText().toString())) {
+                    etCustEmail.setError("Please Enter Valid Email id.");
+                } else {
+                    send(etCustEmail.getText().toString(), purchaseOrderNo, "-", "-");
+                    Toast.makeText(PurchaseOrderActivity.this, "Sending....", Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    private void send(String custEmail, String purchaseOrderNo, String invoiceNo, String invoiceDate) {
+        String emailContent = "Please find the generated PurchaseOrder in mail attachment.";
+        String firmName = "";
+
+        String filename = "PO_" + purchaseOrderNo + "_" + invoiceNo + "_" + invoiceDate + ".pdf";
+
+        String attachment = Environment.getExternalStorageDirectory().getPath() + "/WeP_Retail_PurchaseOrder/"
+                + filename;
+
+        SendBillInfoToCustUtility smsUtility = new SendBillInfoToCustUtility(this, "Purchase Order", emailContent, "", "", false, true, false,
+                this, custEmail, attachment, filename, firmName);
+        smsUtility.sendBillInfo();
+        Toast.makeText(this, "Sharing Purchase Order...", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isWifiConnected() {
+        boolean isWifiConnected = false;
+        try {
+            ConnectivityManager connManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (mWifi.isConnected()) {
+                isWifiConnected = true;
+            }
+
+        } catch (Exception e) {
+            isWifiConnected = false;
+            Log.e(TAG, e.toString());
+        } finally {
+            return isWifiConnected;
         }
     }
 
@@ -652,1410 +1227,640 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     {
         // 1 -> save
         // 2- >Edit
-
+        if(purchaseOrderBeanList != null && purchaseOrderBeanList.size() > 0){
+            if(purchaseOrderBeanList.get(0).getStrSupplierId().isEmpty()){
+                MsgBox.Show(" Insufficient Information ", "Supplier's Firm is not in Database. Please add Supplier's Firm");
+                return -1;
+            }
+        }
         // Inserted Row Id in database table
-        long lResult = 0;
-
-
-        long result = 1;
+        long result = -1;
         int menucode = 0;
         String additionalchargename = "", additionalCharge = "";
 
         try
         {
+            String purchaseorderno = avPurchaseOrder.getText().toString();
+            String supp_name = avSupplierName.getText().toString();
+            int suppliercode  = Integer.parseInt(purchaseOrderBeanList.get(0).getStrSupplierId());
+            String sup_phone = edtPhone.getText().toString();
+            String sup_address = edtAddress.getText().toString();
+            String sup_gstin = edtGSTIN.getText().toString();
 
-            String purchaseorderno = autocompletetv_purchase_order.getText().toString();
-            String supp_name = autocompletetv_suppliername.getText().toString();
-            int suppliercode  = Integer.parseInt(et_supplier_code.getText().toString());
-            String sup_phone = et_supplier_phone.getText().toString();
-            String sup_address = et_supplier_address.getText().toString();
-            String sup_gstin = et_supplier_GSTIN.getText().toString();
-
-
-
-            int deletedrows = dbPurchaseOrder.deletePurchaseOrder( suppliercode,Integer.parseInt(purchaseorderno));
+            int deletedrows = dbPurchaseOrder.deletePurchaseOrder( suppliercode,purchaseorderno);
             Log.d("InsertPurchaseOrder", deletedrows+" Rows deleted for Purchase Order "+purchaseorderno);
 
+            Date d = new Date();
+            CharSequence currentdate = DateFormat.format("dd-MM-yyyy", d.getTime());
+            Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(currentdate.toString());
+            long milliseconds = date.getTime();
 
-            for (PurchaseOrder po :dataList) {
+            for (PurchaseOrderBean po :purchaseOrderBeanList) {
 
-                po.setPurchaseOrderNo(purchaseorderno);
-                if(chk_interState.isChecked())
+                po.setiPurchaseOrderNo(Integer.parseInt(purchaseorderno));
+                po.setStrPurchaseOrderDate(String.valueOf(milliseconds));
+                po.setStrInvoiceNo(edtInvoiceNo.getText().toString().trim());
+                po.setStrInvoiceDate(edtInvoiceDate.getText().toString().trim());
+
+                if(cbStateCode.isChecked())
                 {
-                    String supplier_stateCode = spnrSupplierStateCode.getSelectedItem().toString();
+                    String supplier_stateCode = spStateCode.getSelectedItem().toString();
                     int l = supplier_stateCode.length();
                     String state_cd = supplier_stateCode.substring(l-2,l);
-                    po.setSupplierPOS(state_cd);
+                    po.setStrSupplierPOS(state_cd);
                 }else
                 {
-                    po.setSupplierPOS("");
+                    po.setStrSupplierPOS("");
                 }
-                if(chk_inward_additional_charge.isChecked())
+                if(cbAdditionalChargeStatus.isChecked())
                 {
-                    po.setAdditionalCharge(et_inward_additionalchargename.getText().toString());
-                    po.setAdditionalChargeAmount(Double.parseDouble(et_inward_additionalchargeamount.getText().toString()));
+                    po.setStrAdditionalCharge(edtAdditionalChargeName.getText().toString());
+                    po.setStrAdditionalCharge(edtAdditionalChargeName.getText().toString());
+                    if (!edtAdditionalAmt.getText().toString().isEmpty())
+                        po.setDblAdditionalChargeAmount(Double.parseDouble(edtAdditionalAmt.getText().toString()));
+                    else
+                        po.setDblAdditionalChargeAmount(0);
                 }
                 else
                 {
-                    po.setAdditionalCharge("");
-                    po.setAdditionalChargeAmount(0);
+                    po.setStrAdditionalCharge("");
+                    po.setDblAdditionalChargeAmount(0);
                 }
-                lResult = dbPurchaseOrder.InsertPurchaseOrder(po);
-                if(lResult>0)
-                    Log.d("InsertPurchaseOrder", " item inserted at position:" + lResult);
-                //Cursor duplicacy_crsr = dbPurchaseOrder.checkDuplicatePurchaseOrder(suppliercode,menucode,Integer.parseInt(purchaseorderno));
-//                if (duplicacy_crsr == null || !duplicacy_crsr.moveToFirst())
-//                {
-//                    // item not present for that purchase order
-//                    lResult = dbPurchaseOrder.InsertPurchaseOrder(po);
-//                    Log.d("InsertPurchaseOrder", " item inserted at position:" + lResult);
-//                }
-//                else
-//                { // already present
-//                    lResult = dbPurchaseOrder.UpdatePurchaseOrder(po);
-//                    Log.d("InsertPurchaseOrder", "item updated at position:" + lResult);
-//                }
-
+                result = dbPurchaseOrder.InsertPurchaseOrder(po);
+                if(result>0) {
+                    Log.d("InsertPurchaseOrder", " item inserted at position:" + purchaseorderno);
+//                    Toast.makeText(this, "Purchase Order generate with PO no.: " + result, Toast.LENGTH_SHORT).show();
+                }
             }
         } catch (Exception e) {
-            Toast.makeText(myContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("log", e.getMessage(), e);
             result = -1;
         }
         return result;
     }
 
-
-    public  void EditPO(View v)
-    {
-        String supplieraddress_str = et_supplier_address.getText().toString();
-        String suppliername_str = autocompletetv_suppliername.getText().toString(),
-                supplierphn = et_supplier_phone.getText().toString();
-        int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
-        String purchaseorder = autocompletetv_purchase_order.getText().toString();
-
-        if(suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn.equals("")){
-            MsgBox.Show(" Insufficient Information ","Please fill Supplier Details");
-        } else if (suppliercode< 0) { // details are filled but supplier not in database
-            MsgBox.Show("Error ", " Supplier is not in Database. Please add supplier");
-        } else if (purchaseOrderAdapter == null){
-            MsgBox.Show("Insufficient Information ", " Please add item");
-        }else if (purchaseorder.equals(""))
-        { MsgBox.Show(" Insufficent Information", " Please Select Purchase Order");
-        }else if (chk_interState.isChecked() && spnrSupplierStateCode.getSelectedItem().toString().equals(""))
-        {
-            MsgBox.Show("Insufficient Information ", " Please select state for supplier");
-        }else
-        {
-            Cursor duplicacy_crsr = dbPurchaseOrder.checkduplicatePO(suppliercode, Integer.parseInt(purchaseorder));
-            if (duplicacy_crsr!= null && duplicacy_crsr.moveToFirst())
-            {
-                long saved = savePurchaseOrder();
-                if (saved >0)// successfully added bill items
-                {
-                    Toast.makeText(myContext, "Purchase Order Updated ", Toast.LENGTH_SHORT).show();
-                    Log.d(" PurchaseOrderActivty", " Purchase Order Updated at "+saved);
-                    reset_inward(0);
-                }
-            }else { // no duplicacy
-                MsgBox.setTitle(" Error ")
-                        .setIcon(R.drawable.ic_launcher)
-                        .setMessage(" This Purchase Order No is not present. Do you want to create new ")
-                        .setNegativeButton("No", null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                edit = savePurchaseOrder();
-                                reset_inward(0);
-                            }
-                        })
-                        .show();
-            }
-        }
-    }
-
-    void InitializeViews()
-    {
-        ll_POS = (LinearLayout)findViewById(R.id.ll_POS);
-        lv_inward_item_details = (ListView) findViewById(R.id.lv_inward_item_details);
-        chk_interState = (CheckBox) findViewById(R.id.chk_interState);
-        spnrSupplierStateCode = (Spinner) findViewById(R.id.spnrSupplierStateCode);
-        et_supplier_code = (EditText) findViewById(R.id.et_supplier_code);
-        autocompletetv_suppliername = (AutoCompleteTextView)findViewById(R.id.autocompletetv_suppliername);
-        et_supplier_address = (EditText) findViewById(R.id.et_supplier_address);
-        et_supplier_phone = (EditText) findViewById(R.id.et_supplier_phone);
-
-        autocompletetv_invoiceno = (AutoCompleteTextView)findViewById(R.id.autocompletetv_invoiceno);
-        tx_inward_supply_invoice_number = (EditText) findViewById(R.id.tx_inward_supply_invoice_number);
-        tx_inward_invoice_date = (TextView) findViewById(R.id.tx_inward_invoice_date);
-        autocompletetv_purchase_order = (AutoCompleteTextView)findViewById(R.id.autocompletetv_purchase_order);
-        autocompletetv_itemlist = (AutoCompleteTextView)findViewById(R.id.autocompletetv_itemlist);
-        et_inward_item_quantity = (EditText) findViewById(R.id.et_inward_item_quantity);
-        // btnimage_new_item = (ImageButton) findViewById(R.id.btnimage_new_item);
-
-        btnEditPO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnEditPO);
-        btnGeneratePO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnGeneratePO);
-        btnClearItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnClearItem);
-        btnCloseItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnCloseItem);
-        btnAddSupplier = (com.wep.common.app.views.WepButton) findViewById (R.id.btnAddSupplier);
-        btn_add_new_item = (com.wep.common.app.views.WepButton) findViewById (R.id.btn_add_new_item);
-        btnAddSupplier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                AddSupplier(v);
-            }
-        });
-        btnGeneratePO.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GeneratePO(v);
-            }
-        });
-
-        btnClearItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Clear_inward(v);
-            }
-        });
-
-        btnCloseItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Close_inward(v);
-            }
-        });
-        btnEditPO.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditPO(v);
-            }
-        });
-        chk_inward_additional_charge = (CheckBox) findViewById(R.id.chk_inward_additional_charge);
-        et_inward_additionalchargeamount = (EditText) findViewById(R.id.et_inward_additionalchargeamount);
-        et_inward_additionalchargename  = (EditText) findViewById(R.id.et_inward_additionalchargename);
-        et_inward_sub_total = (EditText) findViewById(R.id.et_inward_sub_total);
-        et_supplier_GSTIN = (EditText) findViewById(R.id.et_supplier_GSTIN);
-        et_inward_grand_total = (EditText) findViewById(R.id.et_inward_grand_total);
-
-        chk_interState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                /*if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
-                    return;*/
-                if(!isChecked)
-                {
-
-                    spnrSupplierStateCode.setSelection(0);
-                    spnrSupplierStateCode.setEnabled(false);
-                    if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
-                        return;
-                    for(PurchaseOrder po : dataList)
-                    {
-                        double sgstAmt =0, cgstAmt =0;
-                        double taxval = po.getTaxableValue();
-                        String suppliercode = po.getSupplierCode();
-                        String itemname = po.getItemName();
-
-                        Cursor crsr = dbPurchaseOrder.getItemDetail_inward(itemname);
-                        if(crsr!=null && crsr.moveToNext())
-                        {
-                            double cgstRate = crsr.getDouble(crsr.getColumnIndex("CGSTRate"));
-                            double sgstRate = crsr.getDouble(crsr.getColumnIndex("SGSTRate"));
-                            sgstAmt= taxval*sgstRate/100;
-                            cgstAmt= taxval*cgstRate/100;
-                        }
-                        po.setIgstAmount(0);
-                        po.setCgstAmount(cgstAmt);
-                        po.setSgstAmount(sgstAmt);
-                    }
-                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
-
-                }
-                else
-                {
-                    spnrSupplierStateCode.setSelection(0);
-                    spnrSupplierStateCode.setEnabled(true);
-                    if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
-                        return;
-                    for(PurchaseOrder po : dataList)
-                    {
-                        double sgst = po.getSgstAmount();
-                        double cgst = po.getCgstAmount();
-                        po.setIgstAmount(sgst+cgst);
-                        po.setCgstAmount(0);
-                        po.setSgstAmount(0);
-                    }
-                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
-                }
-
-            }
-        });
-
-    }
-
-    private void loadAutoCompleteData_purchaseOrder(int suppliercode) {
-        // loading Purchase order for that supplier
-        List<String> invoicelist = dbPurchaseOrder.getPurchaseOrderlist(suppliercode);
-        final ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,invoicelist);
-        dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        // attaching data adapter to spinner
-        autocompletetv_purchase_order.setAdapter(dataAdapter11);
-
-
-    }
-
-    private void loadAutoCompleteData_item(int suppliercode) {
-
-        String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-        List<String> itemlist = new ArrayList<>();
-        itemlist.add("Not in list");
-        Cursor menuCodeListcrsr= dbPurchaseOrder.getLinkedMenuCodeForSupplier(suppliercode);
-        while (menuCodeListcrsr!=null && menuCodeListcrsr.moveToNext())
-        {
-            int menucode = menuCodeListcrsr.getInt(menuCodeListcrsr.getColumnIndex("MenuCode"));
-            Cursor itemDetail = dbPurchaseOrder.getItem_inward(menucode);
-            if(itemDetail!=null && itemDetail.moveToNext())
-            {
-                String itemName = itemDetail.getString(itemDetail.getColumnIndex("ItemName"));
-                itemlist.add(itemName);
-            }
-        }
-
-        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,itemlist);
-        dataAdapter1.setDropDownViewResource(android.R.layout.simple_list_item_1);
-
-        // attaching data adapter to spinner
-        autocompletetv_itemlist.setAdapter(dataAdapter1);
-
-    }
-
-
-    public int getIndex_POS(String item)
-    {
-        List<String> pos = Arrays.asList(getResources().getStringArray(R.array.poscode));
-        int count =0;
-        for (String pos_temp : pos)
-        {
-            if(pos_temp.contains(item))
-                return count;
-            count++;
-        }
-        return 0;
-    }
-
-    void populate(int type)
-    {
-        //1 - new item entry
-        //2 - existing item in database
-        // 3 - popualte table from saved purchase order
-
-
+    private void generatePOPdf() {
         try {
 
-            if (type == 3)
-            {
-                if (purchase_crsr ==null)
-                {
-                    return;
-                }
-
-                PurchaseOrder po = new PurchaseOrder();
-
-                String gstin = et_supplier_GSTIN.getText().toString();
-                po.setSupplierCode((et_supplier_code.getText().toString()));
-                po.setSupplierGSTIN(gstin);
-                po.setSupplierName(autocompletetv_suppliername.getText().toString());
-                po.setSupplierPhone(et_supplier_phone.getText().toString());
-                po.setSupplierAddress(et_supplier_address.getText().toString());
-                po.setSupplierPOS(purchase_crsr.getString(purchase_crsr.getColumnIndex("SupplierPOS")));
-                if(po.getSupplierPOS()== null || po.getSupplierPOS().equals(""))
-                {
-                    chk_interState.setChecked(false);
-                    spnrSupplierStateCode.setEnabled(false);
-                }
-                else
-                {
-                    chk_interState.setChecked(true);
-                    spnrSupplierStateCode.setEnabled(true);
-                    spnrSupplierStateCode.setSelection(getIndex_POS(po.getSupplierPOS()));
-                }
-
-
-                if(gstin.equals(""))
-                    po.setSupplierType("UnRegistered");
-                else
-                    po.setSupplierType("Registered");
-
-                po.setMenuCode(purchase_crsr.getInt(purchase_crsr.getColumnIndex("MenuCode")));
-                po.setItemName(purchase_crsr.getString(purchase_crsr.getColumnIndex("ItemName")));
-                po.setSupplyType(purchase_crsr.getString(purchase_crsr.getColumnIndex("SupplyType")));
-                po.setHSNCode(purchase_crsr.getString(purchase_crsr.getColumnIndex("HSNCode")));
-                String quantity_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("Quantity"));
-                po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(quantity_str))));
-
-
-                String Rate = purchase_crsr.getString(purchase_crsr.getColumnIndex("Value"));
-                if (Rate == null || Rate.equals(""))
-                    po.setValue(0.00);
-                else
-                    po.setValue(Double.parseDouble(String.format("%.2f", Float.parseFloat(Rate))));
-
-
-                Item_quantity = purchase_crsr.getString(purchase_crsr.getColumnIndex("Quantity"));
-                if (Item_quantity == null || Item_quantity.equals(""))
-                    po.setQuantity(0.00);
-                else
-                    po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(Item_quantity))));
-
-                double taxval = purchase_crsr.getDouble(purchase_crsr.getColumnIndex("TaxableValue"));
-                po.setTaxableValue(Double.parseDouble(String.format("%.2f", taxval)));
-
-                String uom_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("UOM"));
-                po.setUOM(uom_str);
-
-
-
-                String cgstRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("CGSTRate"));
-                if (cgstRate_str== null || cgstRate_str.equals(""))
-                    cgstRate_str ="0.00";
-
-                String sgstRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("SGSTRate"));
-                if (sgstRate_str== null || sgstRate_str.equals(""))
-                    sgstRate_str =("0.00");
-
-                String cgstAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("CGSTAmount"));
-                if (cgstAmt_str== null || cgstAmt_str.equals(""))
-                    cgstAmt_str ="0.00";
-
-                String sgstAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("SGSTAmount"));
-                if (sgstAmt_str== null || sgstAmt_str.equals(""))
-                    sgstAmt_str =("0.00");
-
-                String igstRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("IGSTRate"));
-                if (igstRate_str== null || igstRate_str.equals(""))
-                    igstRate_str =("0.00");
-
-                String igstAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("IGSTAmount"));
-                if (igstAmt_str== null || igstAmt_str.equals(""))
-                    igstAmt_str ="0.00";
-
-                String cessRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("cessRate"));
-                if (cessRate_str== null || cessRate_str.equals(""))
-                    cessRate_str =("0.00");
-
-                String cessAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("cessAmount"));
-                if (cessAmt_str== null || cessAmt_str.equals(""))
-                    cessAmt_str ="0.00";
-
-                po.setIgstRate(Double.parseDouble(igstRate_str));
-                po.setIgstAmount(Double.parseDouble(igstAmt_str));
-                po.setCgstRate(Double.parseDouble(cgstRate_str));
-                po.setCgstAmount(Double.parseDouble(cgstAmt_str));
-                po.setSgstRate(Double.parseDouble(sgstRate_str));
-                po.setSgstAmount(Double.parseDouble(sgstAmt_str));
-                po.setCsRate(Double.parseDouble(cessRate_str));
-                po.setCsAmount(Double.parseDouble(cessAmt_str));
-
-                double amt = purchase_crsr.getDouble(purchase_crsr.getColumnIndex("Amount"));
-                po.setAmount(amt);
-                po.setIsgoodInward(purchase_crsr.getString(purchase_crsr.getColumnIndex("isGoodinward")));
-                String add_amt = purchase_crsr.getString(purchase_crsr.getColumnIndex("AdditionalChargeAmount"));
-                if(add_amt!=null && !add_amt.equals("")&& !add_amt.equals("0"))
-                {
-                    et_inward_additionalchargename.setText(purchase_crsr.getString(purchase_crsr.getColumnIndex("AdditionalChargeName")));
-                    et_inward_additionalchargeamount.setText(add_amt);
-                    chk_inward_additional_charge.setChecked(true);
-                    po.setAdditionalCharge(et_inward_additionalchargename.getText().toString());
-                    po.setAdditionalChargeAmount(Double.parseDouble(et_inward_additionalchargeamount.getText().toString()));
-                }
-                dataList.add(po);
-
-                set_list_spnr();
-                calculateSubTotal();
-                if (purchaseOrderAdapter == null) {
-                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList,HSNEnabled);
-                    lv_inward_item_details.setAdapter(purchaseOrderAdapter);
-                } else {
-                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
-                }
-            }
-            else if(type ==2) // item existing in database
-            {
-                if (dataList== null)
-                    dataList = new ArrayList<PurchaseOrder>();
-                Item_name = autocompletetv_itemlist.getText().toString().toUpperCase();
-                int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
-                if (suppliercode <0)
-                {
-                    MsgBox = new MessageDialog(myContext);
-                    MsgBox.Show("Insufficient Information ", " Please fill Supplier Details ");
-                    return;
-                }
-                Cursor itemdetails = dbPurchaseOrder.getItemDetail_inward(Item_name);
-                if (itemdetails!=null && itemdetails.moveToFirst()) {
-                    PurchaseOrder po = new PurchaseOrder();
-                    //po.setSn(dataList.size()+1);
-                    String gstin = et_supplier_GSTIN.getText().toString();
-                    po.setSupplierCode((et_supplier_code.getText().toString()));
-                    po.setSupplierGSTIN(gstin);
-                    po.setSupplierName(autocompletetv_suppliername.getText().toString());
-                    po.setSupplierPhone(et_supplier_phone.getText().toString());
-                    po.setSupplierAddress(et_supplier_address.getText().toString());
-                    if(gstin.equals(""))
-                        po.setSupplierType("UnRegistered");
-                    else
-                        po.setSupplierType("Registered");
-                    po.setMenuCode(itemdetails.getInt(itemdetails.getColumnIndex("MenuCode")));
-                    po.setItemName(Item_name);
-                    po.setSupplyType(itemdetails.getString(itemdetails.getColumnIndex("SupplyType")));
-                    po.setHSNCode(itemdetails.getString(itemdetails.getColumnIndex("HSNCode")));
-
-
-                    String Rate = itemdetails.getString(itemdetails.getColumnIndex("AverageRate"));
-                    if (Rate == null || Rate.equals(""))
-                        po.setValue(0.00);
-                    else
-                        po.setValue(Double.parseDouble(String.format("%.2f", Float.parseFloat(Rate))));
-
-
-                    Item_quantity = et_inward_item_quantity.getText().toString();
-                    if (Item_quantity == null || Item_quantity.equals(""))
-                        po.setQuantity(0.00);
-                    else
-                        po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(Item_quantity))));
-
-
-                    float rate_f = (float)po.getValue();
-                    float qty_f = (float)po.getQuantity();
-                    float taxval_f = rate_f * qty_f;
-                    po.setTaxableValue(Double.parseDouble(String.format("%.2f", taxval_f)));
-
-                    String uom_str = itemdetails.getString(itemdetails.getColumnIndex("UOM"));
-                    po.setUOM(uom_str);
-
-                    double cgstRate_d =0, sgstRate_d =0, igstRate_d = 0,cessRate_d=0;
-                    double cgstAmt_d =0, sgstAmt_d =0, igstAmt_d = 0,cessAmt_d=0;
-
-                    String cgstRate_str = itemdetails.getString(itemdetails.getColumnIndex("CGSTRate"));
-                    if (cgstRate_str== null || cgstRate_str.equals(""))
-                        cgstRate_str ="0.00";
-
-                    String sgstRate_str = itemdetails.getString(itemdetails.getColumnIndex("SGSTRate"));
-                    if (sgstRate_str== null || sgstRate_str.equals(""))
-                        sgstRate_str =("0.00");
-
-                    String igstRate_str = itemdetails.getString(itemdetails.getColumnIndex("IGSTRate"));
-                    if (igstRate_str== null || igstRate_str.equals(""))
-                        igstRate_str ="0.00";
-
-                    String cessRate_str = itemdetails.getString(itemdetails.getColumnIndex("cessRate"));
-                    if (cessRate_str== null || cessRate_str.equals(""))
-                        cessRate_str =("0.00");
-
-                    cgstRate_d = Double.parseDouble(cgstRate_str);
-                    sgstRate_d = Double.parseDouble(sgstRate_str);
-                    igstRate_d = Double.parseDouble(igstRate_str);
-                    cessRate_d = Double.parseDouble(cessRate_str);
-                    if(chk_interState.isChecked())
-                    {
-                        igstAmt_d = igstRate_d *taxval_f/100;
-                        cgstRate_d = 0;
-                        cgstAmt_d = 0;
-                        sgstRate_d = 0;
-                        sgstAmt_d = 0;
-                    }
-                    else
-                    {
-                        cgstAmt_d = cgstRate_d*taxval_f/100;
-                        sgstAmt_d = sgstRate_d*taxval_f/100;
-                        igstAmt_d =0;
-                        igstRate_d=0;
-                    }
-                    cessAmt_d = cessRate_d*taxval_f/100;
-                    po.setIgstRate(igstRate_d);
-                    po.setIgstAmount(igstAmt_d);
-                    po.setCgstRate(cgstRate_d);
-                    po.setCgstAmount(cgstAmt_d);
-                    po.setSgstRate(sgstRate_d);
-                    po.setSgstAmount(sgstAmt_d);
-                    po.setCsRate(cessRate_d);
-                    po.setCsAmount(cessAmt_d);
-                    double amount_f = taxval_f + cgstAmt_d +sgstAmt_d+igstAmt_d+cessAmt_d;
-                    po.setAmount(amount_f);
-                    po.setIsgoodInward("0");
-                    if(chk_inward_additional_charge.isChecked())
-                    {
-                        po.setAdditionalCharge(et_inward_additionalchargename.getText().toString());
-                        po.setAdditionalChargeAmount(Double.parseDouble(et_inward_additionalchargeamount.getText().toString()));
-                    }
-                    dataList.add(po);
-                }
-                set_list_spnr();
-                calculateSubTotal();
-                if (purchaseOrderAdapter == null) {
-                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList, HSNEnabled);
-                    lv_inward_item_details.setAdapter(purchaseOrderAdapter);
-                } else {
-                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
-                }
-
-            }// end of if(type ==2)
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(myContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-
-
-    }
-/*
-void populate_old(int type)
-    {
-        //1 - new item entry
-        //2 - existing item in database
-        // 3 - popualte table from saved purchase order
-        boolean flag_pos =true;
-
-        TableRow tr = new TableRow(this);
-        //tr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
-
-        TextView sn = new TextView(myContext);
-        sn.setWidth(55);
-        sn.setBackgroundResource(R.drawable.border_itemdatabase);
-        count++;
-        sn.setPadding(10,0,0,0);
-        sn.setTextSize(20);
-        sn.setText(String.valueOf(count));
-
-
-        TextView Supplytype = new TextView(myContext);
-        Supplytype.setWidth(55);
-        Supplytype.setPadding(10,0,0,0);
-        Supplytype.setTextSize(20);
-        Supplytype.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView name = new TextView(myContext);
-        name.setBackgroundResource(R.drawable.border_itemdatabase);
-        name.setWidth(225);
-        name.setTextSize(20);
-        name.setPadding(10,0,0,0);
-
-        TextView rate = new TextView(myContext);
-        rate.setWidth(110);
-        rate.setPadding(0,0,10,0);
-        rate.setGravity(Gravity.RIGHT);
-        rate.setTextSize(20);
-        rate.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView qty = new TextView(myContext);
-        qty.setWidth(90);
-        qty.setPadding(0,0,10,0);
-        qty.setGravity(Gravity.RIGHT);
-        qty.setTextSize(20);
-        qty.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView uom = new TextView(myContext);
-        uom.setWidth(110);
-       // uom.setPadding(10,0,0,0);
-        uom.setGravity(Gravity.CENTER);
-        uom.setTextSize(20);
-        uom.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView taxvalue = new TextView(myContext);
-        taxvalue.setWidth(170);
-        taxvalue.setPadding(0,0,10,0);
-        taxvalue.setGravity(Gravity.RIGHT);
-        taxvalue.setTextSize(20);
-        taxvalue.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView Salestax = new TextView(myContext);
-        Salestax.setWidth(110);
-        Salestax.setPadding(0,0,10,0);
-        Salestax.setGravity(Gravity.RIGHT);
-        Salestax.setTextSize(20);
-        Salestax.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView Servicetax = new TextView(myContext);
-        Servicetax.setWidth(110);
-        Servicetax.setPadding(0,0,10,0);
-        Servicetax.setGravity(Gravity.RIGHT);
-        Servicetax.setTextSize(20);
-        Servicetax.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView Amount = new TextView(myContext);
-        Amount.setWidth(155);
-        Amount.setPadding(0,0,10,0);
-        Amount.setGravity(Gravity.RIGHT);
-        Amount.setTextSize(20);
-        Amount.setBackgroundResource(R.drawable.border_itemdatabase);
-
-        TextView MenuCode = new TextView(myContext);
-        MenuCode.setWidth(130);
-        MenuCode.setBackgroundResource(R.drawable.border_itemdatabase);
-
-
-        // Delete
-
-
-        Button ImgDelete = new Button(myContext);
-        ImgDelete.setBackground(getResources().getDrawable(R.drawable.delete_icon_border));
-        ImgDelete.setLayoutParams(new TableRow.LayoutParams(40, 35));
-        //ImgDelete.setPadding(5,0,0,5);
-        ImgDelete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final View v1 = v;
-                AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-
-                LayoutInflater UserAuthorization = (LayoutInflater) myContext
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);
-
-
-                AuthorizationDialog
-                        .setTitle("Confimation")
-                        .setView(vwAuthorization)
-                        .setNegativeButton("Cancel", null)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-
-                                View row = (View) v1.getParent();
-                                ViewGroup container = ((ViewGroup) row.getParent());
-                                container.removeView(row);
-                                container.invalidate();
-                                calculateSubTotal();
-                                */
-/*int child = tbl_inward_item_details.getChildCount();
-                                for(int i =0;i< child ;i++)
-                                {
-                                    if(i==0)
-                                        count =0;
-
-                                    TableRow row1 = (TableRow) tbl_inward_item_details.getChildAt(i);
-                                    TextView Sn = (TextView) row1.getChildAt(0);
-                                    count++;
-                                    Sn.setText(String.valueOf(count));
-                                }*//*
-
-                            }
-                        })
-                        .show();
-
-            }
-        });
-
-        */
-/*ImgDelete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                View row = (View) v.getParent();
-                ViewGroup container = ((ViewGroup) row.getParent());
-                container.removeView(row);
-                container.invalidate();
-                calculateSubTotal();
-                int child = tbl_inward_item_details.getChildCount();
-                for(int i =0;i< child ;i++)
-                {
-                    if(i==0)
-                        count =0;
-
-                    TableRow row1 = (TableRow) tbl_inward_item_details.getChildAt(i);
-                    TextView Sn = (TextView) row1.getChildAt(0);
-                    count++;
-                    Sn.setText(String.valueOf(count));
-                }
-            }
-        });*//*
-
-
-        TextView spc = new TextView(myContext);
-        spc.setWidth(5);
-
-        Button btndel = new Button(myContext);
-        btndel.setBackground(getResources().getDrawable(R.drawable.deletered1));
-        btndel.setPadding(5,0,0,0);
-        btndel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final View v1 = v;
-                MsgBox = new MessageDialog(myContext);
-                MsgBox.setTitle("Confirm")
-                        .setMessage("Do you want to Delete this item ")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                View row = (View) v1.getParent();
-                                ViewGroup container = ((ViewGroup) row.getParent());
-                                container.removeView(row);
-                                container.invalidate();
-                                calculateSubTotal();
-                            }
-                        })
-                        .setNegativeButton("No",null)
-                        .show();
-            }
-        });
-        */
-/*btndel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final View v1 = v;
-                AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-
-                LayoutInflater UserAuthorization = (LayoutInflater) myContext
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);
-
-
-                AuthorizationDialog
-                        .setTitle("Confimation")
-                        .setView(vwAuthorization)
-                        .setNegativeButton("Cancel", null)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-
-                                View row = (View) v1.getParent();
-                                ViewGroup container = ((ViewGroup) row.getParent());
-                                container.removeView(row);
-                                container.invalidate();
-                                calculateSubTotal();
-
-                            }
-                        })
-                        .show();
-
-            }
-        });*//*
-
-        */
-/*btndel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                View row = (View) v.getParent();
-                ViewGroup container = ((ViewGroup) row.getParent());
-                container.removeView(row);
-                container.invalidate();
-                calculateSubTotal();
-            }
-        });*//*
-
-
-        try {
-
-
-            if (type == 3)
-            {
-                if (purchase_crsr ==null)
-                {
-                    return;
-                }
-
-                String supplytype = purchase_crsr.getString(purchase_crsr.getColumnIndex("SupplyType"));
-                Supplytype.setText(supplytype);
-
-                String itemname = purchase_crsr.getString(purchase_crsr.getColumnIndex("ItemName"));
-                name.setText(itemname);
-
-                String rate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("Value"));
-                rate.setText(String.format("%.2f", Float.parseFloat(rate_str)));
-
-                String quantity_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("Quantity"));
-                qty.setText(String.format("%.2f", Float.parseFloat(quantity_str)));
-
-                String uom_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("UOM"));
-                uom.setText(uom_str);
-
-                String taxval_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("TaxableValue"));
-                taxvalue.setText(String.format("%.2f", Float.parseFloat(taxval_str)));
-
-                String salestax_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("SalesTax"));
-                Salestax.setText(String.format("%.2f", Float.parseFloat(salestax_str)));
-
-                String servicetax_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("ServiceTaxAmount"));
-                Servicetax.setText(String.format("%.2f", Float.parseFloat(servicetax_str)));
-
-                String amount = purchase_crsr.getString(purchase_crsr.getColumnIndex("Amount"));
-                Amount.setText(String.format("%.2f", Float.parseFloat(amount)));
-
-                String menucode = purchase_crsr.getString(purchase_crsr.getColumnIndex("MenuCode"));
-                MenuCode.setText(menucode);
-
-                tr.addView(sn);
-                tr.addView(Supplytype);
-                tr.addView(name);
-                tr.addView(rate);
-                tr.addView(qty);
-                tr.addView(uom);
-                tr.addView(taxvalue);
-                tr.addView(Salestax);
-                tr.addView(Servicetax);
-                tr.addView(Amount);
-                tr.addView(MenuCode);
-                tr.addView(spc);
-               // tr.addView(btndel);
-                tr.addView(ImgDelete);
-
-               */
-/* tbl_inward_item_details.addView(tr);*//*
-
-
-            } else if(type ==2) // item existing in database
-            {
-                float salestaxamount =0 , servicetaxamount =0;
-                Item_name = autocompletetv_itemlist.getText().toString().toUpperCase();
-                int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
-                if (suppliercode <0)
-                {
-                    MsgBox = new MessageDialog(myContext);
-                    MsgBox.Show("Insufficient Information ", " Please fill Supplier Details ");
-                    return;
-                }
-                Cursor itemdetails = dbPurchaseOrder.getItemdetailsforSupplier(suppliercode,Item_name);
-                if (itemdetails!=null && itemdetails.moveToFirst()) {
-                    name.setText(Item_name);
-
-                    String supplytype = itemdetails.getString(itemdetails.getColumnIndex("SupplyType"));
-                    Supplytype.setText(supplytype);
-
-                    String Rate = itemdetails.getString(itemdetails.getColumnIndex("Rate"));
-                    if (Rate == null || Rate.equals(""))
-                        rate.setText("0.00");
-                    else
-                        rate.setText(String.format("%.2f", Float.parseFloat(Rate)));
-
-
-                    Item_quantity = et_inward_item_quantity.getText().toString();
-                    if (Item_quantity == null || Item_quantity.equals(""))
-                        qty.setText("0.00");
-                    else
-                        qty.setText(String.format("%.2f", Float.parseFloat(Item_quantity)));
-
-
-                    float rate_f = Float.parseFloat(Rate);
-                    float qty_f = Float.parseFloat(Item_quantity);
-                    float taxval_f = rate_f * qty_f;
-                    taxvalue.setText(String.format("%.2f", taxval_f));
-
-                    String uom_str = itemdetails.getString(itemdetails.getColumnIndex("UOM"));
-                    uom.setText(uom_str);
-
-                    float salestax_f =0, servicetax_f =0;
-
-                    String salestax_str = itemdetails.getString(itemdetails.getColumnIndex("CGSTRate"));
-                    if (salestax_str== null || salestax_str.equals(""))
-                        Salestax.setText("0.00");
-                    else
-                    {
-                        salestax_f = Float.parseFloat(salestax_str);
-                        salestaxamount = salestax_f*taxval_f/100;
-                        Salestax.setText(String.format("%.2f", salestaxamount));
-                    }
-
-                    String servicetax_str = itemdetails.getString(itemdetails.getColumnIndex("SGSTRate"));
-                    if (servicetax_str== null || servicetax_str.equals(""))
-                        Servicetax.setText("0.00");
-                    else
-                    {
-                        servicetax_f = Float.parseFloat(servicetax_str);
-                        servicetaxamount = servicetax_f *taxval_f/100;
-                        Servicetax.setText(String.format("%.2f", servicetaxamount));
-
-                    }
-
-                    float amount_f = taxval_f + salestaxamount +servicetaxamount;
-                    Amount.setText(String.format("%.2f", amount_f));
-
-                    int menucode  = itemdetails.getInt(itemdetails.getColumnIndex("MenuCode"));
-                    MenuCode.setText(String.valueOf(menucode));
-                }
-
-                tr.addView(sn);
-                tr.addView(Supplytype);
-                tr.addView(name);
-                tr.addView(rate);
-                tr.addView(qty);
-                tr.addView(uom);
-                tr.addView(taxvalue);
-                tr.addView(Salestax);
-                tr.addView(Servicetax);
-                tr.addView(Amount);
-                tr.addView(MenuCode);
-                tr.addView(spc);
-                //tr.addView(btndel);
-                tr.addView(ImgDelete);
-
-
-
-//                tbl_inward_item_details.addView(tr);
-                set_list_spnr();
-                calculateSubTotal();
-
-            }// end of if(type ==2)
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(myContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
-*/
-
-    public void calculateSubTotal()
-    {
-        float grandtotal_f =0;
-        float subtotal_f =0;
-        float additionalcharge_f = 0;
-        TextView Amount;
-        String amount_str = "0";
-        for (PurchaseOrder po : dataList)
-        {
-
-            subtotal_f += po.getAmount();
-
-        }
-        et_inward_sub_total.setText(String.format("%.2f",subtotal_f));
-
-        // addtional charge
-        if (chk_inward_additional_charge.isChecked())
-            if( et_inward_additionalchargeamount.getText().toString().equals(""))
-            {
-                additionalcharge_f =0;
-            }
-            else
-            {
-                additionalcharge_f = Float.parseFloat(et_inward_additionalchargeamount.getText().toString());
-            }
-
-        grandtotal_f = subtotal_f+ additionalcharge_f;
-        et_inward_grand_total.setText(String.format("%.2f",grandtotal_f));
-
-    }
-
-    void set_list_spnr()
-    {
-        autocompletetv_itemlist.setText("");
-        //autocompletetv_purchase_order.setText("");
-        et_inward_item_quantity.setBackgroundColor(Color.WHITE);
-        et_inward_item_quantity.setText("");
-        et_inward_item_quantity.setEnabled(true);
-    }
-
-    public void dateSelection_inward (View v)
-    {
-        String currentdate = DateFormat.format("yyyy-MM-dd", (new Date()).getTime()).toString();
-
-        DateTime objDate = new DateTime(currentdate);
-        try {
-            AlertDialog.Builder dlgReportDate = new AlertDialog.Builder(myContext);
-            final DatePicker dateReportDate = new DatePicker(myContext);
-            // Initialize date picker value to business date
-            dateReportDate.updateDate(objDate.getYear(), objDate.getMonth(), objDate.getDay());
-            String strMessage = " Select the date";
-
-
-            dlgReportDate
-                    .setIcon(R.drawable.ic_launcher)
-                    .setTitle("Date Selection")
-                    .setMessage(strMessage)
-                    .setView(dateReportDate)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-                            if (dateReportDate.getDayOfMonth() < 10) {
-                                strDate = "0" + String.valueOf(dateReportDate.getDayOfMonth())+"-";
-                            } else {
-                                strDate = String.valueOf(dateReportDate.getDayOfMonth())+"-";
-                            }
-                            if (dateReportDate.getMonth() < 9) {
-                                strDate += "0" + String.valueOf(dateReportDate.getMonth() + 1) + "-";
-                            } else {
-                                strDate += String.valueOf(dateReportDate.getMonth() + 1) + "-";
-                            }
-
-                            strDate += String.valueOf(dateReportDate.getYear());
-
-                            tx_inward_invoice_date.setText(strDate);
-
-                            Log.d("ReportDate", "Selected Date:" + strDate);
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-
-                        }
-                    })
-                    .show();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public void Clear_inward(View v)
-    {
-        /*for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
-            View Row = tbl_inward_item_details.getChildAt(i-1);
-            if (Row instanceof TableRow) {
-                ((TableRow) Row).removeAllViews();
-            }
-            ViewGroup container = ((ViewGroup) Row.getParent());
-            container.removeView(Row);
-            container.invalidate();
-            count--;
-        }*/
-        purchaseOrderAdapter = null;
-        if(dataList!=null)
-            dataList.clear();
-        lv_inward_item_details.setAdapter(purchaseOrderAdapter);
-        count=0;
-        autocompletetv_purchase_order.setText("");
-        set_list_spnr();
-
-        et_inward_additionalchargename.setText("");
-        et_inward_additionalchargeamount.setText("");
-        chk_inward_additional_charge.setChecked(false);
-        et_inward_grand_total.setText("");
-        et_inward_sub_total.setText("");
-
-        AlertDialog.Builder msg = new AlertDialog.Builder(myContext);
-        msg.setMessage(" Do you want to clear supplier details also")
-                .setNegativeButton("No", null)
-                .setIcon(R.drawable.ic_launcher)
-                .setTitle("Note")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                reset_inward(1);
-                            }
-
-                        }
-                )
-                .show();
-    }
-
-    void loadAutoCompleteDate()
-    {
-        try
-        {
-//            labelsSupplierName = dbPurchaseOrder.getAllSupplierName();
-            autoCompleteDetails = dbPurchaseOrder.getAllSupplierNamePhone();
-
-//            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-//                    labelsSupplierName);
-//            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-//            autocompletetv_suppliername.setAdapter(dataAdapter);
-
-            String[] fields = {"name", "phone"};
-            int[] res = {R.id.adapterName, R.id.adapterPhone};
-
-            //SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
-            SupplierSuggestionAdapter simpleAdapter = new SupplierSuggestionAdapter(myContext, R.layout.adapter_supplier_name, autoCompleteDetails);
-            autocompletetv_suppliername.setAdapter(simpleAdapter);
-
-            ArrayList<String> labelsItemName = new ArrayList<String>();
-            //labelsItemName.add(" ");
-            labelsItemName.add("Select/Add Supplier");
-            ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                    labelsItemName);
-            dataAdapter1.setDropDownViewResource(android.R.layout.simple_list_item_1);
-            autocompletetv_itemlist.setAdapter(dataAdapter1);
-
-
-            ArrayList<String> labelsPurchaseOrder = new ArrayList<String>();
-            //labelsItemName.add(" ");
-            labelsPurchaseOrder.add("Select/Add Supplier");
-            ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                    labelsPurchaseOrder);
-            dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
-            autocompletetv_purchase_order.setAdapter(dataAdapter11);
-
-
-           /* ArrayList<String> labelsInvoiceNo = new ArrayList<String>();
-            labelsInvoiceNo.add("Select Supplier");
-            ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                    labelsInvoiceNo);
-            dataAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_1);
-            autocompletetv_invoiceno.setAdapter(dataAdapter2);*/
-        }
-        catch(Exception e )
-        {
-            MsgBox.setMessage(e.getMessage())
-                    .setTitle("Error")
-                    .setIcon(R.drawable.ic_launcher)
-                    .setNeutralButton("OK", null)
-                    .show();
-        }
-
-    }
-
-    void reset_inward(int type)
-    {
-        et_supplier_code.setText("0");
-        et_supplier_GSTIN.setText("");
-        autocompletetv_suppliername.setText("");
-        et_supplier_address.setText("");
-        et_supplier_phone.setText("");
-        chk_interState.setChecked(false);
-        spnrSupplierStateCode.setSelection(0);
-        spnrSupplierStateCode.setEnabled(false);
-
-        et_inward_sub_total.setText("");
-        autocompletetv_invoiceno.setText("");
-        tx_inward_supply_invoice_number.setText("");
-        autocompletetv_purchase_order.setText("");
-        tx_inward_invoice_date.setText("");
-        et_inward_item_quantity.setEnabled(false);
-
-        btnEditPO.setEnabled(false);
-        btnGeneratePO.setEnabled(true);
-        btnAddSupplier.setEnabled(true);
-
-        //btnimage_new_item.setEnabled(true);
-
-
-
-        if (type ==0)
-        {
-            ClearTable();
-            set_list_spnr();
-
-            et_inward_additionalchargename.setText("");
-            et_inward_additionalchargeamount.setText("");
-            chk_inward_additional_charge.setChecked(false);
-            et_inward_grand_total.setText("");
-            et_inward_sub_total.setText("");
-        }
-        loadAutoCompleteDate();
-    }
-
-    public  void ClearTable()
-    {
-//        for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
-//            View Row = tbl_inward_item_details.getChildAt(i-1);
-//            if (Row instanceof TableRow) {
-//                ((TableRow) Row).removeAllViews();
-//            }
-//            ViewGroup container = ((ViewGroup) Row.getParent());
-//            container.removeView(Row);
-//            container.invalidate();
-//            count--;
-//        }
-        if(dataList!=null)
-            dataList.clear();
-        dataList= new ArrayList<>();
-        purchaseOrderAdapter= null;
-        lv_inward_item_details.setAdapter(purchaseOrderAdapter);
-
-        count=0;
-    }
-    public void Close_inward(View v) {
-
-        dbPurchaseOrder.CloseDatabase();
-        this.finish();
-    }
-
-
-    public static int checkDataypeValue(String value, String type) {
-        int flag =0;
-        try {
-            switch(type) {
-                case "Int":
-                    Integer.parseInt(value);
-                    flag = 0;
-                    break;
-                case "Double" : Double.parseDouble(value);
-                    flag = 1;
-                    break;
-                default : flag =2;
-            }
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-            flag = -1;
-        }
-        return flag;
-    }
-
-    boolean checkgstinvalidity(String str)
-    {
-        boolean mFlag = true;
-        try {
-            if(str.trim().length() == 0)
-            {mFlag = true;}
-            else if (str.trim().length() > 0 && str.length() == 15) {
-                String[] part = str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
-                        && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
-                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
-
-                    mFlag = true;
-                } else {
-                    mFlag = false;
-                }
+            PdfPOBean pdfItem = null;
+
+            if (purchaseOrderBeanList.size() < 1) {
+                MsgBox.Show("Warning", "Insert item before Print Bill");
+                return;
             } else {
-                mFlag = false;
+                if ((!avPurchaseOrder.getText().toString().trim().equalsIgnoreCase(""))) {
+
+                    pdfItem = new PdfPOBean();
+
+                    pdfItem.setiPurchaseOrderNo(Integer.parseInt(avPurchaseOrder.getText().toString()));
+                    pdfItem.setStrInvoiceNo("-");
+                    pdfItem.setStrInvoiceDate("-");
+                    pdfItem.setStrSupplierName(avSupplierName.getText().toString());
+                    pdfItem.setStrSupplierPhone(edtPhone.getText().toString());
+                    pdfItem.setStrSupplierGSTIN(edtGSTIN.getText().toString());
+                    pdfItem.setStrSupplierAddress(edtAddress.getText().toString());
+                    if (edtAdditionalChargeName.getText().toString().isEmpty()) {
+                        pdfItem.setStrAdditionalCharge("");
+                        pdfItem.setDblAdditionalChargeAmount(0.00);
+                    } else {
+                        pdfItem.setStrAdditionalCharge(edtAdditionalChargeName.getText().toString().trim());
+                        pdfItem.setDblAdditionalChargeAmount(Double.parseDouble(String.format("%.2f", Double.parseDouble(edtAdditionalAmt.getText().toString().trim()))));
+                    }
+
+                    if(cbStateCode.isChecked())
+                    {
+                        String supplier_stateCode = spStateCode.getSelectedItem().toString();
+                        int l = supplier_stateCode.length();
+                        String state_cd = supplier_stateCode.substring(l-2,l);
+                        pdfItem.setStrSupplierPOS(state_cd);
+                    }else
+                    {
+                        if (!edtGSTIN.getText().toString().isEmpty())
+                            pdfItem.setStrSupplierPOS(edtGSTIN.getText().toString().substring(0,2));
+                        else
+                            pdfItem.setStrSupplierPOS("");
+                    }
+
+                    Cursor crsrOwnerDetails = null;
+                    try {
+                        crsrOwnerDetails = dbPurchaseOrder.getOwnerDetail();
+
+                        if (crsrOwnerDetails.moveToFirst()) {
+                            try {
+                                pdfItem.setOwnerPos(dbPurchaseOrder.getOwnerPOS());
+                                pdfItem.setOwnerGstin(crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
+                                pdfItem.setOwnerName(crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex(DatabaseHandler.KEY_Owner_Name)));
+                                pdfItem.setOwnerAddress(crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex(DatabaseHandler.KEY_Address)));
+//                                String ownerPos = "";
+                              /*  for (int i = 0; i < arrayPOS.length; i++) {
+                                    if (arrayPOS[i].contains(pdfItem.getOwnerStateCode()))
+                                        ownerPos = arrayPOS[i];
+                                }
+                                ownerPos = ownerPos.substring(0, ownerPos.length() - 2);*/
+                                pdfItem.setOwnerPos(dbPurchaseOrder.getOwnerPOS());
+                                try {
+                                    pdfItem.setCompanyLogoPath(crsrOwnerDetails.getString(crsrOwnerDetails.getColumnIndex(DatabaseHandler.KEY_TINCIN)));
+                                } catch (Exception ex) {
+                                    pdfItem.setCompanyLogoPath(null);
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Unable to fetch data from owner details data from table." + ex.getMessage());
+                    } finally {
+                        if (crsrOwnerDetails != null) {
+                            crsrOwnerDetails.close();
+                        }
+                    }
+
+                    ArrayList<PdfPOItemBean> pdfItemBeanArrayList = new ArrayList<>();
+                    PdfPOItemBean pdfItemBean;
+
+                    for (PurchaseOrderBean purchaseOrderBean : purchaseOrderBeanList) {
+                        pdfItemBean = new PdfPOItemBean();
+
+                        pdfItemBean.setiItemId(purchaseOrderBean.getiItemId());
+                        pdfItemBean.setStrItemName(purchaseOrderBean.getStrItemName());
+                        pdfItemBean.setDblValue(purchaseOrderBean.getDblPurchaseRate());
+                        pdfItemBean.setStrHSNCode(purchaseOrderBean.getStrHSNCode());
+                        pdfItemBean.setDblQuantity(purchaseOrderBean.getDblQuantity());
+                        pdfItemBean.setStrUOM(purchaseOrderBean.getStrUOM());
+
+                        if (cbStateCode.isChecked()) {
+                            pdfItemBean.setDblCGSTRate(0.00);
+                            pdfItemBean.setDblSGSTRate(0.00);
+                            pdfItemBean.setDblIGSTRate(purchaseOrderBean.getDblIGSTRate());
+                        } else {
+                            pdfItemBean.setDblCGSTRate(purchaseOrderBean.getDblCGSTRate());
+                            pdfItemBean.setDblSGSTRate(purchaseOrderBean.getDblSGSTRate());
+                            pdfItemBean.setDblIGSTRate(0.00);
+                        }
+                        pdfItemBean.setDblCessRate(purchaseOrderBean.getDblCessRate());
+
+                        pdfItemBean.setDblCGSTAmount(purchaseOrderBean.getDblCGSTAmount());
+                        pdfItemBean.setDblSGSTAmount(purchaseOrderBean.getDblSGSTAmount());
+                        pdfItemBean.setDblIGSTAmount(purchaseOrderBean.getDblIGSTAmount());
+                        pdfItemBean.setDblCessAmount(purchaseOrderBean.getDblCessAmount());
+
+                        pdfItemBean.setDblTaxableValue(purchaseOrderBean.getDblTaxableValue());
+                        pdfItemBean.setDblAmount(purchaseOrderBean.getDblAmount());
+
+                        pdfItemBeanArrayList.add(pdfItemBean);
+                    }
+
+                    pdfItem.setPdfItemBeanArrayList(pdfItemBeanArrayList);
+
+                    try {
+                        CreatePdfPO test = CreatePdfPO.getInstance(this, pdfItem);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "Error occurred while generating PDF PO", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Please Enter Bill Table Number", Toast.LENGTH_SHORT).show();
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            mFlag = false;
-        }
-        finally{
-            return mFlag;
+            Log.e(TAG, e.getMessage());
         }
     }
 
-    /*public void AddSupplier(View v)
-    {
-        //String suppliercode = et_supplier_code.getText().toString();
-        String suppliername = autocompletetv_suppliername.getText().toString().toUpperCase();
-        String supplierphone = et_supplier_phone.getText().toString();
-        String supplieradress = et_supplier_address.getText().toString();
+    public void mUpdatePO() {
+        String purchaseorder = avPurchaseOrder.getText().toString();
 
-        if (suppliername.equals("") || supplierphone.equals("") || supplieradress.equals(""))
-        {
-            MsgBox.Show("Insufficient Information", " Please fill Supplier Details");
-        }else {
-            try {
+        if (avPurchaseOrder.getText().toString().isEmpty()) {
+            MsgBox.Show("Insufficient Information", "Please Select Purchase Order");
+            return;
+        } else {
 
-                Cursor cursor = dbPurchaseOrder.getAllSupplierName_nonGST();
-                //labelsSupplierName = dbPurchaseOrder.getAllSupplierName_nonGST();
-                labelsSupplierName = new ArrayList<String>();
-                ArrayList<String>labelsSupplierGSTIN = new ArrayList<String>();
-                if (cursor != null && cursor.moveToFirst()) {
-                    do {
-                        labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
-                        String gstin =(cursor.getString(cursor.getColumnIndex("GSTIN")));
-                        if(gstin!=null && !gstin.equals(""))
-                            labelsSupplierGSTIN.add(gstin);
-                    } while (cursor.moveToNext());
-                }
+            int purchaseorderId = Integer.parseInt(edtPurchaseOrderId.getText().toString().trim());
+            int porchaseOrderNo = Integer.parseInt(avPurchaseOrder.getText().toString().trim());
 
-                for (String supplier : labelsSupplierName) {
-                    if (suppliername.equalsIgnoreCase(supplier)) {
-                        MsgBox.setTitle("Warning")
-                                .setIcon(R.drawable.ic_launcher)
-                                .setMessage("Supplier already present in list")
-                                .setPositiveButton("OK", null)
-                                .show();
-                        return;
-                    }
-                }
-                String gstin = et_supplier_GSTIN.getText().toString().toUpperCase();
-                if(gstin!=null && !gstin.equals("") && labelsSupplierGSTIN.contains(gstin))
-                {
-                    MsgBox.setTitle("Warning")
-                            .setIcon(R.drawable.ic_launcher)
-                            .setMessage("Supplier already present in list")
-                            .setPositiveButton("OK", null)
-                            .show();
-                    return;
-                }
-                if(!checkgstinvalidity(gstin))
-                {
-                    MsgBox.setTitle("Warning")
-                            .setIcon(R.drawable.ic_launcher)
-                            .setMessage("Invalid Supplier gstin")
-                            .setPositiveButton("OK", null)
-                            .show();
-                    return;
-                }
-                else if(supplierphone.length()!=10){
-                    MsgBox.Show("Invalid Information","Phone no. cannot be less than 10 digits");
-                    return ;
-                }
+            Cursor isPurchaseOrderExist = dbPurchaseOrder.getPurchaseOrderById(supplier_model.get_id(),
+                    purchaseorderId, porchaseOrderNo);
+            if (isPurchaseOrderExist != null && isPurchaseOrderExist.moveToFirst()){
 
-                long l =0;
-                if(gstin!=null && !gstin.equals("")){
-                    l = dbPurchaseOrder.saveSupplierDetails("Registered", gstin, suppliername, supplierphone, supplieradress);
-                    et_supplier_GSTIN.setText(gstin);
-                }
-                else
-                    l = dbPurchaseOrder.saveSupplierDetails("UnRegistered", "", suppliername, supplierphone, supplieradress);
+            } else {
+                MsgBox.Show("Invalid Information", "Please Select a valid Purchase Order");
+                return;
+            }
 
-                if (l > 0) {
-                    Log.d("Inward_Item_Entry", " Supplier details saved at " + l);
-                    Toast.makeText(myContext, "Supplier details saved at " + l, Toast.LENGTH_SHORT).show();
-                }
+        }
+        if (avSupplierName.getText().toString().isEmpty()) {
+            MsgBox.Show("Insufficient Information", "Please Select/Add Supplier's Firm ");
+            return;
+        }
+        if (purchaseOrderAdapter == null) {
+            MsgBox.Show("Insufficient Information", "Please add an item ");
+            return;
+        }
 
-                cursor = dbPurchaseOrder.getAllSupplierName_nonGST();
-                labelsSupplierName = new ArrayList<String>();
-                if (cursor != null && cursor.moveToFirst()) {
-                    do {
-                        labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
-                    } while (cursor.moveToNext());
-                }
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                        labelsSupplierName);
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-                autocompletetv_suppliername.setAdapter(dataAdapter);
+        if (edtPhone.getText().toString().isEmpty() && edtAddress.getText().toString().isEmpty()) {
+            MsgBox.Show("Insufficient Information", "Please select proper Supplier's Firm or add Supplier's Firm and select items.");
+            return;
+        }
 
-                et_supplier_code.setText(String.valueOf(l));
-                loadAutoCompleteData_purchaseOrder((int)(l));
-                loadAutoCompleteData_item((int)l);
-                autocompletetv_purchase_order.setText("");
-                autocompletetv_itemlist.setText("");
+        if (cbStateCode.isChecked() && spStateCode.getSelectedItem().toString().equals("Select")) {
+            MsgBox.Show("Insufficient Information ", " Please select state for Supplier's Firm");
+            return;
+        }
 
-            } catch (Exception e) {
-                MsgBox.setMessage(e.getMessage())
-                        .setIcon(R.drawable.ic_launcher)
-                        .setTitle("Error")
-                        .setNeutralButton("Ok", null)
-                        .show();
+        if (purchaseOrderBeanList != null && purchaseOrderBeanList.size() == 0) {
+            MsgBox.Show(" Insufficient Information ", "Please add some items in the list first.");
+            return;
+        }
+        if (cbAdditionalChargeStatus.isChecked()) {
+            if (edtAdditionalChargeName.getText().toString().isEmpty()){
+                MsgBox.Show("Insufficient Information", "Please enter the additional charge name.");
+                return;
+            }
+            if (edtAdditionalAmt.getText().toString().isEmpty()){
+                MsgBox.Show("Insufficient Information", "Please enter the additional charge.");
+                return;
             }
         }
-    }*/
-    private void InsertItem(int suppliercode, String suppliername, String itemName, String strbarCode, float ratef,
-                            float quantity, String mou, String ImageUri, float SalesTax, float ServiceTax,String supplytype) {
 
-
-        Item objItem = new Item();
-        objItem.setsuppliercode(suppliercode);
-        objItem.setsupplierName(suppliername);
-        objItem.setItemname(itemName);
-        objItem.setItemBarcode(strbarCode);
-        objItem.setRate(ratef);
-        objItem.setQuantity(0);
-        objItem.setMOU(mou);
-        objItem.setImageId(ImageUri);
-        objItem.setSalesTaxPercent(SalesTax);
-        objItem.setServiceTaxPercent(ServiceTax);
-        objItem.setSupplyType(supplytype);
-
-
-
-        lRowId = dbPurchaseOrder.addItem_Inw_nonGST(objItem);
-
-        Log.d("Item", "Row Id:" + String.valueOf(lRowId));
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-            AuthorizationDialog
-                    .setTitle("Are you sure you want to exit ?")
-                    .setIcon(R.drawable.ic_launcher)
+        Cursor duplicacy_crsr = dbPurchaseOrder.checkduplicatePO(Integer.parseInt(purchaseOrderBeanList.get(0).getStrSupplierId()), purchaseorder);
+        if (duplicacy_crsr != null && duplicacy_crsr.moveToFirst()) {
+            long saved = savePurchaseOrder();
+            if (saved > 0)// successfully added bill items
+            {
+                generatePOPdf();
+                sendPurchaseOrder(purchaseorder, supplier_model.getSupplierEmail());
+                Toast.makeText(this, " Purchase Order Updated", Toast.LENGTH_SHORT).show();
+                Log.d(" PurchaseOrderActivty", " Purchase Order Updated at " + saved);
+                mClear();
+            }
+        }
+        else { // no duplicacy
+            MsgBox.setTitle(" Error ")
+                    .setIcon(R.mipmap.ic_company_logo)
+                    .setMessage("This Purchase Order No is not present. Do you want to create new ")
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent returnIntent = new Intent();
-                            setResult(Activity.RESULT_OK, returnIntent);
-                            dbPurchaseOrder.CloseDatabase();
-                            finish();
+                            savePurchaseOrder();
+                            generatePOPdf();
+                            sendPurchaseOrder(avPurchaseOrder.getText().toString().trim(), supplier_model.getSupplierEmail());
+                            mClear();
                         }
                     })
                     .show();
         }
-
-        return super.onKeyDown(keyCode, event);
     }
+
+    private double mCalculateSubTotal(){
+        double dblSubTotal = 0;
+        for(int i = 0; i < purchaseOrderBeanList.size(); i++){
+            dblSubTotal = dblSubTotal + purchaseOrderBeanList.get(i).getDblAmount();
+        }
+        return dblSubTotal;
+    }
+
+    private double mCalculateGrandTotal(double dblAdditionalCharges){
+        double dblGrandTotal = 0;
+        for(int i = 0; i < purchaseOrderBeanList.size(); i++){
+            dblGrandTotal = dblGrandTotal + purchaseOrderBeanList.get(i).getDblAmount();
+        }
+        dblGrandTotal = dblGrandTotal + dblAdditionalCharges;
+        return dblGrandTotal;
+    }
+
+    private void mClear()
+    {
+        edtInvoiceNo.setText("");
+        edtInvoiceDate.setText("");
+        avSupplierName.setText("");
+        avItemName.setText("");
+        avPurchaseOrder.setFocusable(false);
+        avPurchaseOrder.setFocusableInTouchMode(false);
+        avPurchaseOrder.setText("");
+        avPurchaseOrder.setFocusable(true);
+        avPurchaseOrder.setFocusableInTouchMode(true);
+        edtSupplierId.setText("");
+        edtPurchaseOrderId.setText("");
+        edtPhone.setText("");
+        edtAddress.setText("");
+        edtGSTIN.setText("");
+        edtQty.setText("");
+        edtMrp.setText("");
+        edtPurchaseRate.setText("");
+        edtAdditionalAmt.setText("");
+        edtAdditionalChargeName.setText("");
+        edtSubTotal.setText("");
+        edtGrandTotal.setText("");
+        cbStateCode.setChecked(false);
+        spStateCode.setEnabled(false);
+        cbAdditionalChargeStatus.setChecked(false);
+        purchaseOrderBeanList.clear();
+        purchaseOrderBean = null;
+        supplier_model = null;
+        listName.clear();
+        btnUpdate.setEnabled(false);
+        btnUpdate.setBackgroundResource(R.color.holo_blue);
+        updateItem = false;
+        btnAddItem.setText("Add Item");
+        cbSearchInAllItems.setChecked(false);
+        if(purchaseOrderAdapter != null){
+            purchaseOrderAdapter.notifyDataSetChanged(purchaseOrderBeanList);
+        }
+
+        btnUpdate.setEnabled(false);
+        btnUpdate.setBackgroundResource(R.color.holo_blue);
+        btnGenerate.setEnabled(true);
+        btnGenerate.setBackgroundResource(R.drawable.button_blue_color);
+
+    }
+
+    @Override
+    public void onPurchaseOrderListItemDeleteSuccess() {
+        mPopulatingDataToAdapter();
+    }
+
+    private void setFilters(){
+        avSupplierName.setFilters(new InputFilter[]{new EMOJI_FILTER(), new InputFilter.LengthFilter(30)});
+        avItemName.setFilters(new InputFilter[]{new EMOJI_FILTER(), new InputFilter.LengthFilter(30)});
+        avPurchaseOrder.setFilters(new InputFilter[]{new EMOJI_FILTER()});
+        edtAdditionalChargeName.setFilters(new InputFilter[]{new EMOJI_FILTER(), new InputFilter.LengthFilter(30)});
+        edtQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(6,2)});
+        edtPurchaseRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(6,2)});
+        edtAdditionalAmt.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(6,2)});
+        /*edtQty.setFilters(new InputFilter[] {new InputFilterForDoubleMinMax(0, 999999.99)});
+        edtPurchaseRate.setFilters(new InputFilter[] {new InputFilterForDoubleMinMax(0, 999999.99)});
+        edtAdditionalAmt.setFilters(new InputFilter[] {new InputFilterForDoubleMinMax(0, 999999.99)});*/
+    }
+
+    int checkCount =0;
+    void inflateMultipleRateOption(Cursor cursor)
+    {
+        checkCount =0;
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_multiple_item_with_same_name, null, false);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+
+        ImageView iv_close = (ImageView)view.findViewById(R.id.iv_close);
+        final TableLayout tbl_rate = (TableLayout)view.findViewById(R.id.tbl_rates);
+        Button btnOk = (Button) view.findViewById(R.id.btnok) ;
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                avItemName.setText("");
+                dialog.dismiss();
+            }
+        });
+
+        View view1 = this.getCurrentFocus();
+        if (view1 != null) {
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view1.getWindowToken(), 0);
+        }
+        int count =1;
+
+        while(cursor!=null && cursor.moveToNext())
+        {
+
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            row.setBackgroundResource(R.drawable.row_background);
+
+            CheckBox checkBox = new CheckBox(this);
+            String item_id = cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_id));
+            checkBox.setText(item_id);
+            checkBox.setHeight(40);
+            checkBox.setTextSize(1);
+            checkBox.setVisibility(View.GONE);
+            //checkBox.setTextColor(getResources().getColor(R.drawable.row_item_background));
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if(isChecked)
+                        checkCount++;
+                    else
+                        checkCount--;
+                }
+            });
+            row.addView(checkBox);
+
+            TextView tvSno = new TextView(this);
+            tvSno.setText(""+count);
+            tvSno.setHeight(50);
+            count++;
+            tvSno.setTextSize(20);
+            tvSno.setPadding(5,0,0,0);
+            row.addView(tvSno);
+
+            TextView tvName = new TextView(this);
+            tvName.setHeight(50);
+            tvName.setTextSize(20);
+            tvName.setTextColor(Color.parseColor("#000000"));
+            tvName.setText(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemShortName)));
+            row.addView(tvName);
+
+            TextView tvMrp  = new TextView(this);
+            tvMrp.setHeight(50);
+            tvMrp.setTextSize(20);
+            tvMrp.setTextColor(Color.parseColor("#000000"));
+            String mrp = String.format("%.2f", cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_Rate)));
+            tvMrp.setText(mrp);
+            row.addView(tvMrp);
+
+            row.setTag("TAG");
+            row.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (String.valueOf(view.getTag()) == "TAG") {
+                        TableRow Row = (TableRow) view;
+                        CheckBox checkBox1= (CheckBox) Row.getChildAt(0);
+                        int id = Integer.parseInt(checkBox1.getText().toString());
+                        Cursor cursor = null;
+                        if (searchInAllItems)
+                            cursor = dbPurchaseOrder.getItemByID(id);
+                        else
+                            cursor = dbPurchaseOrder.mGetPurchaseOrderItemsByItemId(id, supplier_model.get_id());
+
+                        if(cursor != null && cursor.moveToFirst()) {
+                            mAddDataToPurchaseOrderBean(cursor);
+                        } else {
+                            avItemName.setText("");
+                            edtMrp.setText("");
+                            edtPurchaseRate.setText("");
+                            Toast.makeText(PurchaseOrderActivity.this, "Please link item and try again.", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                }
+            });
+            tbl_rate.addView(row);
+        }
+    }
+
+
+    private void mBarcodeSearch(String strBarcode){
+        Cursor cursor = null;
+        try{
+            cursor = dbPurchaseOrder.getActiveItemssbyBarCode(strBarcode);
+            if(cursor != null && cursor.getCount() > 1){
+                inflateMultipleRateOption(cursor);
+            } else {
+                if (cursor != null && cursor.moveToFirst()) {
+                    Cursor cursor1 = null;
+                    if (searchInAllItems)
+                        cursor1 = dbPurchaseOrder.getActiveItemssbyBarCode(strBarcode);
+                    else
+                        cursor1 = dbPurchaseOrder.mGetPurchaseOrderItems(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemShortName)),supplier_model.get_id());
+                    if(cursor1 != null && cursor1.moveToFirst()) {
+                        mAddDataToPurchaseOrderBean(cursor1);
+                    } else {
+                        avItemName.setText("");
+                        edtMrp.setText("");
+                        edtPurchaseRate.setText("");
+                        Toast.makeText(this, "Please link item and try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        } catch (Exception ex){
+            Log.i(TAG,"Unable to search and populate data by barcode scanner search." +ex.getMessage());
+        }finally {
+            if(cursor != null){
+                cursor.close();
+            }
+        }
+    }
+
+    private void mAddDataToPurchaseOrderBean(Cursor cursor){
+        if(cursor != null) {
+            purchaseOrderBean = new PurchaseOrderBean();
+            if (!searchInAllItems) {
+                purchaseOrderBean.setiItemId(cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_ItemId)));
+                purchaseOrderBean.setStrSupplierId(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_id)));
+                purchaseOrderBean.setStrSupplierName(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SUPPLIERNAME)));
+                purchaseOrderBean.setStrSupplierPhone(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierPhone)));
+                purchaseOrderBean.setStrSupplierAddress(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierAddress)));
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)) != null) {
+                    purchaseOrderBean.setStrSupplierGSTIN(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_GSTIN)));
+                } else {
+                    purchaseOrderBean.setStrSupplierGSTIN("");
+                }
+                if (!purchaseOrderBean.getStrSupplierGSTIN().isEmpty())
+                    purchaseOrderBean.setStrSupplierPOS(purchaseOrderBean.getStrSupplierGSTIN().substring(0, 2));
+                else
+                    purchaseOrderBean.setStrSupplierPOS("");
+
+                purchaseOrderBean.setStrBarcode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemBarcode)));
+                purchaseOrderBean.setStrItemName(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemShortName)));
+
+                purchaseOrderBean.setDblPurchaseRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_PurchaseRate)));
+                purchaseOrderBean.setDblRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_Rate)));
+
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)) != null) {
+                    purchaseOrderBean.setStrSupplyType(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)));
+                }
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierType)) != null) {
+                    purchaseOrderBean.setStrSupplierType(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplierType)));
+                }
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)) != null) {
+                    purchaseOrderBean.setStrHSNCode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)));
+                }
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)) != null) {
+                    purchaseOrderBean.setStrUOM(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)));
+                }
+
+                purchaseOrderBean.setDblCGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CGSTRate)));
+                purchaseOrderBean.setDblSGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_SGSTRate)));
+                purchaseOrderBean.setDblIGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_IGSTRate)));
+                purchaseOrderBean.setDblCessRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessRate)));
+                purchaseOrderBean.setDblCessAmountPerUnit(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessAmountPerUnit)));
+                purchaseOrderBean.setDblAdditionalCessAmount(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount)));
+            } else {
+                purchaseOrderBean.setiItemId(cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_id)));
+                purchaseOrderBean.setStrSupplierId(""+supplier_model.get_id());
+                purchaseOrderBean.setStrSupplierName(supplier_model.getSupplierName());
+                purchaseOrderBean.setStrSupplierPhone(supplier_model.getSupplierPhone());
+                purchaseOrderBean.setStrSupplierAddress(supplier_model.getSupplierAddress());
+                if (supplier_model.getSupplierGSTIN() != null) {
+                    purchaseOrderBean.setStrSupplierGSTIN(supplier_model.getSupplierGSTIN());
+                } else {
+                    purchaseOrderBean.setStrSupplierGSTIN("");
+                }
+                if (!purchaseOrderBean.getStrSupplierGSTIN().isEmpty())
+                    purchaseOrderBean.setStrSupplierPOS(purchaseOrderBean.getStrSupplierGSTIN().substring(0, 2));
+                else
+                    purchaseOrderBean.setStrSupplierPOS("");
+
+                if (supplier_model.getSupplierType() != null) {
+                    purchaseOrderBean.setStrSupplierType(supplier_model.getSupplierType());
+                }
+
+                purchaseOrderBean.setStrBarcode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemBarcode)));
+                purchaseOrderBean.setStrItemName(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_ItemShortName)));
+
+                purchaseOrderBean.setDblPurchaseRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_PurchaseRate)));
+
+                purchaseOrderBean.setDblRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_Rate)));
+
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)) != null) {
+                    purchaseOrderBean.setStrSupplyType(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_SupplyType)));
+                }
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)) != null) {
+                    purchaseOrderBean.setStrHSNCode(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_HSNCode)));
+                }
+                if (cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)) != null) {
+                    purchaseOrderBean.setStrUOM(cursor.getString(cursor.getColumnIndex(DatabaseHandler.KEY_UOM)));
+                }
+
+                purchaseOrderBean.setDblCGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_CGSTRate)));
+                purchaseOrderBean.setDblSGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_SGSTRate)));
+                purchaseOrderBean.setDblIGSTRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_IGSTRate)));
+                purchaseOrderBean.setDblCessRate(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessRate)));
+                purchaseOrderBean.setDblCessAmountPerUnit(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_cessAmount)));
+                purchaseOrderBean.setDblAdditionalCessAmount(cursor.getDouble(cursor.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount)));
+            }
+
+            edtMrp.setText(""+purchaseOrderBean.getDblRate());
+            edtPurchaseRate.setText("" + purchaseOrderBean.getDblPurchaseRate());
+            avItemName.setText(purchaseOrderBean.getStrItemName());
+        }
+    }
+
+    //testing on 10/05/2018 start
+    private TextWatcher filterTextWatcher = new TextWatcher() {
+
+        public void afterTextChanged(Editable s) {
+        }
+
+        public void beforeTextChanged(CharSequence s, int st, int ct,
+                                      int af) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.length() < 1 || start >= s.length() || start < 0)
+                return;
+
+            if (s.subSequence(start, start + 1).toString().equalsIgnoreCase("\n")) {
+                String s_text = start > 0 ? s.subSequence(0, start).toString() : "";
+                s_text += start < s.length() ? s.subSequence(start + 1, s.length()).toString() : "";
+                Log.i(TAG, "Scanned data in  supplier item linkage: " + s_text);
+                avItemName.setText(s_text);
+                avItemName.setSelection(s_text.length());
+                if(avSupplierName.getText().toString().isEmpty()){
+                    avItemName.setText("");
+                    Toast.makeText(PurchaseOrderActivity.this,"Please select supplier and search item.",Toast.LENGTH_SHORT).show();
+                } else {
+                    mBarcodeSearch(avItemName.getText().toString());
+                }
+            }
+        }
+
+    };
 
     @Override
     public void onHomePressed() {

@@ -36,6 +36,8 @@ import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.models.PaymentOptionsBean;
+import com.wep.common.app.models.PurchaseOrderBean;
+import com.wep.common.app.models.SupplierItemLinkageBean;
 import com.wep.common.app.print.Payment;
 
 import java.io.File;
@@ -135,7 +137,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_ItemName = "ItemName";
     private static final String KEY_SalesTax = "SalesTax";
     private static final String KEY_OtherTax = "OtherTax";
-    public static final String KEY_ItemId = "ItemNumber";
+    public static final String KEY_ItemId = "ItemId";
     public static final String KEY_Quantity = "Quantity";
     public static final String KEY_MinimumStock = "MinimumStock";
     public static final String KEY_Rate = "Rate";
@@ -265,7 +267,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_BillNoReset_PeriodDate = " PeriodDate";
 
     // Category
-    private static final String KEY_CategoryName = "CategoryName";
+    public static final String KEY_CategoryName = "CategoryName";
 
     // Complimentary Bill Detail
     private static final String KEY_Complimentary_Reason = "ComplimentaryReason";
@@ -725,6 +727,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_InvoiceDate = "InvoiceDate";
     public static final String KEY_Value = "Value";
     public static final String KEY_HSNCode = "HSNCode";
+    public static final String KEY_PurchaseOrderDate = "PurchaseOrderDate";
     public static final String KEY_SUPPLIERNAME = "SupplierName";
     public static final String KEY_SupplierPhone = "SupplierPhone";
     public static final String KEY_SupplierEmail = "SupplierEmail";
@@ -843,16 +846,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_BusinessDate +" TEXT, "+KEY_MenuCode + " INTEGER, " + KEY_ItemName + "  TEXT, " + KEY_OpeningStock + " REAL, " +
             KEY_ClosingStock + " REAL, " + KEY_Rate + " REAL ) ";
 
-    String QUERY_CREATE_TABLE_ITEM_Inward = "CREATE TABLE " + TBL_ITEM_Inward + "( " + KEY_MenuCode +
-            " INTEGER PRIMARY KEY, " + KEY_TaxationType + " TEXT, " +
-            KEY_SupplyType + " TEXT, " + KEY_SupplierCode + " INTEGER, " + KEY_SUPPLIERNAME + " TEXT, " +
-            KEY_HSNCode + " TEXT, " + KEY_ItemName + " TEXT, " + KEY_IGSTRate + " REAL, " + KEY_IGSTAmount + " REAL, " +
-            KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL," + KEY_SGSTRate + " REAL, " + KEY_SGSTAmount + " REAL,"+
-            KEY_cessRate + " REAL, " + KEY_cessAmount + " REAL," +
-            KEY_ImageUri + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, " + KEY_ItemBarcode + " TEXT, "+
+    String QUERY_CREATE_TABLE_ITEM_Inward = "CREATE TABLE " + TBL_ITEM_Inward + "( " +
+            KEY_MenuCode + " INTEGER PRIMARY KEY, " +
+            KEY_TaxationType + " TEXT, " +
+            KEY_SupplyType + " TEXT, " +
+            KEY_SupplierCode + " INTEGER, " +
+            KEY_SUPPLIERNAME + " TEXT, " +
+            KEY_HSNCode + " TEXT, " +
+            KEY_ItemName + " TEXT, " +
+            KEY_IGSTRate + " REAL, " +
+            KEY_IGSTAmount + " REAL, " +
+            KEY_CGSTRate + " REAL," +
+            KEY_CGSTAmount + " REAL," +
+            KEY_SGSTRate + " REAL, " +
+            KEY_SGSTAmount + " REAL,"+
+            KEY_cessRate + " REAL, " +
+            KEY_cessAmount + " REAL," +
+            KEY_ImageUri + " TEXT, " +
+            KEY_Quantity + " REAL, " +
+            KEY_UOM + " TEXT, " +
+            KEY_ItemBarcode + " TEXT, "+
             KEY_Rate + " REAL, "  +
-            KEY_DiscId + " NUMERIC, " + KEY_DiscountEnable + " NUMERIC, "  +
-            KEY_Count+" INTEGER, "+ KEY_AverageRate+" REAL, "+KEY_TaxType + " NUMERIC )";
+            KEY_DiscId + " NUMERIC, " +
+            KEY_DiscountEnable + " NUMERIC, "  +
+            KEY_Count+" INTEGER, "+
+            KEY_AverageRate+" REAL, "+
+            KEY_TaxType + " NUMERIC )";
 
     String QUERY_CREATE_TABLE_ITEM_Outward = "CREATE TABLE " + TBL_ITEM_Outward + "( "
             + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -1140,7 +1159,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_MONTH_ITC_IGSTAMT + " TEXT, " + KEY_MONTH_ITC_CGSTAMT + " TEXT, " + KEY_MONTH_ITC_SGSTAMT + " TEXT ) ";
 
     String QUERY_CREATE_TABLE_Supplier = " CREATE TABLE " + TBL_Supplier + " ( " +
-            KEY_SupplierCode + " INTEGER PRIMARY KEY, " +
+            KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            KEY_SupplierCode + " INTEGER, " +
             KEY_GSTIN + " TEXT," +
             KEY_SUPPLIERNAME + " TEXT, " +
             KEY_SupplierType + " TEXT, " +
@@ -1189,15 +1209,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating queries for creating tables in database
 
 
-    String QUERY_CREATE_TABLE_PURCHASE_ORDER = " CREATE TABLE " + TBL_PURCHASEORDER + " ( " +
-            KEY_PurchaseOrderNo + " INTEGER, " + KEY_InvoiceNo + " TEXT, " + KEY_InvoiceDate + " TEXT, " +
+    String QUERY_CREATE_TABLE_PURCHASE_ORDER = " CREATE TABLE IF NOT EXISTS " + TBL_PURCHASEORDER + " ( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + KEY_PurchaseOrderNo + " INTEGER, " + KEY_InvoiceNo + " TEXT, " + KEY_InvoiceDate + " TEXT, " + KEY_PurchaseOrderDate + " TEXT, " +
             KEY_SupplierCode + " INTEGER, " + KEY_SUPPLIERNAME + " TEXT, " + KEY_SupplierPhone + " TEXT, " +
-            KEY_SupplierAddress + " TEXT, " + KEY_GSTIN+" TEXT, "+KEY_SupplierType+" TEXT, "+
-            KEY_SupplierPOS+" TEXT, "+
-            KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " + KEY_HSNCode+" TEXT, "+
+            KEY_SupplierAddress + " TEXT, " + KEY_GSTIN + " TEXT, " +
+            KEY_SupplierPOS + " TEXT, " + KEY_SupplierType + " TEXT, " + KEY_Rate + " REAL, " +
+            KEY_ItemId + " INTEGER, " + KEY_SupplyType + " TEXT , " + KEY_HSNCode + " TEXT, " + KEY_ItemBarcode + " TEXT, " +
             KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " + KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT, " + KEY_TaxableValue + " REAL, " +
-            KEY_IGSTRate + " REAL," + KEY_IGSTAmount + " REAl, "+KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAl, "+
-            KEY_SGSTRate + " REAL," + KEY_SGSTAmount + " REAl, "+ KEY_cessRate + " REAL," + KEY_cessAmount + " REAl, "+
+            KEY_IGSTRate + " REAL," + KEY_IGSTAmount + " REAl, " + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAl, " +
+            KEY_SGSTRate + " REAL," + KEY_SGSTAmount + " REAl, " + KEY_cessRate + " REAL," + KEY_cessAmount + " REAl, " + KEY_cessAmountPerUnit + " REAL,"
+            + KEY_additionalCessAmount + " REAL," + KEY_PurchaseRate + " REAL, " +
             KEY_SalesTax + " REAL," + KEY_ServiceTaxAmount + " REAl, " + KEY_Amount + " REAL," + KEY_AdditionalChargeName + " TEXT, " +
             KEY_AdditionalChargeAmount + " REAL , " + KEY_isGoodinward + " INTEGER )";
 
@@ -1225,9 +1247,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_ItemName + " TEXT,"
             + KEY_ItemBarcode + " TEXT,"
             + KEY_PurchaseRate + " REAL,"
-            + KEY_DineInPrice1 + " REAL,"
-            + KEY_DineInPrice2 + " REAL,"
-            + KEY_DineInPrice3 + " REAL,"
+            + KEY_Rate + " REAL,"
             + KEY_SupplyType + " TEXT,"
             + KEY_HSNCode + " TEXT,"
             + KEY_UOM + " TEXT,"
@@ -2480,6 +2500,225 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         long status = -1;
         status = dbFNB.delete(TBL_SupplierItemLinkage, null, null);
         return status;
+    }
+
+    public long mItemUpdateGoodsInwardNote(String itemId, ContentValues cv) {
+        long lStatus = -1;
+        try {
+            String strWhere = KEY_id + "=?";
+            lStatus = dbFNB.update(TBL_ITEM_Inward, cv, strWhere, new String[]{itemId});
+        } catch (Exception ex) {
+            Log.i(TAG, "error on updating the item quantity on goods inward notes" + ex.getMessage());
+        }
+        return lStatus;
+    }
+
+    public Cursor getPurchaseOrder_for_SupplierId(String invoiceNo, String invoiceDate, String supplierId) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_SupplierCode + " Like '" + supplierId + "' AND " +
+                KEY_InvoiceDate + " LIKE '" + invoiceDate + "' AND " + KEY_InvoiceNo + " LIKE '" + invoiceNo + "' AND " + KEY_isGoodinward + " LIKE '1'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+
+    public Cursor getDuplicateSupplierItemLinkage(int supplierId, int itemId, String uom) {
+        String selectquery = "SELECT * FROM " + TBL_SupplierItemLinkage
+                + " WHERE " + KEY_SupplierCode + "=" + supplierId + " AND " + KEY_ItemId + "=" + itemId + " AND " + KEY_UOM + " LIKE '" + uom + "'";
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getItemFromSupplierItemlinkageById(int itemId) {
+        String selectquery = "Select sum(" + KEY_PurchaseRate + "), count(" + KEY_PurchaseRate + ") from SupplierItemLinkage where SupplierItemLinkage.ItemId = " + itemId;
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getSupplierItemlinkageBySupplierIdAndItemId(String supplierId, int itemId) {
+        String selectquery = "Select * FROM " + TBL_SupplierItemLinkage + " WHERE " + KEY_SupplierCode + " LIKE '" + supplierId + "' AND " + KEY_ItemId + " = " + itemId;
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getItemByItemShortName(String itemShortName) {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE " + KEY_ItemShortName + " Like '" + itemShortName + "'";
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getAllItemByBrand(int kitchenCode) {
+        String query = "SELECT * FROM " + TBL_ITEM_Outward + "  WHERE isDelete=0 AND " + KEY_KitchenCode + " = " + kitchenCode;
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getSupplierItemlinkageByPhone(String supplierPhone) {
+        String selectquery = "Select * FROM " + TBL_SupplierItemLinkage + " WHERE " + KEY_SupplierPhone + " LIKE '" + supplierPhone + "'";
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getSupplierItemlinkageByItem(int itemId) {
+        String selectquery = "Select * FROM " + TBL_SupplierItemLinkage + " WHERE " + KEY_ItemId + " = " + itemId;
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getSupplierItemlinkageBySupplierMode(int isActive) {
+        String selectquery = "Select linkage.* FROM " + TBL_SupplierItemLinkage + " linkage, " + TBL_Supplier + " detail WHERE detail._id=linkage.SupplierId AND " +
+                "detail.isActive=" + isActive + " ORDER By linkage.SupplierName ASC";
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getSupplierItemlinkageByItemMode(int isActive) {
+        String selectquery = "Select linkage.* FROM " + TBL_SupplierItemLinkage + " linkage, " + TBL_ITEM_Outward + " item WHERE item._id=linkage.ItemId AND " +
+                "item.isActive=" + isActive + " ORDER By linkage.ItemShortName ASC";
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getSupplierItemlinkage() {
+        String selectquery = "Select * FROM " + TBL_SupplierItemLinkage + " ORDER BY " + KEY_SUPPLIERNAME + " ASC";
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+
+    public Cursor getCategoriesNameByName(String name) {
+        return dbFNB.rawQuery("Select * from Category where " + KEY_CategoryName + " LIKE '" + name + "'", null);
+    }
+
+    public Cursor mGetSupplierSearchData(CharSequence str) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            String select = "(" + KEY_SUPPLIERNAME + " LIKE ? OR "
+                    + KEY_SupplierPhone + " LIKE ?) AND " + KEY_isDelete + "=?";
+            String[] selectArgs = {str + "%", str + "%", 0 + ""};
+            String[] contactsProjection = new String[]{
+                    "*"};
+            cursor = db.query(TBL_Supplier, contactsProjection, select, selectArgs, null, null, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from supplier details table." + str + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public long mUnLinkSupplierWithItem(String strSupplierCode, String strItemID, String strPurchaseRate) {
+        long lstatus = -1;
+        try {
+            if (!strSupplierCode.isEmpty() && !strItemID.isEmpty()) {
+                String strWhere = KEY_SupplierCode + "=? and " + KEY_ItemId + "=? ";
+                lstatus = dbFNB.delete(TBL_SupplierItemLinkage, strWhere, new String[]{strSupplierCode, strItemID});
+            }
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to unlink the supplier item linkage." + ex.getMessage());
+        }
+        return lstatus;
+    }
+
+    public long mLinkSupplierWithItem(SupplierItemLinkageBean supplierItemLinkageBean, int iMode) {
+        ContentValues cv;
+        long lStatus = -1;
+        if (supplierItemLinkageBean != null) {
+            cv = new ContentValues();
+            cv.put(KEY_SupplierCode, supplierItemLinkageBean.getiSupplierID());
+            if (supplierItemLinkageBean.getStrGSTIN() != null) {
+                cv.put(KEY_GSTIN, supplierItemLinkageBean.getStrGSTIN());
+            }
+            cv.put(KEY_SUPPLIERNAME, supplierItemLinkageBean.getStrSupplierName());
+            if (supplierItemLinkageBean.getStrSupplierType() != null) {
+                cv.put(KEY_SupplierType, supplierItemLinkageBean.getStrSupplierType());
+            }
+            cv.put(KEY_SupplierPhone, supplierItemLinkageBean.getStrSupplierPhone());
+            cv.put(KEY_SupplierAddress, supplierItemLinkageBean.getStrSupplierAddress());
+            cv.put(KEY_ItemId, supplierItemLinkageBean.getiItemID());
+            cv.put(KEY_ItemName, supplierItemLinkageBean.getStrItemName());
+            if (supplierItemLinkageBean.getStrBarcode() != null) {
+                cv.put(KEY_ItemBarcode, supplierItemLinkageBean.getStrBarcode());
+            }
+            cv.put(KEY_PurchaseRate, supplierItemLinkageBean.getDblPurchaseRate());
+
+            if (supplierItemLinkageBean.getStrHSNCode() != null) {
+                cv.put(KEY_HSNCode, supplierItemLinkageBean.getStrHSNCode());
+            }
+            if (supplierItemLinkageBean.getStrUOM() != null) {
+                cv.put(KEY_UOM, supplierItemLinkageBean.getStrUOM());
+            }
+            if (supplierItemLinkageBean.getStrSupplyType() != null) {
+                cv.put(KEY_SupplyType, supplierItemLinkageBean.getStrSupplyType());
+            }
+
+            cv.put(KEY_CGSTRate, supplierItemLinkageBean.getDblCGSTPer());
+            cv.put(KEY_SGSTRate, supplierItemLinkageBean.getDblUTGST_SGSTPer());
+            cv.put(KEY_IGSTRate, supplierItemLinkageBean.getDblIGSTPer());
+            cv.put(KEY_cessRate, supplierItemLinkageBean.getDblCessPer());
+            cv.put(KEY_cessAmountPerUnit, supplierItemLinkageBean.getDblCessAmount());
+            cv.put(KEY_additionalCessAmount, supplierItemLinkageBean.getDblAdditionalCessAmount());
+            cv.put(KEY_Rate, supplierItemLinkageBean.getDblPurchaseRate()); // saving purchase rate in rate
+            switch (iMode) {
+                case 1:
+                    lStatus = dbFNB.insert(TBL_SupplierItemLinkage, null, cv);
+                    break;
+                case 2:
+                    String strWhere = KEY_SupplierCode + "=? and " + KEY_ItemId + "=? and " + KEY_id + "=?";
+                    lStatus = dbFNB.update(TBL_SupplierItemLinkage, cv, strWhere, new String[]{"" + supplierItemLinkageBean.getiSupplierID(), "" + supplierItemLinkageBean.getiItemID(), "" + supplierItemLinkageBean.get_id()});
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        return lStatus;
+    }
+
+    public Cursor getAllSuppliersByMode(int isActive) {
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TBL_Supplier + " WHERE " + KEY_isActive + "=" + isActive + " AND " + KEY_isDelete + "=" + 0;
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument
+        return cursor;
+    }
+
+    public Cursor mGetPurchaseOrderItems(CharSequence str, int iSupplierId) {
+        Cursor cursor = null;
+        try {
+            String[] selectArgs = {str + "%", str + "%", "" + iSupplierId};
+
+            String query = "select sl.* from " + TBL_SupplierItemLinkage + " sl, " + TBL_ITEM_Inward + " item where sl." + KEY_ItemId + " = item." + KEY_MenuCode +
+                    " and ( sl." + KEY_ItemName + " LIKE ? OR sl." + KEY_ItemBarcode + " LIKE ? ) AND sl." + KEY_SupplierCode + "=?";
+
+            cursor = dbFNB.rawQuery(query, selectArgs);
+
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from supplier linkage item table." + str + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public Cursor mGetPurchaseOrderNo(CharSequence str, int iSupplierId) {
+
+//        String query = "Select distinct " + KEY_PurchaseOrderNo + ", " + KEY_id + ", " + KEY_SupplierId +" FROM "+TBL_PURCHASEORDER+" WHERE " + KEY_PurchaseOrderNo + " LIKE '" + str + "%' AND " + KEY_SupplierId + "=" + iSupplierId + " AND " + KEY_isGoodinward +"=0";
+//        String query = "Select * FROM "+TBL_PURCHASEORDER+" WHERE " + KEY_PurchaseOrderNo + " LIKE '" + str + "%' AND " + KEY_SupplierId + "=" + iSupplierId + " AND " + KEY_isGoodinward +"=0";
+//        Cursor cursor = dbRetail.rawQuery(query,null);
+//        return cursor;
+
+        Cursor cursor = null;
+
+        try {
+            String select = KEY_PurchaseOrderNo + " LIKE ? AND " + KEY_SupplierCode + "=? AND " + KEY_isGoodinward + "=?";
+            String[] selectArgs = {str + "%", "" + iSupplierId, "" + 0};
+            String[] contactsProjection = new String[]{
+                    "distinct " + KEY_PurchaseOrderNo + " as " + KEY_id, KEY_SupplierCode};
+            if (select != null) {
+                cursor = dbFNB.query(TBL_PURCHASEORDER, contactsProjection, select, selectArgs, null, null, null);
+            }
+        } catch (Exception ex) {
+            if (cursor != null)
+                cursor.close();
+            Log.i(TAG, "Unable to get the data from purchase order no table." + str + " error : " + ex.getMessage());
+        }
+        return cursor;
     }
 
     public Cursor getInwardtaxed_2A(String StartDate, String EndDate) {
@@ -4782,8 +5021,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // -----Retrieve All Items-----
-    public Cursor getAllItems() {
+    public Cursor getAllItemsOutward() {
         String query = "SELECT * FROM " + TBL_ITEM_Outward + " WHERE isDelete=0 order by " + KEY_isActive + " desc ";
+        Cursor cursor = dbFNB.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getAllItemsInward() {
+        String query = "SELECT * FROM " + TBL_ITEM_Inward;
         Cursor cursor = dbFNB.rawQuery(query, null);
         return cursor;
     }
@@ -4836,7 +5081,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor mGetItemSearchData(CharSequence str) {
+    public Cursor mGetItemOutwardSearchData(CharSequence str) {
         Cursor cursor = null;
         try {
             String select = "( " + KEY_ItemName + " LIKE ? OR "
@@ -4845,6 +5090,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             String[] contactsProjection = new String[]{
                     "*"};
             cursor = dbFNB.query(TBL_ITEM_Outward, contactsProjection, select, selectArgs, null, null, null);
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from item master table." + str + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public Cursor mGetItemInwardSearchData(CharSequence str) {
+        Cursor cursor = null;
+        try {
+            String select = "( " + KEY_ItemName + " LIKE ? OR "
+                    + KEY_ItemBarcode + " LIKE ? OR " + KEY_MenuCode + " LIKE ? )";
+            String[] selectArgs = {str + "%", str + "%", str + "%"};
+            String[] contactsProjection = new String[]{
+                    "*"};
+            cursor = dbFNB.query(TBL_ITEM_Inward, contactsProjection, select, selectArgs, null, null, null);
         } catch (Exception ex) {
             Log.i(TAG, "Unable to get the data from item master table." + str + " error : " + ex.getMessage());
         }
@@ -6501,7 +6761,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_ItemName, objBillItem.getItemName());
         cvDbValues.put(KEY_Quantity, objBillItem.getQuantity());
         cvDbValues.put(KEY_UOM, objBillItem.getUom());
-        //cvDbValues.put(KEY_Rate, objBillItem.getRate());
+        //cvDbValues.put(KEY_Rate, objBillItem.getPurchaseRate());
         cvDbValues.put(KEY_Value, objBillItem.getValue());
         cvDbValues.put(KEY_TaxableValue, objBillItem.getTaxableValue());
         cvDbValues.put(KEY_SalesTax, objBillItem.getTaxAmount());
@@ -7094,6 +7354,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvdbValues.put(KEY_SupplierPhone, model.getSupplierPhone());
         cvdbValues.put(KEY_SupplierAddress, model.getSupplierAddress());
         cvdbValues.put(KEY_SupplierEmail, model.getSupplierEmail());
+        cvdbValues.put(KEY_isActive, model.getIsActive());
+        cvdbValues.put(KEY_isDelete, model.getIsDelete());
         l = dbFNB.insert(TBL_Supplier, null, cvdbValues);
         return l;
     }
@@ -7108,7 +7370,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvdbValues.put(KEY_SupplierPhone, model.getSupplierPhone());
         cvdbValues.put(KEY_SupplierAddress, model.getSupplierAddress());
         cvdbValues.put(KEY_SupplierEmail, model.getSupplierEmail());
-        l = dbFNB.update(TBL_Supplier,cvdbValues,KEY_SupplierCode+"="+model.getSupplierCode(),null );
+        cvdbValues.put(KEY_isActive, model.getIsActive());
+        cvdbValues.put(KEY_isDelete, model.getIsDelete());
+        l = dbFNB.update(TBL_Supplier,cvdbValues,KEY_id+"="+model.get_id(),null );
         return l;
     }
 
@@ -7296,12 +7560,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
         cvDbValues.put(KEY_TaxationType, objItem.getTaxationType());
-        cvDbValues.put(KEY_ItemName, objItem.getStrItemname());
+        cvDbValues.put(KEY_ItemName, objItem.getItemShortName());
         cvDbValues.put(KEY_HSNCode, objItem.getHSNCode());
-        cvDbValues.put(KEY_ItemBarcode, objItem.getStrItemBarcode());
+        cvDbValues.put(KEY_ItemBarcode, objItem.getItemBarcode());
         cvDbValues.put(KEY_ImageUri, objItem.getStrImageUri());
-        cvDbValues.put(KEY_Quantity, objItem.getfQuantity());
-        cvDbValues.put(KEY_AverageRate, objItem.getRate());
+        cvDbValues.put(KEY_Quantity, objItem.getQuantity());
+        cvDbValues.put(KEY_Rate, objItem.getPurchaseRate());
+        cvDbValues.put(KEY_AverageRate, objItem.getPurchaseRate());
         cvDbValues.put(KEY_UOM, objItem.getUOM());
         cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
         cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
@@ -7316,12 +7581,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
         cvDbValues.put(KEY_TaxationType, objItem.getTaxationType());
-        cvDbValues.put(KEY_ItemName, objItem.getStrItemname());
+        cvDbValues.put(KEY_ItemName, objItem.getItemShortName());
         cvDbValues.put(KEY_HSNCode, objItem.getHSNCode());
-        cvDbValues.put(KEY_ItemBarcode, objItem.getStrItemBarcode());
+        cvDbValues.put(KEY_ItemBarcode, objItem.getItemBarcode());
         cvDbValues.put(KEY_ImageUri, objItem.getStrImageUri());
-        cvDbValues.put(KEY_Quantity, objItem.getfQuantity());
-        cvDbValues.put(KEY_AverageRate, objItem.getRate());
+        cvDbValues.put(KEY_Quantity, objItem.getQuantity());
+        cvDbValues.put(KEY_AverageRate, objItem.getPurchaseRate());
         cvDbValues.put(KEY_UOM, objItem.getUOM());
         cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
         cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
@@ -7329,7 +7594,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_cessRate, objItem.getCessRate());
         cvDbValues.put(KEY_Count,1);
 
-        return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + objItem.getiMenuCode(), null);
+        return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + objItem.get_id(), null);
     }
 
 
@@ -7606,11 +7871,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.delete(TBL_GOODSINWARD, null, null);
     }
 
-
-    public int deletePurchaseOrder(int suppliercode, int purchaseorder) {
-
-        return dbFNB.delete(TBL_PURCHASEORDER, KEY_SupplierCode + "=" + suppliercode + " AND " + KEY_PurchaseOrderNo + " = " + purchaseorder, null);
+    public int deletePurchaseOrder(int supplierid, String purchaseorder) {
+        return dbFNB.delete(TBL_PURCHASEORDER, KEY_SupplierCode + "=" + supplierid + " AND " + KEY_PurchaseOrderNo + " LIKE '" + purchaseorder + "' AND " + KEY_isGoodinward + " =0", null);
     }
+
     public long deletePurchaseOrderEntry(String puchaseOrderNo, String supplierCode,String itemname,
                                          double rate, double quantity) {
 
@@ -7667,6 +7931,45 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor checkduplicatePO(int supplierid, String purchaseorder) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_SupplierCode + " = " + supplierid + " AND " +
+                KEY_PurchaseOrderNo + " LIKE '" + purchaseorder + "' AND " + KEY_isGoodinward + "=0";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+
+    public Cursor mGetPurchaseOrderItemsByItemId(int itemId, int iSupplierId) {
+        Cursor cursor = null;
+        try {
+
+            String query = "select sl.* from " + TBL_SupplierItemLinkage + " sl, " + TBL_ITEM_Inward + " item where sl." + KEY_ItemId + " = " + itemId + " and item." + KEY_isActive + " = 1" +
+                    " AND sl." + KEY_SupplierCode + " = " + iSupplierId;
+
+            cursor = dbFNB.rawQuery(query, null);
+
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from supplier linkage item table." + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
+    public Cursor mGetPurchaseOrderData(String _id, String supplierId) {
+        Cursor cursor = null;
+        try {
+            String select = KEY_PurchaseOrderNo + "=? AND " + KEY_SupplierCode + "=? AND " + KEY_isGoodinward + "=?";
+            String[] selectArgs = {_id, supplierId, "0"};
+            String[] contactsProjection = new String[]{
+                    "*"};
+            if (select != null) {
+                cursor = dbFNB.query(TBL_PURCHASEORDER, contactsProjection, select, selectArgs, null, null, null);
+            }
+        } catch (Exception ex) {
+            Log.i(TAG, "Unable to get the data from purchase order no table." + _id + " error : " + ex.getMessage());
+        }
+        return cursor;
+    }
+
     public Cursor getPurchaseOrderDetails(int suppliercode, int purchaseOrder) {
         Cursor result = null;
         // richa to do ->date
@@ -7716,141 +8019,64 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getPurchaseOrderById(int supplierId, int purchaseOrderId, int purchaseOrderNo) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_SupplierCode + " = " + supplierId + " AND " +
+                KEY_PurchaseOrderNo + " = " + purchaseOrderNo + " AND " + KEY_id + " = " + purchaseOrderId + " AND " + KEY_isGoodinward + " = 0";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+
     // -----Insert Purchase Order-----
-    public long InsertPurchaseOrder(PurchaseOrder po) {
+    public long InsertPurchaseOrder(PurchaseOrderBean po) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put(KEY_SUPPLIERNAME, po.getSupplierName());
-        cvDbValues.put(KEY_SupplierCode, po.getSupplierCode());
-        cvDbValues.put(KEY_SupplierPhone, po.getSupplierPhone());
-        cvDbValues.put(KEY_SupplierAddress, po.getSupplierAddress());
-        cvDbValues.put(KEY_SupplierType, po.getSupplierType());
-        cvDbValues.put(KEY_SupplierPOS, po.getSupplierPOS());
-        cvDbValues.put(KEY_GSTIN, po.getSupplierGSTIN());
-        cvDbValues.put(KEY_PurchaseOrderNo, po.getPurchaseOrderNo());
-        cvDbValues.put(KEY_InvoiceNo, po.getInvoiceNo());
-        cvDbValues.put(KEY_InvoiceDate, po.getInvoiceDate());
+        cvDbValues.put(KEY_SUPPLIERNAME, po.getStrSupplierName());
+        cvDbValues.put(KEY_SupplierCode, po.getStrSupplierId());
+        cvDbValues.put(KEY_SupplierPhone, po.getStrSupplierPhone());
+        cvDbValues.put(KEY_SupplierAddress, po.getStrSupplierAddress());
+       /* if(po.getStrSupplierType() != null) {
+            cvDbValues.put(KEY_SupplierType, po.getStrSupplierType());
+        }*/
+        cvDbValues.put(KEY_SupplierPOS, po.getStrSupplierPOS());
+        if (po.getStrSupplierGSTIN() != null) {
+            cvDbValues.put(KEY_GSTIN, po.getStrSupplierGSTIN());
+        }
+        cvDbValues.put(KEY_PurchaseOrderNo, po.getiPurchaseOrderNo());
+        cvDbValues.put(KEY_InvoiceNo, po.getStrInvoiceNo());
+        cvDbValues.put(KEY_InvoiceDate, po.getStrInvoiceDate());
+        cvDbValues.put(KEY_InvoiceDate, po.getStrInvoiceDate());
+        cvDbValues.put(KEY_PurchaseOrderDate, po.getStrPurchaseOrderDate());
 
-        cvDbValues.put(KEY_MenuCode, po.getMenuCode());
-        cvDbValues.put(KEY_SupplyType, po.getSupplyType());
-        cvDbValues.put(KEY_HSNCode, po.getHSNCode());
-        cvDbValues.put(KEY_ItemName, po.getItemName());
-        cvDbValues.put(KEY_Quantity, po.getQuantity());
-        cvDbValues.put(KEY_UOM, po.getUOM());
-        cvDbValues.put(KEY_Value, po.getValue());
-        cvDbValues.put(KEY_TaxableValue, po.getTaxableValue());
-        cvDbValues.put(KEY_IGSTRate,po.getIgstRate());
-        cvDbValues.put(KEY_IGSTAmount,po.getIgstAmount());
-        cvDbValues.put(KEY_CGSTRate,po.getCgstRate());
-        cvDbValues.put(KEY_CGSTAmount,po.getCgstAmount());
-        cvDbValues.put(KEY_SGSTRate,po.getSgstRate());
-        cvDbValues.put(KEY_SGSTAmount,po.getSgstAmount());
-        cvDbValues.put(KEY_cessRate,po.getCsRate());
-        cvDbValues.put(KEY_cessAmount,po.getCsAmount());
+        cvDbValues.put(KEY_ItemId, po.getiItemId());
+        cvDbValues.put(KEY_SupplierType, po.getStrSupplierType());
+        cvDbValues.put(KEY_SupplyType, po.getStrSupplyType());
+        cvDbValues.put(KEY_HSNCode, po.getStrHSNCode());
+        cvDbValues.put(KEY_ItemName, po.getStrItemName());
+        cvDbValues.put(KEY_ItemBarcode, po.getStrBarcode());
+        cvDbValues.put(KEY_Quantity, po.getDblQuantity());
+        cvDbValues.put(KEY_UOM, po.getStrUOM());
+        cvDbValues.put(KEY_Rate, po.getDblRate());
+        cvDbValues.put(KEY_PurchaseRate, po.getDblPurchaseRate());
+        cvDbValues.put(KEY_TaxableValue, po.getDblTaxableValue());
+        cvDbValues.put(KEY_IGSTRate, po.getDblIGSTRate());
+        cvDbValues.put(KEY_IGSTAmount, po.getDblIGSTAmount());
+        cvDbValues.put(KEY_CGSTRate, po.getDblCGSTRate());
+        cvDbValues.put(KEY_CGSTAmount, po.getDblCGSTAmount());
+        cvDbValues.put(KEY_SGSTRate, po.getDblSGSTRate());
+        cvDbValues.put(KEY_SGSTAmount, po.getDblSGSTAmount());
+        cvDbValues.put(KEY_cessRate, po.getDblCessRate());
+        cvDbValues.put(KEY_cessAmount, po.getDblCessAmount());
+        cvDbValues.put(KEY_cessAmountPerUnit, po.getDblCessAmountPerUnit());
+        cvDbValues.put(KEY_additionalCessAmount, po.getDblAdditionalCessAmount());
 
-        cvDbValues.put(KEY_Amount, po.getAmount());
-        cvDbValues.put(KEY_AdditionalChargeName, po.getAdditionalCharge());
-        cvDbValues.put(KEY_AdditionalChargeAmount, po.getAdditionalChargeAmount());
-        cvDbValues.put(KEY_isGoodinward, po.getIsgoodInward());
-
+        cvDbValues.put(KEY_Value, po.getDblValue());
+        cvDbValues.put(KEY_Amount, po.getDblAmount());
+        cvDbValues.put(KEY_AdditionalChargeName, po.getStrAdditionalCharge());
+        cvDbValues.put(KEY_AdditionalChargeAmount, po.getDblAdditionalChargeAmount());
+        cvDbValues.put(KEY_isGoodinward, po.getiIsgoodInward());
 
         return dbFNB.insert(TBL_PURCHASEORDER, null, cvDbValues);
-    }
-    public long UpdatePurchaseOrder(PurchaseOrder po) {
-        cvDbValues = new ContentValues();
-
-        cvDbValues.put(KEY_SUPPLIERNAME, po.getSupplierName());
-        cvDbValues.put(KEY_SupplierCode, po.getSupplierCode());
-        cvDbValues.put(KEY_SupplierPhone, po.getSupplierPhone());
-        cvDbValues.put(KEY_SupplierAddress, po.getSupplierAddress());
-        cvDbValues.put(KEY_SupplierType, po.getSupplierType());
-        cvDbValues.put(KEY_GSTIN, po.getSupplierGSTIN());
-
-        cvDbValues.put(KEY_PurchaseOrderNo, po.getPurchaseOrderNo());
-        cvDbValues.put(KEY_MenuCode, po.getMenuCode());
-        cvDbValues.put(KEY_SupplyType, po.getSupplyType());
-        cvDbValues.put(KEY_ItemName, po.getItemName());
-        cvDbValues.put(KEY_Quantity, po.getQuantity());
-        cvDbValues.put(KEY_UOM, po.getUOM());
-        cvDbValues.put(KEY_Value, po.getValue());
-        cvDbValues.put(KEY_TaxableValue, po.getTaxableValue());
-        cvDbValues.put(KEY_IGSTRate,po.getIgstRate());
-        cvDbValues.put(KEY_IGSTAmount,po.getIgstAmount());
-        cvDbValues.put(KEY_CGSTRate,po.getCgstRate());
-        cvDbValues.put(KEY_CGSTAmount,po.getCgstAmount());
-        cvDbValues.put(KEY_SGSTRate,po.getSgstRate());
-        cvDbValues.put(KEY_SGSTAmount,po.getSgstAmount());
-        cvDbValues.put(KEY_Amount, po.getAmount());
-        cvDbValues.put(KEY_AdditionalChargeName, po.getAdditionalCharge());
-        cvDbValues.put(KEY_AdditionalChargeAmount, po.getAdditionalChargeAmount());
-        cvDbValues.put(KEY_isGoodinward, po.getIsgoodInward());
-
-        String whereClause = KEY_PurchaseOrderNo + " = " + po.getPurchaseOrderNo() + " AND " +
-                KEY_SupplierCode + " = " + po.getSupplierCode() + " AND " + KEY_MenuCode + " = " + po.getMenuCode();
-
-        return dbFNB.update(TBL_PURCHASEORDER, cvDbValues, whereClause, null);
-    }
-
-    public long InsertPurchaseOrder(BillItem objBillItem) {
-        cvDbValues = new ContentValues();
-
-        cvDbValues.put(KEY_SUPPLIERNAME, objBillItem.getSupplierName());
-        cvDbValues.put(KEY_SupplierCode, objBillItem.getSuppliercode());
-        cvDbValues.put(KEY_SupplierPhone, objBillItem.getSupplierPhone());
-        cvDbValues.put(KEY_SupplierType, objBillItem.getSupplierType());
-        cvDbValues.put(KEY_GSTIN, objBillItem.getSupplierGSTIN());
-        cvDbValues.put(KEY_InvoiceNo, objBillItem.getBillNumber());
-        cvDbValues.put(KEY_InvoiceDate, objBillItem.getInvoiceDate());
-        cvDbValues.put(KEY_PurchaseOrderNo, objBillItem.getPurchaseOrderNo());
-
-        cvDbValues.put(KEY_MenuCode, objBillItem.getItemNumber());
-        cvDbValues.put(KEY_SupplyType, objBillItem.getSupplyType());
-        cvDbValues.put(KEY_ItemName, objBillItem.getItemName());
-        cvDbValues.put(KEY_Quantity, objBillItem.getQuantity());
-        cvDbValues.put(KEY_UOM, objBillItem.getUom());
-        cvDbValues.put(KEY_Value, objBillItem.getValue());
-        cvDbValues.put(KEY_TaxableValue, objBillItem.getTaxableValue());
-        cvDbValues.put(KEY_SalesTax, objBillItem.getTaxAmount());
-        cvDbValues.put(KEY_ServiceTaxAmount, objBillItem.getServiceTaxAmount());
-        cvDbValues.put(KEY_Amount, objBillItem.getAmount());
-        cvDbValues.put(KEY_AdditionalChargeName, objBillItem.getAdditionalChargeName());
-        cvDbValues.put(KEY_AdditionalChargeAmount, objBillItem.getAdditionalChargeAmount());
-        cvDbValues.put(KEY_isGoodinward, objBillItem.getIsGoodInwarded());
-
-
-        return dbFNB.insert(TBL_PURCHASEORDER, null, cvDbValues);
-    }
-
-    // -----Update Purchase Order-----
-    public long UpdatePurchaseOrder(BillItem objBillItem) {
-        cvDbValues = new ContentValues();
-
-        cvDbValues.put(KEY_SUPPLIERNAME, objBillItem.getSupplierName());
-        cvDbValues.put(KEY_SupplierCode, objBillItem.getSuppliercode());
-        cvDbValues.put(KEY_SupplierPhone, objBillItem.getSupplierPhone());
-
-        cvDbValues.put(KEY_PurchaseOrderNo, objBillItem.getPurchaseOrderNo());
-       /* cvDbValues.put(KEY_InvoiceNo, objBillItem.getBillNumber());
-        cvDbValues.put(KEY_InvoiceDate, objBillItem.getInvoiceDate());*/
-
-        cvDbValues.put(KEY_MenuCode, objBillItem.getItemNumber());
-        cvDbValues.put(KEY_SupplyType, objBillItem.getSupplyType());
-        cvDbValues.put(KEY_ItemName, objBillItem.getItemName());
-        cvDbValues.put(KEY_Quantity, objBillItem.getQuantity());
-        cvDbValues.put(KEY_UOM, objBillItem.getUom());
-        cvDbValues.put(KEY_Value, objBillItem.getValue());
-        cvDbValues.put(KEY_TaxableValue, objBillItem.getTaxableValue());
-        cvDbValues.put(KEY_SalesTax, objBillItem.getTaxAmount());
-        cvDbValues.put(KEY_ServiceTaxAmount, objBillItem.getServiceTaxAmount());
-        cvDbValues.put(KEY_Amount, objBillItem.getAmount());
-        cvDbValues.put(KEY_AdditionalChargeName, objBillItem.getAdditionalChargeName());
-        cvDbValues.put(KEY_AdditionalChargeAmount, objBillItem.getAdditionalChargeAmount());
-        cvDbValues.put(KEY_isGoodinward, objBillItem.getIsGoodInwarded());
-
-        String whereClause = KEY_PurchaseOrderNo + " = " + objBillItem.getPurchaseOrderNo() + " AND " +
-                KEY_SupplierCode + " = " + objBillItem.getSuppliercode() + " AND " + KEY_MenuCode + " = " + objBillItem.getItemNumber();
-
-        return dbFNB.update(TBL_PURCHASEORDER, cvDbValues, whereClause, null);
     }
 
     public Cursor getGSTR2_b2bA_invoices_for_gstin_registered(String startDate, String endDate,String gstin ) {

@@ -96,9 +96,9 @@ public class ItemInwardAdapter extends BaseAdapter {
         }
         ItemInward item = itemList.get(position);
         viewHolder.Sno.setText(String.valueOf(position+1));
-        viewHolder.ItemName.setText(item.getStrItemname());
-        viewHolder.AverageRate.setText(String.format("%.2f",item.getRate()));
-        viewHolder.Stock.setText(String.format("%.2f",item.getfQuantity()));
+        viewHolder.ItemName.setText(item.getItemShortName());
+        viewHolder.AverageRate.setText(String.format("%.2f",item.getPurchaseRate()));
+        viewHolder.Stock.setText(String.format("%.2f",item.getQuantity()));
         viewHolder.UOM.setText(item.getUOM());
 
         viewHolder.btndel.setLayoutParams(new TableRow.LayoutParams(40, 35));
@@ -126,13 +126,13 @@ public class ItemInwardAdapter extends BaseAdapter {
 
                             final int i  = Integer.parseInt(v.getTag().toString());
                             final ItemInward obj = (ItemInward) getItem(i);
-                            String ItemName = obj.getStrItemname();
-                            String MenuCode = String.valueOf(obj.getiMenuCode());
+                            String ItemName = obj.getItemShortName();
+                            String MenuCode = String.valueOf(obj.get_id());
                             long lResult = dbHandler.DeleteItem_Inw(MenuCode);
                             if (lResult>0){
                                 Toast.makeText(activityContext, "Item Deleted Successfully", Toast.LENGTH_SHORT).show();
                                 Log.d("InwardItemActivity",ItemName+" delete successfully");
-                                dbHandler.deleteSupplierItemLinkforItem(obj.getiMenuCode());
+                                dbHandler.deleteSupplierItemLinkforItem(obj.get_id());
                                 dbHandler.deleteItemInGoodsInward(ItemName);
                                 if(className.equalsIgnoreCase("InwardItemActivity")) {
                                     ((InwardItemActivity) activityContext).loadSpinnerData();

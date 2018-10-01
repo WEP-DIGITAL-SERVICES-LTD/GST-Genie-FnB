@@ -3130,6 +3130,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
             messageDialog.Show("Warning", "Please Select Code for Intersate Supply");
             proceed =0;
+        } else if ((OWNERPOS.equals("") || OWNERPOS.equals("0"))) {
+            messageDialog.Show(getString(R.string.invalid_attempt), getString(R.string.empty_owner_pos_message));
+            proceed = 0;
         }
 
         if(proceed == 0)

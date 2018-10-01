@@ -195,7 +195,7 @@ public class FragmentInwardStock extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Supplier_Model supplier = (Supplier_Model) supplierAdapter.getItem(position);
-            supplierCode  = supplier.getSupplierCode();
+            supplierCode  = supplier.get_id();
             loadItems( supplierCode );
             ResetStock();
         }
@@ -370,7 +370,7 @@ public class FragmentInwardStock extends Fragment {
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
                         Supplier_Model supplier  = new Supplier_Model();
-                        supplier.setSupplierCode(cursor.getInt(cursor.getColumnIndex("SupplierCode")));
+                        supplier.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
                         supplier.setSupplierName(cursor.getString(cursor.getColumnIndex("SupplierName")));
                         supplier.setSupplierAddress(cursor.getString(cursor.getColumnIndex("SupplierAddress")));
                         supplier.setSupplierPhone(cursor.getString(cursor.getColumnIndex("SupplierPhone")));

@@ -1741,7 +1741,7 @@ public class PayBillFragment extends DialogFragment implements PayBillViewHolder
 //            {
 //                for(AddedItemsToOrderTableClass item : orderList_recieved) {
 //
-//                    double rate= item.getRate();
+//                    double rate= item.getPurchaseRate();
 //                    double quantity = item.getQuantity();
 //
 //                    item.setTaxableValue(rate);// required to change beacuse of reverse tax implementation.

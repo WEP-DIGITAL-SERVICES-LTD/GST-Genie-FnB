@@ -190,10 +190,10 @@ public class InwardStockActivity extends WepBaseActivity {
                     System.out.println(itemName +" :"+existingStock );
                     double rate = Double.parseDouble(String.format("%.2f",item_crsr.getDouble(item_crsr.getColumnIndex("Value"))));
                     ItemInward item = new ItemInward();
-                    item.setiMenuCode(menuCode);
-                    item.setStrItemname(itemName);
-                    item.setfQuantity(existingStock);
-                    item.setRate(rate);
+                    item.set_id(menuCode);
+                    item.setItemShortName(itemName);
+                    item.setQuantity(existingStock);
+                    item.setPurchaseRate(rate);
                     InwardItemList.add(item);
                     System.out.println(itemName+" has rate "+rate);
                 }
@@ -222,12 +222,12 @@ public class InwardStockActivity extends WepBaseActivity {
                 @Override
                 public void onItemClick(int position, View v) {
                     ItemInward itemClick = InwardItemList.get(position);
-                    strMenuCode = String.valueOf(itemClick.getiMenuCode());
+                    strMenuCode = String.valueOf(itemClick.get_id());
                     ItemLongName.setThreshold(1000);
-                    ItemLongName.setText(itemClick.getStrItemname());
+                    ItemLongName.setText(itemClick.getItemShortName());
                     ItemLongName.setThreshold(1);
-                    tvExistingStock.setText(String.format("%.2f", itemClick.getfQuantity()));
-                    txtRate1.setText(String.format("%.2f", itemClick.getRate()));
+                    tvExistingStock.setText(String.format("%.2f", itemClick.getQuantity()));
+                    txtRate1.setText(String.format("%.2f", itemClick.getPurchaseRate()));
                     txtNewStock.setText("0");
                     btnUpdate.setEnabled(true);
                 }
@@ -359,7 +359,7 @@ public class InwardStockActivity extends WepBaseActivity {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             ItemInward item = (ItemInward)InwardItemList.get(position);
-            String ItemInward = item.getStrItemname();
+            String ItemInward = item.getItemShortName();
             holder.ItemNametv.setText(ItemInward);
             holder.SnNotv.setText(String.valueOf(position+1));
         }

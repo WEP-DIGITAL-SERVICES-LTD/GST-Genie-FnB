@@ -101,7 +101,7 @@ public class SupplierAdapter extends BaseAdapter {
         public void onClick(View v) {
             final int i  = Integer.parseInt(v.getTag().toString());
             final Supplier_Model supplier_model = (Supplier_Model) getItem(i);
-            final int SupplierCode = supplier_model.getSupplierCode();
+            final int SupplierCode = supplier_model.get_id();
             final String SupplierName = supplier_model.getSupplierName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activityContext)
                     .setTitle("Delete")
@@ -111,7 +111,7 @@ public class SupplierAdapter extends BaseAdapter {
                         public void onClick(DialogInterface dialog, int which) {
                             for(Supplier_Model supplier : SupplierList)
                             {
-                                if(supplier.getSupplierCode()==SupplierCode )
+                                if(supplier.get_id()==SupplierCode )
                                 {
                                     long ll = db.deleteSupplier(SupplierCode);
                                     if(ll >0)

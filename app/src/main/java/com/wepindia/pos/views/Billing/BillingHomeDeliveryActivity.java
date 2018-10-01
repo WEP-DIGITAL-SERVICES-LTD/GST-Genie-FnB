@@ -1622,7 +1622,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     // Get Items by CategCode
     /*private void GetItemDetails() {
         Cursor Items = null;
-        Items = dbBillScreen.getAllItems();
+        Items = dbBillScreen.getAllItemsOutward();
         //Items = dbBillScreen.getAllItemsWithoutDeptCateg();
         if (Items.moveToFirst()) {
 
@@ -1645,7 +1645,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
     private void GetItemDetailswithoutDeptCateg() {
         Cursor Items = null;
-        //Items = dbBillScreen.getAllItems();
+        //Items = dbBillScreen.getAllItemsOutward();
         Items = dbBillScreen.getAllItemsWithoutDeptCateg();
         if (Items.moveToFirst()) {
 
@@ -6861,6 +6861,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
      * @param v : SaveOrder button
      ************************************************************************************************************************************/
     public void SaveKOT(View v) {
+
+        if ((OWNERPOS.equals("") || OWNERPOS.equals("0"))) {
+            MsgBox.Show(getString(R.string.invalid_attempt), getString(R.string.empty_owner_pos_message));
+            return;
+        }
+
         iPrintKOTStatus = 1;
         int i = SaveKOT();
         Log.d("Billing Activity", "SaveKOT : Status = "+i );
@@ -7977,6 +7983,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
             MsgBox.Show("Warning", "Please Select Code for Intersate Supply");
             proceed =0;
+        } else if ((OWNERPOS.equals("") || OWNERPOS.equals("0"))) {
+            MsgBox.Show(getString(R.string.invalid_attempt), getString(R.string.empty_owner_pos_message));
+            proceed = 0;
         }
 
         else if (jBillingMode==4 )

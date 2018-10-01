@@ -1053,7 +1053,7 @@ public class InwardItemActivity extends WepBaseActivity {
                     break;
                 }
 
-                ItemInward itemInwardObj = new ItemInward(mMenuCode, mItemName, "Barcode", colums[6].trim(), "HSNCode",
+                ItemInward itemInwardObj = new ItemInward(mMenuCode, mItemName, "", colums[6].trim(), "HSNCode",
                         mRate, mQuantity, mUOM,
                         mIGSTRate, IGSTAmt, mCGSTRate, CGSTAmt, mSGSTRate, SGSTAmt, mCESSRate, cessAmt,
                         "TaxationType", mSupplyType);
@@ -1071,61 +1071,61 @@ public class InwardItemActivity extends WepBaseActivity {
 
                 for (ItemInward item : inwardList) {
                     long lRowId = dbInwardItem.addItem_InwardDatabase(item);
-                    Cursor item_present_crsr = dbInwardItem.getItem_GoodsInward(item.getStrItemname());
+                    Cursor item_present_crsr = dbInwardItem.getItem_GoodsInward(item.getItemShortName());
                     if (item_present_crsr != null && item_present_crsr.moveToFirst()) {
                         // already present , needs to update
                         double qty = item_present_crsr.getDouble(item_present_crsr.getColumnIndex("Quantity"));
-                        item.setfQuantity(item.getfQuantity() + qty);
-                        long l = dbInwardItem.updateIngredient(item.getStrItemname(), item.getfQuantity(), item.getRate(), 0); // richa_todo
+                        item.setQuantity(item.getQuantity() + qty);
+                        long l = dbInwardItem.updateIngredient(item.getItemShortName(), item.getQuantity(), item.getPurchaseRate(), 0); // richa_todo
                         if (l > 0) {
-                            Log.d(" GoodsInwardNote ", item.getStrItemname() + " updated  successfully at " + l);
+                            Log.d(" GoodsInwardNote ", item.getItemShortName() + " updated  successfully at " + l);
                             // updating stock inward
 
                             double openingStock = 0, closingStock = 0;
                             StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbInwardItem);
-                            Cursor crsr_inward_stock = dbInwardItem.getInwardStock(item.getStrItemname());
+                            Cursor crsr_inward_stock = dbInwardItem.getInwardStock(item.getItemShortName());
                             int menuCode = 0;
                             if (crsr_inward_stock != null && crsr_inward_stock.moveToFirst()) {
                                 openingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("OpeningStock"));
                                 closingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("ClosingStock"));
                                 menuCode = crsr_inward_stock.getInt(crsr_inward_stock.getColumnIndex("MenuCode"));
-                                double additionalQty = item.getfQuantity();
-                                stock_inward.updateOpeningStock_Inward(businessDate, menuCode, item.getStrItemname(),
-                                        openingStock + additionalQty, item.getRate());
-                                stock_inward.updateClosingStock_Inward(businessDate, menuCode, item.getStrItemname(),
+                                double additionalQty = item.getQuantity();
+                                stock_inward.updateOpeningStock_Inward(businessDate, menuCode, item.getItemShortName(),
+                                        openingStock + additionalQty, item.getPurchaseRate());
+                                stock_inward.updateClosingStock_Inward(businessDate, menuCode, item.getItemShortName(),
                                         closingStock + additionalQty);
                             }else
                             {
-                                stock_inward.addIngredientToStock_Inward(businessDate, menuCode, item.getStrItemname(),
-                                        item.getfQuantity(), item.getRate());
+                                stock_inward.addIngredientToStock_Inward(businessDate, menuCode, item.getItemShortName(),
+                                        item.getQuantity(), item.getPurchaseRate());
                             }
 
                         }
                     } else {
                         // new entry
                         //richa_todo
-                        long l = dbInwardItem.addIngredient(item.getStrItemname(), item.getfQuantity(), item.getUOM(),
-                                item.getRate(), 0);
+                        long l = dbInwardItem.addIngredient(item.getItemShortName(), item.getQuantity(), item.getUOM(),
+                                item.getPurchaseRate(), 0);
                         if (l > 0) {
-                            Log.d(" GoodsInwardNote ", item.getStrItemname() + " added  successfully at " + l);
+                            Log.d(" GoodsInwardNote ", item.getItemShortName() + " added  successfully at " + l);
 
                             // updating Stock inward
                             int menuCode = 0;
                             double openingStock = 0, closingStock = 0;
                             StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbInwardItem);
-                            Cursor crsr_inward_stock = dbInwardItem.getInwardStock(item.getStrItemname());
+                            Cursor crsr_inward_stock = dbInwardItem.getInwardStock(item.getItemShortName());
                             if (crsr_inward_stock != null && crsr_inward_stock.moveToFirst()) {
                                 openingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("OpeningStock"));
                                 closingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("ClosingStock"));
                                 menuCode = crsr_inward_stock.getInt(crsr_inward_stock.getColumnIndex("MenuCode"));
-                                double additionalQty = item.getfQuantity();
-                                stock_inward.updateOpeningStock_Inward(businessDate, menuCode, item.getStrItemname(),
-                                        openingStock + additionalQty, item.getRate());
-                                stock_inward.updateClosingStock_Inward(businessDate, menuCode, item.getStrItemname(),
+                                double additionalQty = item.getQuantity();
+                                stock_inward.updateOpeningStock_Inward(businessDate, menuCode, item.getItemShortName(),
+                                        openingStock + additionalQty, item.getPurchaseRate());
+                                stock_inward.updateClosingStock_Inward(businessDate, menuCode, item.getItemShortName(),
                                         closingStock + additionalQty);
                             }
-                            stock_inward.addIngredientToStock_Inward(businessDate, menuCode, item.getStrItemname(),
-                                    item.getfQuantity(), item.getRate());
+                            stock_inward.addIngredientToStock_Inward(businessDate, menuCode, item.getItemShortName(),
+                                    item.getQuantity(), item.getPurchaseRate());
                         }
 
                     }
@@ -1208,14 +1208,14 @@ public class InwardItemActivity extends WepBaseActivity {
                 if(InwardItemAdapter==null )
                     return;
                 ItemInward item = (ItemInward)InwardItemAdapter.getItem(position);
-                itemname_clicked = (item.getStrItemname());
+                itemname_clicked = (item.getItemShortName());
                 autocomplete_inw_ItemName.setThreshold(1000);
-                autocomplete_inw_ItemName.setText(item.getStrItemname());
+                autocomplete_inw_ItemName.setText(item.getItemShortName());
                 autocomplete_inw_ItemName.setThreshold(1);
-                tvMenuCode.setText(String.valueOf(item.getiMenuCode()));
-                et_inw_ItemBarcode.setText(item.getStrItemBarcode());
-                et_inw_averagerate_entered.setText(String.format("%.2f",item.getRate()));
-                et_inw_quantity.setText(String.format("%.2f",item.getfQuantity()));
+                tvMenuCode.setText(String.valueOf(item.get_id()));
+                et_inw_ItemBarcode.setText(item.getItemBarcode());
+                et_inw_averagerate_entered.setText(String.format("%.2f",item.getPurchaseRate()));
+                et_inw_quantity.setText(String.format("%.2f",item.getQuantity()));
                 et_inw_HSNCode.setText(item.getHSNCode());
                 et_Inw_CGSTRate.setText(String.format("%.2f",item.getCGSTRate()));
                 et_Inw_SGSTRate.setText(String.format("%.2f",item.getSGSTRate()));
@@ -1664,8 +1664,6 @@ public class InwardItemActivity extends WepBaseActivity {
                         })
                         .setNegativeButton("No", null)
                         .show();
-
-
             }
         }
     }
@@ -1760,8 +1758,6 @@ public class InwardItemActivity extends WepBaseActivity {
 
     public void AddItem1 (View v)
     {
-
-
         String item_name = autocomplete_inw_ItemName.getText().toString().toUpperCase();
         if (item_name.equalsIgnoreCase("")) {
             MsgBox.setTitle("Warning")

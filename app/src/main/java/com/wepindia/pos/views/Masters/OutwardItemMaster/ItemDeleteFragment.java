@@ -316,7 +316,7 @@ public class ItemDeleteFragment extends DialogFragment {
                 }
 
             } else {
-                item = dbItems.getAllItems();
+                item = dbItems.getAllItemsOutward();
 
                 int count = 1;
 

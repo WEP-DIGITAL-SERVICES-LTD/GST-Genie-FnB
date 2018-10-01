@@ -6,47 +6,28 @@ package com.wep.common.app.models;
 
 public class ItemInward {
     // Private variable
-    String strItemname, strItemBarcode, strImageUri;
-    int iMenuCode;
-    double rate, fQuantity;
-    double IGSTRate, IGSTAmount, CGSTRate, CGSTAmount,SGSTRate, SGSTAmount, cessRate, cessAmount;
+    String itemShortName, itemBarcode, strImageUri;
+    int _id;
+    double purchaseRate, quantity, rate;
+    double IGSTRate, IGSTAmount, CGSTRate, CGSTAmount,SGSTRate, SGSTAmount, cessRate, cessAmount,
+            cessAmountPerUnit, additionalCessAmount, totalAdditioalCessAmount;
     String UOM,HSNCode,TaxationType , SupplyType, pos;
-    double rate1 =0;
+    private boolean isSelected;
 
-    public ItemInward(String strItemname, String strItemBarcode, String strImageUri, int iMenuCode, double fAveragerate, double fQuantity, double IGSTRate, double IGSTAmount, double CGSTRate,
-                      double CGSTAmount, double SGSTRate, double SGSTAmount,double cessRate, double cessAmount, String MOU, String HSNCode, String taxationType, String supplyType, String pos) {
-        this.strItemname = strItemname;
-        this.strItemBarcode = strItemBarcode;
-        this.strImageUri = strImageUri;
-        this.iMenuCode = iMenuCode;
-        this.rate = fAveragerate;
-        this.fQuantity = fQuantity;
-        this.IGSTRate = IGSTRate;
-        this.IGSTAmount = IGSTAmount;
-        this.CGSTRate = CGSTRate;
-        this.CGSTAmount = CGSTAmount;
-        this.SGSTRate = SGSTRate;
-        this.SGSTAmount = SGSTAmount;
-        this.cessRate = cessRate;
-        this.cessAmount = cessAmount;
-        this.UOM = MOU;
-        this.HSNCode = HSNCode;
-        TaxationType = taxationType;
-        SupplyType = supplyType;
-        this.pos = pos;
-    }
-    public ItemInward(int iMenuCode, String strItemname, String strItemBarcode, String strImageUri, String HSNCode,
-                      double fAveragerate,double fQuantity, String MOU,
+
+
+    public ItemInward(int _id, String itemShortName, String itemBarcode, String strImageUri, String HSNCode,
+                      double fAveragerate, double quantity, String MOU,
                       double IGSTRate, double IGSTAmount, double CGSTRate, double CGSTAmount,
-                      double SGSTRate, double SGSTAmount,double cessRate, double cessAmount,
+                      double SGSTRate, double SGSTAmount, double cessRate, double cessAmount,
                       String taxationType, String supplyType)
     {
-        this.strItemname = strItemname;
-        this.strItemBarcode = strItemBarcode;
+        this.itemShortName = itemShortName;
+        this.itemBarcode = itemBarcode;
         this.strImageUri = strImageUri;
-        this.iMenuCode = iMenuCode;
-        this.rate = fAveragerate;
-        this.fQuantity = fQuantity;
+        this._id = _id;
+        this.purchaseRate = fAveragerate;
+        this.quantity = quantity;
         this.IGSTRate = IGSTRate;
         this.IGSTAmount = IGSTAmount;
         this.CGSTRate = CGSTRate;
@@ -62,12 +43,12 @@ public class ItemInward {
         this.pos = "";
     }
     public ItemInward() {
-        this.strItemname = "";
-        this.strItemBarcode = "";
+        this.itemShortName = "";
+        this.itemBarcode = "";
         this.strImageUri = "";
-        this.iMenuCode = -1;
-        this.rate = 0;
-        this.fQuantity = 0;
+        this._id = -1;
+        this.purchaseRate = 0;
+        this.quantity = 0;
         this.IGSTRate = 0;
         this.IGSTAmount = 0;
         this.CGSTRate = 0;
@@ -84,22 +65,60 @@ public class ItemInward {
 
     }
 
-
-
-    public String getStrItemname() {
-        return strItemname;
+    public double getRate() {
+        return rate;
     }
 
-    public void setStrItemname(String strItemname) {
-        this.strItemname = strItemname;
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 
-    public String getStrItemBarcode() {
-        return strItemBarcode;
+    public boolean isSelected() {
+        return isSelected;
     }
 
-    public void setStrItemBarcode(String strItemBarcode) {
-        this.strItemBarcode = strItemBarcode;
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public double getCessAmountPerUnit() {
+        return cessAmountPerUnit;
+    }
+
+    public void setCessAmountPerUnit(double cessAmountPerUnit) {
+        this.cessAmountPerUnit = cessAmountPerUnit;
+    }
+
+    public double getAdditionalCessAmount() {
+        return additionalCessAmount;
+    }
+
+    public void setAdditionalCessAmount(double additionalCessAmount) {
+        this.additionalCessAmount = additionalCessAmount;
+    }
+
+    public double getTotalAdditioalCessAmount() {
+        return totalAdditioalCessAmount;
+    }
+
+    public void setTotalAdditioalCessAmount(double totalAdditioalCessAmount) {
+        this.totalAdditioalCessAmount = totalAdditioalCessAmount;
+    }
+
+    public String getItemShortName() {
+        return itemShortName;
+    }
+
+    public void setItemShortName(String itemShortName) {
+        this.itemShortName = itemShortName;
+    }
+
+    public String getItemBarcode() {
+        return itemBarcode;
+    }
+
+    public void setItemBarcode(String itemBarcode) {
+        this.itemBarcode = itemBarcode;
     }
 
     public String getStrImageUri() {
@@ -110,28 +129,28 @@ public class ItemInward {
         this.strImageUri = strImageUri;
     }
 
-    public int getiMenuCode() {
-        return iMenuCode;
+    public int get_id() {
+        return _id;
     }
 
-    public void setiMenuCode(int iMenuCode) {
-        this.iMenuCode = iMenuCode;
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
-    public double getRate() {
-        return rate;
+    public double getPurchaseRate() {
+        return purchaseRate;
     }
 
-    public void setRate(double rate) {
-        this.rate = rate;
+    public void setPurchaseRate(double purchaseRate) {
+        this.purchaseRate = purchaseRate;
     }
 
-    public double getfQuantity() {
-        return fQuantity;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setfQuantity(double fQuantity) {
-        this.fQuantity = fQuantity;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public double getCessRate() {

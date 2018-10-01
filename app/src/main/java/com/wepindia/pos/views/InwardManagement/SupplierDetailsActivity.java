@@ -202,7 +202,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
                     else
                         supp_gstin= "";
 
-                    suppliercode = supplierdetail_cursor.getInt(supplierdetail_cursor.getColumnIndex("SupplierCode"));
+                    suppliercode = supplierdetail_cursor.getInt(supplierdetail_cursor.getColumnIndex("_id"));
                     tv_suppliercode.setText(String.valueOf(suppliercode));
                     suppliergstin_clicked = supp_gstin;
                     suppliername_clicked = suppliername_str;
@@ -219,7 +219,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         btnUpdateSupplier.setEnabled(true);
         btnAddSupplier.setEnabled(false);
 
-        tv_suppliercode.setText(String.valueOf(supplier.getSupplierCode()));
+        tv_suppliercode.setText(String.valueOf(supplier.get_id()));
 
         autocompletetv_suppliername.setFocusable(false);
         autocompletetv_suppliername.setFocusableInTouchMode(false);
@@ -227,6 +227,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         autocompletetv_suppliername.setFocusable(true);
         autocompletetv_suppliername.setFocusableInTouchMode(true);
 
+        tv_suppliercode.setText(supplier.get_id() + "");
         autocompletetv_supplierPhn.setText(supplier.getSupplierPhone());
         edt_supplierGSTIN.setText(supplier.getSupplierGSTIN());
         et_inw_supplierAddress.setText(supplier.getSupplierAddress());
@@ -321,13 +322,15 @@ public class SupplierDetailsActivity extends WepBaseActivity {
 
             supplier_model = new Supplier_Model();
 
+            supplier_model.set_id(Integer.parseInt(tv_suppliercode.getText().toString()));
             supplier_model.setSupplierType(supplierType_str);
             supplier_model.setSupplierGSTIN(suppliergstin_str);
             supplier_model.setSupplierName(suppliername_str);
             supplier_model.setSupplierPhone(supplierphn_str);
             supplier_model.setSupplierAddress(supplieraddress_str);
             supplier_model.setSupplierEmail(supplierEmail);
-            supplier_model.setSupplierCode(Integer.parseInt(tv_suppliercode.getText().toString()));
+            supplier_model.setIsActive(1);
+            supplier_model.setIsDelete(0);
 
             l = dbSupplierDetails.updateSupplierDetails(supplier_model);
             if (l > 0) {
@@ -448,6 +451,8 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             supplier_model.setSupplierPhone(supplierphn_str);
             supplier_model.setSupplierAddress(supplieraddress_str);
             supplier_model.setSupplierEmail(supplierEmail);
+            supplier_model.setIsActive(1);
+            supplier_model.setIsDelete(0);
 
             l = dbSupplierDetails.saveSupplierDetails(supplier_model);
             if (l > 0) {
@@ -497,7 +502,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         Cursor supplierCursor = dbSupplierDetails.getAllSupplierName_nonGST();
         while(supplierCursor!=null && supplierCursor.moveToNext())
         {
-            int suppliercode = supplierCursor.getInt(supplierCursor.getColumnIndex("SupplierCode"));
+            int _id = supplierCursor.getInt(supplierCursor.getColumnIndex("_id"));
             String suppliergstin = supplierCursor.getString(supplierCursor.getColumnIndex("GSTIN"));
             String suppliername = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierName"));
             String suppliernphone = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierPhone"));
@@ -510,7 +515,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             supplier_model.setSupplierPhone(suppliernphone);
             supplier_model.setSupplierAddress(supplieraddress);
             supplier_model.setSupplierEmail(supplierEmail);
-            supplier_model.setSupplierCode(suppliercode);
+            supplier_model.set_id(_id);
 
             SupplierList.add(supplier_model);
         } // end of while
@@ -518,7 +523,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         {
             if(SupplierAdapter == null)
             {
-                SupplierAdapter = new SupplierAdapter(this,SupplierList,dbSupplierDetails , this.getClass().getName());
+                SupplierAdapter = new SupplierAdapter(this,SupplierList, dbSupplierDetails , this.getClass().getName());
                 lstSupplierDetails.setAdapter(SupplierAdapter);
             } else {
                 SupplierAdapter.notifyNewDataAdded(SupplierList);

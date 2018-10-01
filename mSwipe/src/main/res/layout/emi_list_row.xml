@@ -38,7 +38,7 @@
             <com.mswipetech.wisepad.sdktest.customviews.CustomTextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="bank intrest rate"
+                android:text="bank intrest purchaseRate"
                 android:textSize="18sp" />
 
             <com.mswipetech.wisepad.sdktest.customviews.CustomTextView
@@ -76,7 +76,7 @@
             <com.mswipetech.wisepad.sdktest.customviews.CustomTextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="cash back rate"
+                android:text="cash back purchaseRate"
                 android:textSize="18sp" />
 
             <com.mswipetech.wisepad.sdktest.customviews.CustomTextView

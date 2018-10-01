@@ -1552,7 +1552,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                 objItem.setsupplierName(suppliername);
                 objItem.setItemname(itemname);
                 objItem.setItemBarcode(strBarcode);
-                objItem.setRate(rate);
+                objItem.setPurchaseRate(rate);
                 objItem.setQuantity(quantity);
                 objItem.setUOM(mou);
                 objItem.setImageId(ImageUri);

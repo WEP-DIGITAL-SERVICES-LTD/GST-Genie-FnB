@@ -850,7 +850,7 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
     // Get Items by CategCode
     private void GetItemDetails() {
 //        Cursor Items = null;
-//        Items = dbStock.getAllItems();
+//        Items = dbStock.getAllItemsOutward();
 //        //Items = dbBillScreen.getAllItemsWithoutDeptCateg();
 //        if (Items.moveToFirst()) {
 //
@@ -873,7 +873,7 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
 
     private void GetItemDetailswithoutDeptCateg() {
 //        Cursor Items = null;
-//        //Items = dbBillScreen.getAllItems();
+//        //Items = dbBillScreen.getAllItemsOutward();
 //        Items = dbStock.getAllItemsWithoutDeptCateg();
 //        if (Items.moveToFirst()) {
 //

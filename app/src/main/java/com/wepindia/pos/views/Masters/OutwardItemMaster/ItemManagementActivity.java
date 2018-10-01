@@ -1920,7 +1920,7 @@ public class ItemManagementActivity extends WepBaseActivity implements OnItemLis
             switch (rg_displayItemCriteria.getCheckedRadioButtonId()) {
                 case R.id.rb_item_master_list_all:
                     iMode = Constants.MODE;
-                    cursor = dbItems.getAllItems();
+                    cursor = dbItems.getAllItemsOutward();
                     fromColumn = from;
                     break;
                 case R.id.rb_item_master_list_brand:
@@ -1958,7 +1958,7 @@ public class ItemManagementActivity extends WepBaseActivity implements OnItemLis
                     break;
                 default:
                     iMode = Constants.MODE;
-                    cursor = dbItems.getAllItems();
+                    cursor = dbItems.getAllItemsOutward();
                     fromColumn = from;
                     break;
             }
@@ -1974,7 +1974,7 @@ public class ItemManagementActivity extends WepBaseActivity implements OnItemLis
 
                     cursor = dbItems.getAllItems_details(Integer.parseInt(shortCode), itemShortName, itemBarcode,0);
                 } else if (!data.equals("")){
-                    cursor = dbItems.mGetItemSearchData(data);
+                    cursor = dbItems.mGetItemOutwardSearchData(data);
                 }
             }
             if(brandCategDeptSearchClicked == true)

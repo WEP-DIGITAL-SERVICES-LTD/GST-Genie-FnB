@@ -170,7 +170,7 @@ public class FragmentSupplierDetails extends Fragment {
         btnUpdateSupplier.setEnabled(true);
         btnAddSupplier.setEnabled(false);
 
-        tv_suppliercode.setText(String.valueOf(supplier.getSupplierCode()));
+        tv_suppliercode.setText(String.valueOf(supplier.get_id()));
 
         autocompletetv_suppliername.setFocusable(false);
         autocompletetv_suppliername.setFocusableInTouchMode(false);
@@ -246,7 +246,7 @@ public class FragmentSupplierDetails extends Fragment {
             supplier_model.setSupplierPhone(supplierphn_str);
             supplier_model.setSupplierAddress(supplieraddress_str);
             supplier_model.setSupplierEmail("");
-            supplier_model.setSupplierCode(Integer.parseInt(tv_suppliercode.getText().toString()));
+            supplier_model.set_id(Integer.parseInt(tv_suppliercode.getText().toString()));
 
             l = dbSupplierDetails.updateSupplierDetails(supplier_model);
             if (l > 0) {
@@ -356,12 +356,17 @@ public class FragmentSupplierDetails extends Fragment {
         Cursor supplierCursor = dbSupplierDetails.getAllSupplierName_nonGST();
         while(supplierCursor!=null && supplierCursor.moveToNext())
         {
-            int suppliercode = supplierCursor.getInt(supplierCursor.getColumnIndex("SupplierCode"));
+            int suppliercode = supplierCursor.getInt(supplierCursor.getColumnIndex("_id"));
             String suppliergstin = supplierCursor.getString(supplierCursor.getColumnIndex("GSTIN"));
             String suppliername = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierName"));
             String suppliernphone = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierPhone"));
             String supplieraddress = supplierCursor.getString(supplierCursor.getColumnIndex("SupplierAddress"));
-            Supplier_Model supplier_model = new Supplier_Model(suppliercode, suppliergstin, suppliername, suppliernphone, supplieraddress);
+            Supplier_Model supplier_model = new Supplier_Model();
+            supplier_model.set_id(suppliercode);
+            supplier_model.setSupplierGSTIN(suppliergstin);
+            supplier_model.setSupplierName(suppliername);
+            supplier_model.setSupplierPhone(suppliernphone);
+            supplier_model.setSupplierAddress(supplieraddress);
             SupplierList.add(supplier_model);
         } // end of while
         if (SupplierList.size() >0)

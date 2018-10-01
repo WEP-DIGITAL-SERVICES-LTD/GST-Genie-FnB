@@ -424,7 +424,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
     }
     void loadAutoCompleteOutwardItems() {
 
-        Cursor item_crsr  = dbIngredientManagement.getAllItems();
+        Cursor item_crsr  = dbIngredientManagement.getAllItemsOutward();
         ArrayList<String>  itemlist = new ArrayList<String>();
         while (item_crsr !=null && item_crsr.moveToNext()){
             String item = item_crsr.getString(item_crsr.getColumnIndex("ItemName"));

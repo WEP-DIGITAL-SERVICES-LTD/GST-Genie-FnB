@@ -3,7 +3,6 @@ package com.wepindia.pos.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -102,7 +101,7 @@ public class StockOutwardMaintain {
         { // new entry for businessdate
             //newBusinessDate = true; -- no need
         }
-        final Cursor itemCursor = db.getAllItems();
+        final Cursor itemCursor = db.getAllItemsOutward();
         if(itemCursor == null || !itemCursor.moveToFirst())
         {
             // no outward item in database
@@ -169,7 +168,7 @@ public class StockOutwardMaintain {
                 // update only closing stock
                 stockAlreadyPresent = true;
             }
-            final Cursor itemCursor = db.getAllItems();
+            final Cursor itemCursor = db.getAllItemsOutward();
             if(itemCursor == null || !itemCursor.moveToFirst())
             {
                 // no outward item in database
@@ -217,7 +216,7 @@ public class StockOutwardMaintain {
             { // new entry for businessdate
                 //newBusinessDate = true; -- no need
             }
-            final Cursor itemCursor = db.getAllItems();
+            final Cursor itemCursor = db.getAllItemsOutward();
             if(itemCursor == null || !itemCursor.moveToFirst())
             {
                 // no outward item in database

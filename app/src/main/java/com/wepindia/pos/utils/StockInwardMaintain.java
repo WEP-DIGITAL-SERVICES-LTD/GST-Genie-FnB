@@ -1,9 +1,7 @@
 package com.wepindia.pos.utils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -156,7 +154,7 @@ public class StockInwardMaintain {
                 // update only closing stock
                 stockAlreadyPresent = true;
             }
-            final Cursor itemCursor = db.getAllItems();
+            final Cursor itemCursor = db.getAllItemsOutward();
             if(itemCursor == null || !itemCursor.moveToFirst())
             {
                 // no outward item in database

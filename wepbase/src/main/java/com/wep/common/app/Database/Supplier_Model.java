@@ -17,18 +17,10 @@ public class Supplier_Model implements Parcelable {
     private String SupplierEmail;
     private String SupplierAddress;
     private String SupplierType;
-    private int SupplierCode;
     private int isActive;
+    private int isDelete;
 
     public Supplier_Model() {
-    }
-
-    public Supplier_Model(int supplierCode, String supplierGSTIN, String supplierName, String supplierPhone, String supplierAddress) {
-        SupplierName = supplierName;
-        SupplierGSTIN = supplierGSTIN;
-        SupplierCode = supplierCode;
-        SupplierPhone = supplierPhone;
-        SupplierAddress = supplierAddress;
     }
 
     protected Supplier_Model(Parcel in) {
@@ -40,7 +32,6 @@ public class Supplier_Model implements Parcelable {
         SupplierEmail = in.readString();
         SupplierAddress = in.readString();
         SupplierType = in.readString();
-        SupplierCode = in.readInt();
         isActive = in.readInt();
     }
 
@@ -55,6 +46,14 @@ public class Supplier_Model implements Parcelable {
             return new Supplier_Model[size];
         }
     };
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
 
     public int getSno() {
         return sno;
@@ -120,14 +119,6 @@ public class Supplier_Model implements Parcelable {
         SupplierType = supplierType;
     }
 
-    public int getSupplierCode() {
-        return SupplierCode;
-    }
-
-    public void setSupplierCode(int supplierCode) {
-        SupplierCode = supplierCode;
-    }
-
     public int getIsActive() {
         return isActive;
     }
@@ -151,7 +142,6 @@ public class Supplier_Model implements Parcelable {
         parcel.writeString(SupplierEmail);
         parcel.writeString(SupplierAddress);
         parcel.writeString(SupplierType);
-        parcel.writeInt(SupplierCode);
         parcel.writeInt(isActive);
     }
 }

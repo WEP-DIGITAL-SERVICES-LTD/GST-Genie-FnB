@@ -12,6 +12,9 @@ public interface Constants {
     public static final String DEPOSIT = "Deposit";
     public static final String BILL_NO = "BillNo";
 
+    public static final int INSERT = 1;
+    public static final int UPDATE = 2;
+
     // Progress Dialog Title
     public static final String waiting = "Waiting";
     public static final String processing = "Processing";

@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.wep.common.app.models.SupplierItemLinkageModel;
+import com.wep.common.app.models.SupplierItemLinkageBean;
 import com.wepindia.pos.R;
 
-import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by RichaA on 6/7/2017.
@@ -18,12 +19,12 @@ import java.util.ArrayList;
 
 public class SupplierItemLinkageAdapter extends BaseAdapter {
 
-    ArrayList<SupplierItemLinkageModel> SupplierItemList;
+    List<SupplierItemLinkageBean> SupplierItemList;
     Context myContext;
 
-    public SupplierItemLinkageAdapter(ArrayList<SupplierItemLinkageModel> supplierItemList, Context myContext) {
+    public SupplierItemLinkageAdapter(Context context, List<SupplierItemLinkageBean> supplierItemList) {
+        this.myContext = context;
         SupplierItemList = supplierItemList;
-        this.myContext = myContext;
     }
 
     @Override
@@ -41,12 +42,12 @@ public class SupplierItemLinkageAdapter extends BaseAdapter {
         return position;
     }
 
-    public void notifyDataSetChanged(ArrayList<SupplierItemLinkageModel> list) {
+    public void notifyDataSetChanged(List<SupplierItemLinkageBean> list) {
         this.SupplierItemList = list;
         notifyDataSetChanged();
     }
 
-    public void notifyNewDataAdded(ArrayList<SupplierItemLinkageModel> list) {
+    public void notifyNewDataAdded(List<SupplierItemLinkageBean> list) {
         this.SupplierItemList = list;
         notifyDataSetChanged();
     }
@@ -55,8 +56,13 @@ public class SupplierItemLinkageAdapter extends BaseAdapter {
         TextView tv_Sn;
         TextView tv_supplierName;
         TextView tv_itemName;
-        TextView tv_averageRate;
+        TextView tv_purchaseRate;
         TextView tv_UOM;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
     }
 
     @Override
@@ -71,7 +77,7 @@ public class SupplierItemLinkageAdapter extends BaseAdapter {
             viewHolder.tv_Sn = (TextView) convertView.findViewById(R.id.tv_Sn);
             viewHolder.tv_supplierName = (TextView) convertView.findViewById(R.id.tv_supplierName);
             viewHolder.tv_itemName = (TextView) convertView.findViewById(R.id.tv_itemName);
-            viewHolder.tv_averageRate = (TextView) convertView.findViewById(R.id.tv_averageRate);
+            viewHolder.tv_purchaseRate = (TextView) convertView.findViewById(R.id.tv_purchaseRate);
             viewHolder.tv_UOM = (TextView) convertView.findViewById(R.id.tv_UOM);
             convertView.setTag(viewHolder);
         }
@@ -79,13 +85,18 @@ public class SupplierItemLinkageAdapter extends BaseAdapter {
         {
             viewHolder = (SupplierItemLinkageAdapter.ViewHolder) convertView.getTag();
         }
-        SupplierItemLinkageModel data = SupplierItemList.get(position);
+        SupplierItemLinkageBean data = SupplierItemList.get(position);
         viewHolder.tv_Sn.setText(String.valueOf(position+1));
-        viewHolder.tv_supplierName.setText(data.getSupplierName());
-        viewHolder.tv_itemName.setText(data.getItemName());
-        viewHolder.tv_averageRate.setText(String.format("%.2f",data.getAverageRate()));
-        viewHolder.tv_UOM.setText(data.getUom());
+        viewHolder.tv_supplierName.setText(data.getStrSupplierName());
+        viewHolder.tv_itemName.setText(data.getStrItemName());
+        viewHolder.tv_purchaseRate.setText(String.format("%.2f",data.getDblPurchaseRate()));
+        viewHolder.tv_UOM.setText(data.getStrUOM());
 
         return convertView;
+    }
+
+    public void notify(List<SupplierItemLinkageBean> supplierItemList){
+        this.SupplierItemList = supplierItemList;
+        notifyDataSetChanged();
     }
 }

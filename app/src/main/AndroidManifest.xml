@@ -389,7 +389,7 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".views.InwardManagement.ItemSupplierLinkageActivity"
+            android:name=".views.InwardManagement.SupplierItemLinkageActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
