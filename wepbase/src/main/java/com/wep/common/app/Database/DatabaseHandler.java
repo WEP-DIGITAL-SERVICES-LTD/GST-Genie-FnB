@@ -662,8 +662,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_ACCESS_NAME + " TEXT,"
             + KEY_ROLE_ID + " TEXT )";
 
-    String QUERY_CREATE_TABLE_USERS = "CREATE TABLE " + TBL_USERS + "("
-            + KEY_USER_ID + " INTEGER PRIMARY KEY,"
+    String QUERY_CREATE_TABLE_USERS = "CREATE TABLE IF NOT EXISTS " + TBL_USERS + "("
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_USER_ID + " INTEGER,"
             + KEY_USER_NAME + " TEXT,"
             + KEY_USER_MOBILE + " TEXT,"
             + KEY_USER_DESIGNATION + " TEXT,"
@@ -674,8 +675,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_USER_EMAIL + " TEXT,"
             + KEY_USER_ADDRESS + " TEXT,"
             + KEY_SALES_MAN_ID + " TEXT,"
-            + KEY_USER_FILE_LOCATION + " TEXT" + ")";
-
+            + KEY_isActive + " INTEGER, "
+            + KEY_USER_FILE_LOCATION + " TEXT, UNIQUE ( "
+            + KEY_USER_ID + "))";
 
     // USERS_new end
 
@@ -716,6 +718,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_RewardPointsAccumulated = "RewardPointsAccumulated";
     public static final String KEY_RewardPointsToAmt = "RewardPointsToAmt";
     public static final String KEY_RewardPointsLimit = "RewardPointsLimit";
+
+    public static final String KEY_isPayPerUseModel = "isPayPerUseModel";
 
     public static final String KEY_GSTIN = "GSTIN";
     public static final String KEY_GSTIN_Ori = "GSTIN_Ori";
@@ -1331,6 +1335,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_ItemNoReset + " NUMERIC , "
             + KEY_PrintPreview + " NUMERIC , "
             + KEY_Environment +" NUMERIC, "
+            + KEY_isPayPerUseModel +" TEXT, "
             + KEY_UTGSTEnabled +" NUMERIC, "
             + KEY_HSNPrintEnabled_out +" NUMERIC, "
             + KEY_PrintOwnerDetail +" NUMERIC, "
@@ -1608,40 +1613,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void setDefaultTableValues(SQLiteDatabase db) {//user HARDCODING
 
-        ContentValues cnDbValues;
         cvDbValues = new ContentValues();
-        cvDbValues.put("AccessLevel", "1");
-        cvDbValues.put("Password", "admin");
-        cvDbValues.put("UserId", "admin");
-        cvDbValues.put("UserName", "administrator");
-        long l = db.insert(TBL_USER, null, cvDbValues);
-        if (l == -1) {
-        }
-
-        /*cvDbValues = new ContentValues();
-        //cvDbValues.put(KEY_GSTIN, "G12345678901234");
-        cvDbValues.put(KEY_GSTIN, "04AABFN9870CMZT");
-        cvDbValues.put(KEY_POS, "29");
-        cvDbValues.put(KEY_Owner_Name, "Anuj Sharma");
-        cvDbValues.put(KEY_DeviceId, "MACID_00");
-        cvDbValues.put(KEY_DeviceName, "TAB2200+");
-        cvDbValues.put(KEY_USER_EMAIL, "abc@xyz.com");
-        cvDbValues.put(KEY_FIRM_NAME, "Sharma & Sons");
-        cvDbValues.put(KEY_PhoneNo, "1234567890");
-        cvDbValues.put(KEY_Address, "Bangalore");
-        cvDbValues.put(KEY_TINCIN, "1234567890");
-        cvDbValues.put(KEY_IsMainOffice, "YES");
-        try {
-            l = db.insert(TBL_OWNER_DETAILS, null, cvDbValues);
-
-        } catch (Exception e) {
-            l = 0;
-            //Log.d(TAG, e.toString());
-            e.printStackTrace();
-        }*/
-
-
-        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_USER_ID, 1);
         cvDbValues.put(KEY_USER_NAME, "admin");
         cvDbValues.put(KEY_USER_MOBILE, "1234567890");
         cvDbValues.put(KEY_USER_DESIGNATION, "Owner");
@@ -1651,8 +1624,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_USER_ADHAR, "Adhaar1");
         cvDbValues.put(KEY_USER_EMAIL, "wep@india.com");
         cvDbValues.put(KEY_USER_ADDRESS, "lavelle road");
-        cvDbValues.put(KEY_SALES_MAN_ID, "");
         cvDbValues.put(KEY_USER_FILE_LOCATION, "xx");
+        cvDbValues.put(KEY_SALES_MAN_ID, "");
+        cvDbValues.put(KEY_isActive, 1);
         long status = 0;
         try {
             status = db.insert(TBL_USERS, null, cvDbValues);
@@ -1663,17 +1637,43 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             e.printStackTrace();
         }
         cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_USER_ID, 2);
         cvDbValues.put(KEY_USER_NAME, "d#demo");
         cvDbValues.put(KEY_USER_MOBILE, "1234567890");
         cvDbValues.put(KEY_USER_DESIGNATION, "d#demo");
         cvDbValues.put(KEY_ROLE_ID, 1);
         cvDbValues.put(KEY_USER_LOGIN, "d#demo");
-        cvDbValues.put(KEY_USER_PASS, "d#demo");
+        cvDbValues.put(KEY_USER_PASS, "ddemo_123");
         cvDbValues.put(KEY_USER_ADHAR, "Adhaar1");
         cvDbValues.put(KEY_USER_EMAIL, "wep@india.com");
         cvDbValues.put(KEY_USER_ADDRESS, "lavelle road");
-        cvDbValues.put(KEY_SALES_MAN_ID, "");
         cvDbValues.put(KEY_USER_FILE_LOCATION, "xx");
+        cvDbValues.put(KEY_SALES_MAN_ID, "");
+        cvDbValues.put(KEY_isActive, 1);
+        status = 0;
+        try {
+            status = db.insert(TBL_USERS, null, cvDbValues);
+
+        } catch (Exception e) {
+            status = 0;
+            Log.d(TAG, e.toString());
+            e.printStackTrace();
+        }
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_USER_ID, 3);
+        cvDbValues.put(KEY_USER_NAME, "OwnerPOS");
+        cvDbValues.put(KEY_USER_MOBILE, "1234567891");
+        cvDbValues.put(KEY_USER_DESIGNATION, "OwnerPOS");
+        cvDbValues.put(KEY_ROLE_ID, 1);
+        cvDbValues.put(KEY_USER_LOGIN, "OwnerPOS");
+        cvDbValues.put(KEY_USER_PASS, "OwnerPOS123");
+        cvDbValues.put(KEY_USER_ADHAR, "Adhaar1");
+        cvDbValues.put(KEY_USER_EMAIL, "wep@india.com");
+        cvDbValues.put(KEY_USER_ADDRESS, "lavelle road");
+        cvDbValues.put(KEY_USER_FILE_LOCATION, "xx");
+        cvDbValues.put(KEY_SALES_MAN_ID, "");
+        cvDbValues.put(KEY_isActive, 1);
         status = 0;
         try {
             status = db.insert(TBL_USERS, null, cvDbValues);
@@ -1816,6 +1816,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_Environment, 1); // Production
         cvDbValues.put(KEY_HSNPrintEnabled_out, 0); // Disabled
         cvDbValues.put(KEY_SALES_MAN_ID, 0); // Disabled
+        cvDbValues.put(KEY_isPayPerUseModel, "n"); // Disabled
 
         cvDbValues.put(KEY_PrintOwnerDetail, 0); // Disabled
         cvDbValues.put(KEY_HeaderBold, 0); // Disabled
@@ -3545,6 +3546,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_JURISDICTIONS_STATUS, objBillSetting.getiJurisdictionsPrintStatus());
         cvDbValues.put(KEY_ShareBill, objBillSetting.getShareBill());
         cvDbValues.put(KEY_RewardPoints, objBillSetting.getRewardPoints());
+        cvDbValues.put(KEY_isPayPerUseModel, objBillSetting.getIsPayPerUseModel());
 //        cvDbValues.put(KEY_SALES_MAN_ID, objBillSetting.getiSalesManId());
 
         return dbFNB.update(TBL_BILLSETTING, cvDbValues, null, null);
@@ -8806,6 +8808,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HeaderBold, 0); // Disabled
         cvDbValues.put(KEY_PrintService, 0); // Disabled
         cvDbValues.put(KEY_BillAmountRoundOff, 0); // Disabled
+        cvDbValues.put(KEY_isPayPerUseModel, "n"); // Disabled
 
         long result1 = dbFNB.insert(TBL_BILLSETTING, null, cvDbValues);
 

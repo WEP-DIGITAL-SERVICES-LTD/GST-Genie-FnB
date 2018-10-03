@@ -629,6 +629,34 @@
                                     android:text="Disable" />
                             </RadioGroup>
 
+                            <TextView
+                                android:id="@+id/tv_others_PayPerUseModel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Pay Per Use Model"
+                                android:visibility="gone" />
+
+                            <RadioGroup
+                                android:id="@+id/rg_others_PayPerUseModel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <RadioButton
+                                    android:id="@+id/rb_others_PayPerUseModel_enable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Enable" />
+
+                                <RadioButton
+                                    android:id="@+id/rb_others_PayPerUseModel_disable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Disable" />
+                            </RadioGroup>
+
                         </LinearLayout>
 
                     </FrameLayout>

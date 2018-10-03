@@ -2,6 +2,7 @@ package com.wepindia.pos.views.Settings;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.gprinter.command.EscCommand;
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
+import com.wepindia.pos.Constants;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 
@@ -41,9 +45,13 @@ public class FragmentSettingsOther extends Fragment {
     RadioButton rbTableSplitingEnable, rbTableSplitingDisable;
     RadioButton rb_others_settings_share_bill_enable, rb_others_settings_share_bill_disable;
     RadioButton rbRewardPointsEnable, rbRewardPointsDisable;
+    RadioButton rb_others_PayPerUseModel_enable, rb_others_PayPerUseModel_disable;
+    RadioGroup rg_others_PayPerUseModel;
+    TextView tv_others_PayPerUseModel;
     BillSetting objBillSettings = new BillSetting();
     Button btnApplyOtherSettings,btnCloseOtherSettings;
     Button btnApply, btnClose;
+    String strUserName = "";
 
 
     public FragmentSettingsOther() {
@@ -53,6 +61,9 @@ public class FragmentSettingsOther extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
+
+            strUserName = getArguments().getString(Constants.USER_NAME);
+
             dbOtherSettings = new DatabaseHandler(getActivity());
             dbOtherSettings.OpenDatabase();
         }catch (Exception e){
@@ -159,6 +170,12 @@ public class FragmentSettingsOther extends Fragment {
         rbRewardPointsEnable = (RadioButton) view.findViewById(R.id.rbRewardPointsEnable);
         rbRewardPointsDisable = (RadioButton) view.findViewById(R.id.rbRewardPointsDisable);
 
+        rb_others_PayPerUseModel_enable = (RadioButton) view.findViewById(R.id.rb_others_PayPerUseModel_enable);
+        rb_others_PayPerUseModel_disable = (RadioButton) view.findViewById(R.id.rb_others_PayPerUseModel_disable);
+
+        tv_others_PayPerUseModel = (TextView)  view.findViewById(R.id.tv_others_PayPerUseModel);
+        rg_others_PayPerUseModel = (RadioGroup)  view.findViewById(R.id.rg_others_PayPerUseModel);
+
         rbEnvironment_Production = (RadioButton) view.findViewById(R.id.rbEnvironment_Production);
         rbEnvironment_Demo = (RadioButton) view.findViewById(R.id.rbEnvironment_Demo);
         rbEnvironment_Testing = (RadioButton) view.findViewById(R.id.rbEnvironment_Testing);
@@ -167,7 +184,21 @@ public class FragmentSettingsOther extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DisplaySettings();
+        try{
+           /* SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHAREDPREFERENCE, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String username = sharedPreferences.getString(Constants.USER_NAME, "");*/
+            if(strUserName.equalsIgnoreCase("d#demo"))
+            {
+                tv_others_PayPerUseModel.setVisibility(View.VISIBLE);
+                rg_others_PayPerUseModel.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            DisplaySettings();
+        }
     }
 
     private void DisplaySettings() {
@@ -328,6 +359,13 @@ public class FragmentSettingsOther extends Fragment {
                 rbRewardPointsDisable.setChecked(true);
             }
 
+            // Pay per use model
+            if(crsrBillSetting.getString(crsrBillSetting.getColumnIndex(DatabaseHandler.KEY_isPayPerUseModel)).equalsIgnoreCase("y")){
+                rb_others_PayPerUseModel_enable.setChecked(true);
+            }else {
+                rb_others_PayPerUseModel_disable.setChecked(true);
+            }
+
         } else {
             Log.d("OtherSettings", "No data in BillSettings table");
         }
@@ -343,6 +381,7 @@ public class FragmentSettingsOther extends Fragment {
         int fastBillingMode = 0, iItemNoReset = 0, iPrintPreview = 0, iTableSpliting = 0;
         int CummulativeHeadingEnable = 0, Jurisdiction = 0, shareBill = 0; //richa_2012
         int environment =1;
+        String isPayPerUse = "n";
         int printOwnerDetail = 0, boldHeader = 0, printService = 0, billAmountRounfOff = 0, rewardPoints = 0;
 
         // Date And Time
@@ -484,6 +523,13 @@ public class FragmentSettingsOther extends Fragment {
             rewardPoints = 0;
         }
 
+        // Pay per use
+        if(rb_others_PayPerUseModel_enable.isChecked()) {
+            isPayPerUse = "y";
+        } else {
+            isPayPerUse = "n";
+        }
+
         // Initialize all the settings variable
         objBillSettings.setLoginWith(0);
         objBillSettings.setDateAndTime(iDateAndTime);
@@ -514,6 +560,7 @@ public class FragmentSettingsOther extends Fragment {
         objBillSettings.setBoldHeader(boldHeader);
         objBillSettings.setPrintService(printService);
         objBillSettings.setBillAmountRounfOff(billAmountRounfOff);
+        objBillSettings.setIsPayPerUseModel(isPayPerUse);
     }
 
     private void SaveOtherSettings() {

@@ -6,6 +6,10 @@ package com.wepindia.pos;
 
 public interface Constants {
 
+    public final String SHAREDPREFERENCE = "SharedPreference";
+    public  final String KEY_id = "_id";
+    public  final String KEY_CustId = "CustId";
+
     public static final String CUSTOMER_PASSBOOK_TAG = "Customer Passbook";
     public String SALES_MAN_ID_KEY = "Salesman";
     public static final String OPENING_BALANCE = "Opening Balance";
@@ -14,6 +18,11 @@ public interface Constants {
 
     public static final int INSERT = 1;
     public static final int UPDATE = 2;
+
+    // user constants
+    public static String USER_ID = "user_id";
+    public static String USER_NAME = "user_name";
+    public static String USER_ROLE = "user_role";
 
     // Progress Dialog Title
     public static final String waiting = "Waiting";

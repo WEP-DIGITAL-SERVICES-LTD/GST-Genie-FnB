@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.wep.common.app.Database.DatabaseHandler;
+import com.wepindia.pos.Constants;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.utils.ActionBarUtils;
@@ -103,8 +104,9 @@ public class TabbedSettingsActivity extends WepPrinterBaseActivity {
 
         Bundle bundle4=new Bundle();
         bundle4.putString("REPORT_TYPE", "4");
+        bundle4.putString(Constants.USER_NAME, strUserName);
         FragmentSettingsOther reportFragment4 = new FragmentSettingsOther();
-        reportFragment1.setArguments(bundle4);
+        reportFragment4.setArguments(bundle4);
         adapter.addFragment(reportFragment4, "Other");
 
         Bundle bundle5=new Bundle();

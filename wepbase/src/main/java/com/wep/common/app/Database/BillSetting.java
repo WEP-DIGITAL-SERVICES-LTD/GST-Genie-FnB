@@ -27,6 +27,7 @@ public class BillSetting {
 	float fServiceTaxpercent;
 
 	String DineInCaption, CounterSalesCaption, TakeAwayCaption, HomeDeliveryCaption;
+	String isPayPerUseModel = "n" ;
 
 	int iLoginWith, iPeripherals;
 	int iDateAndTime, iPriceChange, iBillwithStock, iBillwithoutStock, iTax, iTaxType, iKOT, iToken, iKitchen,iDiscountType;
@@ -202,6 +203,14 @@ public class BillSetting {
 		this.HSNPrintenabled_out = HSNPrintenabled_out;
 		this.iJurisdictionsPrintStatus = iJurisdictionsPrintStatus;
 		this.shareBill = shareBill;
+	}
+
+	public String getIsPayPerUseModel() {
+		return isPayPerUseModel;
+	}
+
+	public void setIsPayPerUseModel(String isPayPerUseModel) {
+		this.isPayPerUseModel = isPayPerUseModel;
 	}
 
 	public int getRewardPoints() {
