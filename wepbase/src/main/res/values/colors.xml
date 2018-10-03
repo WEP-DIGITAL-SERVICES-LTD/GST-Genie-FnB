@@ -12,6 +12,7 @@
     <color name="colorFontLogin">#FFFFFF</color>
     <color name="colorAccent2">#2980b9</color>
     <color name="colorCard">#80FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     <color name="txtColorAccent">#FFFFFF</color>
 

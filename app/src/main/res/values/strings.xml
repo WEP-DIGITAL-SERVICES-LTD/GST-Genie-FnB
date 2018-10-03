@@ -4,6 +4,10 @@
     <string name="gstinValidation">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
     <string name="passwordValidation">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.#@</string>
 
+    <!-- Notification paper count dialog screen strings -->
+    <string name="notification_paper_count_dialog">Notification</string>
+    <string name="notification">Notification</string>
+
     <string name="org_name">Supplier\'s Firm Name*</string>
     <string name="org_name_title">Supplier\'s Firm Name</string>
     <string name="serial_no">S.No</string>

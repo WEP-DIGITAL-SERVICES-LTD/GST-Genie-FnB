@@ -1,22 +1,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_notifications"
+        android:title="Notification"
+        android:orderInCategory="100"
+        android:icon="@drawable/actionbar_group_icon"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_home"
         android:icon="@mipmap/ic_home_white_24dp"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="Home"
         android:visible="false"/>
 
     <item
         android:id="@+id/action_screen_shot"
         android:icon="@mipmap/ic_photo_white_24dp"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="ScreenShot" />
 
     <item
         android:id="@+id/action_logout"
         android:icon="@mipmap/ic_logout"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         android:title="Logout" />
 </menu>

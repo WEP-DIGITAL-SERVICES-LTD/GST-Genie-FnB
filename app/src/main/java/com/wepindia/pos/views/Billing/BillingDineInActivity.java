@@ -6643,10 +6643,28 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         // Insert bill details to database
         InsertBillDetail(TenderType);
 
+        updateMeteringData();
+
         /*if (isPrintBill) {
             // Print bill
             PrintBill();
         }*/
+    }
+
+    void updateMeteringData() {
+        try {
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(BUSINESS_DATE);
+            Cursor cursor = db.getMeteringDataforDate("" + date.getTime());
+            if (cursor != null && cursor.moveToFirst()) {
+                int totalcount = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_TotalInvoiceCount));
+                db.updateMeteringDataforDate("" + date.getTime(), totalcount + 1);
+            } else {
+                // first bill of the day
+                db.insertMeteringDataForDate("" + date.getTime(), 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkforRoundOff()

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            android:padding="5dp"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/ic_form_update" />
+
+        <TextView
+            android:id="@+id/tv_notification_paper_count_dialog_title"
+            style="@style/TV_Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="left|center"
+            android:text="@string/notification_paper_count_dialog"
+            android:textColor="@android:color/background_light" />
+
+        <ImageView
+            android:id="@+id/iv_notification_paper_count_dialog_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:srcCompat="@mipmap/ic_cross" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:layout_margin="5dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_notification_paper_count_dialog_title_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="@string/serial_no"
+                style="@style/TV_Billing_Screen_black" />
+
+            <TextView
+                android:id="@+id/tv_notification_paper_count_dialog_title_date"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/date"
+                style="@style/TV_Billing_Screen" />
+
+            <TextView
+                android:id="@+id/tv_notification_paper_count_dialog_title_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/description"
+                style="@style/TV_Billing_Screen" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                style="@style/TV_Billing_Screen" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_notification_paper_count_dialog_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.2"
+            android:layout_margin="5dp"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+</LinearLayout>

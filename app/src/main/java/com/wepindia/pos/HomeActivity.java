@@ -12,12 +12,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -35,23 +41,28 @@ import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
+import com.wep.common.app.models.NotificationPaperCountBean;
 import com.wep.common.app.utils.Preferences;
 import com.wep.gstcall.api.http.HTTPAsyncTask;
 import com.wep.gstcall.api.util.Config;
 import com.wepindia.pos.GenericClasses.BillNoReset;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.CountDrawable;
 import com.wepindia.pos.utils.StockInwardMaintain;
 import com.wepindia.pos.utils.StockOutwardMaintain;
+import com.wepindia.pos.utils.SubscriptionBillUploadUtility;
 import com.wepindia.pos.views.Amendment.TabbedAmmendActivity;
 import com.wepindia.pos.views.Billing.BillingCounterSalesActivity;
 import com.wepindia.pos.views.Billing.BillingHomeDeliveryActivity;
+import com.wepindia.pos.views.Billing.NotificationPaperCount.NotificationPaperCountDialogFragment;
 import com.wepindia.pos.views.Billing.TableActivity;
 import com.wepindia.pos.views.CreditDebitNote.TabbedCreditDebitNote;
 import com.wepindia.pos.views.Masters.MasterActivity;
 import com.wepindia.pos.views.PaymentReceipt.PaymentReceiptActivity;
 import com.wepindia.pos.views.Reports.TabbedReportActivity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,6 +101,10 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    private  String isPayPerUseModel = "n";
+    Boolean blockBilling= false;
+    private boolean first_response = true;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +121,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             strUserId = ApplicationData.getUserId(this);//ApplicationData.USER_ID;
             strUserName = ApplicationData.getUserName(this);//ApplicationData.USER_NAME;
             strUserRole = Integer.valueOf(ApplicationData.getUserRole(this));
+
+            blockBilling = getIntent().getBooleanExtra(Constants.BLOCKBILLING, false);
 
             getDb().CreateDatabase();
             listAccesses = getDb().getPermissionsNamesForRole(getDb().getRoleName(strUserRole+""));
@@ -369,7 +386,15 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                     BillNoReset bs = new BillNoReset();
                     bs.setBillNo(dbHomeScreen);
 
-                    try
+                    try {
+//                        Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(currentdate);
+                        String dateToUpdate  = String.valueOf(android.text.format.DateFormat.format("dd-MM-yyyy", d.getTime()));
+                        checkMeteringData(dateToUpdate,  Integer.parseInt(new SimpleDateFormat("dd").format(d)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    /*try
                     {
                         Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(businessdate);
                         long milli = dd.getTime();
@@ -400,7 +425,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                     }catch (Exception e)
                     {
                         e.printStackTrace();
-                    }
+                    }*/
 
                 }
 
@@ -418,7 +443,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     BillNoReset bs = new BillNoReset();
     bs.setBillNo(dbHomeScreen);
     Display();
-    checkForAutoDayEnd();
+//    checkForAutoDayEnd();
     }
 
     public boolean isAccessable(String type){
@@ -490,6 +515,9 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             Toast.makeText(getContext(), ""+day, Toast.LENGTH_SHORT).show();
         }
     }
+
+    String BUSINESS_DATE = "";
+    
     private void DayEnd() {
         try {
 
@@ -641,6 +669,15 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                             } else {
                                 MsgBox.Show("Warning", "Error: DayEnd is not done");
                             }
+
+                            try {
+                                Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(BUSINESS_DATE);
+                                String dateToUpdate  = String.valueOf(android.text.format.DateFormat.format("dd-MM-yyyy", dd.getTime()));
+                                checkMeteringData(dateToUpdate,  Integer.parseInt(new SimpleDateFormat("dd").format(dd)));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            
                         }
 
                     })
@@ -658,9 +695,221 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }
     }
 
+    void checkMeteringData(String date, int d){
+        if(isPayPerUseModel.equalsIgnoreCase("y") )
+        {
+            uploadMeteringData();
+            BUSINESS_DATE = date;
+            updateNotificationStatus(d);
+        }
+    }
+
+    private void uploadMeteringData()
+    {
+        try
+        {
+            Cursor cursor = dbHomeScreen.getMeteringData();
+            while (cursor!=null && cursor.moveToNext())
+            {
+                int totalInvoiceCount  = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_TotalInvoiceCount));
+                int uploadedInvoiceCount  = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_UploadedInvoiceCount));
+                long invoiceDate  = cursor.getLong(cursor.getColumnIndex("InvoiceDate"));
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTimeInMillis(invoiceDate);
+                String date = new SimpleDateFormat("dd-MM-yyyy").format(calendar1.getTime());
+                Cursor cursor_owner = dbHomeScreen.getOwnerDetail();
+                if(cursor_owner!= null && cursor_owner.moveToNext())
+                {
+                    // String deviceid = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceId"));
+                    TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                    String deviceid = "00";
+                    try{
+                        deviceid = telephonyManager.getDeviceId();
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        deviceid = "00";
+                    }
+                    // String deviceName = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceName"));
+                    String Email = cursor_owner.getString(cursor_owner.getColumnIndex("Email"));
+                    String paramStr ="data="+deviceid+","+Email+","+date+","+(totalInvoiceCount-uploadedInvoiceCount)+",POS";
+                    ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    if (mWifi.isConnected()) {
+                        // Do whatever
+                        Log.d("Home Screen","wifi connected");
+                        first_response = true;
+                        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",Upload_Invoice_Count, Config.Upload_No_of_Invoices+paramStr).execute();
+                    }else
+                    {
+                        if(SubscriptionBillUploadUtility.checkForBillsCountToUpload(dbHomeScreen)){
+                            System.out.println("richa : sys should be blocked");
+                            Intent intent = new Intent();
+                            intent.putExtra("BillsUploadedStatus", "Pending");
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }else
+                        {
+                            System.out.print("richa : sys is ok ");
+                            Toast.makeText(myContext, "Metering data not uploaded. WiFi is disabled.", Toast.LENGTH_SHORT).show();
+
+                        }
+                        Log.d("Home Screen","wifi not connected");
+                    }
+                    cursor_owner.close();
+                }
+                else
+                {
+                    Log.d("TAG", "Cannot upload invoices count due to insufficient owners details");
+                }
+
+            }
+            cursor.close();
+            /*else
+            {
+                //Toast.makeText(myContext, "No Invoice count to send for businessDate :"+businessdate, Toast.LENGTH_SHORT).show();
+                //Log.d("TAG", "No Invoice count to send for businessDate :"+businessdate);
+            }*/
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    void updateNotificationStatus(int day)
+    {
+        String msgStr = "Kindly upload the metering data if any before 25th of month, to avoid billing screen access blocking";
+        if(day >20 && day <26){
+            mInsertNotificationPaperCount(msgStr, Constants.NOTIFICATION_PAPER_COUNT_1);
+        }else
+        {
+            dbHomeScreen.mDeleteNotificationPaperData();
+            setCount(HomeActivity.this,"0" );
+            notificationPaperCountBeanList.clear();
+        }
+    }
+
+    private void mInsertNotificationPaperCount(String strMsg, int iEventCode){
+        Date date1 = new Date();
+        try{
+            date1 = new SimpleDateFormat("dd-MM-yyyy").parse(BUSINESS_DATE);
+        }catch (Exception e)
+        {
+            Log.e(TAG,""+e);
+            Log.e(TAG, ""+e);
+
+        }
+        NotificationPaperCountBean notificationPaperCountBean = new NotificationPaperCountBean();
+        notificationPaperCountBean.setiEventCode(iEventCode);
+        notificationPaperCountBean.setStrMessage(strMsg);
+        notificationPaperCountBean.setStrDate(""+date1.getTime());
+        if(!dbHomeScreen.mCheckNotificationPaperCountDataIsExists(notificationPaperCountBean.getStrDate(),
+                notificationPaperCountBean.getiEventCode())){
+            long lResult = dbHomeScreen.insertNotificationPaperCount(notificationPaperCountBean);
+            if(lResult > -1){
+                /*CountDrawable.iCount++;
+                int c = CountDrawable.iCount;
+                setCount(this,""+ c);*/
+                mGetDataFromNotificationPaperCount();
+            }
+        }
+    }
+
+    public void setCount(Context context, String count) {
+        if (defaultMenu != null) {
+            MenuItem menuItem = defaultMenu.findItem(R.id.action_notifications);
+            LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
+
+            CountDrawable badge;
+
+            // Reuse drawable if possible
+            Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
+            if (reuse != null && reuse instanceof CountDrawable) {
+                badge = (CountDrawable) reuse;
+            } else {
+                badge = new CountDrawable(context);
+            }
+
+            //Toast.makeText(context, "count = "+count, Toast.LENGTH_SHORT).show();
+            badge.setCount(count);
+            icon.mutate();
+            icon.setDrawableByLayerId(R.id.ic_group_count, badge);
+        }
+    }
+
+    private void mSetNotificationPaperCount(){
+        FragmentManager fm = getSupportFragmentManager();
+        NotificationPaperCountDialogFragment notificationPaperCountDialogFragment = new NotificationPaperCountDialogFragment();
+        Bundle bundle = new Bundle();
+        mGetDataFromNotificationPaperCount();
+        bundle.putParcelableArrayList(Constants.NOTIFICATION_PAPER_COUNT,notificationPaperCountBeanList);
+        notificationPaperCountDialogFragment.setArguments(bundle);
+        notificationPaperCountDialogFragment.setCancelable(true);
+        notificationPaperCountDialogFragment.show(fm, Constants.NOTIFICATION_PAPER_COUNT);
+    }
+
+    public ArrayList<NotificationPaperCountBean> notificationPaperCountBeanList = new ArrayList<NotificationPaperCountBean>();
+
+    private void mGetDataFromNotificationPaperCount(){
+        Cursor cursorNotificationPaperCount = null;
+        try{
+            int count =0;
+            cursorNotificationPaperCount = dbHomeScreen.mGetNotificationPaperData();
+            //Toast.makeText(myContext, "notification count = "+cursorNotificationPaperCount.getCount(), Toast.LENGTH_SHORT).show();
+            if(cursorNotificationPaperCount != null && cursorNotificationPaperCount.moveToFirst()){
+                notificationPaperCountBeanList.clear();
+                do{
+                    count++;
+                    NotificationPaperCountBean notificationPaperCountBean = new NotificationPaperCountBean();
+                    notificationPaperCountBean.setiID(cursorNotificationPaperCount.getInt(
+                            cursorNotificationPaperCount.getColumnIndex(DatabaseHandler.KEY_id)));
+                    notificationPaperCountBean.setiEventCode(cursorNotificationPaperCount.getInt(
+                            cursorNotificationPaperCount.getColumnIndex(DatabaseHandler.KEY_EVENT_CODE)));
+                    notificationPaperCountBean.setStrMessage(cursorNotificationPaperCount.getString(
+                            cursorNotificationPaperCount.getColumnIndex(DatabaseHandler.KEY_MESSAGE)));
+                    notificationPaperCountBeanList.add(notificationPaperCountBean);
+                } while(cursorNotificationPaperCount.moveToNext());
+            }
+        }catch (Exception ex){
+            Log.e(TAG, "Unable to get notification paper data ? Method : mGetDataFromNotificationPaperCount()." +ex.getMessage());
+        }finally {
+            if(cursorNotificationPaperCount != null){
+                cursorNotificationPaperCount.close();
+            }
+        }
+        if(notificationPaperCountBeanList.size() > 0){
+            CountDrawable.iCount = notificationPaperCountBeanList.size();
+            int c = CountDrawable.iCount;
+            //Toast.makeText(myContext, "iCount = "+c, Toast.LENGTH_SHORT).show();
+            setCount(this,""+ c);
+        }
+    }
+
+    private Menu defaultMenu;
+
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        defaultMenu = menu;
+       /* setHomeDeliveryCount(this, "1");
+        setPromotionCount(this,"10");*/
+        //if(CountDrawable.iCount>0)
+        mGetDataFromNotificationPaperCount();
+        setCount(this,CountDrawable.iCount+"");
+
+        return true;
+    }
+
 
     public void LaunchActivity(View v) {
-        if (v.getContentDescription().toString().equalsIgnoreCase("DineIn"))
+
+        if(blockBilling)
+        {
+            Toast.makeText(this, "Kindly connect to wifi to upload metering data and unlock screens.", Toast.LENGTH_LONG).show();
+        }
+         else if (v.getContentDescription().toString().equalsIgnoreCase("DineIn"))
         {
             Intent intentDineIn = new Intent(myContext, TableActivity.class);
             intentDineIn.putExtra("BILLING_MODE", DINEIN);
@@ -841,6 +1090,19 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(mUsbDetachReceiver);
+            unregisterReceiver(mUsbReceiver);
+            unregisterReceiver(mUsbAttachReceiver);
+            //disconnect();
+        }catch (Exception ex){
+            Log.e(TAG, ex.getMessage());
+        }
     }
 
     @Override

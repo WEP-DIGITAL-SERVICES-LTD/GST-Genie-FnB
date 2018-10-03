@@ -3191,6 +3191,23 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private void mSaveBillData(int TenderType) { // TenderType:
         InsertBillItems();
         InsertBillDetail(TenderType);
+        updateMeteringData();
+    }
+
+    void updateMeteringData() {
+        try {
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(BUSINESS_DATE);
+            Cursor cursor = db.getMeteringDataforDate("" + date.getTime());
+            if (cursor != null && cursor.moveToFirst()) {
+                int totalcount = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_TotalInvoiceCount));
+                db.updateMeteringDataforDate("" + date.getTime(), totalcount + 1);
+            } else {
+                // first bill of the day
+                db.insertMeteringDataForDate("" + date.getTime(), 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /*************************************************************************************************************************************

@@ -35,6 +35,7 @@ import com.wep.common.app.models.ItemModel;
 import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.models.Items;
+import com.wep.common.app.models.NotificationPaperCountBean;
 import com.wep.common.app.models.PaymentOptionsBean;
 import com.wep.common.app.models.PurchaseOrderBean;
 import com.wep.common.app.models.SupplierItemLinkageBean;
@@ -113,6 +114,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TBL_PaymentModeConfiguration = "PaymentModeConfiguration";
     private static final String TBL_TRANSACTION_DETAIL = "TransactionDetails";
     private static final String TBL_AEPS_TRANSACTIONS = "aeps_transactions";
+    private static final String TBL_METERINGDATA = "MeteringData";
 
     // Column Names for the tables
     private static final String KEY_ServiceTaxPercent = "ServiceTaxPercent";
@@ -353,6 +355,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DescriptionId2 = "DescriptionId2";
     private static final String KEY_DescriptionId3 = "DescriptionId3";
 
+    // Pay Per Use
+    public static final String KEY_TotalInvoiceCount = "TotalInvoiceCount";
+    public static final String KEY_UploadedInvoiceCount = "UploadedInvoiceCount";
+
     // PendingKOT
     private static final String KEY_IsCheckedOut = "IsCheckedOut";
     private static final String KEY_OrderMode = "OrderMode";
@@ -509,6 +515,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_PETTY_CASH_TRANSACTION = "petty_cash_transaction";
     public static final String KEY_REWARD_POINTS = "reward_points";
     public static final String KEY_DESCRIPTION = "description";
+
+    //Notification table
+    public static final String TBL_NOTIFICATION_PAPER_COUNT = "NotificationTable";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EVENT_CODE = "event_code";
+    public static final String KEY_EVENT_DATE = "event_date";
+
+    String QUERY_CREATE_TABLE_NOTIFICATION_PAPER_COUNT = "CREATE TABLE IF NOT EXISTS " + TBL_NOTIFICATION_PAPER_COUNT +
+            "( "
+            + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_MESSAGE + " TEXT, "
+            + KEY_EVENT_DATE + " TEXT, "
+            + KEY_EVENT_CODE + " NUMERIC )" ;
+
+    String QUERY_CREATE_TABLE_METERINGDATA = "CREATE TABLE IF NOT EXISTS " + TBL_METERINGDATA + " ( " +
+            "_id" +"  INTEGER PRIMARY KEY, " +
+            KEY_InvoiceDate + " TEXT ," +
+            KEY_TotalInvoiceCount + " INTEGER ,"+
+            KEY_UploadedInvoiceCount + " INTEGER ," +
+            KEY_Status + " TEXT )";
 
     String QUERY_CREATE_TBL_AEPS_TRANSACTIONS = "CREATE TABLE IF NOT EXISTS " + TBL_AEPS_TRANSACTIONS + "("
             + KEY_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -1591,6 +1617,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TBL_AEPS_TRANSACTIONS);
             db.execSQL(QUERY_CREATE_TABLE_CUSTOMER_PASSBOOK);
             db.execSQL(QUERY_CREATE_TABLE_REWARD_POINTS_CONFIGURATION);
+            db.execSQL(QUERY_CREATE_TABLE_METERINGDATA);
+            db.execSQL(QUERY_CREATE_TABLE_NOTIFICATION_PAPER_COUNT);
+
             setDefaultTableValues(db);
         } catch (Exception ex) {
             Toast.makeText(myContext, "OnCreate : " + ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -10160,7 +10189,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             ContentValues cvDbValues = new ContentValues();
             cvDbValues.put(KEY_InvoiceNo, objBillItem.getBillNumber());
             cvDbValues.put(KEY_BillingMode, objBillItem.getBillingMode()); // richa_2012
-            cvDbValues.put("ItemNumber", objBillItem.getItemNumber());
+            cvDbValues.put("ItemId", objBillItem.getItemNumber());
             cvDbValues.put("ItemName", objBillItem.getItemName());
             cvDbValues.put("Quantity", objBillItem.getQuantity());
             cvDbValues.put("Value", objBillItem.getValue());
@@ -10880,4 +10909,131 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         result = db.rawQuery(queryString, null);
         return result;
     }
+
+    public Cursor getMeteringData()
+    {    SQLiteDatabase db = getReadableDatabase();
+        String query = "Select * from "+TBL_METERINGDATA +" WHERE "+KEY_TotalInvoiceCount+"-"+KEY_UploadedInvoiceCount+" > 0";
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getMeteringDataCalculatedforDate(long enddate)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "Select * from "+TBL_METERINGDATA+" WHERE "+KEY_InvoiceDate+" <="+enddate+" AND  "+
+                KEY_TotalInvoiceCount+" - "+KEY_UploadedInvoiceCount+" > 0 ORDER BY "+KEY_InvoiceDate +" ASC ";
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getMeteringDataforDate(String InvoiceDate)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "Select * from "+TBL_METERINGDATA+" WHERE "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'";
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+    public int updateMeteringDataforDate_uploadedInvoiceCount(String InvoiceDate ,int billcount)
+    {   SQLiteDatabase db = getReadableDatabase();
+        int result=  -1;
+        try {
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_UploadedInvoiceCount,billcount);
+            result = db.update(TBL_METERINGDATA, cvDbValues, KEY_InvoiceDate+" LIKE '" + InvoiceDate+"'", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        }
+        finally {
+            return result;
+        }
+    }
+
+    public boolean mCheckNotificationPaperCountDataIsExists(String strDate, int iEventCode){
+        SQLiteDatabase db = getReadableDatabase();
+        boolean bResult = false;
+        Cursor cursorNotificationPaperCount = null;
+        try{
+            cursorNotificationPaperCount = db.rawQuery(" SELECT * FROM " + TBL_NOTIFICATION_PAPER_COUNT
+                    + " where " + KEY_EVENT_CODE + " = "+ iEventCode , null);
+            if(cursorNotificationPaperCount != null && cursorNotificationPaperCount.moveToFirst()){
+                if(cursorNotificationPaperCount.getInt(cursorNotificationPaperCount.getColumnIndex(KEY_EVENT_CODE)) > 0){
+                    bResult = true;
+                }
+            }
+        }catch (Exception ex){
+            Log.e(TAG, "Unable to check notification paper count data exists or not ? Method : mCheckNotificationPaperCountDataIsExists()." +ex.getMessage());
+            bResult = false;
+        }finally {
+            if(cursorNotificationPaperCount != null){
+                cursorNotificationPaperCount.close();
+            }
+        }
+        return bResult;
+    }
+
+    public long insertNotificationPaperCount(NotificationPaperCountBean notificationPaperCountBean) {
+        SQLiteDatabase db = getReadableDatabase();
+        long lResult = -1;
+        ContentValues cvDbValues = new ContentValues();
+        try{
+            cvDbValues.put(KEY_MESSAGE, notificationPaperCountBean.getStrMessage());
+            cvDbValues.put(KEY_EVENT_CODE, notificationPaperCountBean.getiEventCode());
+            cvDbValues.put(KEY_EVENT_DATE, notificationPaperCountBean.getStrDate());
+            lResult = db.insert(TBL_NOTIFICATION_PAPER_COUNT,null,cvDbValues);
+        } catch (Exception ex){
+            Log.i(TAG,"Unable to insert the notification paper count data." +ex.getMessage());
+            lResult = -1;
+        }
+        return lResult;
+    }
+
+    public Cursor mGetNotificationPaperData(){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(" SELECT * FROM " + TBL_NOTIFICATION_PAPER_COUNT, null);
+    }
+
+    public long mDeleteNotificationPaperData(){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.delete(TBL_NOTIFICATION_PAPER_COUNT, null, null);
+    }
+
+    public int updateMeteringDataforDate(String InvoiceDate ,int billcount)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        int result=  -1;
+        try {
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_TotalInvoiceCount,billcount);
+            result = db.update(TBL_METERINGDATA, cvDbValues, KEY_InvoiceDate+" LIKE '" + InvoiceDate+"'", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        }
+        finally {
+            return result;
+        }
+    }
+
+    public long insertMeteringDataForDate(String InvoiceDate, int billcount)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        long result=  -1;
+        try {
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_TotalInvoiceCount,billcount);
+            cvDbValues.put(KEY_UploadedInvoiceCount,0);
+            cvDbValues.put(KEY_InvoiceDate,InvoiceDate);
+            cvDbValues.put(KEY_Status,"Pending");
+            result = db.insert(TBL_METERINGDATA, null, cvDbValues);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        }
+        finally {
+            return result;
+        }
+    }
+
 }

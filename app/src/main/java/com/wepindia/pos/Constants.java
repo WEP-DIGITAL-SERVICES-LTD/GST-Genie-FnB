@@ -19,6 +19,10 @@ public interface Constants {
     public static final int INSERT = 1;
     public static final int UPDATE = 2;
 
+    public static final String NOTIFICATION_PAPER_COUNT = "NOTIFICATION_PAPER_COUNT";
+    public static final int NOTIFICATION_PAPER_COUNT_1 = 1001;
+    public static String BLOCKBILLING = "BlockBilling";
+
     // user constants
     public static String USER_ID = "user_id";
     public static String USER_NAME = "user_name";

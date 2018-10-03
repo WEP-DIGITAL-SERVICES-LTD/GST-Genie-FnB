@@ -19,11 +19,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -44,7 +47,10 @@ import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.utils.Preferences;
+import com.wep.gstcall.api.http.HTTPAsyncTask;
+import com.wep.gstcall.api.util.Config;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.utils.SubscriptionBillUploadUtility;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,11 +58,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
+import static com.wepindia.pos.HomeActivity.Upload_Invoice_Count;
+
 @SuppressWarnings("Since15")
-public class LoginActivity extends WepBaseActivity {
+public class LoginActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTTPRequestCompletedListener {
 
     // DatabaseHandler object
     DatabaseHandler dbLogin = new DatabaseHandler(LoginActivity.this);
@@ -76,6 +86,11 @@ public class LoginActivity extends WepBaseActivity {
     BillSetting objBillSettings = new BillSetting();
     private SharedPreferences sharedPreferences;
     private AppCompatCheckBox appCompatCheckBox;
+    private  String isPayPerUseModel = "n";
+    private static final String TAG = LoginActivity.class.getSimpleName();
+    private ProgressDialog pd;
+    private int upload_counter = 0;
+    private boolean first_response = true;
 
     @TargetApi(9)
     @Override
@@ -125,12 +140,21 @@ public class LoginActivity extends WepBaseActivity {
 //            initSinglePrinter();
             sharedPreferences = Preferences.getSharedPreferencesForPrint(LoginActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
 
+            checkForisPayPerUseModel();
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
+    }
+
+    private void checkForisPayPerUseModel() {
+        Cursor cursorBillsetting = dbLogin.getBillSettings();
+        if(cursorBillsetting!=null && cursorBillsetting.moveToFirst())
+        {
+            isPayPerUseModel = cursorBillsetting.getString(cursorBillsetting.getColumnIndex(DatabaseHandler.KEY_isPayPerUseModel));
+        }
     }
 
     private void initSinglePrinter() {
@@ -312,6 +336,14 @@ public class LoginActivity extends WepBaseActivity {
     // Login button event
 
     public void onLogin(View view) {
+
+        boolean blockBilling = false;
+        if(isPayPerUseModel.equalsIgnoreCase("Y") )
+        {
+            blockBilling = checkForBillUpload();
+
+        }
+
         String userNameTxt = txtUserId.getText().toString();
         String userPassTxt = txtPassword.getText().toString();
         if(userNameTxt.equalsIgnoreCase("") || userPassTxt.equalsIgnoreCase(""))
@@ -344,14 +376,16 @@ public class LoginActivity extends WepBaseActivity {
                     ApplicationData.savePreference(this,ApplicationData.USER_NAME,userName);
                     ApplicationData.savePreference(this,ApplicationData.USER_ROLE,userRole);
 
-                    startActivity(intentHomeScreen);
+                    intentHomeScreen.putExtra(Constants.BLOCKBILLING,blockBilling);
+
+                    startActivityForResult(intentHomeScreen, HOME_RESULT);
                     /*Cursor cursor = dbLogin.getAllBillDetail();
                     if(cursor!=null && cursor.moveToFirst())
                         startActivity(intentHomeScreen);
                     else
                         startActivity(intentOwnerDetail);*/
 
-                    finish();
+//                    finish();
 
                 } else {
                     MsgBox.Show("Login", "Wrong user id or password");
@@ -359,6 +393,92 @@ public class LoginActivity extends WepBaseActivity {
             } else {
                 MsgBox.Show("Login", "Login DB Error");
             }
+        }
+    }
+
+    boolean checkForBillUpload()
+    {
+        boolean result = false;
+        result = uploadMeteringData();
+
+        return result;
+    }
+
+    private boolean uploadMeteringData()
+    {
+        boolean result = false;
+        try
+        {
+            Cursor cursor = dbLogin.getMeteringData();
+            while (cursor!=null && cursor.moveToNext())
+            {
+                int totalInvoiceCount  = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_TotalInvoiceCount));
+                int uploadedInvoiceCount  = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_UploadedInvoiceCount));
+                long invoiceDate  = cursor.getLong(cursor.getColumnIndex("InvoiceDate"));
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTimeInMillis(invoiceDate);
+                String date = new SimpleDateFormat("dd-MM-yyyy").format(calendar1.getTime());
+                Cursor cursor_owner = dbLogin.getOwnerDetail();
+                if(cursor_owner!= null && cursor_owner.moveToNext())
+                {
+                    // String deviceid = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceId"));
+                    TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                    String deviceid = "00";
+                    try{
+                        deviceid = telephonyManager.getDeviceId();
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        deviceid = "00";
+                    }
+                    // String deviceName = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceName"));
+                    String Email = cursor_owner.getString(cursor_owner.getColumnIndex("Email"));
+                    String paramStr ="data="+deviceid+","+Email+","+date+","+(totalInvoiceCount-uploadedInvoiceCount)+",POS";
+                    ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    if (mWifi.isConnected()) {
+                        // Do whatever
+                        Log.d("Home Screen","wifi connected");
+                        if (pd==null){
+                            pd = new ProgressDialog(this);
+                            pd.setIcon(R.mipmap.ic_company_logo);
+                            pd.setTitle(Constants.processing);
+                            pd.setMessage("Uploading Invoices...");
+                            pd.setCancelable(false);
+                            pd.show();
+                            upload_counter = 0;
+                        }
+                        upload_counter++;
+                        first_response = true;
+                        new HTTPAsyncTask(LoginActivity.this,HTTPAsyncTask.HTTP_GET,"",Upload_Invoice_Count, Config.Upload_No_of_Invoices+paramStr).execute();
+                    }else
+                    {
+                        if(SubscriptionBillUploadUtility.checkForBillsCountToUpload(dbLogin)){
+                            System.out.println("richa : sys should be blocked");
+                            result = true;
+                        }else
+                        {
+                            System.out.print("richa : sys is ok ");
+                        }
+                        Log.d(TAG,"wifi not connected");
+                    }
+                    cursor_owner.close();
+                }
+                else
+                {
+                    Log.d(TAG, "Cannot upload invoices count due to insufficient owners details");
+                }
+
+            }
+            cursor.close();
+
+        }catch (Exception e)
+        {
+            result = false;
+            e.printStackTrace();
+        }finally
+        {
+            return result;
         }
     }
 
@@ -376,12 +496,80 @@ public class LoginActivity extends WepBaseActivity {
         if (resultCode == RESULT_OK) {
 
             if (requestCode == HOME_RESULT) {
-                this.finish();
+                if(resultCode == RESULT_OK)
+                {
+                    String BillsUploadedStatus = data.getStringExtra("BillsUploadedStatus");
+                    if(BillsUploadedStatus.equalsIgnoreCase("Pending"))
+                    {
+                        MessageDialog msg = new MessageDialog(this);
+                        msg.setIcon(R.mipmap.ic_company_logo)
+                                .setTitle("Locked")
+                                .setMessage("Kindly connect to wi-fi to upload bill count")
+                                .setPositiveButton("OK", null)
+                                .setCancelable(false)
+                                .show();
+                    }
+                }
             } else {
                 this.txtUserId.setText("");
                 this.txtPassword.setText("");
             }
         }
+    }
+
+    public void onHttpRequestComplete(int requestCode, String data) {
+        //progressDialog.dismiss();
+        if (data != null) {
+            try{
+                if (upload_counter == 1)
+                {
+                    pd.dismiss();
+                    pd = null;
+                }
+                else
+                    upload_counter--;
+                if (requestCode == Upload_Invoice_Count) // Upload_invoice count for metering
+                {
+                    if(data.contains("\"success\":true,\"message\":\"Data Updated Successfully\""))
+                    {
+                        String [] recvdData = data.split(":");
+                        try {
+                            String datenCount = recvdData[3];
+                            String[] dataa = datenCount.split(",");
+                            String[] date = dataa[0].split("\"");
+                            String[] cc = dataa[1].split("\"");
+                            int count = Integer.parseInt(cc[0]);
+                            //Toast.makeText(myContext, "No of invoices uploaded sucessfully.", Toast.LENGTH_SHORT).show();
+                            Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(date[1]);
+                            Cursor cursor = dbLogin.getMeteringDataforDate(""+dd.getTime());
+                            if(cursor!=null && cursor.moveToFirst() && first_response)
+                            {
+                                int uploadedInvoiceCount = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_UploadedInvoiceCount));
+                                dbLogin.updateMeteringDataforDate_uploadedInvoiceCount(""+dd.getTime(),uploadedInvoiceCount+count);
+                                first_response = false;
+                            }
+                            Log.d(TAG,date[1]+": No of invoices uploaded : "+count);
+
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if (data.contains("\"success\":false,\"message\":\"Check Parameters\""))
+                    {
+                        //Toast.makeText(myContext, "No of invoices uploading failed.", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG,"No of invoices uploading failed.");
+                    }
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Error due to " + e, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+
+        } else {
+            Toast.makeText(this, "Sending error", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
