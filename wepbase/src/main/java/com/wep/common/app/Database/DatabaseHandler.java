@@ -2193,6 +2193,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ReportsName", "Online Order Numbers Report");
         cvDbValues.put("ReportsType", 1);
         cvDbValues.put("Status", 0);
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put("ReportsName", "Subscription Bill Upload Report");
+        cvDbValues.put("ReportsType", 1);
+        cvDbValues.put("Status", 0);
+
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
 
         cvDbValues = new ContentValues();
@@ -7168,7 +7174,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // richa
         return dbFNB.rawQuery("SELECT * FROM " + TBL_BILLITEM + " , " + TBL_BILLDETAIL + " WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
                 + TBL_BILLITEM + ".InvoiceNo= " + TBL_BILLDETAIL + ".InvoiceNo AND " + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '"
-                + EndDate + "' ORDER BY ItemNumber ASC", null);
+                + EndDate + "' ORDER BY ItemId ASC", null);
     }
 
     // -----Fast Selling Item wise Report-----
@@ -11034,6 +11040,16 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         finally {
             return result;
         }
+    }
+
+    public Cursor getMeteringDataCalculatedforDateRange(String startDate , String endDate)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "Select * from "+TBL_METERINGDATA+" WHERE "+KEY_InvoiceDate+" BETWEEN '"+startDate+"' AND  '"+
+                endDate+"'  ORDER BY "+ KEY_TotalInvoiceCount+" - "+KEY_UploadedInvoiceCount+"  DESC, "+
+                KEY_InvoiceDate +" ASC ";
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
     }
 
 }

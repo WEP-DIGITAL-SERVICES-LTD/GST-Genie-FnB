@@ -87,7 +87,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
     ArrayAdapter<String> adapReportNames;
     String strDate = "", strBusinessDate = "";
     String[] ReportNames;
-    String ReportType = "";
+    int ReportType = -1;
     String strReportsId, strReportName;
     Spinner spnrUsers, spnrCustomers;
     private List<String> labelUsers, labelCustomers;
@@ -105,6 +105,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
     private TextView lblName;
     TVSPrinterBaseActivity tvsPrinterBaseActivity;
+    private String isPayPerUseModel = "N";
 
 
     public ReportFragment() {
@@ -156,7 +157,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
     public void onInit() {
         myContext = getActivity();
         dbReport = new DatabaseHandler(getActivity());
-        ReportType = getArguments().getString("REPORT_TYPE");
+        ReportType = getArguments().getInt("REPORT_TYPE");
 
         try {
 
@@ -208,22 +209,79 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
         }
     }
 
-    private void loadSpinnerData(String ReportsType) {
+    private void loadSpinnerData(int ReportsType) {
 
-        // Spinner Drop down cursor
-        Cursor servicesCursor = dbReport.getReportsNameCursor(ReportsType);
+        ArrayList spinnerDataList = new ArrayList();
 
-        // map the cursor column names to the TextView ids in the layout
-        String[] from = {"ReportsName"};
-        int[] to = {android.R.id.text1};
+        Cursor crsrSettings = dbReport.getBillSettings();
+        if (crsrSettings != null && crsrSettings.moveToFirst()) {
+            isPayPerUseModel = crsrSettings.getString(crsrSettings.getColumnIndex(DatabaseHandler.KEY_isPayPerUseModel));
+        }
 
-        // Creating adapter for spinner
-        SimpleCursorAdapter dataAdapter = new SimpleCursorAdapter(getActivity(),
+        switch (ReportsType) {
+            case 1:
+                spinnerDataList.clear();
+                spinnerDataList.add("Bill Wise Report");
+                spinnerDataList.add("Cummulative Billing Report");
+                spinnerDataList.add("Cummulative Payment-Receipt-Sales Report");
+                spinnerDataList.add("Day Wise Report");
+                spinnerDataList.add("Duplicate Bill Report");
+                spinnerDataList.add("Month Wise Report");
+                spinnerDataList.add("Online Order Numbers Report");
+                spinnerDataList.add("Payments Report");
+                spinnerDataList.add("Receipt Report");
+                spinnerDataList.add("Tax Report");
+                spinnerDataList.add("Transaction Report");
+                spinnerDataList.add("Void Bill Report");
+                if (isPayPerUseModel.equalsIgnoreCase("y"))
+                    spinnerDataList.add("Subscription Bill Upload Report");
+                break;
+            case 2:
+                spinnerDataList.clear();
+                spinnerDataList.add("Category Wise Report");
+                spinnerDataList.add("Department Wise Report");
+                spinnerDataList.add("Fast Selling Itemwise Report");
+                spinnerDataList.add("Inward Stock Report");
+                spinnerDataList.add("Item Wise Report");
+                spinnerDataList.add("KOT Deleted Report");
+                spinnerDataList.add("KOT Pending Report");
+                spinnerDataList.add("Outward Stock Report");
+                break;
+            case 3:
+                spinnerDataList.clear();
+                spinnerDataList.add("Customer Detailed Report");
+                spinnerDataList.add("Customer Wise Report");
+                spinnerDataList.add("Rider Detailed Report");
+                spinnerDataList.add("Rider Wise Report");
+                spinnerDataList.add("Supplier Wise Report");
+                spinnerDataList.add("User Detailed Report");
+                spinnerDataList.add("User Wise Report");
+                spinnerDataList.add("Waiter Detailed Report");
+                spinnerDataList.add("Waiter Wise Report");
+                break;
+            case 4:
+                spinnerDataList.clear();
+                spinnerDataList.add("GSTR1-B2B");
+                spinnerDataList.add("GSTR1-B2BA");
+                spinnerDataList.add("GSTR1-B2CL");
+                spinnerDataList.add("GSTR1-B2CLA");
+                spinnerDataList.add("GSTR1-B2CS");
+                spinnerDataList.add("GSTR1-B2CSA");
+                spinnerDataList.add("GSTR1-CND");
+                spinnerDataList.add("GSTR1-Document Issued");
+                spinnerDataList.add("GSTR1-HSN Summary");
+                spinnerDataList.add("GSTR2-Registered");
+                spinnerDataList.add("GSTR2-UnRegistered");
+                spinnerDataList.add("GSTR2-Registered Amend");
+                break;
+        }
+
+        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(myContext,
                 android.R.layout.simple_spinner_dropdown_item,
-                servicesCursor, from, to, 0);
+                spinnerDataList);
 
         // attaching data adapter to spinner
-        spnrReportType.setAdapter(dataAdapter);
+        spnrReportType.setAdapter(spinnerArrayAdapter);
     }
 
     private void InitializeViews() {
@@ -286,8 +344,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                                    long id) {
             // TODO Auto-generated method stub
 //            String ReportName = (String) adapter.getSelectedItem();
-            Cursor crsrReport = (Cursor) adapter.getSelectedItem();
-            strReportName = crsrReport.getString(crsrReport.getColumnIndex("ReportsName"));
+//            Cursor crsrReport = (Cursor) adapter.getSelectedItem();
+//            strReportName = crsrReport.getString(crsrReport.getColumnIndex("ReportsName"));
+            strReportName = spnrReportType.getSelectedItem().toString();
             ResetAll();
 
             if (strReportName.equalsIgnoreCase("Waiter Detailed Report") ||
@@ -474,7 +533,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                 }
             }*/
 
-            if(ReportType.equals("4"))
+            if(ReportType == 4)
                 setMessageForGSTR(4);
             // ReportHelper object
             ReportHelper objReportColumn = new ReportHelper(myContext);
@@ -482,60 +541,44 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
             //switch (spnrReportType.getSelectedItemPosition() + 1) {
             try{
-                switch (Integer.valueOf(strReportsId)) {
-                    case 1:    // Bill wise Report
+                switch (spnrReportType.getSelectedItem().toString()) {
+                    case "Bill Wise Report":    // Bill wise Report
                         BillwiseReport();
                         break;
 
-                    case 2:    // Transaction Report
+                    case "Transaction Report":    // Transaction Report
                         TransactionReport();
                         break;
 
-                    case 3:    // Sales Tax Report
+                    case "Tax Report":    // Sales Tax Report
                         TaxReport();
                         break;
-
-                    case 4:    // Service Tax Report
-                /*int iTaxType = 0;
-                String strServiceTaxPercent = "";
-                Cursor Settings = dbReport.getBillSetting();
-                if (Settings.moveToFirst()) {
-                    iTaxType = Settings.getInt(Settings.getColumnIndex("ServiceTaxType"));
-                    strServiceTaxPercent = Settings.getString(Settings.getColumnIndex("ServiceTaxPercent"));
-                }
-                if (iTaxType == 1) {
-                    ItemServiceTaxReport();
-                } else if (iTaxType == 2) {
-                    BillServiceTaxReport(strServiceTaxPercent);
-                }
-                break;*/
-
-                    case 5:    // Void Bill Report
+                    case "Void Bill Report":    // Void Bill Report
                         VoidBillReport();
                         break;
 
-                    case 6:    // Duplicate Bill Report
+                    case "Duplicate Bill Report":    // Duplicate Bill Report
                         DuplicateBillReport();
                         break;
 
-                    case 7:    // KOT Pending Report
+                    case "KOT Pending Report":    // KOT Pending Report
                         KOTPendingReport();
                         break;
 
-                    case 8:    // KOT Deleted Report
+                    case "KOT Deleted Report":    // KOT Deleted Report
                         KOTDeletedReport();
                         break;
 
-                    case 9:    // Item wise Report
+                    case "Item Wise Report":    // Item wise Report
                         ItemwiseReport();
                         break;
 
-                    case 10: // Day wise Report
+                    case "Day Wise Report": // Day wise Report
                         int count = tblReport.getChildCount();
                         DaywiseReport(count);
                         break;
 
-                    case 11: // Month wise Report
+                    case "Month Wise Report": // Month wise Report
                         try {
                             MonthwiseReport();
                         } catch (NumberFormatException e) {
@@ -547,131 +590,132 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                         }
                         break;
 
-                    case 12: // Department wise Report
+                    case "Department Wise Report": // Department wise Report
                         DepartmentwiseReport();
                         break;
 
-                    case 13: // Category wise Report
+                    case "Category Wise Report": // Category wise Report
                         CategorywiseReport();
                         break;
 
-                    case 14: // Kitchen wise Report
+                   /* case 14: // Kitchen wise Report
                         KitchenwiseReport();
-                        break;
+                        break;*/
 
-                    case 15: // Waiter wise Report
+                    case "Waiter Wise Report": // Waiter wise Report
                         WaiterwiseReport();
                         break;
 
-                    case 16: // Waiter Detailed Report
+                    case "Waiter Detailed Report": // Waiter Detailed Report
                         WaiterDetailedReport();
                         break;
 
-                    case 17: // Rider wise Report
+                    case "Rider Wise Report": // Rider wise Report
                         RiderwiseReport();
                         break;
 
-                    case 18: // Rider Detailed Report
+                    case "Rider Detailed Report": // Rider Detailed Report
                         RiderDetailedReport();
                         break;
 
-                    case 19: // User wise Report
+                    case "User Wise Report": // User wise Report
                         UserwiseReport();
                         break;
 
-                    case 20: // User Detailed Report
+                    case "User Detailed Report": // User Detailed Report
                         UserDetailedReport();
                         break;
 
-                    case 21: // Customer wise Report
+                    case "Customer Wise Report": // Customer wise Report
                         CustomerwiseReport();
                         break;
 
-                    case 22: // Customer Detailed Report
+                    case "Customer Detailed Report": // Customer Detailed Report
                         CustomerDetailedReport();
                         break;
 
-                    case 23: // Payments Report
+                    case "Payments Report": // Payments Report
                         PaymentReport();
                         break;
 
-                    case 24: // Receipts Report
+                    case "Receipt Report": // Receipts Report
                         ReceiptReport();
                         break;
 
-                    case 25: // Fast Sellin Itemwise Report
+                    case "Fast Selling Itemwise Report": // Fast Sellin Itemwise Report
                         FastSellingItemwiseReport();
                         break;
 
-                    case 26: //// GSTR1-B2B
+                    case "GSTR1-B2B": //// GSTR1-B2B
                         GSTR1_B2B();
                         break;
-                    case 27: // GSTR1-B2BA
+                    case "GSTR1-B2BA": // GSTR1-B2BA
                         GSTR1_B2BA();
                         break;
-                    case 28:// GSTR1-B2C
+                    case "GSTR1-B2CS":// GSTR1-B2C
                         GSTR1_B2Cs();
                         break;
-                    case 29:// GSTR1-B2ClA
+                    case "GSTR1-B2CSA":// GSTR1-B2ClA
                         GSTR1_B2CSA();
                         break;
-                    case 30:// GSTR1-B2Cl
+                    case "GSTR1-B2CL":// GSTR1-B2Cl
                         GSTR1_B2Cl();
                         break;
-                    case 31:// GSTR1-B2ClA
+                    case "GSTR1-B2CLA":// GSTR1-B2ClA
                         GSTR1_B2CLA();
                         break;
-                    case 32: // GSTR2-B2B
+                    case "GSTR2-Registered": // GSTR2-B2B
                         GSTR2_Registered_Report();
                         break;
-                    case 33:// GSTR2-B2BA
+                    case "GSTR2-Registered Amend":// GSTR2-B2BA
                         GSTR2_Registered_Amend();
                         break;
-                    case 34: // GTR2-B2C
+                    case "GSTR2-UnRegistered": // GTR2-B2C
                         GSTR2_UnRegistered_Report();
                         break;
-                    case 35: // GTR2-B2cA
+                   /* case 35: // GTR2-B2cA
                         GSTR2_UnRegistered_Amend();
-                        break;
-                    case 36: //2A
-
-                        break;
-                    case 37:// modified 2a
+                        break;*/
+                    case "GSTR1-CND":// modified 2a
                         GSTR1_CDNReport();
                         break;
-                    case 38://2A validation
+                   /* case 38://2A validation
                         reconcile2();
                         break;
                     case 39://1A validation
                         reconcile1();
-                        break;
-                    case 40: //Supplier wise
+                        break;*/
+                    case "Supplier Wise Report": //Supplier wise
                         SupplierwiseReport();
                         break;
-                    case 41: //Cummulative Payment-Reciept-Sales Report
+                  /*  case : //Cummulative Payment-Reciept-Sales Report
                         Cummulate_payment();
-                        break;
+                        break;*/
                     // richa_2012
-                    case 42:  // Cummulative Billing Report
+                    case "Cummulative Billing Report":  // Cummulative Billing Report
                         Cummulate_Billing();
                         break;
-                    case 43:  // Outward Stock Report
+                    case "Outward Stock Report":  // Outward Stock Report
                         OutwardStockReport();
                         break;
-                    case 44:  // Inward Stock Report
+                    case "Inward Stock Report":  // Inward Stock Report
                         InwardStockReport();
                         break;
-                    case 45:  // GSTR1-HSNSummary
+                    case "GSTR1-HSN Summary":  // GSTR1-HSNSummary
                         GSTR1_HSNSummary();
                         break;
-                    case 46: // doc issuesd
+                    case "GSTR1-Document Issued": // doc issuesd
                         GSTR1_DocIssued();
                         break;
-                    case 47: GSTR4_CompositeReport();
+                   /* case 47: GSTR4_CompositeReport();
                         // GSTR4 composite Report
-                        break;
-                    case 48:
+                        break;*/
+                    case "Online Order Numbers Report":
                         mOnlineOrderNumbersRetort();
+                        break;
+                    case "Subscription Bill Upload Report":
+//                        mOnlineOrderNumbersRetort();
+                        mSubscriptionBillUploadReport();
                         break;
                         default:
                             break;
@@ -682,6 +726,100 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                 MsgBox.Show("Error","Some error occured while displaying report");
             }
         }
+    }
+
+    void mSubscriptionBillUploadReport () {
+        Cursor Report = dbReport.getMeteringDataCalculatedforDateRange(
+                String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+
+        if (Report.moveToFirst()) {
+            TextView Date, TotalBillCount, UploadBillCount, Status;
+            TableRow rowReport;
+
+            rowReport = new TableRow(myContext);
+            rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            rowReport.setBackgroundColor(myContext.getResources().getColor(R.color.colorPrimaryLight));
+
+            Date = new TextView(myContext);
+            Date.setText("Date\t\t");
+            Date.setTextColor(Color.WHITE);
+            Date.setGravity(Gravity.CENTER);
+            Date.setTextSize(15);
+
+            TotalBillCount = new TextView(myContext);
+            TotalBillCount.setText("Total Bill Count\t\t");
+            TotalBillCount.setTextColor(Color.WHITE);
+            Date.setGravity(Gravity.CENTER);
+            TotalBillCount.setTextSize(15);
+
+            UploadBillCount = new TextView(myContext);
+            UploadBillCount.setText("Uploaded Bill Count\t\t");
+            UploadBillCount.setTextColor(Color.WHITE);
+            Date.setGravity(Gravity.CENTER);
+            UploadBillCount.setTextSize(15);
+
+            Status = new TextView(myContext);
+            Status.setText("Status");
+            Status.setTextColor(Color.WHITE);
+            Date.setGravity(Gravity.CENTER);
+            Status.setTextSize(15);
+
+            rowReport.addView(Date);
+            rowReport.addView(TotalBillCount);
+            rowReport.addView(UploadBillCount);
+            rowReport.addView(Status);
+
+            tblReport.addView(rowReport,
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            do {
+                rowReport = new TableRow(myContext);
+                rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                        (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                Date = new TextView(myContext);
+                String dateInMillis = Report.getString(Report.getColumnIndex("InvoiceDate"));
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                String dateString = formatter.format(Long.parseLong(dateInMillis));
+                Date.setGravity(Gravity.CENTER);
+                Date.setPadding(0,0,10,0);
+                Date.setText(dateString);
+
+                TotalBillCount = new TextView(myContext);
+                TotalBillCount.setGravity(Gravity.CENTER);
+                TotalBillCount.setPadding(0,0,10,0);
+                TotalBillCount.setText(Report.getString(Report.getColumnIndex(DatabaseHandler.KEY_TotalInvoiceCount)));
+
+                UploadBillCount = new TextView(myContext);
+                UploadBillCount.setGravity(Gravity.CENTER);
+                UploadBillCount.setPadding(0,0,10,0);
+                UploadBillCount.setText(Report.getString(Report.getColumnIndex(DatabaseHandler.KEY_UploadedInvoiceCount)));
+
+                Status = new TextView(myContext);
+                Status.setGravity(Gravity.CENTER);
+                Status.setPadding(0,0,10,0);
+
+                if(Report.getDouble(Report.getColumnIndex(DatabaseHandler.KEY_TotalInvoiceCount))
+                        - Report.getDouble(Report.getColumnIndex(DatabaseHandler.KEY_UploadedInvoiceCount)) > 0)
+                    Status.setText("Pending");
+                else
+                    Status.setText("Uploaded");
+
+                rowReport.addView(Date);
+                rowReport.addView(TotalBillCount);
+                rowReport.addView(UploadBillCount);
+                rowReport.addView(Status);
+
+                tblReport.addView(rowReport,
+                        new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            } while (Report.moveToNext());
+
+        }
+
     }
 
     public void ExportReport() {
@@ -4001,7 +4139,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                         TextView ItemNumber = (TextView) rowItem.getChildAt(0);
 
                         if (Integer.parseInt(ItemNumber.getText().toString()) == (Report.getInt(Report
-                                .getColumnIndex("ItemNumber")))) {
+                                .getColumnIndex("ItemId")))) {
 
                             // Quantity
                             TextView Qty = (TextView) rowItem.getChildAt(2);
@@ -4079,7 +4217,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
                     Number = new TextView(myContext);
                     Number.setText(Report.getString(Report
-                            .getColumnIndex("ItemNumber")));
+                            .getColumnIndex("ItemId")));
 
                     Name = new TextView(myContext);
                     Name.setText(Report.getString(Report

@@ -143,5 +143,9 @@
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime-1.0.0" level="project" />
     <orderEntry type="module" module-name="wepbase" />
     <orderEntry type="module" module-name="printers" />
+    <orderEntry type="module" module-name="wepbase" />
+    <orderEntry type="module" module-name="printers" />
+    <orderEntry type="module" module-name="wepbase" />
+    <orderEntry type="module" module-name="printers" />
   </component>
 </module>

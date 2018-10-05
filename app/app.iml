@@ -178,5 +178,13 @@
     <orderEntry type="module" module-name="gstAPI" />
     <orderEntry type="module" module-name="printers" />
     <orderEntry type="module" module-name="mSwipe" />
+    <orderEntry type="module" module-name="wepbase" />
+    <orderEntry type="module" module-name="gstAPI" />
+    <orderEntry type="module" module-name="printers" />
+    <orderEntry type="module" module-name="mSwipe" />
+    <orderEntry type="module" module-name="wepbase" />
+    <orderEntry type="module" module-name="gstAPI" />
+    <orderEntry type="module" module-name="printers" />
+    <orderEntry type="module" module-name="mSwipe" />
   </component>
 </module>
