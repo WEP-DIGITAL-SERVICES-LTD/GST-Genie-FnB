@@ -9697,14 +9697,14 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<Items> list = null;
         try{
-            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"}, "CategoryCode=" + CategCode, null, null, null, null);
+            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", KEY_ItemShortName, "ImageUri"}, "CategoryCode=" + CategCode, null, null, null, null);
             if(cursor!=null)
             {
                 list = new ArrayList<Items>();
                 while (cursor.moveToNext())
                 {
                     Items items = new Items(
-                            cursor.getString(cursor.getColumnIndex("ItemName")),
+                            cursor.getString(cursor.getColumnIndex(KEY_ItemShortName)),
                             cursor.getString(cursor.getColumnIndex("ImageUri")),
                             cursor.getInt(cursor.getColumnIndex("MenuCode"))
                     );
@@ -9724,7 +9724,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<Items> list = null;
         try{
-            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"},
+            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", KEY_ItemShortName, "ImageUri"},
                     KEY_DepartmentCode +"=" + deptCode, null, null, null, null);
             if(cursor!=null)
             {
@@ -9732,7 +9732,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
                 while (cursor.moveToNext())
                 {
                     Items items = new Items(
-                            cursor.getString(cursor.getColumnIndex("ItemName")),
+                            cursor.getString(cursor.getColumnIndex(KEY_ItemShortName)),
                             cursor.getString(cursor.getColumnIndex("ImageUri")),
                             cursor.getInt(cursor.getColumnIndex("MenuCode"))
                     );
