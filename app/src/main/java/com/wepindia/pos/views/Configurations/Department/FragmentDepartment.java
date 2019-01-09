@@ -127,13 +127,14 @@ public class FragmentDepartment extends Fragment {
                 tvDeptCode = new TextView(myContext);
                 tvDeptCode.setTextSize(18);
                 tvDeptCode.setGravity(1);
-                tvDeptCode.setText(crsrDepartment.getString(0));
+                tvDeptCode.setText(crsrDepartment.getString(crsrDepartment.getColumnIndex(DatabaseHandler.KEY_id)));
                 rowDept.addView(tvDeptCode);
 
                 tvDeptName = new TextView(myContext);
                 tvDeptName.setTextSize(18);
+                tvDeptCode.setGravity(1);
                 tvDeptName.setPadding(3,0,0,0);
-                tvDeptName.setText(crsrDepartment.getString(1));
+                tvDeptName.setText(crsrDepartment.getString(crsrDepartment.getColumnIndex(DatabaseHandler.KEY_DepartmentName)));
                 rowDept.addView(tvDeptName);
 
                 // Delete

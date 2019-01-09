@@ -364,7 +364,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_OrderMode = "OrderMode";
 
     // KITCHEN
-    private static final String KEY_KitchenName = "KitchenName";
+    public static final String KEY_KitchenName = "KitchenName";
 
     // RiderSettlement
     private static final String KEY_PettyCash = "PettyCash";
@@ -1080,7 +1080,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             +KEY_OriginalRate+" REAL, "+  KEY_SALES_MAN_ID + " TEXT, " +
             KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_Amount + " REAL, " +KEY_IsReverseTaxEnabled + " TEXT, " + KEY_IGSTRate + " REAL," +
             KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," +
-            KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," +
+            KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," +  KEY_cessAmountPerUnit + " REAL,"
+            + KEY_additionalCessAmount + " REAL,"
+            + KEY_TotalAdditionalCessAmount + " REAL," +
             KEY_SubTotal + " REAl, " + KEY_BillingMode + " TEXT, " + KEY_ServiceTaxAmount + " REAL, " +
             KEY_ServiceTaxPercent + " REAL," + KEY_ModifierAmount + " REAL, " + KEY_TaxType + " NUMERIC, " +
             KEY_KitchenCode + " NUMERIC, " + KEY_CategoryCode + " NUMERIC, " + KEY_DepartmentCode + " NUMERIC, " +
@@ -5612,8 +5614,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("EmployeeId", objPendingKOT.getEmployeeId());
         cvDbValues.put("CustId", objPendingKOT.getCusId());
         cvDbValues.put("Time", objPendingKOT.getTime());
-        cvDbValues.put("ItemNumber", objPendingKOT.getItemNumber());
-        cvDbValues.put("ItemName", objPendingKOT.getItemName());
+        cvDbValues.put(KEY_ItemId, objPendingKOT.getItemNumber());
+        cvDbValues.put(KEY_ItemName, objPendingKOT.getItemName());
         cvDbValues.put("Quantity", objPendingKOT.getQuantity());
         cvDbValues.put(KEY_OriginalRate, objPendingKOT.getOriginalrate());
         cvDbValues.put(KEY_TaxableValue, objPendingKOT.getTaxableValue());
@@ -5662,7 +5664,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put("EmployeeId", objPendingKOT.getEmployeeId());
             cvDbValues.put("CustId", objPendingKOT.getCusId());
             cvDbValues.put("Time", objPendingKOT.getTime());
-            cvDbValues.put("ItemNumber", objPendingKOT.getItemNumber());
+            cvDbValues.put("ItemId", objPendingKOT.getItemNumber());
             cvDbValues.put("ItemName", objPendingKOT.getItemName());
             cvDbValues.put("Quantity", objPendingKOT.getQuantity());
             cvDbValues.put("Rate", objPendingKOT.getRate());
@@ -5715,7 +5717,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_IGSTAmount, IAmt);
         cvDbValues.put(KEY_cessAmount, cessAmt);
         cvDbValues.put(KEY_TaxableValue, taxableValue);
-        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode + " AND TableNumber=" + tblno + " AND TableSplitNo=" + tblsplitno, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemId=" + ItemNo + " AND OrderMode=" + OrderMode + " AND TableNumber=" + tblno + " AND TableSplitNo=" + tblsplitno, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
     }
     public long updateKOT(int ItemNo, float Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode
             ,float IAmt, double cessAmt, double taxableValue) {
@@ -5727,7 +5729,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_IGSTAmount, IAmt);
         cvDbValues.put(KEY_cessAmount, cessAmt);
         cvDbValues.put(KEY_TaxableValue, taxableValue);
-        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode , null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemId=" + ItemNo + " AND OrderMode=" + OrderMode , null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
     }
 
     public long updateKOT(int ItemNo, float Qty, double Amount, double TaxAmt, double SerTaxAmt, int OrderMode, int PrintKOTStatus
@@ -5740,7 +5742,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_IGSTAmount, IAmt);
         cvDbValues.put(KEY_cessAmount, cessAmt);
         cvDbValues.put(KEY_TaxableValue, taxableValue);
-        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+        return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemId=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
     }
 
 
@@ -5757,7 +5759,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
             cvDbValues.put(KEY_IGSTAmount, IAmt);
             cvDbValues.put(KEY_cessAmount, cessAmt);
-            result =  db.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+            result =  db.update(TBL_PENDINGKOT, cvDbValues, "ItemId=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -5797,7 +5799,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int PrintStatus = 0;
         return dbFNB.query(TBL_PENDINGKOT, new String[]{"*"},
                 "TableNumber=" + TableNo + " AND SubUdfNumber=" + SubUdfNo + " AND TableSplitNo=" + TableSplitNo +
-                        " AND ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode + " AND PrintKOTStatus = " + PrintStatus
+                        " AND ItemId=" + ItemNo + " AND OrderMode=" + OrderMode + " AND PrintKOTStatus = " + PrintStatus
                 , null, null, null, null);
     }
     public Cursor getItemsForUpdatingKOT_new(int TableNo, int SubUdfNo, int TableSplitNo, int ItemNo, int OrderMode) {
@@ -6005,14 +6007,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Delete finalized KOT items from Pending KOT table by Token Number-----
     public int deleteKOTItemsByItemToken(String ItemNumber, int TokenNumber, int TableNumber) {
 
-        return dbFNB.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND TableNumber=" + TableNumber, null);
+        return dbFNB.delete(TBL_PENDINGKOT, "ItemId=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND TableNumber=" + TableNumber, null);
     }
     public int deleteKOTItemsByItemToken_new(String ItemNumber, int TokenNumber, int SubUdfNumber) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         int result =0;
         try {
-            result = db.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
+            result = db.delete(TBL_PENDINGKOT, "ItemId=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -6700,7 +6702,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cvDbValues.put(KEY_InvoiceNo, objBillItem.getBillNumber());
         cvDbValues.put(KEY_BillingMode, objBillItem.getBillingMode()); // richa_2012
-        cvDbValues.put("ItemNumber", objBillItem.getItemNumber());
+        cvDbValues.put(KEY_ItemId, objBillItem.getItemNumber());
         cvDbValues.put("ItemName", objBillItem.getItemName());
         cvDbValues.put("Quantity", objBillItem.getQuantity());
         cvDbValues.put("Value", objBillItem.getValue());
@@ -6757,7 +6759,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cvDbValues.put(KEY_InvoiceNo, objBillItem.getBillNumber());
         cvDbValues.put(KEY_BillingMode, objBillItem.getBillingMode()); // richa_2012
-        cvDbValues.put("ItemNumber", objBillItem.getItemNumber());
+        cvDbValues.put(KEY_ItemId, objBillItem.getItemNumber());
         cvDbValues.put("ItemName", objBillItem.getItemName());
         cvDbValues.put("Quantity", objBillItem.getQuantity());
         cvDbValues.put("Value", objBillItem.getValue());
@@ -6789,6 +6791,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_SGSTAmount, objBillItem.getSGSTAmount());
         cvDbValues.put(KEY_cessRate, objBillItem.getCessRate());
         cvDbValues.put(KEY_cessAmount, objBillItem.getCessAmount());
+        cvDbValues.put(KEY_cessAmountPerUnit, objBillItem.getDblCessAmountPerUnit());
+        cvDbValues.put(KEY_additionalCessAmount, objBillItem.getDblAdditionalCessAmount());
+        cvDbValues.put(KEY_TotalAdditionalCessAmount, objBillItem.getDblTotalAdditionalCessAmount());
         cvDbValues.put(KEY_SupplyType, objBillItem.getSupplyType());
         cvDbValues.put(KEY_SubTotal, objBillItem.getSubTotal());
         cvDbValues.put(KEY_CustName, objBillItem.getCustName());
@@ -10153,6 +10158,37 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         }
         return cursor;
     }
+
+    public Cursor getItemsForCessTaxPreviewAmountPrints(int InvoiceNo, String InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("Select SUM(cessAmount) as cessAmount, cessAmountPerUnit from " + TBL_PREVIEWBILLITEM +
+                    " where cessRate = 0 AND InvoiceNo = '" + InvoiceNo + "' AND " + KEY_InvoiceDate + " LIKE '" + InvoiceDate + "' GROUP BY cessAmountPerUnit", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+        } finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    public Cursor getItemsForCessTaxPreviewAdditionalAmountPrints(int InvoiceNo, String InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("Select SUM(TotalAdditionalCessAmount) as "+KEY_TotalAdditionalCessAmount+", "+KEY_additionalCessAmount+" from " + TBL_PREVIEWBILLITEM +
+                    " where InvoiceNo = '" + InvoiceNo + "' AND " + KEY_InvoiceDate + " LIKE '" + InvoiceDate + "' GROUP BY additionalCessAmount", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+        } finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
     /*public Cursor getItemsForSGSTTaxPrint(int InvoiceNo) {
 
         Cursor cursor = null;

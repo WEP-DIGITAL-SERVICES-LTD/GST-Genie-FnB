@@ -408,7 +408,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 						LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 				rowItem.setBackgroundResource(R.drawable.row_background);
 
-				int menuCode = crsrPendingOrderItems.getInt(crsrPendingOrderItems.getColumnIndex("ItemNumber"));
+				int menuCode = crsrPendingOrderItems.getInt(crsrPendingOrderItems.getColumnIndex("ItemId"));
 				menuCodeList.add(menuCode);
 				// S.No
 				tvSno = new TextView(myContext);

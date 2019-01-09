@@ -6330,7 +6330,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 Number.setWidth(40);
                 Number.setTextSize(0);
                 Number.setTextColor(Color.TRANSPARENT);
-                Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemNumber")));
+                Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemId")));
 
                 // Item Name
                 tvName = new TextView(BillingCounterSalesActivity.this);

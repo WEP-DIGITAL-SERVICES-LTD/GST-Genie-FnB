@@ -123,12 +123,12 @@ public class FragmentKitchen extends Fragment {
 
                 tvKitchenCode = new TextView(myContext);
                 tvKitchenCode.setTextSize(18);
-                tvKitchenCode.setText(crsrKitchen.getString(0));
+                tvKitchenCode.setText(crsrKitchen.getString(crsrKitchen.getColumnIndex(DatabaseHandler.KEY_id)));
                 rowKitchen.addView(tvKitchenCode);
 
                 tvKitchenName = new TextView(myContext);
                 tvKitchenName.setTextSize(18);
-                tvKitchenName.setText(crsrKitchen.getString(1));
+                tvKitchenName.setText(crsrKitchen.getString(crsrKitchen.getColumnIndex(DatabaseHandler.KEY_KitchenName)));
                 rowKitchen.addView(tvKitchenName);
 
                 // Delete

@@ -258,7 +258,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             dblChangePayment = 0, dblRoundOfValue = 0, dblOtherCharges = 0, dblRewardPointsAmount = 0, dblAEPSAmount = 0, dblMSwipeAmount = 0, dblPaytmAmount = 0;
     int  PRINT_DISCOUNT = 0, SHAREBILL = 0, REWARD_POINTS = 0;
     boolean trainingMode = false;
-    String custPhone = "", OWNERPOS = "", BUSINESS_DATE = "";
+    String custPhone = "", BUSINESS_DATE = "";
     private CreatePdfInvoice createPdfInvoice = null;
     double RewardPtToAmt = 0, amountToRewardPoints = 0, RewardPoints = 0;
     //MSwipe
@@ -3117,8 +3117,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 dTaxTotal += Double.parseDouble(ColTax.getText().toString());
                 dServiceTaxAmt += Double.parseDouble(ColServiceTaxAmount.getText().toString());
                 dIGSTAmt += Double.parseDouble(ColIGSTAmount.getText().toString());
-//                dcessAmt += (Double.parseDouble(ColcessAmount.getText().toString()) + Double.parseDouble(ColAdditionalCessAmt.getText().toString()));
-                dcessAmt += Double.parseDouble(ColTotalCessAmount.getText().toString());
+                dcessAmt += (Double.parseDouble(ColcessAmount.getText().toString()) + Double.parseDouble(ColTotalCessAmount.getText().toString()));
+//                dcessAmt += Double.parseDouble(ColcessAmount.getText().toString());
                 if (crsrSettings!=null && crsrSettings.getString(crsrSettings.getColumnIndex("Tax")).equalsIgnoreCase("1"))  // forward tax
                 {
                     dSubTotal += Double.parseDouble(ColAmount.getText().toString());
@@ -3866,7 +3866,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     Number.setWidth(40);
                     Number.setTextSize(0);
                     Number.setTextColor(Color.TRANSPARENT);
-                    Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemNumber")));
+                    Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemId")));
 
                     // Item Name
                     tvName = new TextView(myContext);
@@ -4511,7 +4511,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     Number.setWidth(40);
                     Number.setTextSize(0);
                     Number.setTextColor(Color.TRANSPARENT);
-                    Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemNumber")));
+                    Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemId")));
 
                     // Item Name
                     tvName = new TextView(myContext);
@@ -4603,11 +4603,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
 // Dept Code
                     tvDeptCode = new TextView(myContext);
-                    tvDeptCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DeptCode")));
+                    tvDeptCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex(DatabaseHandler.KEY_DepartmentCode)));
 
                     // Categ Code
                     tvCategCode = new TextView(myContext);
-                    tvCategCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CategCode")));
+                    tvCategCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex(DatabaseHandler.KEY_CategoryCode)));
 
                     // Kitchen Code
                     tvKitchenCode = new TextView(myContext);
@@ -4665,6 +4665,12 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     TextView tvcessAmt = new TextView(BillingDineInActivity.this);
                     tvcessAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("cessAmount")));
 
+                    TextView tvAdditionalCessAmount = new TextView(BillingDineInActivity.this);
+                    tvAdditionalCessAmount.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount)));
+
+                    TextView tvTotalCessAmount = new TextView(BillingDineInActivity.this);
+                    tvTotalCessAmount.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex(DatabaseHandler.KEY_TotalAdditionalCessAmount)));
+
                     TextView tvOriginalRate = new TextView(BillingDineInActivity.this);
                     tvOriginalRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("OriginalRate")));
 
@@ -4711,6 +4717,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     rowItem.addView(tvOriginalRate); //27
                     rowItem.addView(tvTaxableValue);//28
                     rowItem.addView(tvKOTNo);//29
+                    rowItem.addView(tvAdditionalCessAmount);//30
+                    rowItem.addView(tvTotalCessAmount);//31
 
                     // Add row to table
                     tblOrderItems.addView(rowItem, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -5719,15 +5727,28 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                 TextView cessTaxPercent = (TextView) RowBillItem.getChildAt(25);
                 float cesstax = (Float.parseFloat(cessTaxPercent.getText().toString()));
                 objBillItem.setCessRate(Float.parseFloat(String.format("%.2f", cesstax)));
-                Log.d("InsertBillItems_Preview", " cess Tax %: " + objBillItem.getCessRate());
+                Log.d("InsertBillItems", " cess Tax %: " + objBillItem.getCessRate());
             }
-            // cessTax Amount
+            // cess amount per unit
             if (RowBillItem.getChildAt(26) != null) {
-                TextView cessTaxAmount = (TextView) RowBillItem.getChildAt(26);
-                double cessAmt = (Double.parseDouble(cessTaxAmount.getText().toString()));
-                objBillItem.setCessAmount(Double.parseDouble(String.format("%.2f",cessAmt)));
-                Log.d("InsertBillItems_Preview", "cess Amt: " + objBillItem.getCessAmount());
+                TextView cessPerUnitAmt = (TextView) RowBillItem.getChildAt(26);
+                double cessPerunit = (Double.parseDouble(cessPerUnitAmt.getText().toString()));
+                if (objBillItem.getCessRate() > 0)
+                    objBillItem.setDblCessAmountPerUnit(0.00);
+                else
+                    objBillItem.setDblCessAmountPerUnit(Double.parseDouble(String.format("%.2f", cessPerunit)));
+                objBillItem.setCessAmount(Double.parseDouble(String.format("%.2f", cessPerunit * objBillItem.getQuantity())));
+                Log.d("InsertBillItems", "cess Amt: " + objBillItem.getDblCessAmountPerUnit());
             }
+            // additional cess amount
+            if (RowBillItem.getChildAt(30) != null) {
+                TextView tvadditionalcess = (TextView) RowBillItem.getChildAt(30);
+                double additionalCess = (Double.parseDouble(tvadditionalcess.getText().toString()));
+                objBillItem.setDblAdditionalCessAmount(additionalCess);
+                objBillItem.setDblTotalAdditionalCessAmount(Double.parseDouble(String.format("%.2f", additionalCess * objBillItem.getQuantity())));
+                Log.d("InsertBillItems", "cess Amt: " + objBillItem.getDblAdditionalCessAmount());
+            }
+
             // Discount %
             if (RowBillItem.getChildAt(8) != null) {
                 TextView DiscountPercent = (TextView) RowBillItem.getChildAt(8);
@@ -7698,7 +7719,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
      ************************************************************************************************************************************/
     public void SaveKOT(View v) {
 
-        if ((OWNERPOS.equals("") || OWNERPOS.equals("0"))) {
+        if ((ownerPos.equals("") || ownerPos.equals("0"))) {
             MsgBox.Show(getString(R.string.invalid_attempt), getString(R.string.empty_owner_pos_message));
             return;
         }
@@ -8122,7 +8143,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         Cursor cursor = dbBillScreen.getPreviewBillItem();
         while(cursor !=null  && cursor.moveToNext()){
 
-            int id = cursor.getInt(cursor.getColumnIndex("ItemNumber"));
+            int id = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.KEY_ItemId));
             int sno = count;
             String name = cursor.getString(cursor.getColumnIndex("ItemName"));
             String hsncode = cursor.getString(cursor.getColumnIndex("HSNCode"));
@@ -8498,6 +8519,30 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     String taxpercent = String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessRate")));
                     Double taxvalue = Double.parseDouble(String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessAmount"))));
                     Double taxvalueperunit = 0.00;
+                    BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)), taxvalueperunit);
+                    billcessTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
+            crsrTax = db.getItemsForCessTaxPreviewAmountPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "cess "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = "0.00";
+                    Double taxvalue = Double.parseDouble(String.format("%.2f", crsrTax.getDouble(crsrTax.getColumnIndex("cessAmount"))));
+                    Double taxvalueperunit = Double.parseDouble(String.format("%.2f", crsrTax.getDouble(crsrTax.getColumnIndex(DatabaseHandler.KEY_cessAmountPerUnit))));
+
+                    BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)), taxvalueperunit);
+                    billcessTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
+            crsrTax = db.getItemsForCessTaxPreviewAdditionalAmountPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "additional cess "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = "0.00";
+                    Double taxvalue = Double.parseDouble(String.format("%.2f", crsrTax.getDouble(crsrTax.getColumnIndex(DatabaseHandler.KEY_TotalAdditionalCessAmount))));
+                    Double taxvalueperunit = Double.parseDouble(String.format("%.2f", crsrTax.getDouble(crsrTax.getColumnIndex(DatabaseHandler.KEY_additionalCessAmount))));
+
                     BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)), taxvalueperunit);
                     billcessTaxItems.add(taxItem);
                 } while (crsrTax.moveToNext());
@@ -8896,7 +8941,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         }else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
             MsgBox.Show("Warning", "Please Select Code for Intersate Supply");
             proceed =0;
-        } else if ((OWNERPOS.equals("") || OWNERPOS.equals("0"))) {
+        } else if ((ownerPos.equals("") || ownerPos.equals("0"))) {
             MsgBox.Show(getString(R.string.invalid_attempt), getString(R.string.empty_owner_pos_message));
             proceed = 0;
         }
@@ -10596,7 +10641,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                 Number.setWidth(40);
                 Number.setTextSize(0);
                 Number.setTextColor(Color.TRANSPARENT);
-                Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemNumber")));
+                Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex(DatabaseHandler.KEY_ItemId)));
 
                 // Item Name
                 tvName = new TextView(myContext);
@@ -11188,7 +11233,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
     }
 
     void checkForInterstateTransaction(String posCode) {
-        if (!posCode.equalsIgnoreCase(OWNERPOS)) {
+        if (!posCode.equalsIgnoreCase(ownerPos)) {
             chk_interstate.setChecked(true);
             spnr_pos.setSelection(getIndex_pos(posCode));
             Toast.makeText(this, getString(R.string.autosetting_cust_State_message), Toast.LENGTH_SHORT).show();

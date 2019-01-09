@@ -874,7 +874,10 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                                 tvCustomerDepositAmt.setVisibility(View.VISIBLE);
                                 etCreditDepositAmt.setVisibility(View.VISIBLE);
                                 etCustomerOpeningBal.setEnabled(false);
-                                etCustomerOpeningBal.setText(String.format("%.2f", Double.parseDouble(rowOpeningBalance.getText().toString().trim())));
+                                if (rowOpeningBalance != null && !rowOpeningBalance.getText().toString().isEmpty())
+                                    etCustomerOpeningBal.setText(String.format("%.2f", Double.parseDouble(rowOpeningBalance.getText().toString().trim())));
+                                else
+                                    etCustomerOpeningBal.setText("0.00");
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
                                 btnEditPrint.setEnabled(true);
@@ -995,6 +998,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
         txtName.setText("");
         txtPhone.setText("");
         txtAddress.setText("");
+        etCustomerEmail.setText("");
         txtCreditAmount.setText("0.00");
         txtCustomerCreditLimit.setText("0.00");
         tvCustomerDepositAmt.setVisibility(View.GONE);
@@ -1171,7 +1175,7 @@ public class CustomerDetailActivity extends WepPrinterBaseActivity implements Pr
                 int iResult = dbCustomer.updateCustomer(customer);
 
                 Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
-                Toast.makeText(myContext, "Cus tomer Updated Successfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
                 if (iResult > 0) {
                     mStoreCustomerPassbookData(customer.getStrCustName(),customer.getStrCustPhone(),1);
                     if (isPrint) {

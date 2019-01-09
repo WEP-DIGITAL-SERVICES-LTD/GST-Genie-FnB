@@ -473,7 +473,7 @@ public class PrinterUtil {
         esc.addText("Bill no         : "+item.getBillNo()+"\n");
 
 
-        if(item.getBillingMode().equals("1"))
+        if(item.getBillingMode().equals("1") && item.getTableNo()!=null)
             esc.addText("Table           : "+item.getTableNo()+"\n");
         esc.addText("Date            : "+item.getDate() +"    Time : "+item.getTime() +"\n");
        /* esc.addText("Date            : "+item.getDate() +"\n");
