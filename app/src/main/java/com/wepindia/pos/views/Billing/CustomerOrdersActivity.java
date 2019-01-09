@@ -1149,7 +1149,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				// Rider code
 				Code = new TextView(myContext);
 				Code.setTextSize(18);
-				Code.setText(crsrRider.getString(crsrRider.getColumnIndex("UserId")));
+				Code.setText(crsrRider.getString(crsrRider.getColumnIndex("_id")));
 
 				// Rider Name
 				Name = new TextView(myContext);

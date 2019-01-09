@@ -3854,7 +3854,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Delete Department from Dept Table-----
     public int DeleteDept(String DeptCode) {
 
-        return dbFNB.delete(TBL_DEPARTMENT, "DepartmentCode=" + DeptCode, null);
+        return dbFNB.delete(TBL_DEPARTMENT, "_id=" + DeptCode, null);
     }
 
     /************************************************************************************************************************************/
@@ -5577,8 +5577,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Delete Items from Item Table by Dept Code-----
     public int DeleteItemByDeptCode(String DeptCode) {
-
-        return dbFNB.delete(TBL_ITEM_Outward, "DepartmentCode=" + DeptCode, null);
+        String where = "DepartmentCode =" + DeptCode;
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_DepartmentCode, -1);
+        return dbFNB.update(TBL_ITEM_Outward, cvDbValues, where, null);
     }
 
     // -----Delete Items from Item Table by Categ Code-----

@@ -186,10 +186,13 @@ public class FragmentDepartment extends Fragment {
                             TableRow tr = (TableRow) v.getParent();
                             TextView DeptCode = (TextView) tr.getChildAt(1);
                             long lResult = dbDepartment.DeleteDept(DeptCode.getText().toString());
-                            lResult = dbDepartment.DeleteCategByDeptCode(DeptCode.getText().toString());
-                            lResult = dbDepartment.DeleteItemByDeptCode(DeptCode.getText().toString());
-                            //MsgBox.Show("", "Department Deleted Successfully");
-                            Toast.makeText(myContext, "Department Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            if (lResult > 0) {
+                                lResult = dbDepartment.DeleteCategByDeptCode(DeptCode.getText().toString());
+                                lResult = dbDepartment.DeleteItemByDeptCode(DeptCode.getText().toString());
+                                Toast.makeText(myContext, "Department Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(myContext, "Unable to delete department.", Toast.LENGTH_SHORT).show();
+                            }
 
                             ClearDepartmentTable();
                             DisplayDepartment();
