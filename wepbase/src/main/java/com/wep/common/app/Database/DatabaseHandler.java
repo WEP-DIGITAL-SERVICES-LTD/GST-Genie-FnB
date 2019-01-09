@@ -5807,7 +5807,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             cursor = db.query(TBL_PENDINGKOT, new String[]{"*"},
                     "TableNumber=" + TableNo + " AND SubUdfNumber=" + SubUdfNo + " AND TableSplitNo=" + TableSplitNo +
-                            " AND ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode + " AND PrintKOTStatus = " + PrintStatus
+                            " AND ItemId=" + ItemNo + " AND OrderMode=" + OrderMode + " AND PrintKOTStatus = " + PrintStatus
                     , null, null, null, null);
         }catch (Exception e)
         {

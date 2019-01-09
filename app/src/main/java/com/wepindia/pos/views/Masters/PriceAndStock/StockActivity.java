@@ -473,7 +473,7 @@ public class StockActivity extends WepBaseActivity implements TextWatcher {
                         strMenuCode = Item.getString(Item.getColumnIndex("MenuCode"));
                         ItemLongName.setThreshold(1000);
                         AutoCompleteItemBarcodeValue.setThreshold(1000);
-                        ItemLongName.setText(Item.getString(Item.getColumnIndex("ItemName")));
+                        ItemLongName.setText(Item.getString(Item.getColumnIndex(DatabaseHandler.KEY_ItemShortName)));
                         AutoCompleteItemBarcodeValue.setText(Item.getString(Item.getColumnIndex("ItemBarcode")));
                         ItemLongName.setThreshold(1);
                         AutoCompleteItemBarcodeValue.setThreshold(1);

@@ -216,7 +216,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     private AppCompatDelegate delegate;
     String businessDate="";
     int BillwithStock = 0, JURISDICTIONS_PRINT_STATUS = 0;;
-    String ownerPos= "";
     int reprintBillingMode =0;
     boolean isReprint = false;
     String FASTBILLINGMODE = "1"; // by default setting to items only mode
@@ -257,7 +256,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             dblChangePayment = 0, dblRoundOfValue = 0, dblOtherCharges = 0, dblRewardPointsAmount = 0, dblAEPSAmount = 0, dblMSwipeAmount = 0, dblPaytmAmount = 0;
     int  PRINT_DISCOUNT = 0, SHAREBILL = 0;
     boolean trainingMode = false;
-    String custPhone = "", OWNERPOS = "";
+    String custPhone = "", ownerPos = "";
     private CreatePdfInvoice createPdfInvoice = null;
     //MSwipe
     public final int REQUEST_CODE_CARD_PAYMENT = 12;
@@ -3692,7 +3691,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             Status = Integer.valueOf(printstatus.getText().toString());
 
             Cursor crsrItemsUpdate = db.getItemsForUpdatingKOT_new(tblno, subudfno, tblsplitno, itemno, jBillingMode);
-            if (crsrItemsUpdate.moveToFirst()) {
+            if (crsrItemsUpdate!= null && crsrItemsUpdate.moveToFirst()) {
                 float Qty = 0;
                 double Amt = 0, TaxAmt = 0, SerTaxAmt = 0;
                 float qty_temp = Float.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("Quantity")));
@@ -6880,7 +6879,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
      ************************************************************************************************************************************/
     public void SaveKOT(View v) {
 
-        if ((OWNERPOS.equals("") || OWNERPOS.equals("0"))) {
+        if ((ownerPos.equals("") || ownerPos.equals("0"))) {
             MsgBox.Show(getString(R.string.invalid_attempt), getString(R.string.empty_owner_pos_message));
             return;
         }
@@ -8001,7 +8000,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
             MsgBox.Show("Warning", "Please Select Code for Intersate Supply");
             proceed =0;
-        } else if ((OWNERPOS.equals("") || OWNERPOS.equals("0"))) {
+        } else if ((ownerPos.equals("") || ownerPos.equals("0"))) {
             MsgBox.Show(getString(R.string.invalid_attempt), getString(R.string.empty_owner_pos_message));
             proceed = 0;
         }
@@ -9566,7 +9565,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     }
 
     void checkForInterstateTransaction(String posCode) {
-        if (!posCode.equalsIgnoreCase(OWNERPOS)) {
+        if (!posCode.equalsIgnoreCase(ownerPos)) {
             chk_interstate.setChecked(true);
             spnr_pos.setSelection(getIndex_pos(posCode));
             Toast.makeText(this, getString(R.string.autosetting_cust_State_message), Toast.LENGTH_SHORT).show();

@@ -242,7 +242,7 @@ public class TableActivity extends WepBaseActivity {
 
                 do {
                     Map<String, String> mapWaiters = new HashMap<String, String>(2);
-                    mapWaiters.put("Id", crsrWaiters.getString(crsrWaiters.getColumnIndex("UserId")));
+                    mapWaiters.put("Id", crsrWaiters.getString(crsrWaiters.getColumnIndex("_id")));
                     mapWaiters.put("Name", crsrWaiters.getString(crsrWaiters
                             .getColumnIndex("Name")));
 

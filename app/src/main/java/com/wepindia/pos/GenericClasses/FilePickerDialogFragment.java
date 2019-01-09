@@ -4,6 +4,7 @@ package com.wepindia.pos.GenericClasses;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -42,7 +43,8 @@ public class FilePickerDialogFragment extends DialogFragment implements AdapterV
     public final static String EXTRA_FILE_PATH = "file_path";
     //public final static String EXTRA_SHOW_HIDDEN_FILES = "show_hidden_files";
     public final static String EXTRA_ACCEPTED_FILE_EXTENSIONS = "accepted_file_extensions";
-    private final static String DEFAULT_INITIAL_DIRECTORY = "/storage";
+//    private final static String DEFAULT_INITIAL_DIRECTORY = "/storage";
+    private final static String DEFAULT_INITIAL_DIRECTORY = Environment.getExternalStorageDirectory().getPath();
     protected File mDirectory;
     protected ArrayList<File> mFiles;
     protected boolean mShowHiddenFiles = false;
