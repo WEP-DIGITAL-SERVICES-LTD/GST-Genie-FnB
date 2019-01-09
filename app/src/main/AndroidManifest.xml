@@ -35,7 +35,7 @@
     <application
         android:name="com.mswipetech.wisepad.sdktest.view.ApplicationData"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="JOYPOS F&amp;B"
         android:theme="@style/AppThemeWep"
         tools:replace="android:icon,android:label">
 

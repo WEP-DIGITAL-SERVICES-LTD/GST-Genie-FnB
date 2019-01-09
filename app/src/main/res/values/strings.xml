@@ -98,7 +98,7 @@
     <string name="same_item_same_mrp">Duplicate Item: Same item short name, barcode and UOM cannot exist with same MRP  </string>
     <string name="same_item_different_uom">Same items cannot exist with different UOM  </string>
 
-    <string name="app_name">GST Genie F</string>
+    <string name="app_name">JOYPOS F&amp;B</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_login">WeP_FnB_GST</string>
