@@ -427,7 +427,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
         Cursor item_crsr  = dbIngredientManagement.getAllItemsOutward();
         ArrayList<String>  itemlist = new ArrayList<String>();
         while (item_crsr !=null && item_crsr.moveToNext()){
-            String item = item_crsr.getString(item_crsr.getColumnIndex("ItemName"));
+            String item = item_crsr.getString(item_crsr.getColumnIndex(DatabaseHandler.KEY_ItemShortName));
             if(item !=null)
                 itemlist.add(item);
         }

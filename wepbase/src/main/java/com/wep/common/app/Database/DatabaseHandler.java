@@ -5357,7 +5357,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Retrieve Single Item based on Item Name-----
     public Cursor getbyItemName(String ItemName) {
 //        return dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, "ItemName = '" + ItemName + "'", null, null, null, null);
-        return dbFNB.rawQuery("SELECT MenuCode FROM " + TBL_ITEM_Outward + " WHERE ItemName = '" + ItemName + "'", null);
+        return dbFNB.rawQuery("SELECT MenuCode FROM " + TBL_ITEM_Outward + " WHERE ItemShortName LIKE '" + ItemName + "'", null);
     }
 
     public int getMenuCodebyItemName_inw(String ItemName) {
@@ -5378,11 +5378,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Retrieve Item List based on Item MenuCode-----
     public Cursor getItemList(String Name) {
-        return dbFNB.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemName LIKE '" + Name + "%'", null);
+        return dbFNB.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemShortName LIKE '" + Name + "%'", null);
     }
 
     public Cursor getItemDetails(String Name) {
-        return dbFNB.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemName LIKE '" + Name + "'", null);
+        return dbFNB.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemShortName LIKE '" + Name + "'", null);
     }
 
     // -----Retrieve Item stock quantity on Item MenuCode-----
@@ -9823,7 +9823,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.query(TBL_ITEM_Outward, new String[]{"*"}, "MenuCode=" + MenuCode, null, null, null, null);
+            cursor = db.query(TBL_ITEM_Outward, new String[]{"*"}, "_id=" + MenuCode, null, null, null, null);
         }catch (Exception e){
             e.printStackTrace();
             cursor = null;

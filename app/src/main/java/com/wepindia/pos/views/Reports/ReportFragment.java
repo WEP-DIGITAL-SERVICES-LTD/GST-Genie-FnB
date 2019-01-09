@@ -5013,7 +5013,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                             TextView Code = (TextView) rowItem.getChildAt(0);
 
                             if (Code.getText().toString().equalsIgnoreCase(Report.getString(Report
-                                    .getColumnIndex("DeptCode")))) {
+                                    .getColumnIndex(DatabaseHandler.KEY_DepartmentCode)))) {
 
                                 // Total Items
                                 TextView Items = (TextView) rowItem.getChildAt(2);
@@ -5085,11 +5085,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
                         DeptCode = new TextView(myContext);
                         DeptCode.setText(Report.getString(Report
-                                .getColumnIndex("DeptCode")));
+                                .getColumnIndex(DatabaseHandler.KEY_DepartmentCode)));
 
                         DeptName = new TextView(myContext);
                         DeptName.setText(Report.getString(Report
-                                .getColumnIndex("DeptName")));
+                                .getColumnIndex(DatabaseHandler.KEY_DepartmentName)));
 
                         TotalItems = new TextView(myContext);
                         TotalItems.setText(Report.getString(Report
@@ -5287,7 +5287,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                         TextView Code = (TextView) rowItem.getChildAt(0);
 
                         if (Code.getText().toString().equalsIgnoreCase(Report.getString(Report
-                                .getColumnIndex("CategCode")))) {
+                                .getColumnIndex(DatabaseHandler.KEY_CategoryCode)))) {
 
                             // Total Items
                             TextView Items = (TextView) rowItem.getChildAt(2);
@@ -5359,11 +5359,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
 
                     CategCode = new TextView(myContext);
                     CategCode.setText(Report.getString(Report
-                            .getColumnIndex("CategCode")));
+                            .getColumnIndex(DatabaseHandler.KEY_CategoryCode)));
 
                     CategName = new TextView(myContext);
                     CategName.setText(Report.getString(Report
-                            .getColumnIndex("CategName")));
+                            .getColumnIndex(DatabaseHandler.KEY_CategoryName)));
 
                     TotalItems = new TextView(myContext);
                     TotalItems.setText(Report.getString(Report
@@ -6758,7 +6758,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                         TextView MenuCode = (TextView) rowItem.getChildAt(1);
 
                         int MenuCodeInTable = Integer.parseInt(MenuCode.getText().toString());
-                        int menucode = Report.getInt(Report.getColumnIndex("ItemNumber"));
+                        int menucode = Report.getInt(Report.getColumnIndex("ItemId"));
 
                         if (MenuCodeInTable == menucode) {
                             TextView Qty = (TextView) rowItem.getChildAt(5);
@@ -6788,34 +6788,34 @@ public class ReportFragment extends Fragment implements View.OnClickListener, Pr
                     SNo.setText(String.valueOf(i));
 
                     DeptCode = new TextView(myContext);
-                    int dept = Report.getInt(Report.getColumnIndex("DeptCode"));
+                    int dept = Report.getInt(Report.getColumnIndex(DatabaseHandler.KEY_DepartmentCode));
                     if(dept ==0)
                         DeptCode.setText("-");
                     else
                     {
                         Cursor dd = dbReport.getDepartment(dept);
                         if(dd!=null && dd.moveToFirst())
-                            DeptCode.setText(dd.getString(dd.getColumnIndex("DeptName")));
+                            DeptCode.setText(dd.getString(dd.getColumnIndex(DatabaseHandler.KEY_DepartmentName)));
                         else
                             DeptCode.setText("-");
 
                     }
 
                     CategCode = new TextView(myContext);
-                    int categ = Report.getInt(Report.getColumnIndex("CategCode"));
+                    int categ = Report.getInt(Report.getColumnIndex(DatabaseHandler.KEY_CategoryCode));
                     if(categ== 0)
                         CategCode.setText("-");
                     else
                     {
                         Cursor cc = dbReport.getCategory(categ);
                         if(cc!=null &&  cc.moveToFirst())
-                            CategCode.setText(cc.getString(cc.getColumnIndex("CategName")));
+                            CategCode.setText(cc.getString(cc.getColumnIndex(DatabaseHandler.KEY_CategoryName)));
                         else
                             CategCode.setText("-");
                     }
 
 
-                    int menuCode = Report.getInt(Report.getColumnIndex("ItemNumber"));
+                    int menuCode = Report.getInt(Report.getColumnIndex("ItemId"));
 
                     TextView MenuCode = new TextView(myContext);
                     MenuCode.setText(String.valueOf(menuCode));

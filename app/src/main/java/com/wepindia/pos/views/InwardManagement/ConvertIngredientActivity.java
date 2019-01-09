@@ -573,7 +573,7 @@ public class ConvertIngredientActivity extends Activity {
         }
         else
         {
-            menucode = crsr_item.getInt(crsr_item.getColumnIndex("MenuCode"));
+            menucode = crsr_item.getInt(crsr_item.getColumnIndex("_id"));
         }
 
         String item_qty = et_convert_item_quantity.getText().toString();
