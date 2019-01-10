@@ -5357,7 +5357,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Retrieve Single Item based on Item Name-----
     public Cursor getbyItemName(String ItemName) {
 //        return dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, "ItemName = '" + ItemName + "'", null, null, null, null);
-        return dbFNB.rawQuery("SELECT MenuCode FROM " + TBL_ITEM_Outward + " WHERE ItemShortName LIKE '" + ItemName + "'", null);
+        return dbFNB.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + " WHERE ItemShortName LIKE '" + ItemName + "'", null);
     }
 
     public int getMenuCodebyItemName_inw(String ItemName) {
